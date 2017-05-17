@@ -46,6 +46,18 @@ body {
     background-size: cover;
 }
 
+.layer {
+	background-color: #333;
+	height: 100%;
+	opacity: 0.5;
+	transition: 0.5s;
+	width: 100%;
+}
+
+.layer:hover {
+	opacity: 0.2;
+}
+
 .content {
 	background-color: #eee;
 	padding: 10px 0;
