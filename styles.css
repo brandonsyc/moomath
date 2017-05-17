@@ -46,6 +46,11 @@ body {
     background-size: cover;
 }
 
+.content {
+	background-color: #eee;
+	padding: 10px 0;
+}
+
 h1, h2, p {
 	color: #333;
 	text-align: center;
