@@ -82,7 +82,7 @@ h1, h2, p {
 	text-align: left;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
 	.topnav {
 		position: relative;
 	}
