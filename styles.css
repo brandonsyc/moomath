@@ -129,6 +129,11 @@ h2 {
 	font-size: 25px;
 }
 
+.columns {
+	margin: auto;
+	max-width: 1500px;
+}
+
 .fourth {
 	float: left;
 	width: 25%;
