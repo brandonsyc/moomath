@@ -12,6 +12,29 @@ body {
 	margin: 0;
 }
 
+h1, h2, p {
+	color: #333;
+	text-align: center;
+	padding: 10px;
+	margin: 0px;
+}
+
+h1 {
+	font-size: 30px;
+}
+
+h2 {
+	font-size: 25px;
+}
+
+p {
+	font-size: 15px;
+}
+
+a {
+	text-decoration: none;
+}
+
 .topnav {
 	background-color: #333;
 	font-size: 0;
@@ -23,7 +46,6 @@ body {
 	display: inline-block;
 	font-size: 15px;
 	padding: 15px;
-	text-decoration: none;
 	transition: 0.5s;
 }
 
@@ -106,27 +128,10 @@ body {
 }
 
 .content {
+	align-content: center;
 	background-color: #eee;
 	padding: 10px 0;
-}
-
-h1, h2, p {
-	color: #333;
 	text-align: center;
-	padding: 10px;
-	margin: 0px;
-}
-
-h1 {
-	font-size: 30px;
-}
-
-p {
-	font-size: 15px;
-}
-
-h2 {
-	font-size: 25px;
 }
 
 .columns {
@@ -167,7 +172,6 @@ h2 {
 
 .footer a {
 	color: inherit;
-	text-decoration: none;
 	transition: 0.5s;
 }
 
@@ -175,27 +179,68 @@ h2 {
 	text-shadow: 2px 2px 10px #08b;
 }
 
+.avatar {
+	border: 1px solid #ccc;
+	display: inline-block;
+	margin: 0 10px;
+	max-width: 250px;
+	min-width: 100px;
+	transition: 0.5s;
+	width: 25%;
+}
+
+.avatar:hover {
+	box-shadow: 2px 2px 10px #333;
+}
+
+.blurb
+{
+	display: inline-block;
+	max-width: 500px;
+	vertical-align: top;
+	width: 70%;
+}
+
+.blurb h1 {
+	text-align: left;
+}
+
+.blurb p {
+	text-align: left;
+}
+
+.separate {
+	margin: 50px;
+}
+
 @media only screen and (max-width: 768px) {
 	.topnav {
-		position: relative;
 	}
-	
+
 	.topnav a {
-		float: none;
 		display: block;
-		text-align: left;
 	}
-	
-    .parallax {
-        background-attachment: scroll;
-    }
-	
+
 	.fourth {
 		margin: 5px 0;
 		width: 50%;
 	}
-	
+
 	.divider {
 		clear: both;
+	}
+
+	.blurb {
+		display: block;
+		max-width: none;
+		width: 100%;
+	}
+
+	.blurb h1 {
+		text-align: center;
+	}
+
+	.blurb p {
+		text-align: center;
 	}
 }
