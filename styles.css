@@ -42,7 +42,7 @@ a {
 }
 
 a:hover {
-	text-shadow: 2px 2px 10px #08b;
+	text-shadow: 2px 2px 10px #333;
 }
 
 .topnav {
