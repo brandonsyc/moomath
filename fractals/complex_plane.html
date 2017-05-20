@@ -29,6 +29,8 @@
 	<p>18 May, 2017 &ndash; <a href="https://github.com/anematode">anematode</a></p>
 </div>
 
+<div class="article">
+
 <p>
 	Ever since the term was introduced by <a href="https://en.wikipedia.org/wiki/Benoit_Mandelbrot">Benoit B. Mandelbrot</a>, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the <a href="https://en.wikipedia.org/wiki/Complex_plane">complex plane</a>, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.
 </p>
@@ -41,9 +43,9 @@
 	Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" width="768" height="525">
+		<img src="article1/mandelbrot.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
 		<figcaption>
 			<p align="center">Figure 1: The Mandelbrot set.</p>
 		</figcaption>
@@ -100,11 +102,11 @@
 	Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown:
 </p>
 
-<div style="width: 256px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/complextable1.png" alt="Iterations after c=(0.2+0.5i)" width="256">
+		<img src="article1/complextable1.png" alt="Iterations after c=(0.2+0.5i)">
 		<figcaption>
-			<p align="center">Figure 2: The numbers produced by iteration of \(f_c\).</p>
+			<p>Figure 2: The numbers produced by iteration of \(f_c\).</p>
 		</figcaption>
 	</figure>
 </div>
@@ -115,11 +117,11 @@
 	It seems \(c=0.2+0.5\) does not diverge to infinity; it stays bounded. Thus, it is in the Mandelbrot set. Overlaying a point \(c=0.2+0.5i\) on the original image, we can see that, indeed, the point lies in a black region. (The x and y axes are also indicated.)
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot2.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" width="768" height="525">
+		<img src="article1/mandelbrot2.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
 		<figcaption>
-			<p align="center">Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).</p>
+			<p>Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).</p>
 		</figcaption>
 	</figure>
 </div>
@@ -134,11 +136,11 @@
 	But what's so interesting about the Mandelbrot set? The answer lies in its intrinsically fractal nature. For example, suppose we zoom in on the Mandelbrot set, say, on the gray rectangle highlighted here:
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot3.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" width="768" height="525">
+		<img src="article1/mandelbrot3.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" >
 		<figcaption>
-			<p align="center">Figure 4: The Mandelbrot set, box around mini-Brot.</p>
+			<p>Figure 4: The Mandelbrot set, box around mini-Brot.</p>
 		</figcaption>
 	</figure>
 </div>
@@ -149,9 +151,9 @@
 	When we zoom in on that box, we get this image:
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot4.png" alt="Mandelbrot Set" width="768">
+		<img src="article1/mandelbrot4.png" alt="Mandelbrot Set">
 		<figcaption>
 			<p align="center">Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).</p>
 		</figcaption>
@@ -164,9 +166,9 @@
 	Wait... what? It's the Mandelbrot Set again! It's just rotated and scaled down. There must be some end to this... let's zoom in on the same spot, but now in this "mini-Brot".
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot5.png" alt="Mandelbrot Set" width="768">
+		<img src="article1/mandelbrot5.png" alt="Mandelbrot Set">
 		<figcaption>
 			<p align="center">Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.</p>
 		</figcaption>
@@ -175,9 +177,9 @@
 
 <br>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot6.png" alt="Mandelbrot Set" width="768">
+		<img src="article1/mandelbrot6.png" alt="Mandelbrot Set">
 		<figcaption>
 			<p align="center">Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.</p>
 		</figcaption>
@@ -198,9 +200,9 @@
 	Remember the numbers produced by the function \(f_c\)? Well, they're complex numbers, and that means they can be graphed! Let's draw lines between them on a coordinate grid to see their movements.
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot7.png" alt="Mandelbrot Set" width="768">
+		<img src="article1/mandelbrot7.png" alt="Mandelbrot Set">
 		<figcaption>
 			<p align="center">Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).</p>
 		</figcaption>
@@ -213,9 +215,9 @@
 	We can see that the lines converge towards a certain point, slowly circling around it. This is true for any other point in the main <strong>cardioid</strong>, which is the sideways, heart-shaped object comprising most of the Mandelbrot set's area. Let's try a point outside of the main cardioid, say, \(c=-1.311687+0.062514i\)! (The point \(c\) is indicated with the arrow.)
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/mandelbrot8.png" alt="Mandelbrot Set" width="768">
+		<img src="article1/mandelbrot8.png" alt="Mandelbrot Set">
 		<figcaption>
 			<p align="center">Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).</p>
 		</figcaption>
@@ -232,9 +234,9 @@
 	Of course, a natural question is: what happens when you change the function \(f_c(z)\)? Well, let's try it!
 </p>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/fractal1.png" alt="Fractal" width="512">
+		<img src="article1/fractal1.png" alt="Fractal">
 		<figcaption>
 			<p align="center">Figure 10: Fractal for \(f_c(z)=z^3+c\).</p>
 		</figcaption>
@@ -243,9 +245,9 @@
 
 <br>
 
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/fractal2.png" alt="Fractal" width="512">
+		<img src="article1/fractal2.png" alt="Fractal">
 		<figcaption>
 			<p align="center">Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).</p>
 		</figcaption>
@@ -254,9 +256,9 @@
 
 <br>
    
-<div style="width:768px; margin:0 auto;">
+<div class="figure">
 	<figure>
-		<img src="article1/fractal3.png" alt="Fractal" width="512">
+		<img src="article1/fractal3.png" alt="Fractal">
 		<figcaption>
 			<p align="center">Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).</p>
 		</figcaption>
@@ -307,6 +309,8 @@
 <p>
 	Hopefully this has been a good introduction to fractals in the complex plane!
 </p>
+
+</div>
 
 <div class="footer">
 	<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
