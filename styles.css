@@ -32,6 +32,7 @@ p {
 }
 
 a {
+	color: #08b;
 	text-decoration: none;
 }
 
@@ -211,6 +212,17 @@ a {
 
 .separate {
 	margin: 50px;
+}
+
+img.latex {
+	height: 14px;
+	vertical-align: middle;
+}
+
+.code {
+	font-family: Consolas, Helvetica, sans-serif;
+	padding: 0 50px;
+	text-align: left;
 }
 
 @media only screen and (max-width: 768px) {
