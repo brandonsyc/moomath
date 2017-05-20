@@ -37,6 +37,7 @@ p {
 
 a {
 	color: #08b;
+	font-size: 15px;
 	text-decoration: none;
 	transition: 0.5s;
 }
