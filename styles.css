@@ -34,6 +34,11 @@ p {
 a {
 	color: #08b;
 	text-decoration: none;
+	transition: 0.5s;
+}
+
+a:hover {
+	text-shadow: 2px 2px 10px #08b;
 }
 
 .topnav {
@@ -214,6 +219,25 @@ a {
 	margin: 50px;
 }
 
+.article {
+	margin: auto;
+	max-width: 1500px;
+}
+
+.figure {
+    text-align: center;
+    display: flex;
+}
+
+.figure figure {
+	margin: auto;
+}
+
+.figure img {
+	box-shadow: 2px 2px 10px #333;
+	width: 50%;
+}
+
 img.latex {
 	height: 14px;
 	vertical-align: middle;
@@ -254,5 +278,9 @@ img.latex {
 
 	.blurb p {
 		text-align: center;
+	}
+	
+	.figure img {
+		width: 75%;
 	}
 }
