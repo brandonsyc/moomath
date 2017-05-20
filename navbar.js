@@ -9,7 +9,7 @@ document.getElementsByClassName("topnav")[0].innerHTML =
 
 var linkz = document.getElementsByClassName("topnav")[0].children;
 for (var i = 0; i < linkz.length; i++) {
-	if (linkz[i].href === window.location.href) {
+	if (linkz[i].href === window.location.href || linkz[i].href === "https://nichodon.github.io/") {
 		linkz[i].classList.add('active');
 	}
 	alert(linkz[i].href + "\n" + window.location.href);
