@@ -1,5 +1,5 @@
 document.getElementsByClassName("topnav")[0].innerHTML =
-	'<a href=\"index.html\">Home</a>' +
+	'<a href=\"https://nichodon.github.io\">Home</a>' +
 	'<a href=\"fractals.html\">Fractals</a>' +
 	'<a href=\"coming_soon\">Programming</a>' +
 	'<a href=\"coming_soon\">Calculators</a>' +
@@ -9,7 +9,7 @@ document.getElementsByClassName("topnav")[0].innerHTML =
 
 var linkz = document.getElementsByClassName("topnav")[0].children;
 for (var i = 0; i < linkz.length; i++) {
-	if (linkz[i].href === window.location.href || linkz[i].href === "https://nichodon.github.io/") {
+	if (linkz[i].href === window.location.href) {
 		linkz[i].classList.add('active');
 	}
 }
