@@ -52,6 +52,7 @@ a:hover {
 	display: inline-block;
 	font-size: 15px;
 	padding: 15px;
+	text-shadow: none;
 	transition: 0.5s;
 }
 
