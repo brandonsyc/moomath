@@ -12,4 +12,5 @@ for (var i = 0; i < linkz.length; i++) {
 	if (linkz[i].href === window.location.href) {
 		linkz[i].classList.add('active');
 	}
+	alert(linkz[i].href + "\n" + window.location.href);
 }
