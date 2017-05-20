@@ -1,5 +1,5 @@
 document.getElementsByClassName("topnav")[0].innerHTML =
-	'<a href=\"../index.html\">Home</a>' +
+	'<a href=\"https://nichodon.github.io\">Home</a>' +
 	'<a href=\"../fractals.html\">Fractals</a>' +
 	'<a href=\"../coming_soon\">Programming</a>' +
 	'<a href=\"../coming_soon\">Calculators</a>' +
