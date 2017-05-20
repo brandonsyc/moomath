@@ -257,7 +257,7 @@ img.latex {
 }
 
 .code {
-	font-family: Consolas, Helvetica, sans-serif;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 	padding: 0 50px;
 	text-align: left;
 }
