@@ -15,7 +15,6 @@ document.getElementById("top").innerHTML =
 
 var linkz = document.getElementsByClassName("topnav")[0].children;
 for (var i = 0; i < linkz.length; i++) {
-<<<<<<< HEAD
     if (linkz[i].href === window.location.href.replace("#top", "")) {
         linkz[i].classList.add('active');
     } else if (linkz[i].className === "dropdown") {
@@ -23,9 +22,4 @@ for (var i = 0; i < linkz.length; i++) {
             linkz[i].children[0].classList.add('active');
         }
     }
-=======
-	if (linkz[i].href === window.location.href.replace("#top", "")) {
-		linkz[i].classList.add('active');
-	}
->>>>>>> fcbf173ff79467f5a63c3fe74ed2ce0bf22b880a
 }
