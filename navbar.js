@@ -10,7 +10,7 @@ document.getElementById("top").innerHTML =
 		'<a href=\"https://nichodon.github.io/coming_soon/\">Calculators</a>' +
 		'<a href=\"https://nichodon.github.io/coming_soon/\">More Math</a>' +
 		'<a href=\"https://nichodon.github.io/coming_soon/\">Worksheets</a>' +
-		'<a href=\"https://nichodon.github.io/about.html\">About</a>' +
+		'<a href=\"https://nichodon.github.io/about/\">About</a>' +
 	'</div>';
 
 var linkz = document.getElementsByClassName("topnav")[0].children;
