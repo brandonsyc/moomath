@@ -5,7 +5,7 @@ document.getElementById("top").innerHTML =
 
 	'<div class="topnav">' +
 		'<a href=\"https://nichodon.github.io\">Home</a>' +
-		'<a href=\"../fractals\">Fractals</a>' +
+		'<a href=\"../fractals/\">Fractals</a>' +
 		'<a href=\"../programming.html\">Programming</a>' +
 		'<a href=\"../coming_soon\">Calculators</a>' +
 		'<a href=\"../coming_soon\">More Math</a>' +
