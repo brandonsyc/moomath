@@ -198,6 +198,10 @@ a:hover {
 .article {
 	margin: auto;
 	max-width: 1500px;
+	padding: 5px;
+}
+.article p {
+	text-align: justify;
 }
 .figure {
 	text-align: center;
@@ -216,9 +220,8 @@ img.latex {
 }
 .code {
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	padding: 0 50px;
-	overflow: scroll;
-	overflow-y: hidden;
+	padding: 0 25px;
+	overflow: auto;
 	text-align: left;
     white-space: nowrap;
 }
