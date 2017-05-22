@@ -200,7 +200,7 @@ a:hover {
 	max-width: 1500px;
 	padding: 5px;
 }
-.article p {
+.article p:not(.figcaption p) {
 	text-align: justify;
 }
 .figure {
