@@ -222,8 +222,9 @@ img.latex {
 	text-align: center;
 }
 .code {
+	background-color: #eee;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	padding: 0 25px;
+	padding: 10px 25px;
 	overflow: auto;
 	text-align: left;
     white-space: nowrap;

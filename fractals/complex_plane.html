@@ -5,7 +5,7 @@
 <title>Fractals in the Complex Plane</title>
 <link rel="stylesheet" type="text/css" href="../styles.css">
 <link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </head>
 
 <body>
@@ -243,30 +243,30 @@
 	First, we define our constants. These are 1. the image's height and width, 2. the bounds on the real axis, 3. the bounds on the imaginary axis, 4. the number of iterations to execute, and 5. the "escape radius," or the magnitude of the complex number where it is treated as if it will go to infinity. For taking a picture of the Mandelbrot set, the following settings are suitable, but you may want to adjust them for greater accuracy. For example, if the fractal boundary is too smooth, increasing the iteration count might help. For most fractals, an escape radius of 2 is too small, so set it to some number like 50 for fractals besides the Mandelbrot set. Changing the real and imaginary boundaries allow us to look at different parts of a fractal, including creating zooms into fractals, which we will consider in another article.
 </p>
 
-<div class="content">
-	<div class="code">
-		const int w = 2048;                 // Width, in pixels, of the output image<br>
-		const int h = 2048;					// Height, in pixels, of the output image<br>
+<div class="code">
+	<code class="prettyprint">
+		const int w = 2048; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Width, in pixels, of the output image<br>
+		const int h = 2048; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Height, in pixels, of the output image<br>
 		<br>
-		const float re_min = -2.5;			// Real value of the left edge of the image<br>
-		const float re_max = 1.5;			// Real value of the right edge of the image<br>
-		const float im_min = -2;			// Imaginary value of the bottom edge of the image<br>
-		const float im_max = 2;				// Imaginary value of the top edge of the image<br>
+		const float re_min = -2.5;&nbsp; // Real value of the left edge of the image<br>
+		const float re_max = 1.5; &nbsp; // Real value of the right edge of the image<br>
+		const float im_min = -2; &nbsp;&nbsp; // Imaginary value of the bottom edge of the image<br>
+		const float im_max = 2; &nbsp;&nbsp;&nbsp; // Imaginary value of the top edge of the image<br>
 		<br>
-		const int iterations = 255;			// Number of iterations required to assume boundedness under iteration<br>
-		const int escaperadius = 2;			// Critical radius determining non-boundedness under iteration<br>
-	</div>
+		const int iterations = 255; // Number of iterations required to assume boundedness under iteration<br>
+		const int escaperadius = 2; // Critical radius determining non-boundedness under iteration<br>
+	</code>
 </div>
 
 <p>
 	Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
 </p>
 
-<div class="content">
-	<div class="code">
-		const float colordecrement = 250.0/iterations;			// Change in pixel darkness after each iteration<br>
+<div class="code">
+	<code class="prettyprint">
+		const float colordecrement = 250.0/iterations; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // Change in pixel darkness after each iteration<br>
 		const int radiussquared = escaperadius * escaperadius;<br>
-	</div>
+	</code>
 </div>
 
 <p>
