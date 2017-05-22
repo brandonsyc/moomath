@@ -200,7 +200,7 @@ a:hover {
 	max-width: 1500px;
 	padding: 5px;
 }
-.article p:not(.figcaption p) {
+.article p {
 	text-align: justify;
 }
 .figure {
@@ -217,6 +217,9 @@ a:hover {
 img.latex {
 	height: 14px;
 	vertical-align: middle;
+}
+.figcaption {
+	text-align: center;
 }
 .code {
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
