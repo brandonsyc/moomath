@@ -40,12 +40,12 @@ a:hover {
 	text-shadow: 2px 2px 10px #333;
 }
 .topnav {
-	background-color: #333;
+	background-color: #fff;
 	font-size: 0;
 	text-align: center;
 }
 .topnav a {
-	color: #fff;
+	color: #333;
 	display: inline-block;
 	font-size: 15px;
 	padding: 15px;
@@ -53,13 +53,13 @@ a:hover {
 	transition: 0.5s;
 }
 .topnav a:not(.active):hover {
-	background-color: #111;
+	background-color: #ddd;
 }
 .active {
-	background-color: #096;
+	background-color: #0a7;
 }
 .active:hover {
-	background-color: #064;
+	background-color: #096;
 }
 .parallax {
 	background-attachment: fixed;
@@ -152,7 +152,7 @@ a:hover {
 	clear: both;
 }
 .footer {
-	background-color: #333;
+	background-color: #ddd;
 	font-size: 15px;
 	padding: 10px;
 }
