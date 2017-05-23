@@ -67,18 +67,21 @@ hr {
 	color: #333;
 	display: inline-block;
 	font-size: 15px;
-	padding: 15px;
+	padding: 15px 15px 10px 15px;
 	text-shadow: none;
-	transition: 0.5s;
+	transition: 0.2s;
+}
+.topnav a:not(.active) {
+	border-bottom: 5px solid #fff;
 }
 .topnav a:not(.active):hover {
-	background-color: #ddd;
+	border-bottom: 5px solid #ddd;
 }
 .active {
-	background-color: #0a7;
+	border-bottom: 5px solid #0a7;
 }
 .active:hover {
-	background-color: #096;
+	border-bottom: 5px solid #096;
 }
 .parallax {
 	background-attachment: fixed;
