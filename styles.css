@@ -47,15 +47,15 @@ hr {
 }
 .header {
 	background-color: #ddd;
-	padding: 25px;
 }
 .header h1 {
 	color: #096;
 	font-size: 35px;
-	padding: 10px 0 0 0;
+	margin: 25px 0 -10px 0;
 	letter-spacing: 5px;
 }
 .header p {
+	margin: 20px;
 	letter-spacing: 2px;
 }
 .topnav {
