@@ -216,6 +216,10 @@ hr {
 	background-color: #fff;
 	padding: 20px;
 }
+.white {
+	background-color: #fff;
+	width: 100%;
+}
 .article {
 	background-color: #fff;
 	margin: auto;
