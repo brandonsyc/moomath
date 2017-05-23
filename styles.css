@@ -46,6 +46,7 @@ a:hover {
 .header h1 {
 	border-bottom: 2px solid #bbb;
 	color: #096;
+	font-size: 35px;
 	padding: 10px 0 25px 0;
 	letter-spacing: 5px;
 }
