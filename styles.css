@@ -75,13 +75,13 @@ hr {
 	border-bottom: 5px solid #fff;
 }
 .topnav a:not(.active):hover {
-	border-bottom: 5px solid #ddd;
+	border-bottom: 5px solid #bbb;
 }
 .active {
-	border-bottom: 5px solid #0a7;
+	border-bottom: 5px solid #096;
 }
 .active:hover {
-	border-bottom: 5px solid #096;
+	border-bottom: 5px solid #075;
 }
 .parallax {
 	background-attachment: fixed;
