@@ -132,6 +132,9 @@ a:hover {
 	box-shadow: none;
 	transition: 0.2s;
 }
+.layer button:focus {
+	outline: none;
+}
 .content {
 	align-content: center;
 	background-color: #eee;
