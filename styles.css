@@ -5,6 +5,7 @@ html {
 	height: 100%;
 }
 body {
+	background-color: #ddd;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	height: 100%;
 	margin: 0;
@@ -119,7 +120,7 @@ a:hover {
 }
 .layer button {
 	background-color: #08b;
-	border: 0;
+	border: none;
 	box-shadow: 2px 2px 10px #333;
 	color: #eee;
 	opacity: 0;
@@ -183,7 +184,7 @@ a:hover {
 .avatar {
 	border: 1px solid #ccc;
 	display: inline-block;
-	margin: 0 10px;
+	margin: 10px;
 	max-width: 250px;
 	min-width: 100px;
 	transition: 0.5s;
@@ -206,10 +207,10 @@ a:hover {
 }
 .separate {
 	background-color: #fff;
-	margin: 10px 0;
-	padding: 10px;
+	padding: 20px;
 }
 .article {
+	background-color: #fff;
 	margin: auto;
 	max-width: 1500px;
 	padding: 5px;
