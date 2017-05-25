@@ -41,12 +41,10 @@ window.onscroll = function() {
 	"use strict";
 	var navbar = document.getElementsByClassName("topnav")[0];
 	var sticky = document.getElementById('sticky');
-	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
-		sticky.style.visibility = 'visible';
-		sticky.style.opacity = 1;
+	if (window.scrollY > navbar.offsetTop) {
+		sticky.style.display = 'inline';
 	}
 	else {
-		sticky.style.visibility = 'hidden';
-		sticky.style.opacity = 0;
+		sticky.style.display = 'none';
 	}
 };
