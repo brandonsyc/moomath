@@ -135,10 +135,10 @@ hr {
 	transition: 0.5s;
 }
 .layer button {
-	background-color: rgba(0, 0, 0, 0.5);
-	border: 2px solid #08b;border-radius: 2px;
+	background-color: #08b;
+	border: none;
 	box-shadow: 2px 2px 10px #333;
-	color: #08b;
+	color: #fff;
 	opacity: 0;
 	transition: 0.5s;
 	padding: 15px;
@@ -148,8 +148,7 @@ hr {
 	transition: 0.2s;
 }
 .layer button:hover {
-	background-color: #08b;
-	border: 2px solid #08b;
+	background-color: #07a;
 	color: #fff;
 	opacity: 1;
 }
