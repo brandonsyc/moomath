@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>Fractals in the Complex Plane</title>
-<link rel="stylesheet" type="text/css" href="../styles.css">
-<link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script><script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 </head>
 
 <body>
@@ -17,6 +17,7 @@
 	<p>18 May, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a></p>
 </div>
 
+<div class="white">
 <div class="article">
 
 <p>
@@ -33,10 +34,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
-		<figcaption>
-			<p align="center">Figure 1: The Mandelbrot set.</p>
-		</figcaption>
+		<img src="images/mandelbrot.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
+		<figcaption>Figure 1: The Mandelbrot set.</figcaption>
 	</figure>
 </div>
 
@@ -50,7 +49,9 @@
 	First, let's consider the name. The Mandelbrot set is really just that: a <strong>set</strong>. That means it's effectively a list of points. When we color these points black and the rest of the points white, we get the figure from above. But how is this set determined?
 </p>
 
-<p> To understand the construction of the Mandelbrot set, we need to know about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a>. Complex numbers, of course, are an incredibly rich subject, and they have applications in physics, statistics, and much more. In essence, complex numbers are based off an "imaginary number" called <em>i</em>, defined so that </p>
+<p>
+	To understand the construction of the Mandelbrot set, we need to know about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a>. Complex numbers, of course, are an incredibly rich subject, and they have applications in physics, statistics, and much more. In essence, complex numbers are based off an "imaginary number" called <em>i</em>, defined so that \(i^2=-1\).
+</p>
 
 <p>
 	Like any other number, the conventional rules for arithmetic addition and subtraction work with <i>i</i>. For example, \(2i+2i=4i\) and \(5i-2i=3i\).
@@ -90,10 +91,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/complextable1.png" alt="Iterations after c=(0.2+0.5i)">
-		<figcaption>
-			<p>Figure 2: The numbers produced by iteration of \(f_c\).</p>
-		</figcaption>
+		<img src="images/complextable1.png" alt="Iterations after c=(0.2+0.5i)">
+		<figcaption>Figure 2: The numbers produced by iteration of \(f_c\).</figcaption>
 	</figure>
 </div>
 
@@ -105,10 +104,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot2.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
-		<figcaption>
-			<p>Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).</p>
-		</figcaption>
+		<img src="images/mandelbrot2.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
+		<figcaption>Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).</figcaption>
 	</figure>
 </div>
 
@@ -124,10 +121,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot3.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" >
-		<figcaption>
-			<p>Figure 4: The Mandelbrot set, box around mini-Brot.</p>
-		</figcaption>
+		<img src="images/mandelbrot3.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)" >
+		<figcaption>Figure 4: The Mandelbrot set, box around mini-Brot.</figcaption>
 	</figure>
 </div>
 
@@ -139,10 +134,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot4.png" alt="Mandelbrot Set">
-		<figcaption>
-			<p align="center">Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).</p>
-		</figcaption>
+		<img src="images/mandelbrot4.png" alt="Mandelbrot Set">
+		<figcaption>Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).</figcaption>
 	</figure>
 </div>
 
@@ -154,10 +147,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot5.png" alt="Mandelbrot Set">
-		<figcaption>
-			<p align="center">Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.</p>
-		</figcaption>
+		<img src="images/mandelbrot5.png" alt="Mandelbrot Set">
+		<figcaption>Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.</figcaption>
 	</figure>
 </div>
 
@@ -165,10 +156,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot6.png" alt="Mandelbrot Set">
-		<figcaption>
-			<p align="center">Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.</p>
-		</figcaption>
+		<img src="images/mandelbrot6.png" alt="Mandelbrot Set">
+		<figcaption>Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.</figcaption>
 	</figure>
 </div>
 
@@ -188,10 +177,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot7.png" alt="Mandelbrot Set">
-		<figcaption>
-			<p align="center">Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).</p>
-		</figcaption>
+		<img src="images/mandelbrot7.png" alt="Mandelbrot Set">
+		<figcaption>Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).</figcaption>
 	</figure>
 </div>
 
@@ -203,10 +190,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/mandelbrot8.png" alt="Mandelbrot Set">
-		<figcaption>
-			<p align="center">Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).</p>
-		</figcaption>
+		<img src="images/mandelbrot8.png" alt="Mandelbrot Set">
+		<figcaption>Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).</figcaption>
 	</figure>
 </div>
 
@@ -222,10 +207,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/fractal1.png" alt="Fractal">
-		<figcaption>
-			<p align="center">Figure 10: Fractal for \(f_c(z)=z^3+c\).</p>
-		</figcaption>
+		<img src="images/fractal1.png" alt="Fractal">
+		<figcaption>Figure 10: Fractal for \(f_c(z)=z^3+c\).</figcaption>
 	</figure>
 </div>
 
@@ -233,10 +216,8 @@
 
 <div class="figure">
 	<figure>
-		<img src="article1/fractal2.png" alt="Fractal">
-		<figcaption>
-			<p align="center">Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).</p>
-		</figcaption>
+		<img src="images/fractal2.png" alt="Fractal">
+		<figcaption>Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).</figcaption>
 	</figure>
 </div>
 
@@ -244,10 +225,8 @@
    
 <div class="figure">
 	<figure>
-		<img src="article1/fractal3.png" alt="Fractal">
-		<figcaption>
-			<p align="center">Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).</p>
-		</figcaption>
+		<img src="images/fractal3.png" alt="Fractal">
+		<figcaption>Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).</figcaption>
 	</figure>
 </div>
 
@@ -265,42 +244,43 @@
 	First, we define our constants. These are 1. the image's height and width, 2. the bounds on the real axis, 3. the bounds on the imaginary axis, 4. the number of iterations to execute, and 5. the "escape radius," or the magnitude of the complex number where it is treated as if it will go to infinity. For taking a picture of the Mandelbrot set, the following settings are suitable, but you may want to adjust them for greater accuracy. For example, if the fractal boundary is too smooth, increasing the iteration count might help. For most fractals, an escape radius of 2 is too small, so set it to some number like 50 for fractals besides the Mandelbrot set. Changing the real and imaginary boundaries allow us to look at different parts of a fractal, including creating zooms into fractals, which we will consider in another article.
 </p>
 
-<div class="content">
-	<div class="code">
-		const int w = 2048;                 // Width, in pixels, of the output image<br>
-		const int h = 2048;					// Height, in pixels, of the output image<br>
+<div class="code">
+	<code class="prettyprint">
+		const int w = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Width, in pixels, of the output image<br>
+		const int h = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Height, in pixels, of the output image<br>
 		<br>
-		const float re_min = -2.5;			// Real value of the left edge of the image<br>
-		const float re_max = 1.5;			// Real value of the right edge of the image<br>
-		const float im_min = -2;			// Imaginary value of the bottom edge of the image<br>
-		const float im_max = 2;				// Imaginary value of the top edge of the image<br>
+		const float re_min = -2.5;&nbsp; // Real value of the left edge of the image<br>
+		const float re_max = 1.5; &nbsp; // Real value of the right edge of the image<br>
+		const float im_min = -2; &nbsp;&nbsp; // Imaginary value of the bottom edge of the image<br>
+		const float im_max = 2; &nbsp; &nbsp; // Imaginary value of the top edge of the image<br>
 		<br>
-		const int iterations = 255;			// Number of iterations required to assume boundedness under iteration<br>
-		const int escaperadius = 2;			// Critical radius determining non-boundedness under iteration<br>
-	</div>
+		const int iterations = 255; // Number of iterations required to assume boundedness under iteration<br>
+		const int escaperadius = 2; // Critical radius determining non-boundedness under iteration<br>
+	</code>
 </div>
 
 <p>
 	Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
 </p>
 
-<div class="content">
-	<div class="code">
-		const float colordecrement = 250.0/iterations;			// Change in pixel darkness after each iteration<br>
+<div class="code">
+	<code class="prettyprint">
+		const float colordecrement = 250.0/iterations; &nbsp; &nbsp; &nbsp; &nbsp; // Change in pixel darkness after each iteration<br>
 		const int radiussquared = escaperadius * escaperadius;<br>
-	</div>
+	</code>
 </div>
 
 <p>
 	Hopefully this has been a good introduction to fractals in the complex plane!
 </p>
 
+<div class="separate"></div>
+</div>
 </div>
 
 <div class="footer"></div>
 
-<script src="../navbar.js"></script>
-<script src="../footer.js"></script>
+<script src="../../frame.js"></script>
 
 </body>
 </html>
