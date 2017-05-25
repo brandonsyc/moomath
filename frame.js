@@ -25,8 +25,11 @@ document.getElementById("top").innerHTML =
 		'<a href="https://nichodon.github.io/about/">About</a>' +
 	'</div>';
 
-document.getElementsByClassName("footer")[0].innerHTML =
-	"<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>";
+document.getElementById("bottom").innerHTML =
+	'<div class="footer">' +
+		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>' +
+	'</div>' +
+	'<div class="header"><br></div>';
 
 for (var j = 0; j < 2; j++) {
 	var linkz = document.getElementsByClassName("topnav")[j].children;

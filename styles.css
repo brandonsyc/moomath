@@ -193,6 +193,7 @@ hr {
 }
 .footer {
 	background-color: #ddd;
+	box-shadow: 2px 2px 10px #333;
 	font-size: 15px;
 	padding: 10px;
 }
