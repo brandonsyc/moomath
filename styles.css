@@ -77,6 +77,16 @@ hr {
 .topnav a:not(.active):hover {
 	border-bottom: 5px solid #bbb;
 }
+#sticky {
+	box-shadow: 2px 2px 20px #333;
+	top: 0;
+	transition: 0.2s;
+	opacity: 0;
+	position: fixed;
+	width: 100%;
+	visibility: hidden;
+	z-index: 1;
+}
 .active {
 	border-bottom: 5px solid #096;
 }
@@ -266,6 +276,9 @@ img.latex {
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
 		display: block;
+	}
+	#sticky {
+		display: none;
 	}
 	.fourth {
 		margin: 5px 0;
