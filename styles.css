@@ -77,10 +77,10 @@ hr {
 .topnav a:not(.active):hover {
 	border-bottom: 5px solid #bbb;
 }
-.sticky {
+#sticky {
 	box-shadow: 2px 2px 20px #333;
 	top: 0;
-	transition: 0.5s;
+	transition: 0.2s;
 	position: fixed;
 	width: 100%;
 	z-index: 1;
