@@ -50,7 +50,7 @@ window.onscroll = function() {
 		sticky.style.display = 'none';
 	}
 	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
-		sticky.style.boxShadow = "2px 2px 10px #333";
+		sticky.style.boxShadow = "0px 0px 10px #333";
 	}
 	else {
 		sticky.style.boxShadow = "none";

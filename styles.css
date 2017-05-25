@@ -137,7 +137,7 @@ hr {
 .layer button {
 	background-color: #08b;
 	border: none;
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	color: #fff;
 	opacity: 0;
 	transition: 0.5s;
@@ -178,7 +178,7 @@ hr {
 	width: 90%;
 }
 .fourth img:hover {
-	box-shadow: 5px 5px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	margin: auto;
 }
 .fourth h3 {
@@ -253,7 +253,7 @@ hr {
 	margin: auto;
 }
 .figure img {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	width: 50%;
 }
 img.latex {
