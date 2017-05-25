@@ -28,8 +28,7 @@ document.getElementById("top").innerHTML =
 document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
 		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>' +
-	'</div>' +
-	'<div class="header"><br></div>';
+	'</div>';
 
 for (var j = 0; j < 2; j++) {
 	var linkz = document.getElementsByClassName("topnav")[j].children;
@@ -49,5 +48,11 @@ window.onscroll = function() {
 	}
 	else {
 		sticky.style.display = 'none';
+	}
+	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
+		sticky.style.boxShadow = "2px 2px 10px #333";
+	}
+	else {
+		sticky.style.boxShadow = "none";
 	}
 };
