@@ -275,6 +275,9 @@ img.latex {
 	.topnav {} .topnav a {
 		display: block;
 	}
+	#sticky {
+		display: none;
+	}
 	.fourth {
 		margin: 5px 0;
 		width: 50%;
