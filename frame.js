@@ -23,3 +23,15 @@ for (var i = 0; i < linkz.length; i++) {
 		linkz[i].classList.add('active');
 	}
 }
+
+window.onscroll = function() {
+	"use strict";
+	var top = document.getElementById("top");
+	var navbar = document.getElementsByClassName("topnav")[0];
+	if (window.scrollY > (top.offsetTop + top.offsetHeight)) {
+		navbar.classList.add('sticky');
+	}
+	else {
+		navbar.classList.remove('sticky');
+	}
+};
