@@ -299,9 +299,25 @@ img.latex {
 }
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
+		border: none;
 		display: block;
+		padding: 15px;
 	}
-	#sticky {
+	.topnav a:not(.active) {
+		border: none;
+	}
+	.topnav a:not(.active):hover {
+		background-color: #ddd;
+		border: none;
+	}
+	.active {
+		background-color: #096;
+	}
+	.active:hover {
+		background-color: #085;
+		border: none;
+	}
+	#sticky a {
 		display: none;
 	}
 	.fourth {
