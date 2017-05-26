@@ -25,8 +25,10 @@ document.getElementById("top").innerHTML =
 		'<a href="https://nichodon.github.io/about/">About</a>' +
 	'</div>';
 
-document.getElementsByClassName("footer")[0].innerHTML =
-	"<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>";
+document.getElementById("bottom").innerHTML =
+	'<div class="footer">' +
+		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>' +
+	'</div>';
 
 for (var j = 0; j < 2; j++) {
 	var linkz = document.getElementsByClassName("topnav")[j].children;
@@ -41,12 +43,16 @@ window.onscroll = function() {
 	"use strict";
 	var navbar = document.getElementsByClassName("topnav")[0];
 	var sticky = document.getElementById('sticky');
-	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
-		sticky.style.visibility = 'visible';
-		sticky.style.opacity = 1;
+	if (window.scrollY > navbar.offsetTop) {
+		sticky.style.display = 'inline';
 	}
 	else {
-		sticky.style.visibility = 'hidden';
-		sticky.style.opacity = 0;
+		sticky.style.display = 'none';
+	}
+	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
+		sticky.style.boxShadow = "0px 0px 10px #333";
+	}
+	else {
+		sticky.style.boxShadow = "none";
 	}
 };

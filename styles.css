@@ -45,6 +45,31 @@ hr {
 	border-style: solid;
 	margin: 20px;
 }
+ul {
+	background-color: #eee;
+	list-style: none;
+	margin: auto;
+	padding: 0;
+	width: 90%;
+}
+li {
+	border: 1px solid #bbb;
+	padding: 10px;
+	margin: -1px 0 0 0;
+	text-align: left;
+	transition: 0.2s;
+}
+li:hover {
+	background-color: #ddd;
+}
+li a {
+	color: #333;
+}
+input {
+	display: inline-block;
+	padding: 10px;
+	width: 90%;
+}
 .header {
 	background-color: #ddd;
 }
@@ -61,6 +86,7 @@ hr {
 .topnav {
 	background-color: #fff;
 	font-size: 0;
+  	position: relative;
 	text-align: center;
 }
 .topnav a {
@@ -78,13 +104,11 @@ hr {
 	border-bottom: 5px solid #bbb;
 }
 #sticky {
-	box-shadow: 2px 2px 20px #333;
+	display: none;
 	top: 0;
 	transition: 0.2s;
-	opacity: 0;
 	position: fixed;
 	width: 100%;
-	visibility: hidden;
 	z-index: 1;
 }
 .active {
@@ -136,10 +160,10 @@ hr {
 	transition: 0.5s;
 }
 .layer button {
-	background-color: rgba(0, 0, 0, 0.5);
-	border: 2px solid #08b;border-radius: 2px;
-	box-shadow: 2px 2px 10px #333;
-	color: #08b;
+	background-color: #08b;
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	color: #fff;
 	opacity: 0;
 	transition: 0.5s;
 	padding: 15px;
@@ -149,8 +173,7 @@ hr {
 	transition: 0.2s;
 }
 .layer button:hover {
-	background-color: #08b;
-	border: 2px solid #08b;
+	background-color: #07a;
 	color: #fff;
 	opacity: 1;
 }
@@ -180,7 +203,7 @@ hr {
 	width: 90%;
 }
 .fourth img:hover {
-	box-shadow: 5px 5px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	margin: auto;
 }
 .fourth h3 {
@@ -216,7 +239,7 @@ hr {
 	width: 25%;
 }
 .avatar:hover {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 }
 .blurb {
 	display: inline-block;
@@ -239,6 +262,7 @@ hr {
 	width: 100%;
 }
 .article {
+	text-align: center;
 	background-color: #fff;
 	margin: auto;
 	max-width: 1500px;
@@ -255,7 +279,7 @@ hr {
 	margin: auto;
 }
 .figure img {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	width: 50%;
 }
 img.latex {
@@ -275,9 +299,25 @@ img.latex {
 }
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
+		border: none;
 		display: block;
+		padding: 15px;
 	}
-	#sticky {
+	.topnav a:not(.active) {
+		border: none;
+	}
+	.topnav a:not(.active):hover {
+		background-color: #ddd;
+		border: none;
+	}
+	.active {
+		background-color: #096;
+	}
+	.active:hover {
+		background-color: #085;
+		border: none;
+	}
+	#sticky a {
 		display: none;
 	}
 	.fourth {
