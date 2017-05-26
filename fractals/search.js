@@ -12,9 +12,13 @@ rawFile.onreadystatechange = function ()
 			var allText = rawFile.responseText;
 			var array = allText.split("\n");
 			var ul = document.getElementsByClassName("list")[0];
-			for (var i = 0; i < array.length; i++) {
+			for (var i = array.length - 1; i > -1; i--) {
 				var li = document.createElement("li");
-				li.appendChild(document.createTextNode(array[i]));
+				var a = document.createElement('a');
+				a.appendChild(document.createTextNode(array[i]));
+				a.title = array[i];
+				a.href = ('000' + (i + 1)).slice(-4) + "/";
+				li.appendChild(a);
 				ul.appendChild(li);
 			}
 		}
