@@ -45,6 +45,28 @@ hr {
 	border-style: solid;
 	margin: 20px;
 }
+ul {
+	background-color: #eee;
+	list-style: none;
+	margin: auto;
+	padding: 0;
+	width: 90%;
+}
+li {
+	border: 1px solid #bbb;
+	padding: 10px;
+	margin: -1px 0 0 0;
+	text-align: left;
+	transition: 0.2s;
+}
+li:hover {
+	background-color: #ddd;
+}
+input {
+	display: inline-block;
+	padding: 10px;
+	width: 90%;
+}
 .header {
 	background-color: #ddd;
 }
@@ -214,7 +236,7 @@ hr {
 	width: 25%;
 }
 .avatar:hover {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 }
 .blurb {
 	display: inline-block;
@@ -237,6 +259,7 @@ hr {
 	width: 100%;
 }
 .article {
+	text-align: center;
 	background-color: #fff;
 	margin: auto;
 	max-width: 1500px;
