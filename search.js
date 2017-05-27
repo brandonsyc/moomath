@@ -17,7 +17,6 @@ rawFile.onreadystatechange = function ()
 				var a = document.createElement('a');
 				a.appendChild(document.createTextNode(array[i].replace('-', '\u2013')));
 				a.href = 'https://nichodon.github.io/' + path + '/' + ('000' + (i + 1)).slice(-4) + '/';
-				alert(a.href);
 				li.appendChild(a);
 				ul.appendChild(li);
 			}
