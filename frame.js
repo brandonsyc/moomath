@@ -34,7 +34,7 @@ for (var j = 0; j < 2; j++) {
 	var linkz = document.getElementsByClassName("topnav")[j].children;
 	for (var i = 0; i < linkz.length; i++) {
 		if (linkz[i].href === window.location.href.replace("#top", "")) {
-			linkz[i].classList.add('active');
+			linkz[i].classList.add("active");
 		}
 	}
 }
@@ -42,12 +42,12 @@ for (var j = 0; j < 2; j++) {
 window.onscroll = function() {
 	"use strict";
 	var navbar = document.getElementsByClassName("topnav")[0];
-	var sticky = document.getElementById('sticky');
+	var sticky = document.getElementById("sticky");
 	if (window.scrollY > navbar.offsetTop) {
-		sticky.style.display = 'inline';
+		sticky.style.display = "inline";
 	}
 	else {
-		sticky.style.display = 'none';
+		sticky.style.display = "none";
 	}
 	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
 		sticky.style.boxShadow = "0px 0px 10px #333";

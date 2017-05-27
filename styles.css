@@ -10,6 +10,7 @@ body {
 	height: 100%;
 	margin: 0;
 }
+/* Defaults */
 h1,
 h2,
 p,
@@ -70,6 +71,27 @@ input {
 	padding: 10px;
 	width: 90%;
 }
+button {
+	background-color: #08b;
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	color: #fff;
+	transition: 0.5s;
+	padding: 15px;
+}
+button:active {
+	box-shadow: none;
+	transition: 0.2s;
+}
+button:hover {
+	background-color: #07a;
+	color: #fff;
+	opacity: 1;
+}
+button:focus {
+	outline: none;
+}
+/* Frame */
 .header {
 	background-color: #ddd;
 }
@@ -117,6 +139,22 @@ input {
 .active:hover {
 	border-bottom: 5px solid #075;
 }
+.footer {
+	background-color: #ddd;
+	font-size: 15px;
+	padding: 10px;
+}
+.footer p {
+	color: #888;
+}
+.footer a {
+	color: inherit;
+	transition: 0.5s;
+}
+.footer a:hover {
+	text-shadow: 2px 2px 10px #08b;
+}
+/* Front page */
 .parallax {
 	background-attachment: fixed;
 	background-position: center;
@@ -160,26 +198,9 @@ input {
 	transition: 0.5s;
 }
 .layer button {
-	background-color: #08b;
-	border: none;
-	box-shadow: 0px 0px 10px #333;
-	color: #fff;
 	opacity: 0;
-	transition: 0.5s;
-	padding: 15px;
 }
-.layer button:active {
-	box-shadow: none;
-	transition: 0.2s;
-}
-.layer button:hover {
-	background-color: #07a;
-	color: #fff;
-	opacity: 1;
-}
-.layer button:focus {
-	outline: none;
-}
+/* Elements */
 .content {
 	align-content: center;
 	background-color: #eee;
@@ -214,21 +235,6 @@ input {
 .clear {
 	clear: both;
 }
-.footer {
-	background-color: #ddd;
-	font-size: 15px;
-	padding: 10px;
-}
-.footer p {
-	color: #888;
-}
-.footer a {
-	color: inherit;
-	transition: 0.5s;
-}
-.footer a:hover {
-	text-shadow: 2px 2px 10px #08b;
-}
 .avatar {
 	border: 1px solid #ccc;
 	display: inline-block;
@@ -257,6 +263,7 @@ input {
 	background-color: #fff;
 	padding: 20px;
 }
+/* Article */
 .white {
 	background-color: #fff;
 	width: 100%;
