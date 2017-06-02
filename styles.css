@@ -289,6 +289,14 @@ button:focus {
 	box-shadow: 0px 0px 10px #333;
 	width: 50%;
 }
+.video iframe {
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	left: 25%;
+}
 img.latex {
 	height: 14px;
 	vertical-align: middle;
@@ -303,6 +311,12 @@ img.latex {
 	overflow: auto;
 	text-align: left;
     white-space: nowrap;
+}
+.video {
+	margin-bottom: -28.25%;
+	position: relative;
+	padding-bottom: 56.25%; /* 16:9 */
+	height: 0;
 }
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
@@ -346,6 +360,9 @@ img.latex {
 		text-align: center;
 	}
 	.figure img {
+		width: 75%;
+	}
+	.figure iframe {
 		width: 75%;
 	}
 }
