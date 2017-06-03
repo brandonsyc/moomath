@@ -19,6 +19,7 @@ h3 {
 	text-align: center;
 	padding: 10px;
 	margin: 0px;
+	overflow-x: scroll;
 }
 h1 {
 	font-size: 30px;
@@ -307,8 +308,8 @@ img.latex {
 .code {
 	background-color: #eee;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	padding: 10px 25px;
 	overflow: auto;
+	padding: 10px 25px;
 	text-align: left;
     white-space: nowrap;
 }
