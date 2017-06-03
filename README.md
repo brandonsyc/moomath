@@ -1,7 +1,1 @@
-# nichodon.github.io
-A website for Visual Math
-
-this is a test
-
-# nichodon.github.io
-A website for Visual Math
+For some odd reason, you have navigated to VM's Github repository. Good job.
