@@ -13,8 +13,8 @@ body {
 /* Defaults */
 h1,
 h2,
-p,
-h3 {
+h3,
+p {
 	color: #333;
 	text-align: center;
 	padding: 10px;
@@ -291,14 +291,6 @@ button:focus {
 	box-shadow: 0px 0px 10px #333;
 	width: 50%;
 }
-.video iframe {
-	border: none;
-	box-shadow: 0px 0px 10px #333;
-	position: absolute;
-	width: 50%;
-	height: 50%;
-	left: 25%;
-}
 img.latex {
 	height: 14px;
 	vertical-align: middle;
@@ -317,8 +309,16 @@ img.latex {
 .video {
 	margin-bottom: -28.25%;
 	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
+	padding-bottom: 56.25%;
 	height: 0;
+}
+.video iframe {
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	left: 25%;
 }
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
@@ -364,7 +364,12 @@ img.latex {
 	.figure img {
 		width: 75%;
 	}
-	.figure iframe {
+	.video {
+		margin-bottom: -14.125%;
+	}
+	.video iframe {
+		height: 75%;
+		left: 12.5%;
 		width: 75%;
 	}
 }
