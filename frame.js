@@ -34,7 +34,16 @@ document.getElementById("bottom").innerHTML =
 for (var j = 0; j < 2; j++) {
 	var linkz = document.getElementsByClassName("topnav")[j].children;
 	for (var i = 0; i < linkz.length; i++) {
-		if (linkz[i].href === window.location.href.replace("#top", "")) {
+		if (linkz[i].href === undefined) {
+			var links = linkz[i].children;
+			for (var k = 0; k < links.length; k++)
+			{
+				if (links[k].href === window.location.href.replace("#top", "")) {
+					links[k].classList.add("active");
+				}
+			}
+		}
+		else if (linkz[i].href === window.location.href.replace("#top", "")) {
 			linkz[i].classList.add("active");
 		}
 	}
