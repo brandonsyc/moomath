@@ -1,4 +1,3 @@
-// JavaScript Document
 var path;
 var rawFile = new XMLHttpRequest();
 rawFile.open("GET", "https://nichodon.github.io/" + path + "/search/list.txt", false);
