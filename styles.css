@@ -67,6 +67,11 @@ li:hover {
 li a {
 	color: #333;
 }
+th,
+td {
+	border-bottom: 1px solid #ddd;
+	padding: 5px;
+}
 input {
 	border-radius: 0px;
 	display: inline-block;
