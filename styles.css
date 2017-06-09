@@ -135,6 +135,16 @@ button:focus {
 .topnav a:not(.active):hover {
 	border-bottom: 5px solid #bbb;
 }
+.topnav div {
+	overflow: hidden;
+	transition: 0.5s;
+}
+a.icon {
+	display: none;
+}
+.responsive div {
+	overflow: hidden;
+}
 #sticky {
 	display: none;
 	top: 0;
@@ -333,6 +343,7 @@ img.latex {
 		border: none;
 		display: block;
 		padding: 15px;
+		transition: 1s;
 	}
 	.topnav a:not(.active) {
 		border: none;
@@ -340,6 +351,12 @@ img.latex {
 	.topnav a:not(.active):hover {
 		background-color: #ddd;
 		border: none;
+	}
+	.topnav div {
+		max-height: 0;
+	}
+	.responsive div {
+		max-height: 350px;
 	}
 	.active {
 		background-color: #096;

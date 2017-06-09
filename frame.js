@@ -5,13 +5,14 @@ document.getElementById("top").innerHTML =
 	'</div>' +
 
 	'<div class="topnav">' +
-		'<a href="https://nichodon.github.io">Home</a>' +
+		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
+		'<div><a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 		'<a href="https://nichodon.github.io/programming/">Programming</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Calculators</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a>' +
+		'<a href="https://nichodon.github.io/about/">About</a></div>' +
 	'</div>' +
 
 
@@ -56,3 +57,13 @@ window.onscroll = function() {
 		sticky.style.boxShadow = "none";
 	}
 };
+
+function show() {
+	var x = document.getElementsByClassName("topnav")[0];
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    }
+    else {
+        x.className = "topnav";
+    }
+}
