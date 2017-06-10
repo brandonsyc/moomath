@@ -4,10 +4,8 @@ If you are not [me](https://github.com/Nichodon), [this guy](https://github.com/
 
 Topic | Remarks
 --- | ---
-More articles | * Other than fractals<br>* Experiment in programs
-
-* Make more minimalistic (whitespace, less color differences)
-* Mobile navbar (partially done)
-* Folders for JS / CSS?
-* JS pagination (have thumnail.png in folders)
+More articles | <ul><li>Other than fractals</li><li>Experiment in programs</li></ul>
+Theme | <ul><li>Minimalistic</li><li>More white space</li><li>Less colors</li></ul>
+Organization | <ul><li>Folders for JS / CSS?</li></ul>
+JS Pagination | <ul><li>Have a thumbnail.png</li><li>List title, date, and author</li></ul>
 
