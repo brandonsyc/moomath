@@ -340,30 +340,35 @@ img.latex {
 }
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
-		border: none;
+		border-bottom: none;
 		display: block;
 		padding: 15px;
 		transition: 1s;
 	}
 	.topnav a:not(.active) {
-		border: none;
+		border-bottom: none;
+		border-left: 5px solid #fff;
+		border-right: 5px solid #fff;
 	}
 	.topnav a:not(.active):hover {
-		background-color: #ddd;
-		border: none;
+		border-bottom: none;
+		border-left: 5px solid #bbb;
+		border-right: 5px solid #bbb;
 	}
 	.topnav div {
 		max-height: 0;
 	}
 	.responsive div {
-		max-height: 350px;
+		max-height: 550px;
 	}
 	.active {
-		background-color: #096;
+		border-left: 5px solid #096;
+		border-right: 5px solid #096;
 	}
 	.active:hover {
-		background-color: #085;
-		border: none;
+		border-bottom: none;
+		border-left: 5px solid #075;
+		border-right: 5px solid #075;
 	}
 	#sticky a {
 		display: none;
