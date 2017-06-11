@@ -15,7 +15,7 @@ rawFile.onreadystatechange = function ()
 				var li = document.createElement("li");
 				var a = document.createElement("a");
 				a.appendChild(document.createTextNode(array[i]));
-				alert(array[i].replace("\u2013", "\u2013");
+				alert(array[i].replace("\u2013", "\u2013"));
 				a.href = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/";
 				li.appendChild(a);
 				ul.appendChild(li);
