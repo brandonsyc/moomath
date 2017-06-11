@@ -1,6 +1,6 @@
 var path;
 var rawFile = new XMLHttpRequest();
-rawFile.open("GET", "https://nichodon.github.io/" + path + "/search/list.txt", false);
+rawFile.open("GET", "https://nichodon.github.io/" + path + "/search/list.html", false);
 rawFile.onreadystatechange = function ()
 {
 	"use strict";
