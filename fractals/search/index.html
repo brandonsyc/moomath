@@ -17,7 +17,7 @@
 
 <div class="white">
 <div class="article">
-	<input type="text" class="input" onkeyup="myFunction()" placeholder="Input title or date" autofocus>
+	<input type="text" class="input" onkeyup="search()" placeholder="Input title or date" autofocus>
 	<ul class="list"></ul>
 </div>
 </div>
@@ -29,8 +29,7 @@
 <script src="../../search.js"></script>
 	
 <script>
-	
-function myFunction() {
+function search() {
     var input, filter, ul, li, a, i;
     input = document.getElementsByClassName('input')[0];
     filter = input.value.toUpperCase();
