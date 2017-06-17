@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* CSS Document */
+input {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	margin: 10px 0;
+	padding: 10px;
+	transition: 0.5s;
+	width: 100%;
+}
+input:hover {
+	background-color: #eee;
+}
+.box {
+	text-align: center;
+}
+.side {
+	display: inline-block;
+	width: 40%;
+}
+.switch {
+	display: inline-block;
+	width: 10%;
+}
