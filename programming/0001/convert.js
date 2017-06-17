@@ -21,6 +21,9 @@ function search(x)
 	}
 	if (number !== -1) {
 		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1);
+		var input = document.getElementsByClassName("search")[2];
+		var output = document.getElementsByClassName("search")[3];
+		output.value = input.value;
 	}
 	else {
 		unit.innerHTML = "Input";
