@@ -28,7 +28,7 @@ document.getElementById("top").innerHTML =
 
 document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
-		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Go to Top</a></p>' +
+		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Top</a></p>' +
 	'</div>';
 
 for (var j = 0; j < 2; j++) {

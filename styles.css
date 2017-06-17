@@ -17,9 +17,11 @@ h3,
 p {
 	color: #333;
 	text-align: center;
+	letter-spacing: 1px;
+	line-height: 25px;
 	padding: 10px;
 	margin: 0px;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 h1 {
 	font-size: 30px;
@@ -387,9 +389,6 @@ img.latex {
 		width: 100%;
 	}
 	.blurb h1 {
-		text-align: center;
-	}
-	.blurb p {
 		text-align: center;
 	}
 	.figure img {
