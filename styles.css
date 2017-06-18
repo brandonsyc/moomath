@@ -113,6 +113,7 @@ button:focus {
 	font-size: 35px;
 	margin: 25px 0 -10px 0;
 	letter-spacing: 5px;
+	overflow: visible;
 }
 .header p {
 	margin: 20px;
