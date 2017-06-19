@@ -16,10 +16,26 @@ input {
 	font-size: 15px;
 	margin: 5px 0;
 	padding: 10px;
-	transition: 0.5s;
+	transition: 0.2s;
 	width: 100%;
 }
 input:hover {
+	border: 1px solid #bbb;
+}
+button {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	font-size: 16px;
+	height: 100%;
+	margin: 5px 0;
+	padding: 10px;
+	transition: 0.2s;
+	width: 100%;
+}
+button:hover {
+	background-color: #eee;
+}
+.disabled {
 	background-color: #eee;
 }
 .box {
@@ -32,4 +48,5 @@ input:hover {
 .switch {
 	display: inline-block;
 	width: 10%;
+	vertical-align: top;
 }
