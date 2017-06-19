@@ -3,14 +3,28 @@
 <head>
 <meta charset="utf-8">
 <title>Converter</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
 <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
+
+<div id="top"></div>
+
+<div class="content">
+	<h1>Unit Converter</h1>
+	<p>17 June, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a> &amp; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+</div>
+
+<div class="white">
+<div class="article">
+
 <script src="convert.js"></script>
 <div class="box">
-	<h1>Convert suf</h1>
-  <div class="side">
+	<p>This unit converter is exact in every calculation and has a vast collection of different units in mass (and soon more).</p>
+	<p>The converter will recognize the unit name or unit symbol.</p>
+	<div class="side">
 		<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search">
 		<p class="unit">Input</p>
 		<input placeholder="Number of units" class="search" onKeyUp="check()">
@@ -24,5 +38,14 @@
 		<input readonly class="search disabled">
 	</div>
 </div>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+
 </body>
 </html>
