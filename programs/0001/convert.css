@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
-input {
+input:not(.radio) {
 	background-color: #fff;
 	border: 1px solid #ddd;
 	box-sizing: border-box;
@@ -13,6 +13,17 @@ input {
 }
 input:hover {
 	border: 1px solid #bbb;
+}
+input[type=radio] {
+	width: 0;
+}
+input[type=radio]:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	padding: 10px;
+	transition: 0.2s;
 }
 button {
 	background-color: #fff;
@@ -34,7 +45,7 @@ button:active {
 	box-shadow: inset 0px 0px 5px #bbb;
 }
 .disabled {
-	background-color: #eee;
+	background-color: #f00;
 }
 .box {
 	margin: auto;
