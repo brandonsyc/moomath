@@ -1,7 +1,6 @@
 @charset "utf-8";
 /* CSS Document */
 input:not(.radio) {
-	background-color: #fff;
 	border: 1px solid #ddd;
 	box-sizing: border-box;
 	font-size: 15px;
@@ -45,7 +44,7 @@ button:active {
 	box-shadow: inset 0px 0px 5px #bbb;
 }
 .disabled {
-	background-color: #f00;
+	background-color: #eee;
 }
 .box {
 	margin: auto;
