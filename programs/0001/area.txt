@@ -1,16 +1,16 @@
-square kilometre,square kilometres,km\00b2
-square hectometre,square hectometres,hm\00b2,hectare,hectares,ha
-square decametre,square decametres,dam\00b2
-square metre,square metres,m\00b2
-square decimetre,square decimetres,dm\00b2
-square centimetre,square centimetres,cm\00b2
-square millimetre,square millimetres,mm\00b2
+square kilometre,square kilometres,km&sup2;,km2
+square hectometre,square hectometres,hm&sup2;,hm2,hectare,hectares,ha
+square decametre,square decametres,dam&sup2;,dam2
+square metre,square metres,m&sup2;,m2
+square decimetre,square decimetres,dm&sup2;,dm2
+square centimetre,square centimetres,cm&sup2;,cm2
+square millimetre,square millimetres,mm&sup2;,mm2
 square mile,square miles,sqmi
 acre,acres,acre
 square yard,square yards,sqyd
-square foot,square feet,sqft,ft\00b2,sqfoot,foot\00b2
+square foot,square feet,sqft,ft&sup2;,sqfoot,foot&sup2;
 square inch,square inches,sqin
-square nautical mile,square nautical miles,sqnmi,nmi\00b2
+square nautical mile,square nautical miles,sqnmi,nmi&sup2;
 dunam,dunams,dunam,metric dunam,cypriot dunam,iraqi dunam,old dunam
 tsubo,tsubos,tsubo,pyeong,pyeongs
 cuerda,cuerdas,cda
