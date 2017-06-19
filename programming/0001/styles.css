@@ -35,6 +35,9 @@ button {
 button:hover {
 	background-color: #eee;
 }
+button:active {
+	box-shadow: inset 0px 0px 5px #bbb;
+}
 .disabled {
 	background-color: #eee;
 }

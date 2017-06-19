@@ -38,4 +38,16 @@ function check()
 	if (numbers[0] > -1 && numbers[1] > -1 && input.value !== "") {
 		output.value = input.value * values[numbers[0]] / values[numbers[1]];
 	}
+	else {
+		output.value = "";
+	}
+}
+
+function change()
+{
+	"use strict";
+	var inputs = document.getElementsByClassName("search");
+	inputs[0].value = [inputs[2].value, inputs[2].value = inputs[0].value][0];
+	search(0);
+	search(2);
 }
