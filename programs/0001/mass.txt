@@ -1,0 +1,40 @@
+kilogram,kilograms,kg
+gram,grams,g
+milligram,milligrams,mg
+microgram,micrograms,\u03bcg,ug,mcg
+tonne,tonnes,t
+long ton,long tons,LT
+short ton,short tons,ST
+long hundredweight,long hundredweights,long cwt
+short hundredweight,short hundredweights,short cwt
+long quarter,long quarters,long qtr
+short quarter,short quarters,short qtr
+stone,stones,st
+pound,pounds,lb
+ounce,ounces,oz
+drachm,drachms,drachm,dram
+grain,grains,gr
+troy pound,troy pounds,troy pound
+troy ounce,troy ounces,ozt
+pennyweight,pennyweights,dwt
+carat,carats,carat
+:
+0.00
+0.00000
+0.00000000
+100
+1016.046908
+907.1847
+50.8023454
+45.35923
+12.7005863
+11.3398092
+6.3502931
+0.4535923
+0.0283495231
+0.0017718451
+0.0000647989
+0.373241721
+0.031103476
+0.0015551738
+0.0002

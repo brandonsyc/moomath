@@ -1,58 +1,39 @@
 // JavaScript Document
-var units = [["kilogram", "kilograms", "kg"], 
-			 ["gram", "grams", "g"], 
-			 ["milligram", "milligrams", "mg"],
-			 ["microgram", "micrograms", "\u03bcg", "ug", "mcg"],
-			 ["tonne", "tonnes", "t"],
-			 ["long ton", "long tons", "LT"],
-			 ["short ton", "short tons", "ST"],
-			 ["long hundredweight", "long hundredweights", "long cwt"],
-			 ["short hundredweight", "short hundredweights", "short cwt"],
-			 ["long quarter", "long quarters", "long qtr"],
-			 ["short quarter", "short quarters", "short qtr"],
-			 ["stone", "stones", "st"],
-			 ["pound", "pounds", "lb"],
-			 ["ounce", "ounces", "oz"],
-			 ["drachm", "drachms", "drachm", "dram"],
-			 ["grain", "grains", "gr"],
-			 ["troy pound", "troy pounds", "troy pound"],
-			 ["troy ounce", "troy ounces", "ozt"],
-			 ["pennyweight", "pennyweights", "dwt"],
-			 ["carat", "carats", "carat"]
-			];
-var values = [1, 
-			  0.001, 
-			  0.000001,
-			  0.000000001,
-			  1000,
-			  1016.0469088,
-			  907.18474,
-			  50.80234544,
-			  45.359237,
-			  12.70058636,
-			  11.33980925,
-			  6.35029318,
-			  0.45359237,
-			  0.02834952312,
-			  0.00177184519,
-			  0.00006479891,
-			  0.3732417216,
-			  0.0311034768,
-			  0.00155517384,
-			  0.0002
-			 ];
 var numbers = [-1, -1];
+var units = [];
+var values = [];
 
 function search(x)
 {
 	"use strict";
+	var type = document.querySelector('input[name = "type"]:checked').value;
+	var rawFile = new XMLHttpRequest();
+	rawFile.open("GET", type + ".txt", false);
+	rawFile.onreadystatechange = function ()
+	{
+		if(rawFile.readyState === 4)
+		{
+			if(rawFile.status === 200 || rawFile.status === 0)
+			{
+				var allText = rawFile.responseText;
+				var array = allText.split(":");
+				array[0] = array[0].split("\n");
+				values = array[1].split("\n");
+				for (var i = 0; i < array[0].length; i++) {
+					units.push(array[0][i].split(","));
+				}
+			}
+		}
+	};
+	rawFile.send(null);
+	
 	var search = document.getElementsByClassName("search")[x];
 	var unit = document.getElementsByClassName("unit")[x / 2];
 	var number = -1;
 	for (var i = 0; i < units.length; i++) {
 		var current = units[i];
 		for (var j = 0; j < current.length; j++) {
-			if (search.value.toLowerCase() === current[j].toLowerCase()) {
+			if (search.value.toLowerCase() === current[j].toLowerCase().trim()) {
 				number = i;
 			}
 		}
@@ -62,7 +43,7 @@ function search(x)
 	}
 	numbers[x / 2] = number;
 	if (number !== -1) {
-		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][2] + ")";
+		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][2].trim() + ")";
 	}
 	else {
 		unit.innerHTML = "Input";
@@ -90,4 +71,13 @@ function change()
 	inputs[0].value = [inputs[2].value, inputs[2].value = inputs[0].value][0];
 	search(0);
 	search(2);
+}
+
+function update() 
+{
+	"use strict";
+	units = [];
+	values = [];
+	change();
+	change();
 }
