@@ -8,7 +8,7 @@ document.getElementById("top").innerHTML =
 		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
 		'<div><a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programming/">Programming</a>' +
+		'<a href="https://nichodon.github.io/programs/">Programming</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Calculators</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
@@ -19,7 +19,7 @@ document.getElementById("top").innerHTML =
 	'<div class="topnav" id="sticky">' +
 		'<a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programming/">Programming</a>' +
+		'<a href="https://nichodon.github.io/programs/">Programming</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Calculators</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
