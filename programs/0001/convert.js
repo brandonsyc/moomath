@@ -19,6 +19,7 @@ function search(x)
 				var array = allText.split(":");
 				array[0] = array[0].split("\n");
 				values = array[1].split("\n");
+				values.shift();
 				for (var i = 0; i < array[0].length; i++) {
 					units.push(array[0][i].split(","));
 				}
