@@ -3,6 +3,40 @@ var numbers = [-1, -1];
 var units = [];
 var values = [];
 
+function getEditDistance(a, b) {
+  if (a.length === 0) return b.length; 
+  if (b.length === 0) return a.length; 
+
+  var matrix = [];
+
+  // increment along the first column of each row
+  var i;
+  for (i = 0; i <= b.length; i++) {
+    matrix[i] = [i];
+  }
+
+  // increment each column in the first row
+  var j;
+  for (j = 0; j <= a.length; j++) {
+    matrix[0][j] = j;
+  }
+
+  // Fill in the rest of the matrix
+  for (i = 1; i <= b.length; i++) {
+    for (j = 1; j <= a.length; j++) {
+      if (b.charAt(i-1) == a.charAt(j-1)) {
+        matrix[i][j] = matrix[i-1][j-1];
+      } else {
+        matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
+                                Math.min(matrix[i][j-1] + 1, // insertion
+                                         matrix[i-1][j] + 1)); // deletion
+      }
+    }
+  }
+
+  return matrix[b.length][a.length];
+}
+
 function search(x)
 {
 	"use strict";
@@ -31,14 +65,30 @@ function search(x)
 	var search = document.getElementsByClassName("search")[x];
 	var unit = document.getElementsByClassName("unit")[x / 2];
 	var number = -1;
+
+	var lowestEditDistance = 15;
+
+	var foundPerfect = false;
+
+	var editDistance = null;
+
+	var searchvalue = search.value.toLowerCase();
 	for (var i = 0; i < units.length; i++) {
 		var current = units[i];
 		for (var j = 0; j < current.length; j++) {
-			if (search.value.toLowerCase() === current[j].toLowerCase().trim()) {
+			if (searchvalue === current[j].toLowerCase().trim()) {
 				number = i;
+				foundPerfect = true;
+			}
+			if (searchvalue.length < 30) {
+				editDistance = getEditDistance(searchvalue, current[j].toLowerCase().trim())
+				if (lowestEditDistance > editDistance) {
+					lowestEditDistance = editDistance;
+					number = i;
+				}
 			}
 		}
-		if (number !== -1) {
+		if (number !== -1 && foundPerfect) {
 			break;
 		}
 	}
