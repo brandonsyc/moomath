@@ -1,23 +1,23 @@
-kilogram,kilograms,kg
-gram,grams,g
-milligram,milligrams,mg
-microgram,micrograms,\u03bcg,ug,mcg
-tonne,tonnes,t
-long ton,long tons,LT
+kilogram,kilograms,kg,kilogramme,kilogrammes,IPK
+gram,grams,g,gramme,grammes
+milligram,milligrams,mg,milligramme,milligrammes
+microgram,micrograms,\u03bcg,ug,mcg,microgramme,microgrammes
+tonne,tonnes,t,metric ton,megagram
+long ton,long tons,LT,imperial ton,displacement ton
 short ton,short tons,ST
-long hundredweight,long hundredweights,long cwt
-short hundredweight,short hundredweights,short cwt
+long hundredweight,long hundredweights,long cwt,long centum weight,long centum weights,long quintal,long quintals
+short hundredweight,short hundredweights,short cwt,short centum weight,short centum weight,short quintal,short quintals
 long quarter,long quarters,long qtr
 short quarter,short quarters,short qtr
-stone,stones,st
-pound,pounds,lb
+stone,stones,st,stone weight,stone weights
+pound,pounds,lb,pound-mass,pound-masses,lbm,#
 ounce,ounces,oz
-drachm,drachms,drachm,dram
-grain,grains,gr
+drachm,drachms,drachm,dram,drams,dr,fluid dram,fluid drams,fluid drachm,fluid drachms,fluidram,fluidrams,fluidrachm,fluidrachms,fl dr
+grain,grains,gr,troy grain,troy grains,jeweller's grain,jeweller's grains,pearl grain,pearl grains
 troy pound,troy pounds,troy pound
 troy ounce,troy ounces,ozt
 pennyweight,pennyweights,dwt
-carat,carats,carat
+carat,carats,carat,ct,metric carat,metric carats,CD
 :
 0.001
 0.000001
