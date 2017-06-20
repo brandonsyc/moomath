@@ -5,7 +5,7 @@
 <title>Polyrhythm Player</title>
 <link rel="stylesheet" type="text/css" href="../../styles.css">
 <link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-<link rel="stylesheet" type="text/css" href="convert.css">
+<link rel="stylesheet" type="text/css" href="polyrythm.css">
 </head>
 
 <body>
@@ -25,30 +25,19 @@
 <p id="output">
 </p>
 
-<p>This widget is a basic polyrhythm player.</p>
 
-<p>Enter in the polyrhythm you wish to play and the bpm of the playback.</p>
-
-<div style="width=100%">
-<div style="width:300px;">
-<div style="width:140px;">
-    <div style="width:140px;"><p>Polyrhythm</p></div>
-<div style="width:50px;float:left;"><input id="meter1" onKeyUp="updateRhythm()" type="number" min="1" max="50" value="5"></div>
-<div style="width:8px;display:inline-block;"><p>:</p></div>
-<div style="width:50px;float:right;"><input id="meter2" onKeyUp="updateRhythm()" type="number" min="1" max="50" value="3"></div>
+<div class="box">
+	<p>This widget is a basic polyrhythm player.<br>Enter in the polyrhythm you wish to play and the bpm of the playback.</p><br>
+	<hr>
+	<p>Polyrhythm</p>
+	<input id="meter1" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="50" value="5">
+	<p>:</p>
+	<input id="meter2" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="50" value="3"><br>
+	<p id="bpmdisplay">BPM of Slower Rhythm</p>
+    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120"/><br>
+	<button onclick="togglePlayback()" id="toggle">Play</button>
+	<hr>
 </div>
-
-<div style="width:300px;"><p id="bpmdisplay">BPM of Slower Rhythm</p></div>
-<div style="width:300px;">
-    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120"/>
-    </div>
-</div>
-
-</div>
-
-<button onclick="togglePlayback()" id="toggle">Play</button>
-
-<hr>
 
 <div class="separate"></div>
 </div>

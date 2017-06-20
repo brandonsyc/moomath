@@ -1,19 +1,19 @@
-square kilometre,square kilometres,km&sup2;,km2
-square hectometre,square hectometres,hm&sup2;,hm2,hectare,hectares,ha
-square decametre,square decametres,dam&sup2;,dam2
-square metre,square metres,m&sup2;,m2
-square decimetre,square decimetres,dm&sup2;,dm2
-square centimetre,square centimetres,cm&sup2;,cm2
-square millimetre,square millimetres,mm&sup2;,mm2
+square kilometre,square kilometres,km&sup2;,km2,square kilometer,square kilometers
+square hectometre,square hectometres,hm&sup2;,hm2,hectare,hectares,ha,square hectometer,square hectometers
+square decametre,square decametres,dam&sup2;,dam2,square decameter,square decameters
+square metre,square metres,m&sup2;,m2,square meter,square meters
+square decimetre,square decimetres,dm&sup2;,dm2,square decimeter,square decimeters
+square centimetre,square centimetres,cm&sup2;,cm2,square centimeter,square centimeters
+square millimetre,square millimetres,mm&sup2;,mm2,square millimeter,square millimeters
 square mile,square miles,sqmi
-acre,acres,acre
-square yard,square yards,sqyd
-square foot,square feet,sqft,ft&sup2;,sqfoot,foot&sup2;
+acre,acres,acre,ac
+square yard,square yards,sqyd,gaj
+square foot,square feet,sqft,ft2,sqfoot,foot2;
 square inch,square inches,sqin
-square nautical mile,square nautical miles,sqnmi,nmi&sup2;
-dunam,dunams,dunam,metric dunam,cypriot dunam,iraqi dunam,old dunam
-tsubo,tsubos,tsubo,pyeong,pyeongs
-cuerda,cuerdas,cda
+square nautical mile,square nautical miles,sqnmi,nmi2
+dunam,dunams,dunam,metric dunam,metric dunams,cypriot dunam,cypriot dunams,iraqi dunam,iraqi dunams,old dunam,old dunams,donum,donums,dunum,dunums,old stremma,old stremmas,turkish stremma,turkish stremmas,ottoman stremma,ottoman stremmas,new dunam,new dunams
+tsubo,tsubos,tsubo,pyeong,pyeongs,py,ping,pings
+cuerda,cuerdas,cda,spanish acre,spanish acres
 :
 1
 0.01

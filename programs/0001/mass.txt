@@ -1,7 +1,7 @@
 kilogram,kilograms,kg,kilogramme,kilogrammes,IPK
 gram,grams,g,gramme,grammes
 milligram,milligrams,mg,milligramme,milligrammes
-microgram,micrograms,\u03bcg,ug,mcg,microgramme,microgrammes
+microgram,micrograms,&mu;g,ug,mcg,microgramme,microgrammes
 tonne,tonnes,t,metric ton,megagram
 long ton,long tons,LT,imperial ton,displacement ton
 short ton,short tons,ST
