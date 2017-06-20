@@ -5,18 +5,23 @@ html {
 	height: 100%;
 }
 body {
+	background-color: #ddd;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	height: 100%;
 	margin: 0;
 }
+/* Defaults */
 h1,
 h2,
-p,
-h3 {
+h3,
+p {
 	color: #333;
 	text-align: center;
+	letter-spacing: 1px;
+	line-height: 25px;
 	padding: 10px;
 	margin: 0px;
+	overflow-x: auto;
 }
 h1 {
 	font-size: 30px;
@@ -39,37 +44,151 @@ a {
 a:hover {
 	text-shadow: 2px 2px 10px #333;
 }
+hr {
+	border-color: #bbb;
+	border-style: solid;
+	margin: 20px;
+}
+ul {
+	background-color: #eee;
+	list-style: none;
+	margin: auto;
+	padding: 0;
+	width: 90%;
+}
+li {
+	border: 1px solid #bbb;
+	padding: 10px;
+	margin: -1px 0 0 0;
+	text-align: left;
+	transition: 0.2s;
+}
+li:hover {
+	background-color: #ddd;
+}
+li a {
+	color: #333;
+}
+th,
+td {
+	border-bottom: 1px solid #ddd;
+	padding: 5px;
+}
+input {
+	border: 1px solid #bbb;
+	border-radius: 0px;
+	display: inline-block;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	font-size: 16px;
+	margin-bottom: -2px;
+	padding: 10px;
+	width: 90%;
+}
+button {
+	background-color: #08b;
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	color: #fff;
+	transition: 0.5s;
+	padding: 15px;
+}
+button:active {
+	box-shadow: none;
+	transition: 0.2s;
+}
+button:hover {
+	background-color: #07a;
+	color: #fff;
+	opacity: 1;
+}
+button:focus {
+	outline: none;
+}
+/* Frame */
+.header {
+	background-color: #ddd;
+}
+.header h1 {
+	color: #096;
+	font-size: 35px;
+	margin: 25px 0 -10px 0;
+	letter-spacing: 5px;
+	overflow: visible;
+}
+.header p {
+	margin: 20px;
+	letter-spacing: 2px;
+}
 .topnav {
-	background-color: #333;
+	background-color: #fff;
 	font-size: 0;
+  	position: relative;
 	text-align: center;
 }
 .topnav a {
-	color: #fff;
+	color: #333;
 	display: inline-block;
 	font-size: 15px;
-	padding: 15px;
+	padding: 15px 15px 10px 15px;
 	text-shadow: none;
-	transition: 0.5s;
+	transition: 0.2s;
+}
+.topnav a:not(.active) {
+	border-bottom: 5px solid #fff;
 }
 .topnav a:not(.active):hover {
-	background-color: #111;
+	border-bottom: 5px solid #bbb;
+}
+.topnav div {
+	overflow: hidden;
+	transition: 0.5s;
+}
+a.icon {
+	display: none;
+}
+.responsive div {
+	overflow: hidden;
+}
+#sticky {
+	display: none;
+	top: 0;
+	transition: 0.2s;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
 }
 .active {
-	background-color: #096;
+	border-bottom: 5px solid #096;
 }
 .active:hover {
-	background-color: #064;
+	border-bottom: 5px solid #075;
 }
+.footer {
+	background-color: #ddd;
+	font-size: 15px;
+	padding: 10px;
+}
+.footer p {
+	color: #888;
+}
+.footer a {
+	color: inherit;
+	transition: 0.5s;
+}
+.footer a:hover {
+	text-shadow: 2px 2px 10px #08b;
+}
+/* Front page */
 .parallax {
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	min-height: 500px;
 }
 .layer {
 	align-items: center;
-	background-color: rgba(51, 51, 51, 0.7);
+	background-color: rgba(51, 51, 51, 0.5);
 	display: flex;
 	justify-content: center;
 	height: 100%;
@@ -78,8 +197,7 @@ a:hover {
 	width: 100;
 }
 .layer:hover {
-	background-color: rgba(51, 51, 51, 0.5);
-	color: rgba(0, 0, 23, 1);
+	background-color: rgba(51, 51, 51, 0.2);
 }
 .layer:hover h1 {
 	opacity: 1;
@@ -104,19 +222,9 @@ a:hover {
 	transition: 0.5s;
 }
 .layer button {
-	background-color: #08b;
-	border: 0;
-	box-shadow: 2px 2px 10px #333;
-	color: #eee;
 	opacity: 0;
-	transition: 0.5s;
-	padding: 15px;
 }
-.layer button:active {
-	background-color: #333;
-	box-shadow: none;
-	transition: 0.2s;
-}
+/* Elements */
 .content {
 	align-content: center;
 	background-color: #eee;
@@ -137,10 +245,10 @@ a:hover {
 	height: 200px;
 	margin: auto;
 	transition: 0.5s;
-	width: 95%;
+	width: 90%;
 }
 .fourth img:hover {
-	box-shadow: 5px 5px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	margin: auto;
 }
 .fourth h3 {
@@ -151,32 +259,17 @@ a:hover {
 .clear {
 	clear: both;
 }
-.footer {
-	background-color: #333;
-	font-size: 15px;
-	padding: 10px;
-}
-.footer p {
-	color: #888;
-}
-.footer a {
-	color: inherit;
-	transition: 0.5s;
-}
-.footer a:hover {
-	text-shadow: 2px 2px 10px #08b;
-}
 .avatar {
 	border: 1px solid #ccc;
 	display: inline-block;
-	margin: 0 10px;
+	margin: 10px;
 	max-width: 250px;
 	min-width: 100px;
 	transition: 0.5s;
 	width: 25%;
 }
 .avatar:hover {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 }
 .blurb {
 	display: inline-block;
@@ -192,13 +285,19 @@ a:hover {
 }
 .separate {
 	background-color: #fff;
-	margin: 10px 0;
-	padding: 10px;
+	padding: 20px;
+}
+/* Article */
+.white {
+	background-color: #fff;
+	width: 100%;
 }
 .article {
+	text-align: center;
+	background-color: #fff;
 	margin: auto;
 	max-width: 1500px;
-	padding: 5px;
+	padding: 10px;
 }
 .article p {
 	text-align: justify;
@@ -211,7 +310,7 @@ a:hover {
 	margin: auto;
 }
 .figure img {
-	box-shadow: 2px 2px 10px #333;
+	box-shadow: 0px 0px 10px #333;
 	width: 50%;
 }
 img.latex {
@@ -224,14 +323,59 @@ img.latex {
 .code {
 	background-color: #eee;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	padding: 10px 25px;
 	overflow: auto;
+	padding: 10px 25px;
 	text-align: left;
     white-space: nowrap;
 }
+.video {
+	margin-bottom: -28.25%;
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+}
+.video iframe {
+	border: none;
+	box-shadow: 0px 0px 10px #333;
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	left: 25%;
+}
 @media only screen and (max-width: 768px) {
 	.topnav {} .topnav a {
+		border-bottom: none;
 		display: block;
+		padding: 15px;
+		transition: 1s;
+	}
+	.topnav a:not(.active) {
+		border-bottom: none;
+		border-left: 5px solid #fff;
+		border-right: 5px solid #fff;
+	}
+	.topnav a:not(.active):hover {
+		border-bottom: none;
+		border-left: 5px solid #bbb;
+		border-right: 5px solid #bbb;
+	}
+	.topnav div {
+		max-height: 0;
+	}
+	.responsive div {
+		max-height: 550px;
+	}
+	.active {
+		border-left: 5px solid #096;
+		border-right: 5px solid #096;
+	}
+	.active:hover {
+		border-bottom: none;
+		border-left: 5px solid #075;
+		border-right: 5px solid #075;
+	}
+	#sticky a {
+		display: none;
 	}
 	.fourth {
 		margin: 5px 0;
@@ -248,10 +392,15 @@ img.latex {
 	.blurb h1 {
 		text-align: center;
 	}
-	.blurb p {
-		text-align: center;
-	}
 	.figure img {
+		width: 75%;
+	}
+	.video {
+		margin-bottom: -14.125%;
+	}
+	.video iframe {
+		height: 75%;
+		left: 12.5%;
 		width: 75%;
 	}
 }

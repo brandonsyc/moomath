@@ -1,0 +1,3 @@
+Fractals in the Complex Plane -- 18 May, 2017
+The Mandelbrot Set -- 31 May, 2017
+Strange Attractors -- 31 May, 2017

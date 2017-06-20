@@ -1,0 +1,66 @@
+@charset "utf-8";
+/* CSS Document */
+input:not(.radio) {
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	font-size: 15px;
+	letter-spacing: 1px;
+	margin: 20px 0;
+	padding: 10px;
+	transition: 0.2s;
+	width: 100%;
+}
+input:hover {
+	border: 1px solid #bbb;
+}
+input[type=radio] {
+	width: 0;
+}
+input[type=radio]:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	padding: 10px;
+	transition: 0.2s;
+}
+button {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	color: #333;
+	font-size: 16px;
+	height: 100%;
+	margin: 20px 0;
+	padding: 10px;
+	transition: 0.2s;
+	width: 100%;
+}
+button:hover {
+	background-color: #eee;
+	color: #333;
+}
+button:active {
+	box-shadow: inset 0px 0px 5px #bbb;
+}
+.disabled {
+	background-color: #eee;
+}
+.box {
+	margin: auto;
+	max-width: 750px;
+	text-align: center;
+}
+.side {
+	display: inline-block;
+	width: 40%;
+}
+.switch {
+	display: inline-block;
+	width: 10%;
+	vertical-align: top;
+}
+.unit {
+	text-align: left;
+	padding: 0 0 0 11px;
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Converter</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="convert.css">
+</head>
+
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+	<h1>Unit Converter</h1>
+	<p>17 June, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a> &amp; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+</div>
+
+<div class="white">
+<div class="article">
+
+<script src="convert.js"></script>
+
+<p>
+	This unit converter is exact in every calculation to 16 places and has a vast collection of different units in mass (and soon more).<br>The converter will recognize the unit name (singular or plural) or unit symbol.
+</p>
+
+<hr>
+
+<input type="radio" id="area" name="type" value="area" onClick="update()" checked>
+<label for="area">Area</label>
+<input type="radio" id="density" name="type" value="area" onClick="update()">
+<label for="density">Density</label>
+<input type="radio" id="energy" name="type" value="area" onClick="update()">
+<label for="energy">Energy</label>
+<input type="radio" id="force" name="type" value="area" onClick="update()">
+<label for="force">Force</label>
+<input type="radio" id="length" name="type" value="area" onClick="update()">
+<label for="length">Length</label>
+<input type="radio" id="mass" name="type" value="mass" onClick="update()">
+<label for="mass">Mass</label>
+<input type="radio" id="speed" name="type" value="area" onClick="update()">
+<label for="speed">Speed</label>
+<input type="radio" id="temperature" name="type" value="area" onClick="update()">
+<label for="temperature">Temperature</label>
+<input type="radio" id="volume" name="type" value="area" onClick="update()">
+
+<div class="box">
+	<div class="side">
+		<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search">
+		<p class="unit">Input</p>
+		<input placeholder="Number of units" class="search" onKeyUp="check()" type="number">
+	</div>
+	<div class="switch">
+		<button onClick="change()">&#8652;</button>
+	</div>
+	<div class="side">
+		<input placeholder="Unit name or symbol" onKeyUp="search(2)" class="search">
+		<p class="unit">Input</p>
+		<input readonly class="search disabled">
+	</div>
+</div>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+
+</body>
+</html>

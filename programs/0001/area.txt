@@ -1,0 +1,33 @@
+square kilometre,square kilometres,km&sup2;,km2
+square hectometre,square hectometres,hm&sup2;,hm2,hectare,hectares,ha
+square decametre,square decametres,dam&sup2;,dam2
+square metre,square metres,m&sup2;,m2
+square decimetre,square decimetres,dm&sup2;,dm2
+square centimetre,square centimetres,cm&sup2;,cm2
+square millimetre,square millimetres,mm&sup2;,mm2
+square mile,square miles,sqmi
+acre,acres,acre
+square yard,square yards,sqyd
+square foot,square feet,sqft,ft&sup2;,sqfoot,foot&sup2;
+square inch,square inches,sqin
+square nautical mile,square nautical miles,sqnmi,nmi&sup2;
+dunam,dunams,dunam,metric dunam,cypriot dunam,iraqi dunam,old dunam
+tsubo,tsubos,tsubo,pyeong,pyeongs
+cuerda,cuerdas,cda
+:
+1
+0.01
+0.0001
+0.000001
+0.00000001
+0.0000000001
+0.000000000001
+2.589988110336
+0.0040468564224
+0.00000083612736
+0.00000009290304
+0.00000000064516
+3.429904
+0.001
+400/121
+0.003930395625
