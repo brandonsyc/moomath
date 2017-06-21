@@ -32,6 +32,7 @@ function playSoundAsync(url) {
 }
 
 function resetVars() {
+	"use strict";
     start = null;
     nextAt = null;
     
@@ -67,9 +68,10 @@ function playBeat() {
     console.log(beatsLater);**/
     
     if (doSubdivisions) {
-        drift = (new Date().getTime() - start) % (Math.min(60000.0/Math.max(beat1,beat2)/bpm));
-    } else {
-        drift = (new Date().getTime() - start) % (beatsLater*60000.0/Math.max(beat1,beat2)/bpm);
+        drift = (new Date().getTime() - start) % (Math.min(60000.0 / Math.max(beat1, beat2) / bpm));
+    }
+	else {
+        drift = (new Date().getTime() - start) % (beatsLater * 60000.0 / Math.max(beat1, beat2) / bpm);
     }
     
     //console.log(drift + " ms");
@@ -81,71 +83,78 @@ function playBeat() {
     if (beatNum % (beat1 * beat2) === 0) {
         if (playAccents) {
             playSoundAsync("accent1");
-        } else {
+        } 
+		else {
             playSoundAsync("click1");
             playSoundAsync("click2");
         }
-        flyLine(0,false);
+        flyLine(0, false);
         queueFillCircle(0, 0, beat1, 10, "red");
         queueFillCircle(0, 1, beat2, 10, "red");
     }
 	else {
         if (beatNum % beat1 === 0) {
             playSoundAsync("click1");
-            queueFillCircle((beatNum/beat2) % beat1, 1, beat1, 10, "green");
+            queueFillCircle((beatNum / beat2) % beat1, 1, beat1, 10, "green");
         }
         if (beatNum % beat2 === 0) {
             playSoundAsync("click2");
-            queueFillCircle((beatNum/beat1) % beat2, 0, beat2, 10, "green");
+            queueFillCircle((beatNum / beat1) % beat2, 0, beat2, 10, "green");
         }
     }
-    for (i = beatNum+1; i <= beat1*beat2 + beatNum - (beatNum % (beat1*beat2)); i++) {
-        if (i % beat1 == 0 || i % beat2 == 0) {
+    for (var i = beatNum + 1; i <= beat1 * beat2 + beatNum - (beatNum % (beat1 * beat2)); i++) {
+        if (i % beat1 === 0 || i % beat2 === 0) {
             beatsLater = i - beatNum;
             break;
         }
     }
     if (doSubdivisions) {
         beatNum += 1;
-        nextAt += 60000.0/Math.max(beat1,beat2)/bpm;
-    } else {
+        nextAt += 60000.0 / Math.max(beat1, beat2) / bpm;
+    } 
+	else {
         beatNum += beatsLater;
-        nextAt += beatsLater * 60000.0/Math.max(beat1,beat2)/bpm;
+        nextAt += beatsLater * 60000.0 / Math.max(beat1, beat2) / bpm;
     }
     
     /**beatNum += 1;
     nextAt += 60000.0/Math.max(beat1,beat2)/bpm;**/
     if (play) {
-        setTimeout(function(){
-                   playBeat();}, nextAt - new Date().getTime());
+        setTimeout(function() {
+			playBeat();
+		}, nextAt - new Date().getTime());
     }
     return;
 }
 
 function drawCircle(a, beat, beats, rad) {
+	"use strict";
     ctx.beginPath();
-    ctx.arc(1300/beats*a + 100,100*beat+50,rad,0,2*Math.PI);
+    ctx.arc(1300 / beats * a + 100, 100 * beat + 50, rad, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fillStyle = "black";
-    var beatString = String(a%((beat==0)?beat1:beat2)+1);
-    if (beatString.length == 2) {
+    var beatString = String(a % ((beat === 0) ? beat1 : beat2) + 1);
+    if (beatString.length === 2) {
         ctx.font = "13px Cambria";
-        ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 93,100*beat+55);
-        ctx.font = "15px Cambria"
-    } else {
-        ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 96,100*beat+55);
+        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 93, 100 * beat + 55);
+        ctx.font = "15px Cambria";
+    } 
+	else {
+        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 96, 100 * beat + 55);
     }
 }
 
 function drawFillCircle(a, beat, beats, rad, color) {
+	"use strict";
     ctx.beginPath();
-    ctx.arc(1300/beats*a + 100,100*beat+50,rad,0,2*Math.PI);
+    ctx.arc(1300 / beats * a + 100, 100 * beat + 50, rad, 0, 2 * Math.PI);
     ctx.fillStyle = color;
     ctx.fill();
     ctx.stroke();
 }
 
 function initializeAudio() {
+	"use strict";
     var sound = document.createElement('audio');
     sound.setAttribute('src', "sounds/click1.mp3");
     sound.setAttribute('id', 'click1');
@@ -166,21 +175,24 @@ var queuedCircles = [];
 var oneFrameCircles = [];
 
 function queueFillCircle(a, beat, beats, rad, color) {
+	"use strict";
     queuedCircles.push([a, beat, beats, rad, color]);
     return;
 }
 
 function clearCanvas() {
+	"use strict";
     ctx.clearRect(0, 0, c.width, c.height);
 }
 
 function drawBeats() {
+	"use strict";
     clearCanvas();
     
     updateShowFlyline();
     updateAccents();
     
-    for (i = 0; i <= beat1; i++) {
+    for (var i = 0; i <= beat1; i++) {
         drawCircle(i, 0, beat1, 10);
     }
     
@@ -209,6 +221,7 @@ function updateRhythm() {
 }
 
 function flyLine(s,back) {
+	"use strict";
     drawBeats();
     var x = 100+1300/(60*Math.min(beat1,beat2)/bpm)*s;
     if (x > 1400) {
@@ -223,7 +236,8 @@ function flyLine(s,back) {
         ctx.lineTo(x,200);
         ctx.stroke();
     }
-    for (i = 0; i < queuedCircles.length; i++) {
+	var circle;
+    for (var i = 0; i < queuedCircles.length; i++) {
         circle = queuedCircles[i];
         drawFillCircle(circle[0], circle[1], circle[2], circle[3], circle[4]);
     }
@@ -236,11 +250,14 @@ function flyLine(s,back) {
     queuedCircles = [];
     if (play) {
         if (back) {
-            setTimeout(function(){
-                   flyLine(s-1/60.0);}, 1000.0/60.0);
-        } else {
-            setTimeout(function(){
-                       flyLine(s+1/60.0);}, 1000.0/60.0);
+			setTimeout(function() {
+				flyLine(s - 1 / 60.0);
+			}, 1000.0 / 60.0);
+        } 
+		else {
+            setTimeout(function() {
+				flyLine(s + 1 / 60.0);
+			}, 1000.0 / 60.0);
         }
     }
 }
@@ -255,13 +272,16 @@ function updateBPM() {
 }
 
 function updateVolume() {
-    volume = document.getElementById("volume").value/100.0;
+	"use strict";
+    volume = document.getElementById("volume").value / 100.0;
 }
 
 function updateShowFlyline() {
+	"use strict";
     showFlyline = Boolean(document.getElementById("showFlyline").checked);
 }
 function updateAccents() {
+	"use strict";
     playAccents = Boolean(document.getElementById("playAccents").checked);
 }
 
