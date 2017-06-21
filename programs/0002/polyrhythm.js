@@ -8,6 +8,8 @@ var bpm = 120;
 
 var c=document.getElementById("beater");
 var ctx=c.getContext("2d");
+ctx.font = "15px Cambria";
+ctx.align = "center";
 
 var backAndForth = false;
 
@@ -15,12 +17,18 @@ var start;
 var nextAt;
 var beatsLater;
 
+var volume = 0.8;
+
 var doSubdivisions = true;
+var showFlyline = true;
+var playAccents = true;
 
 function playSoundAsync(url) {
 	"use strict";
     //document.getElementById(url).play();
-    new Audio("sounds/" + url + ".mp3").play();
+    var a = new Audio("sounds/" + url + ".wav");
+    a.volume = volume;
+    a.play();
 }
 
 function resetVars() {
@@ -71,7 +79,12 @@ function playBeat() {
         return;
     }
     if (beatNum % (beat1 * beat2) === 0) {
-        playSoundAsync("accent1");
+        if (playAccents) {
+            playSoundAsync("accent1");
+        } else {
+            playSoundAsync("click1");
+            playSoundAsync("click2");
+        }
         flyLine(0,false);
         queueFillCircle(0, 0, beat1, 10, "red");
         queueFillCircle(0, 1, beat2, 10, "red");
@@ -113,6 +126,9 @@ function drawCircle(a, beat, beats, rad) {
     ctx.beginPath();
     ctx.arc(1300/beats*a + 100,100*beat+50,rad,0,2*Math.PI);
     ctx.stroke();
+    ctx.fillStyle = "black";
+    ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 96,100*beat+55);
+    
 }
 
 function drawFillCircle(a, beat, beats, rad, color) {
@@ -155,6 +171,9 @@ function clearCanvas() {
 function drawBeats() {
     clearCanvas();
     
+    updateShowFlyline();
+    updateAccents();
+    
     for (i = 0; i <= beat1; i++) {
         drawCircle(i, 0, beat1, 10);
     }
@@ -192,10 +211,12 @@ function flyLine(s,back) {
         }
         return;
     }
-    ctx.beginPath();
-    ctx.moveTo(x,0);
-    ctx.lineTo(x,200);
-    ctx.stroke();
+    if (showFlyline) {
+        ctx.beginPath();
+        ctx.moveTo(x,0);
+        ctx.lineTo(x,200);
+        ctx.stroke();
+    }
     for (i = 0; i < queuedCircles.length; i++) {
         circle = queuedCircles[i];
         drawFillCircle(circle[0], circle[1], circle[2], circle[3], circle[4]);
@@ -218,7 +239,6 @@ function flyLine(s,back) {
     }
 }
 
-
 function updateBPM() {
     "use strict";
     var givenBPM = document.getElementById("bpminput").value;
@@ -226,6 +246,17 @@ function updateBPM() {
         bpm = givenBPM;
     }
     resetVars();
+}
+
+function updateVolume() {
+    volume = document.getElementById("volume").value/100.0;
+}
+
+function updateShowFlyline() {
+    showFlyline = Boolean(document.getElementById("showFlyline").checked);
+}
+function updateAccents() {
+    playAccents = Boolean(document.getElementById("playAccents").checked);
 }
 
 updateRhythm();
