@@ -127,8 +127,14 @@ function drawCircle(a, beat, beats, rad) {
     ctx.arc(1300/beats*a + 100,100*beat+50,rad,0,2*Math.PI);
     ctx.stroke();
     ctx.fillStyle = "black";
-    ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 96,100*beat+55);
-    
+    var beatString = String(a%((beat==0)?beat1:beat2)+1);
+    if (beatString.length == 2) {
+        ctx.font = "13px Cambria";
+        ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 93,100*beat+55);
+        ctx.font = "15px Cambria"
+    } else {
+        ctx.fillText(String(a%((beat==0)?beat1:beat2)+1),1300/beats*a + 96,100*beat+55);
+    }
 }
 
 function drawFillCircle(a, beat, beats, rad, color) {
