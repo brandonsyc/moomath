@@ -114,7 +114,7 @@ function playBeat(playTime = -1) {
         playSoundAsync(click1);
     }
     
-    accurateTimeout(function() {playBeat(mspb);},mspb + playTime - cTime);
+    accurateTimeout(function() {playBeat(playTime + mspb);},mspb + playTime - cTime);
     
     beatNumber = (beatNumber + 1) % numerator;
     return;
