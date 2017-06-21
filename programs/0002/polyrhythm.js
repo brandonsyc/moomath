@@ -15,9 +15,11 @@ var start;
 var nextAt;
 var beatsLater;
 
+var doSubdivisions = true;
+
 function playSoundAsync(url) {
 	"use strict";
-    // document.getElementById(url).play();
+    //document.getElementById(url).play();
     new Audio("sounds/" + url + ".mp3").play();
 }
 
@@ -38,9 +40,9 @@ function togglePlayback() {
         beatsLater = 1;
         beatNum = 0;
         document.getElementById("toggle").innerHTML = "Stop";
-        playBeat();
         start = new Date().getTime();
         nextAt = start;
+        playBeat();
     }
 	else {
         document.getElementById("toggle").innerHTML = "Play";
@@ -50,8 +52,19 @@ function togglePlayback() {
 
 function playBeat() {
 	"use strict";
+    var drift = null;
     
-    var drift = (new Date().getTime() - start) % (beatsLater*60000.0/Math.max(beat1,beat2)/bpm);
+    /**console.log(start);
+    console.log(nextAt);
+    console.log(beatsLater);**/
+    
+    if (doSubdivisions) {
+        drift = (new Date().getTime() - start) % (Math.min(60000.0/Math.max(beat1,beat2)/bpm));
+    } else {
+        drift = (new Date().getTime() - start) % (beatsLater*60000.0/Math.max(beat1,beat2)/bpm);
+    }
+    
+    //console.log(drift + " ms");
     if (beat1 === -1 || beat2 === -1) {
         play = false;
         document.getElementById("toggle").innerHTML = "Play";
@@ -79,8 +92,13 @@ function playBeat() {
             break;
         }
     }
-    beatNum += beatsLater;
-    nextAt += beatsLater * 60000.0/Math.max(beat1,beat2)/bpm;
+    if (doSubdivisions) {
+        beatNum += 1;
+        nextAt += 60000.0/Math.max(beat1,beat2)/bpm;
+    } else {
+        beatNum += beatsLater;
+        nextAt += beatsLater * 60000.0/Math.max(beat1,beat2)/bpm;
+    }
     
     /**beatNum += 1;
     nextAt += 60000.0/Math.max(beat1,beat2)/bpm;**/
@@ -212,7 +230,7 @@ function updateBPM() {
 
 updateRhythm();
 updateBPM();
-// initializeAudio();
+initializeAudio();
 
 
 
