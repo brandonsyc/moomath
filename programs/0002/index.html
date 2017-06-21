@@ -5,7 +5,7 @@
 <title>Polyrhythm Player</title>
 <link rel="stylesheet" type="text/css" href="../../styles.css">
 <link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-<link rel="stylesheet" type="text/css" href="polyrythm.css">
+<link rel="stylesheet" type="text/css" href="polyrhythm.css">
 </head>
 
 <body>
@@ -20,8 +20,6 @@
 <div class="white">
 <div class="article">
 
-<script src="polyrhythm.js"></script>
-
 <p id="output">
 </p>
 
@@ -32,12 +30,25 @@
 	<p>Polyrhythm</p>
 	<input id="meter1" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="50" value="5">
 	<p>:</p>
-	<input id="meter2" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="50" value="3"><br>
+	<input id="meter2" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="50" value="3">
+    <p>Volume</p>
+    <input id="volume" type="range" min="0" max="100" value="80" onInput="updateVolume()">
+    <br><br>
 	<p id="bpmdisplay">BPM of Slower Rhythm</p>
-    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120"/><br>
+    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120"/>
+    <input name="showFlyline" type="checkbox" id="showFlyline" checked="checked" onInput="updateShowFlyline()"/>
+    <p>Show Metronome Line</p>
+    <input name="playAccents" type="checkbox" id="playAccents" checked="checked" onInput="updateAccents()"/>
+    <p>Play Accents</p>
+    <br><br>
 	<button onclick="togglePlayback()" id="toggle">Play</button>
 	<hr>
 </div>
+
+<div class="">
+<canvas class="shadow" id="beater" width=1500 height=200></canvas>
+    </div>
+
 
 <div class="separate"></div>
 </div>
@@ -46,6 +57,7 @@
 <div id="bottom"></div>
 
 <script src="../../frame.js"></script>
+<script src="polyrhythm.min.js"></script>
 
 </body>
 </html>
