@@ -1,0 +1,41 @@
+input {
+	vertical-align: middle;
+}
+input[type=number] {
+	display: inline-block;
+	max-width: 50px;
+    text-align: center;
+    font-size: 20px;
+    padding: 1px;
+}
+input[type=range] {
+    display: inline-block;
+    max-width: 120px;
+}
+input[type=checkbox] {
+    display: inline-block;
+    max-width: 10px;
+    margin-left: 20px;
+}
+.box p {
+	display: inline-block;
+	vertical-align: middle;
+}
+canvas {
+	border: 1px solid black;
+}
+.signature {
+    width: 100%;
+    max-width: 80px;
+    display: inline-block;
+}
+.signature hr {
+    margin: 5px 0;
+}
+.signature-label {
+    width: 100%;
+    max-width: 150px;
+    display: inline-block;
+    position: relative;
+    bottom: 25px;
+}
