@@ -37,5 +37,12 @@ canvas {
     max-width: 150px;
     display: inline-block;
     position: relative;
-    bottom: 25px;
+    bottom: 20px;
+}
+.bpm-label {
+    width: 100%;
+    max-width: 80px;
+    display: inline-block;
+    position: relative;
+    bottom: 20px;
 }
