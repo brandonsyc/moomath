@@ -8,7 +8,7 @@ var bpm = 120;
 
 var c=document.getElementById("beater");
 var ctx=c.getContext("2d");
-ctx.font = "15px Cambria";
+ctx.font = "20px Segoe, \"Segoe UI\", \"DejaVu Sans\", \"Trebuchet MS\", Verdana, \"sans-serif\"";
 ctx.align = "center";
 
 var backAndForth = false;
@@ -89,17 +89,17 @@ function playBeat() {
             playSoundAsync("click2");
         }
         flyLine(0, false);
-        queueFillCircle(0, 0, beat1, 10, "red");
-        queueFillCircle(0, 1, beat2, 10, "red");
+        queueFillCircle(0, 0, beat1, 20, "#08b");
+        queueFillCircle(0, 1, beat2, 20, "#08b");
     }
 	else {
         if (beatNum % beat1 === 0) {
             playSoundAsync("click1");
-            queueFillCircle((beatNum / beat2) % beat1, 1, beat1, 10, "green");
+            queueFillCircle((beatNum / beat2) % beat1, 1, beat1, 20, "#096");
         }
         if (beatNum % beat2 === 0) {
             playSoundAsync("click2");
-            queueFillCircle((beatNum / beat1) % beat2, 0, beat2, 10, "green");
+            queueFillCircle((beatNum / beat1) % beat2, 0, beat2, 20, "#096");
         }
     }
     for (var i = beatNum + 1; i <= beat1 * beat2 + beatNum - (beatNum % (beat1 * beat2)); i++) {
@@ -135,12 +135,12 @@ function drawCircle(a, beat, beats, rad) {
     ctx.fillStyle = "black";
     var beatString = String(a % ((beat === 0) ? beat1 : beat2) + 1);
     if (beatString.length === 2) {
-        ctx.font = "13px Cambria";
-        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 93, 100 * beat + 55);
-        ctx.font = "15px Cambria";
+		ctx.font = "20px Arial";
+        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 89, 100 * beat + 55);
+		ctx.font = "20px Arial";
     } 
 	else {
-        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 96, 100 * beat + 55);
+        ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 94, 100 * beat + 55);
     }
 }
 
@@ -193,11 +193,11 @@ function drawBeats() {
     updateAccents();
     
     for (var i = 0; i <= beat1; i++) {
-        drawCircle(i, 0, beat1, 10);
+        drawCircle(i, 0, beat1, 20);
     }
     
     for (i = 0; i <= beat2; i++) {
-        drawCircle(i, 1, beat2, 10);
+        drawCircle(i, 1, beat2, 20);
     }
 }
 
