@@ -8,6 +8,13 @@ input[type=number] {
     font-size: 20px;
     padding: 1px;
 }
+input[type=text] {
+    display: inline-block;
+    max-width: 100px;
+    text-align: center;
+    font-size: 15px;
+    padding: 1px;
+}
 input[type=range] {
     display: inline-block;
     max-width: 120px;

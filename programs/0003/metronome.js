@@ -34,7 +34,7 @@ var click3 = "sounds/click3.wav";
 var measureNumber = 0;
 
 // Accented beats (boolean array)
-var accents = [true, false, false, true, false, false, true, false];
+var accents = [true, false, false, false];
 
 // Volume
 var volume = 0.8;
@@ -55,6 +55,9 @@ var flylineNumber = 0;
 
 // Audios
 var audios = [];
+
+// Stop/start button click number
+var stopStartCount = 0;
 
 function resetVars() {
     // Reset user-uncontrolled variables
@@ -80,9 +83,9 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
     var request = new XMLHttpRequest();
     request.open("GET", url, true);
     request.responseType = "arraybuffer";
-    
+
     var loader = this;
-    
+
     request.onload = function() {
         // Asynchronously decode the audio file data in request.response
         loader.context.decodeAudioData(request.response,
@@ -100,11 +103,11 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
                                             }
                                        );
     }
-    
+
     request.onerror = function() {
         alert('BufferLoader: XHR error');
     }
-    
+
     request.send();
 }
 
@@ -118,7 +121,7 @@ function init() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
     gainNode = context.createGain();
-    
+
     bufferLoader = new BufferLoader(context,
                                     [
                                      'https://nichodon.github.io/programs/0003/sounds/click1.wav',
@@ -128,7 +131,7 @@ function init() {
                                      ],
                                     finishedLoading
                                     );
-    
+
     bufferLoader.load();
 }
 
@@ -151,16 +154,19 @@ function finishedLoading(bufferList) {
     click2.buffer = bufferList[1];
     click3.buffer = bufferList[2];
     accent1.buffer = bufferList[3];
-    
+
     click1.connect(context.destination);
     click2.connect(context.destination);
     click3.connect(context.destination);
     accent1.connect(context.destination);
-    
+
     buffers = bufferList;
 }
 
 function playSound(buffer, time) {
+    if (!play) {
+        return;
+    }
     var source = context.createBufferSource();
     source.buffer = buffers[buffer];
     source.connect(context.destination);
@@ -172,7 +178,7 @@ function playSoundAsync(url) {
     var date = context.currentTime * 1000;
     console.log(date - prevBeatTime);
     prevBeatTime = date;
-    
+
     // Plays a sound asynchronously, given its location
     var click = new Audio(url);
     click.volume = volume;
@@ -183,10 +189,11 @@ function playSoundAsync(url) {
 function togglePlayback() {
     // Toggles playback (from button press)
     var playButton = document.getElementById("togglePlayback");
+    stopStartCount += 1;
     play = !play;
     if (play) {
         playButton.innerHTML = "Stop";
-        playBeat();
+        playBeat(-1,stopStartCount);
     } else {
         playButton.innerHTML = "Play";
         stopAll();
@@ -195,20 +202,71 @@ function togglePlayback() {
     return;
 }
 
+function isNormalInteger(str) {
+    // Tests if str is a positive integer
+    var n = Math.floor(Number(str));
+    return String(n) === str && n >= 0;
+}
+
+// Basic String manipulation functions
+
+String.prototype.trimLeft = function(charlist) {
+    if (charlist === undefined)
+        charlist = "\s";
+
+    return this.replace(new RegExp("^[" + charlist + "]+"), "");
+};
+
+String.prototype.trimRight = function(charlist) {
+    if (charlist === undefined)
+        charlist = "\s";
+
+    return this.replace(new RegExp("[" + charlist + "]+$"), "");
+};
+
+String.prototype.trim = function(charlist) {
+    return this.trimLeft(charlist).trimRight(charlist);
+};
+
 function updateSignature() {
     // Updates the time signature
     var givenNumerator = document.getElementById("numerator").value;
     var givenDenominator = document.getElementById("denominator").value;
-    
-    if (1 <= givenNumerator && givenNumerator <= 50) {
-        // If the numerator is in the range 1 <= n <= 50, it is considered valid
-        numerator = givenNumerator;
-        document.getElementById("numerator").style.backgroundColor = "white";
-    } else {
-        // If the numerator is invalid, color the input box salmon as an alert
-        document.getElementById("numerator").style.backgroundColor = "#FF9184";
+
+
+    /*1 <= givenNumerator && givenNumerator <= 50*/
+    // If the numerator is a '+' separated list of whole numbers, it is considered okay
+
+    var beatSeparations = givenNumerator.replace(" ","").trim('+').split('+');
+    if (beatSeparations.length === 0) return;
+
+    var accentPosition = 0;
+    var length = 0;
+    var valid = true;
+
+    for (i = 0; i < beatSeparations.length; i++) {
+        accents[accentPosition] = true;
+        var prevPosition = accentPosition;
+        var separation = beatSeparations[i];
+        if (isNormalInteger(separation)) {
+            accentPosition += parseInt(separation);
+            length += parseInt(separation);
+        } else {
+            valid = false;
+        }
+        for (j = prevPosition + 1; j < accentPosition; j++) {
+            accents[j] = false;
+        }
     }
-    
+
+    if (valid) {
+        document.getElementById("numerator").style.backgroundColor = "white";
+        numerator = length;
+    } else {
+        document.getElementById("numerator").style.backgroundColor = "#FF9184";
+        numerator = 4;
+    }
+
     if (1 <= givenDenominator && givenDenominator <= 64 && Math.log2(givenDenominator) % 1 === 0) {
         // If the numerator is a power of two in the range 1 <= n <= 64, it is considered valid
         denominator = givenDenominator;
@@ -216,7 +274,7 @@ function updateSignature() {
     } else {
         document.getElementById("denominator").style.backgroundColor = "#FF9184";
     }
-    
+
     if (play) {
         togglePlayback();
     }
@@ -238,19 +296,19 @@ function updateBPM() {
     }
     // Beats per second
     bps = bpm/60.0;
-    
+
     // Beats per millisecond
     bpms = bps/1000.0;
-    
+
     // Minutes per beat
     mpb = 1.0/bpm;
-    
+
     // Seconds per beat
     spb = 1.0/bps;
-    
+
     // Milliseconds per beat
     mspb = 1.0/bpms
-    
+
     if (play) {
         togglePlayback();
     }
@@ -266,7 +324,7 @@ function accurateTimeout(func, delay) {
         return;
     }
     var timeoutStart = context.currentTime * 1000;
-    
+
     // console.log(delay);
     // console.log(timeoutStart);
     timeoutSelfCall(func, timeoutStart + delay);
@@ -279,17 +337,19 @@ function timeoutSelfCall(func, desiredTime) {
     }
     // Companion to the accurateTimeout function
     var cTime = context.currentTime * 1000;
-    
+
     // console.log(desiredTime);
     // console.log(cTime);
-    
+
     if (desiredTime - cTime < timeRes) {
-        setTimeout(func(),0);
+        if (play) {
+            setTimeout(func(),0);
+        }
         return;
     }
-    
+
     // console.log(Math.max((desiredTime-cTime)/2.0,0));
-    
+
     setTimeout(function(){timeoutSelfCall(func,desiredTime);}, Math.max((desiredTime-cTime)/2.0,0));
     return;
 }
@@ -300,69 +360,69 @@ function stopAll() {
     }
 }
 
-function playBeat(playTime = -1) {
-    // "Recursive" function which plays the beat
-    
-    if (!play) {
+function playBeat(playTime = -1, ssc) {
+    // SSC identifying is used to cancel playBeat() calls that are from previous stopped measures
+    if (ssc != stopStartCount) {
         return;
     }
-    
+    // "Recursive" function which plays the beat
+
+    if (!play) return;
+    if (playTime === -1) playTime = context.currentTime * 1000;
+
     audios = [];
-    var aTime = context.currentTime;
-    
+
     flyLine();
-    
+
     for (i = 0; i < numerator; i++) {
         if (accents[i]) {
-            playSound(3, aTime + i * spb);
+            playSound(3, playTime / 1000.0 + i * spb);
         } else {
-            playSound(0, aTime + i * spb);
+            playSound(0, playTime / 1000.0 + i * spb);
         }
     }
-    
-    if (playTime === -1) {
-        playTime = context.currentTime * 1000;
-    }
+
     var cTime = context.currentTime * 1000;
-    
+
     // Determine how far CPU clock has fallen out of sync, then adjust next delay accordingly
-    
-    accurateTimeout(function() {playBeat(playTime + mspb * numerator);}, mspb * numerator + playTime - cTime);
-    
+    var sscDuplicate = stopStartCount;
+
+    accurateTimeout(function() {playBeat(playTime + mspb * numerator, sscDuplicate);}, mspb * numerator + playTime - cTime - 20);
+
     measureNumber += 1;
-    
+
     return;
 }
 
 function flyLine(frameTime = -1, frame = 0) {
     // "Recursive" function which controls the line that goes across the canvas and the animations
     clearCanvas();
-    
+
     if (!play) {
         drawBeats();
         return;
     }
-    
+
     var lineX = 100 + frame * 1300 / (60 * spb * numerator);
-    
+
     drawBeats(lineX);
-    
+
     if (lineX >= 1400) {
         return;
     }
-    
+
     ctx.beginPath();
     ctx.moveTo(lineX,0);
     ctx.lineTo(lineX,200);
     ctx.stroke();
-    
+
     if (frameTime === -1) {
         frameTime = context.currentTime * 1000;
     }
     var cTime = context.currentTime * 1000;
-    
+
     accurateTimeout(function() {flyLine(frameTime + 1000.0/60.0, frame + 1);}, frameTime - cTime + 1000.0/60.0);
-    
+
     return;
 }
 
