@@ -34,7 +34,7 @@ var click3 = "sounds/click3.wav";
 var measureNumber = 0;
 
 // Accented beats (boolean array)
-var accents = [true, false, false, false];
+var accents = [true, false, false, true, false, false, true, false];
 
 // Volume
 var volume = 0.8;
@@ -169,7 +169,7 @@ function playSound(buffer, time) {
 }
 
 function playSoundAsync(url) {
-    var date = new Date().getTime();
+    var date = context.currentTime * 1000;
     console.log(date - prevBeatTime);
     prevBeatTime = date;
     
@@ -265,7 +265,7 @@ function accurateTimeout(func, delay) {
         setTimeout(func(),0);
         return;
     }
-    var timeoutStart = new Date().getTime();
+    var timeoutStart = context.currentTime * 1000;
     
     // console.log(delay);
     // console.log(timeoutStart);
@@ -278,7 +278,7 @@ function timeoutSelfCall(func, desiredTime) {
         return;
     }
     // Companion to the accurateTimeout function
-    var cTime = new Date().getTime();
+    var cTime = context.currentTime * 1000;
     
     // console.log(desiredTime);
     // console.log(cTime);
@@ -306,6 +306,7 @@ function playBeat(playTime = -1) {
     if (!play) {
         return;
     }
+    
     audios = [];
     var aTime = context.currentTime;
     
@@ -320,9 +321,9 @@ function playBeat(playTime = -1) {
     }
     
     if (playTime === -1) {
-        playTime = new Date().getTime();
+        playTime = context.currentTime * 1000;
     }
-    var cTime = new Date().getTime();
+    var cTime = context.currentTime * 1000;
     
     // Determine how far CPU clock has fallen out of sync, then adjust next delay accordingly
     
@@ -356,9 +357,9 @@ function flyLine(frameTime = -1, frame = 0) {
     ctx.stroke();
     
     if (frameTime === -1) {
-        frameTime = new Date().getTime();
+        frameTime = context.currentTime * 1000;
     }
-    var cTime = new Date().getTime();
+    var cTime = context.currentTime * 1000;
     
     accurateTimeout(function() {flyLine(frameTime + 1000.0/60.0, frame + 1);}, frameTime - cTime + 1000.0/60.0);
     
