@@ -121,6 +121,7 @@ function init() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     context = new AudioContext();
     gainNode = context.createGain();
+    gainNode.connect(context.destination);
 
     bufferLoader = new BufferLoader(context,
                                     [
@@ -169,8 +170,9 @@ function playSound(buffer, time) {
     }
     var source = context.createBufferSource();
     source.buffer = buffers[buffer];
-    source.connect(context.destination);
     source.start(time);
+    source.connect(gainNode);
+    gainNode.connect(context.destination);
     audios.push(source);
 }
 
@@ -264,7 +266,13 @@ function updateSignature() {
         numerator = length;
     } else {
         document.getElementById("numerator").style.backgroundColor = "#FF9184";
-        numerator = 4;
+    }
+
+    if (isNormalInteger(givenDenominator)) {
+        givenDenominator = parseInt(givenDenominator);
+    } else {
+        document.getElementById("denominator").style.backgroundColor = "#FF9184";
+        return;
     }
 
     if (1 <= givenDenominator && givenDenominator <= 64 && Math.log2(givenDenominator) % 1 === 0) {
@@ -479,6 +487,10 @@ function getCursorPosition(canvas, event) {
     var x = event.clientX - rect.left;
     var y = event.clientY - rect.top;
     console.log("x: " + x + " y: " + y);
+}
+
+function updateBeatLength() {
+    console.log("5");
 }
 
 drawBeats();
