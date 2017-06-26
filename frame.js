@@ -1,6 +1,6 @@
 document.getElementById("top").innerHTML =
 	'<div class="header">' +
-		'<h1>VISUAL MATH</h1><hr>' +
+		'<h1>VISUAL MATH</h1>' +
 		'<p>A lovely math blog</p>' +
 	'</div>' +
 

@@ -5,7 +5,7 @@ html {
 	height: 100%;
 }
 body {
-	background-color: #ddd;
+	background-color: #fff;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	height: 100%;
 	margin: 0;
@@ -106,7 +106,7 @@ button:focus {
 }
 /* Frame */
 .header {
-	background-color: #ddd;
+	background-color: #fff;
 }
 .header h1 {
 	color: #096;
@@ -116,11 +116,13 @@ button:focus {
 	padding: 50px 20px 0 20px;
 }
 .header p {
-	margin: 20px;
+	color: #bbb;
+	padding: 10px 0 20px 0; 
 	letter-spacing: 2px;
 }
 .topnav {
 	background-color: #fff;
+	box-shadow: 0px 20px 25px rgba(51, 51, 51, 0.2);
 	font-size: 0;
   	position: relative;
 	text-align: center;
@@ -137,7 +139,7 @@ button:focus {
 	border-bottom: 5px solid #fff;
 }
 .topnav a:not(.active):hover {
-	border-bottom: 5px solid #bbb;
+	border-bottom: 5px solid #096;
 }
 .topnav div {
 	overflow: hidden;
@@ -164,7 +166,8 @@ a.icon {
 	border-bottom: 5px solid #075;
 }
 .footer {
-	background-color: #ddd;
+	box-shadow: 0px -20px 25px rgba(51, 51, 51, 0.2);
+	background-color: #fff;
 	font-size: 15px;
 	padding: 10px;
 }
@@ -227,7 +230,7 @@ a.icon {
 /* Elements */
 .content {
 	align-content: center;
-	background-color: #eee;
+	background-color: #fff;
 	padding: 25px;
 	text-align: center;
 }
