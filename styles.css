@@ -38,6 +38,7 @@ p {
 a {
 	color: #08b;
 	font-size: 15px;
+	letter-spacing: 1px;
 	text-decoration: none;
 	transition: 0.5s;
 }
