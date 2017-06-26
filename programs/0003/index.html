@@ -19,17 +19,19 @@
 <div class="article">
 <p id="output"></p>
 
+<hr>
 
 <div class="box">
-    <hr>
     <div class="signature-label">
         <p>Time Signature</p>
     </div>
-	<div class="signature">
+		<div class="signature" id="signature">
         <input type="text" min="1" max="50" value="4" id="numerator" onInput="updateSignature()"/>
         <hr>
         <input type="text" min="1" max="50" value="4" id="denominator" onInput="updateSignature()"/>
     </div>
+		<br>
+		<br>
     <div class="signature-label">
         <p>Click Volume</p>
     </div>
@@ -74,13 +76,14 @@
 		<div class="beat-length-label">
 				<p>Play Non-accented Beats</p>
 				<input type="checkbox" value="play-non-accented-beats" id="playNonAccentedBeats" onChange="updatePlayNA()" checked>
-
 		</div>
-		<br>
-    <button id="togglePlayback" onClick="togglePlayback()">Play</button>
-    <br>
-    <br>
 </div>
+
+<hr>
+<br>
+<button id="togglePlayback" onClick="togglePlayback()">Play</button>
+<br>
+<br>
 
 <div class="">
 <canvas class="shadow" id="beater" width=1500 height=200></canvas>
