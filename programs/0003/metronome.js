@@ -255,7 +255,7 @@ function updateSignature() {
         accents[accentPosition] = true;
         var prevPosition = accentPosition;
         var separation = beatSeparations[i];
-        if (isNormalInteger(separation)) {
+        if (isNormalInteger(separation) && parseInt(separation) <= 64) {
             accentPosition += parseInt(separation);
             length += parseInt(separation);
         } else {
@@ -605,12 +605,38 @@ function updateSubdivisions(subdivision) {
 function updatePlayNA() {
     // Update playNonAccentedBeats
     playNonAccentedBeats = document.getElementById("playNonAccentedBeats").checked;
+
+    clearCanvas();
+    drawBeats();
     return;
 }
 
-function initCanvas() {
-    // Initialize the canvas
-    drawBeats();
+function adjustNumeratorWidth() {
+    var numeratorBox = document.getElementById("numerator");
+
+    function getWidthOfInput() {
+        var tmp = document.createElement("span");
+        tmp.className = "input-element tmp-element";
+        tmp.innerHTML = numeratorBox.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        document.body.appendChild(tmp);
+        var theWidth = tmp.getBoundingClientRect().width;
+        document.body.removeChild(tmp);
+        return Math.max(theWidth,80);
+    }
+
+    function adjustWidthOfInput() {
+        numeratorBox.style.width = getWidthOfInput() + "px";
+        document.getElementById("signature").style.maxWidth = getWidthOfInput() + "px";
+    }
+
+    adjustWidthOfInput();
 }
 
-initCanvas();
+function initSequence() {
+    // Initialize the elements
+    drawBeats();
+    document.getElementById("numerator").onkeyup = adjustNumeratorWidth;
+    adjustNumeratorWidth();
+}
+
+initSequence();

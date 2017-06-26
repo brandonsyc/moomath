@@ -1,16 +1,22 @@
 input {
-	vertical-align: middle;
+		vertical-align: middle;
 }
 input[type=number] {
-	display: inline-block;
-	max-width: 50px;
+		display: inline-block;
+		max-width: 50px;
     text-align: center;
     font-size: 20px;
     padding: 1px;
 }
-input[type=text] {
+input[type=text]:not(.signature input) {
     display: inline-block;
     max-width: 100px;
+    text-align: center;
+    font-size: 15px;
+    padding: 1px;
+}
+.signature input {
+    display: inline-block;
     text-align: center;
     font-size: 15px;
     padding: 1px;
@@ -25,26 +31,26 @@ input[type=checkbox] {
     margin-left: 20px;
 }
 .box p {
-	display: inline-block;
-	vertical-align: middle;
+		display: inline-block;
+		vertical-align: middle;
+}
+.box {
+		text-align: left;
+		margin: auto;
 }
 .signature {
-    width: 100%;
-    max-width: 80px;
     display: inline-block;
 }
 .signature hr {
     margin: 8px 0;
 }
 .signature-label {
-    width: 100%;
     max-width: 150px;
     display: inline-block;
     position: relative;
     bottom: 20px;
 }
 .bpm-label {
-    width: 100%;
     max-width: 80px;
     display: inline-block;
     position: relative;
@@ -58,13 +64,13 @@ input:not(.radio .text) {
 		margin: 20px 0;
 		padding: 10px;
 		transition: 0.2s;
-		width: 100%;
 }
 input[type=radio]:hover {
 		border: 1px solid #bbb;
 }
 input[type=radio] {
 		width: 0;
+		visibility: hidden;
 }
 input[type=radio]:checked+label {
 		border-bottom: 5px solid #08b;
@@ -73,4 +79,8 @@ label {
 		border-bottom: 0px solid #08b;
 		padding: 10px;
 		transition: 0.2s;
+}
+.tmp-element {
+    visibility: hidden;
+    white-space: pre;
 }
