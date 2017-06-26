@@ -26,7 +26,9 @@ document.getElementById("top").innerHTML =
 
 document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
-		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Top</a></p>' +
+		'<p><a href=\"#top\"><strong>Go to Top</strong></a><br>' +
+		'&copy; ' + new Date().getFullYear() + ' CE &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a><br>' +
+		'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Visual%20Math">timothy.herchen@gmail.com</a></p>' +
 	'</div>';
 
 for (var j = 0; j < 2; j++) {
