@@ -258,7 +258,6 @@ a.icon {
 	clear: both;
 }
 .avatar {
-	border: 1px solid #ccc;
 	display: inline-block;
 	margin: 10px;
 	max-width: 250px;
@@ -350,8 +349,8 @@ img.latex {
 	}
 	.topnav a:not(.active):hover {
 		border-bottom: none;
-		border-left: 5px solid #bbb;
-		border-right: 5px solid #bbb;
+		border-left: 5px solid #096;
+		border-right: 5px solid #096;
 	}
 	.topnav div {
 		max-height: 0;
