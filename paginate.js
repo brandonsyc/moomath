@@ -11,25 +11,46 @@ rawFile.onreadystatechange = function ()
 		{
 			var allText = rawFile.responseText;
 			var array = allText.split("\n");
-			var div = document.getElementsByClassName("content")[0];
+			var content = document.getElementsByClassName("content")[0];
 			var columns = document.createElement("DIV");
 			columns.classList.add("columns");
 			for (var i = array.length - 1; i > -1; i--) {
 				var split = array[i].split(" -- ");
-				alert((array.length - i) + "");
+				
 				var fourth = document.createElement("DIV");
 				fourth.classList.add("fourth");
+				
 				var h3 = document.createElement("H3");
 				h3.appendChild(document.createTextNode(split[0]));
 				fourth.appendChild(h3);
+				
+				var thumb = document.createElement("A");
+				thumb.href = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/";
+				var img = document.createElement("IMG");
+				img.src = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/images/thumb.png";
+				thumb.appendChild(img);
+				fourth.appendChild(thumb);
+				
+				var p = document.createElement("P");
+				p.appendChild(document.createTextNode(split[1] + " \u2013 "));
+				var author = document.createElement("A");
+				author.href = "https://github.com/" + split[2];
+				author.appendChild(document.createTextNode(split[2]));
+				p.appendChild(author);
+				fourth.appendChild(p);
+				
 				columns.appendChild(fourth);
-				div.appendChild(columns);
-				/**var li = document.createElement("li");
-				var a = document.createElement("a");
-				a.appendChild(document.createTextNode(array[i].replace("--", "\u2013")));
-				a.href = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/";
-				li.appendChild(a);
-				ul.appendChild(li);*/
+				if ((array.length - i) % 4 === 0) {
+					content.appendChild(columns);
+					columns = document.createElement("DIV");
+					columns.classList.add("columns");
+					var clear = document.createElement("DIV");
+					clear.classList.add("clear");
+					content.appendChild(clear);
+					var separate = document.createElement("DIV");
+					separate.classList.add("separate");
+					content.appendChild(separate);
+				}
 			}
 		}
 	}
