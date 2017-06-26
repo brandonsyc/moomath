@@ -33,10 +33,16 @@ rawFile.onreadystatechange = function ()
 				
 				var p = document.createElement("P");
 				p.appendChild(document.createTextNode(split[1] + " \u2013 "));
-				var author = document.createElement("A");
-				author.href = "https://github.com/" + split[2];
-				author.appendChild(document.createTextNode(split[2]));
-				p.appendChild(author);
+				var people = split[2].split(" & ");
+				for (var j = 0; j < people.length; j++) {
+					var author = document.createElement("A");
+					author.href = "https://github.com/" + people[j];
+					author.appendChild(document.createTextNode(people[j]));
+					p.appendChild(author);
+					if (j < people.length - 1) {
+						p.appendChild(document.createTextNode(" & "));
+					}
+				}
 				fourth.appendChild(p);
 				
 				columns.appendChild(fourth);
