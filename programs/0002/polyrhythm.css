@@ -19,5 +19,5 @@ input[type=checkbox] {
 	vertical-align: middle;
 }
 canvas {
-	border: 1px solid black;
+	width: 90%;
 }

@@ -1,6 +1,6 @@
 document.getElementById("top").innerHTML =
 	'<div class="header">' +
-		'<h1>VISUAL MATH</h1><hr>' +
+		'<h1>VISUAL MATH</h1>' +
 		'<p>A lovely math blog</p>' +
 	'</div>' +
 
@@ -9,7 +9,6 @@ document.getElementById("top").innerHTML =
 		'<div><a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Calculators</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
 		'<a href="https://nichodon.github.io/about/">About</a></div>' +
@@ -20,7 +19,6 @@ document.getElementById("top").innerHTML =
 		'<a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Calculators</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
 		'<a href="https://nichodon.github.io/about/">About</a>' +
@@ -28,7 +26,9 @@ document.getElementById("top").innerHTML =
 
 document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
-		'<p>Copyright &copy; 2017 &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a> &ndash; <a href=\"#top\">Top</a></p>' +
+		'<p><a href=\"#top\"><strong>Go to Top</strong></a><br>' +
+		'&copy; ' + new Date().getFullYear() + ' CE &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a><br>' +
+		'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Visual%20Math">timothy.herchen@gmail.com</a></p>' +
 	'</div>';
 
 for (var j = 0; j < 2; j++) {
@@ -58,12 +58,6 @@ window.onscroll = function() {
 	}
 	else {
 		sticky.style.display = "none";
-	}
-	if (window.scrollY > (navbar.offsetTop + navbar.offsetHeight)) {
-		sticky.style.boxShadow = "0px 0px 10px #333";
-	}
-	else {
-		sticky.style.boxShadow = "none";
 	}
 };
 
