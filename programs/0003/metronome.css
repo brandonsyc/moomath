@@ -37,7 +37,7 @@ canvas {
     display: inline-block;
 }
 .signature hr {
-    margin: 5px 0;
+    margin: 8px 0;
 }
 .signature-label {
     width: 100%;
@@ -53,7 +53,7 @@ canvas {
     position: relative;
     bottom: 20px;
 }
-input:not(.radio) {
+input:not(.radio .text) {
 		border: 1px solid #ddd;
 		box-sizing: border-box;
 		font-size: 15px;

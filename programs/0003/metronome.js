@@ -1,3 +1,5 @@
+/** This javascript file controls all logic and timing systems behind the
+entirely JavaScript-powered metronome at nichodon.github.io/programs/0003. **/
 
 // Numerator and denominator of time signature
 var numerator = 4;
@@ -49,6 +51,9 @@ var ctx = canvas.getContext("2d");
 // Circle sizes
 var accentCircleRadius = 20;
 var normalCircleRadius = 10;
+var eighthCircleRadius = 5;
+var sixteenthCircleRadius = 2;
+var tripletCircleRadius = 4;
 
 // Counts how many flylines have passed
 var flylineNumber = 0;
@@ -58,6 +63,17 @@ var audios = [];
 
 // Stop/start button click number
 var stopStartCount = 0;
+
+// Beat length in quarter notes
+var beatLength = 0.25;
+
+// Display of subdivisions
+var eighthNoteSub = false;
+var sixteenthNoteSub = false;
+var tripletNoteSub = false;
+
+// Boolean controlling whether the program should play non accented Beats
+var playNonAccentedBeats = true;
 
 function resetVars() {
     // Reset user-uncontrolled variables
@@ -71,6 +87,7 @@ var bufferLoader;
 var gainNode;
 
 function BufferLoader(context, urlList, callback) {
+    // BufferLoader function that runs XMLHttpRequests to get audio files from server
     this.context = context;
     this.urlList = urlList;
     this.onload = callback;
@@ -95,7 +112,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
                                                 return;
                                             }
                                             loader.bufferList[index] = buffer;
-                                            if (++loader.loadCount == loader.urlList.length)
+                                            if (++loader.loadCount === loader.urlList.length)
                                                 loader.onload(loader.bufferList);
                                         },
                                        function(error) {
@@ -178,7 +195,7 @@ function playSound(buffer, time) {
 
 function playSoundAsync(url) {
     var date = context.currentTime * 1000;
-    console.log(date - prevBeatTime);
+    // console.log(date - prevBeatTime);
     prevBeatTime = date;
 
     // Plays a sound asynchronously, given its location
@@ -283,9 +300,12 @@ function updateSignature() {
         document.getElementById("denominator").style.backgroundColor = "#FF9184";
     }
 
-    if (play) {
-        togglePlayback();
-    }
+    if (play) togglePlayback();
+
+    updateBPM();
+    clearCanvas();
+    drawBeats();
+
     return;
 }
 
@@ -299,55 +319,41 @@ function updateVolume() {
 function updateBPM() {
     // Updates the BPM
     var givenBPM = document.getElementById("bpm").value;
+
     if (5.0 <= givenBPM && givenBPM <= 800.0) {
         bpm = givenBPM;
-    }
-    // Beats per second
+        bpm *= beatLength * denominator;
+    } else return;
+
     bps = bpm/60.0;
-
-    // Beats per millisecond
     bpms = bps/1000.0;
-
-    // Minutes per beat
     mpb = 1.0/bpm;
-
-    // Seconds per beat
     spb = 1.0/bps;
-
-    // Milliseconds per beat
     mspb = 1.0/bpms
 
-    if (play) {
-        togglePlayback();
-    }
+    if (play) togglePlayback();
+    return;
 }
 
 function accurateTimeout(func, delay) {
-    if (!play) {
-        return;
-    }
     // Provides an significantly more accurate timeout function, based on wall clock time rather than CPU time
+    if (!play) return;
+
     if (delay < timeRes) {
         setTimeout(func(),0);
         return;
     }
     var timeoutStart = context.currentTime * 1000;
 
-    // console.log(delay);
-    // console.log(timeoutStart);
     timeoutSelfCall(func, timeoutStart + delay);
     return;
 }
 
 function timeoutSelfCall(func, desiredTime) {
-    if (!play) {
-        return;
-    }
     // Companion to the accurateTimeout function
-    var cTime = context.currentTime * 1000;
+    if (!play) return;
 
-    // console.log(desiredTime);
-    // console.log(cTime);
+    var cTime = context.currentTime * 1000;
 
     if (desiredTime - cTime < timeRes) {
         if (play) {
@@ -356,13 +362,12 @@ function timeoutSelfCall(func, desiredTime) {
         return;
     }
 
-    // console.log(Math.max((desiredTime-cTime)/2.0,0));
-
     setTimeout(function(){timeoutSelfCall(func,desiredTime);}, Math.max((desiredTime-cTime)/2.0,0));
     return;
 }
 
 function stopAll() {
+    // Stop all audios in progress
     for (i = 0; i < audios.length; i++) {
         audios[i].stop();
     }
@@ -385,8 +390,20 @@ function playBeat(playTime = -1, ssc) {
     for (i = 0; i < numerator; i++) {
         if (accents[i]) {
             playSound(3, playTime / 1000.0 + i * spb);
-        } else {
+        } else if (playNonAccentedBeats){
             playSound(0, playTime / 1000.0 + i * spb);
+        }
+        if (playNonAccentedBeats) {
+            if (eighthNoteSub) {
+                playSound(1, playTime / 1000.0 + (i + 0.5) * spb);
+            } else if (sixteenthNoteSub) {
+                playSound(2, playTime / 1000.0 + (i + 0.25) * spb);
+                playSound(2, playTime / 1000.0 + (i + 0.5) * spb);
+                playSound(2, playTime / 1000.0 + (i + 0.75) * spb);
+            } else if (tripletNoteSub) {
+                playSound(1, playTime / 1000.0 + (i + 1.0/3.0) * spb);
+                playSound(1, playTime / 1000.0 + (i + 2.0/3.0) * spb);
+            }
         }
     }
 
@@ -458,39 +475,153 @@ function drawFilledCircle(coords,radius) {
 }
 
 function clearCanvas() {
+    // Clear the canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function drawBeats(lineX) {
     // Draw the beats to the canvas
-    for (i = 0; i <= numerator; i++) {
-        var circleCoords = beatToCoords(i);
-        if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
-            if (accents[i % numerator]) {
-                drawFilledCircle(beatToCoords(i), accentCircleRadius);
+    if (!eighthNoteSub && !sixteenthNoteSub && !tripletNoteSub) {
+        for (i = 0; i <= numerator; i++) {
+            var circleCoords = beatToCoords(i);
+            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+                if (accents[i % numerator]) {
+                    drawFilledCircle(beatToCoords(i), accentCircleRadius);
+                } else if (playNonAccentedBeats) {
+                    drawFilledCircle(beatToCoords(i), normalCircleRadius);
+                }
             } else {
-                drawFilledCircle(beatToCoords(i), normalCircleRadius);
+                if (accents[i % numerator]) {
+                    drawCircle(beatToCoords(i), accentCircleRadius);
+                } else if (playNonAccentedBeats) {
+                    drawCircle(beatToCoords(i), normalCircleRadius);
+                }
             }
-        } else {
-            if (accents[i % numerator]) {
-                drawCircle(beatToCoords(i), accentCircleRadius);
+        }
+    }
+    if (eighthNoteSub) {
+        for (i = 0; i <= numerator; i += 0.5) {
+            var circleCoords = beatToCoords(i);
+            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+                if (i % 1 === 0) {
+                    if (accents[i % numerator]) {
+                        drawFilledCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawFilledCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else if (playNonAccentedBeats) {
+                    drawFilledCircle(beatToCoords(i), eighthCircleRadius);
+                }
             } else {
-                drawCircle(beatToCoords(i), normalCircleRadius);
+                if (i % 1 === 0) {
+                    if (accents[i % numerator]) {
+                        drawCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else if (playNonAccentedBeats) {
+                    drawCircle(beatToCoords(i), eighthCircleRadius);
+                }
+            }
+        }
+    }
+    if (tripletNoteSub) {
+        for (i = 0; i <= numerator; i += 1.0 / 3.0) {
+            var circleCoords = beatToCoords(i);
+            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+                if (0.5 - Math.abs(i % 1 - 0.5) < 0.01) {
+                    if (accents[i % numerator]) {
+                        drawFilledCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawFilledCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else {
+                    drawFilledCircle(beatToCoords(i), tripletCircleRadius);
+                }
+            } else {
+                if (0.5 - Math.abs(i % 1 - 0.5) < 0.01) {
+                    if (accents[i % numerator]) {
+                        drawCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else if (playNonAccentedBeats) {
+                    drawCircle(beatToCoords(i), tripletCircleRadius);
+                }
+            }
+        }
+    }
+    if (sixteenthNoteSub) {
+        for (i = 0; i <= numerator; i += 0.25) {
+            var circleCoords = beatToCoords(i);
+            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+                if (i % 1 === 0) {
+                    if (accents[i % numerator]) {
+                        drawFilledCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawFilledCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else if (playNonAccentedBeats) {
+                    drawFilledCircle(beatToCoords(i), sixteenthCircleRadius);
+                }
+            } else {
+                if (i % 1 === 0) {
+                    if (accents[i % numerator]) {
+                        drawCircle(beatToCoords(i), accentCircleRadius);
+                    } else if (playNonAccentedBeats) {
+                        drawCircle(beatToCoords(i), normalCircleRadius);
+                    }
+                } else if (playNonAccentedBeats) {
+                    drawCircle(beatToCoords(i), sixteenthCircleRadius);
+                }
             }
         }
     }
     return;
 }
 
-function getCursorPosition(canvas, event) {
-    var rect = canvas.getBoundingClientRect();
-    var x = event.clientX - rect.left;
-    var y = event.clientY - rect.top;
-    console.log("x: " + x + " y: " + y);
+function updateBeatLength(length) {
+    // Length is given in quarter notes
+    beatLength = length/4.0;
+    updateBPM();
 }
 
-function updateBeatLength() {
-    console.log("5");
+function updateSubdivisions(subdivision) {
+    // Update subdivision of beats
+    if (subdivision === 0) {
+        eighthNoteSub = false;
+        tripletNoteSub = false;
+        sixteenthNoteSub = false;
+    } else if (subdivision === 1) {
+        eighthNoteSub = true;
+        tripletNoteSub = false;
+        sixteenthNoteSub = false;
+    } else if (subdivision === 2) {
+        eighthNoteSub = false;
+        tripletNoteSub = true;
+        sixteenthNoteSub = false;
+    } else if (subdivision === 3) {
+        eighthNoteSub = false;
+        tripletNoteSub = false;
+        sixteenthNoteSub = true;
+    }
+
+    clearCanvas();
+    drawBeats();
+    return;
 }
 
-drawBeats();
+function updatePlayNA() {
+
+    playNonAccentedBeats = document.getElementById("playNonAccentedBeats").checked;
+    console.log('3');
+    console.log(playNonAccentedBeats);
+    return;
+}
+
+function initCanvas() {
+    // Initialize the canvas
+    drawBeats();
+}
+
+initCanvas();

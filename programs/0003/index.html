@@ -38,7 +38,7 @@
         <p>Click Volume</p>
     </div>
     <div class="signature-label">
-        <input id="volume" min="0" max="100" value="80" type="range" onInput="updateVolume()"/>
+        <input id="volume" min="0" max="200" value="80" type="range" onInput="updateVolume()"/>
     </div>
     <div class="bpm-label">
         <p>BPM</p>
@@ -48,18 +48,39 @@
     </div>
     <br>
     <div class="beat-length-label">
-        <input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength()">
-				<label for="whole">Whole</label>
-        <input type="radio" value="note-length" id="halfNoteLength" onClick="updateBeatLength()">
-				<label for="whole">Half</label>
-        <input type="radio" value="note-length" id="dottedQuarterNoteLength" onClick="updateBeatLength()">
-				<label for="whole">Dotted Quarter</label>
-        <input type="radio" value="note-length" id="quarterNoteLength" onClick="updateBeatLength()">
-				<label for="whole">Quarter</label>
-        <input type="radio" value="note-length" id="eighthNoteLength" onClick="updateBeatLength()">
-				<label for="whole">Eighth</label>
+				<p>Beat Length</p>
+        <input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength(4)" name="select">
+				<label for="wholeNoteLength">Whole</label>
+        <input type="radio" value="note-length" id="halfNoteLength" onClick="updateBeatLength(2)" name="select">
+				<label for="halfNoteLength">Half</label>
+        <input type="radio" value="note-length" id="dottedQuarterNoteLength" onClick="updateBeatLength(1.5)" name="select">
+				<label for="dottedQuarterNoteLength">Dotted Quarter</label>
+        <input type="radio" value="note-length" id="quarterNoteLength" onClick="updateBeatLength(1)" name="select" checked="checked">
+				<label for="quarterNoteLength">Quarter</label>
+        <input type="radio" value="note-length" id="eighthNoteLength" onClick="updateBeatLength(0.5)" name="select">
+				<label for="eighthNoteLength">Eighth</label>
+				<input type="radio" value="note-length" id="sixteenthNoteLength" onClick="updateBeatLength(0.25)" name="select">
+				<label for="sixteenthNoteLength">Sixteenth</label>
     </div>
     <br>
+		<div class="beat-length-label">
+				<p>Note Subdivisions</p>
+        <input type="radio" value="subdivision-length" id="noSubdivisions" onClick="updateSubdivisions(0)" name="subdivision" checked="checked">
+				<label for="noSubdivisions">None</label>
+        <input type="radio" value="subdivision-length" id="eighthSubdivisions" onClick="updateSubdivisions(1)" name="subdivision">
+				<label for="eighthSubdivisions">Eighth</label>
+        <input type="radio" value="subdivision-length" id="tripletSubdivisions" onClick="updateSubdivisions(2)" name="subdivision">
+				<label for="tripletSubdivisions">Triplet</label>
+        <input type="radio" value="subdivision-length" id="sixteenthSubdivisions" onClick="updateSubdivisions(3)" name="subdivision">
+				<label for="sixteenthSubdivisions">Sixteenth</label>
+    </div>
+		<br>
+		<div class="beat-length-label">
+				<p>Play Non-accented Beats</p>
+				<input type="checkbox" value="play-non-accented-beats" id="playNonAccentedBeats" onChange="updatePlayNA()" checked>
+
+		</div>
+		<br>
     <button id="togglePlayback" onClick="togglePlayback()">Play</button>
     <br>
     <br>
