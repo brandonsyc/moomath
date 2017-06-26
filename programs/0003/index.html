@@ -30,10 +30,38 @@
         <p>Time Signature</p>
     </div>
 	<div class="signature">
-        <input type="number" min="1" max="50" value="4" id="numerator" onInput="updateSignature()"/>
+        <input type="text" min="1" max="50" value="4" id="numerator" onInput="updateSignature()"/>
         <hr>
-        <input type="number" min="1" max="50" value="4" id="denominator" onInput="updateSignature()"/>
+        <input type="text" min="1" max="50" value="4" id="denominator" onInput="updateSignature()"/>
     </div>
+    <div class="signature-label">
+        <p>Click Volume</p>
+    </div>
+    <div class="signature-label">
+        <input id="volume" min="0" max="100" value="80" type="range" onInput="updateVolume()"/>
+    </div>
+    <div class="bpm-label">
+        <p>BPM</p>
+    </div>
+    <div class="bpm-label">
+        <input id="bpm" min="5" max="800" value="120" type="number" onInput="updateBPM()"/>
+    </div>
+    <br>
+    <div class="beat-length-label">
+        <input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength()">
+				<label for="whole">Whole</label>
+        <input type="radio" value="note-length" id="halfNoteLength" onClick="updateBeatLength()">
+				<label for="whole">Half</label>
+        <input type="radio" value="note-length" id="dottedQuarterNoteLength" onClick="updateBeatLength()">
+				<label for="whole">Dotted Quarter</label>
+        <input type="radio" value="note-length" id="quarterNoteLength" onClick="updateBeatLength()">
+				<label for="whole">Quarter</label>
+        <input type="radio" value="note-length" id="eighthNoteLength" onClick="updateBeatLength()">
+				<label for="whole">Eighth</label>
+    </div>
+    <br>
+    <button id="togglePlayback" onClick="togglePlayback()">Play</button>
+    <br>
     <br>
 </div>
 

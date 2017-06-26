@@ -8,6 +8,13 @@ input[type=number] {
     font-size: 20px;
     padding: 1px;
 }
+input[type=text] {
+    display: inline-block;
+    max-width: 100px;
+    text-align: center;
+    font-size: 15px;
+    padding: 1px;
+}
 input[type=range] {
     display: inline-block;
     max-width: 120px;
@@ -37,5 +44,36 @@ canvas {
     max-width: 150px;
     display: inline-block;
     position: relative;
-    bottom: 25px;
+    bottom: 20px;
+}
+.bpm-label {
+    width: 100%;
+    max-width: 80px;
+    display: inline-block;
+    position: relative;
+    bottom: 20px;
+}
+input:not(.radio) {
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+		font-size: 15px;
+		letter-spacing: 1px;
+		margin: 20px 0;
+		padding: 10px;
+		transition: 0.2s;
+		width: 100%;
+}
+input[type=radio]:hover {
+		border: 1px solid #bbb;
+}
+input[type=radio] {
+		width: 0;
+}
+input[type=radio]:checked+label {
+		border-bottom: 5px solid #08b;
+}
+label {
+		border-bottom: 0px solid #08b;
+		padding: 10px;
+		transition: 0.2s;
 }
