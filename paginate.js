@@ -40,7 +40,7 @@ rawFile.onreadystatechange = function ()
 				fourth.appendChild(p);
 				
 				columns.appendChild(fourth);
-				if ((array.length - i) % 4 === 0) {
+				if ((array.length - i) % 4 === 0 || i === 0) {
 					content.appendChild(columns);
 					columns = document.createElement("DIV");
 					columns.classList.add("columns");
