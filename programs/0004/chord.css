@@ -1,7 +1,6 @@
 /* CSS Document */
 .piano {
 	font-size: 0;
-	min-width: 960px;
 	user-select: none;
 }
 .key {
@@ -37,4 +36,18 @@
 }
 .box p {
 	display: inline-block;
+}
+.break {
+	display: inline-block;
+}
+@media only screen and (max-width: 768px) {
+	.break {
+		display: block;
+	}
+	.key {
+		width: 15%;
+	}
+	.black {
+		margin: 0 -7.5%;
+	}
 }
