@@ -2,7 +2,7 @@
 entirely JavaScript-powered metronome at nichodon.github.io/programs/0003. **/
 
 // Numerator and denominator of time signature
-var numerator = 4;
+var numerators = [4];
 var denominator = 4;
 
 // Beats per minute
@@ -36,7 +36,7 @@ var click3 = "sounds/click3.wav";
 var measureNumber = 0;
 
 // Accented beats (boolean array)
-var accents = [true, false, false, false];
+var accents = [[true, false, false, false]];
 
 // Volume
 var volume = 0.8;
@@ -74,6 +74,9 @@ var tripletNoteSub = false;
 
 // Boolean controlling whether the program should play non accented Beats
 var playNonAccentedBeats = true;
+
+// Swing value
+var swingValue = 50.0;
 
 function resetVars() {
     // Reset user-uncontrolled variables
@@ -200,9 +203,11 @@ function togglePlayback() {
     play = !play;
     if (play) {
         playButton.innerHTML = "Stop";
+        measureNumber = 0;
         playBeat(-1,stopStartCount);
     } else {
         playButton.innerHTML = "Play";
+        measureNumber = 0;
         stopAll();
         resetVars();
     }
@@ -235,42 +240,54 @@ String.prototype.trim = function(charlist) {
     return this.trimLeft(charlist).trimRight(charlist);
 };
 
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
+
 function updateSignature() {
     // Updates the time signature
-    var givenNumerator = document.getElementById("numerator").value;
+    var givenNumerators = document.getElementById("numerator").value.trim(',').split(',');
     var givenDenominator = document.getElementById("denominator").value;
+
+    numerators = [];
 
 
     /*1 <= givenNumerator && givenNumerator <= 50*/
     // If the numerator is a '+' separated list of whole numbers, it is considered okay
 
-    var beatSeparations = givenNumerator.replace(" ","").trim('+').split('+');
-    if (beatSeparations.length === 0) return;
+    for (j = 0; j < givenNumerators.length; j++) {
+        var beatSeparations = givenNumerators[j].replace(" ","").trim('+').split('+');
+        if (beatSeparations.length === 0) return;
 
-    var accentPosition = 0;
-    var length = 0;
-    var valid = true;
+        var accentPosition = 0;
+        var length = 0;
+        var valid = true;
 
-    for (i = 0; i < beatSeparations.length; i++) {
-        accents[accentPosition] = true;
-        var prevPosition = accentPosition;
-        var separation = beatSeparations[i];
-        if (isNormalInteger(separation) && parseInt(separation) <= 64) {
-            accentPosition += parseInt(separation);
-            length += parseInt(separation);
+        for (i = accents.length; i < givenNumerators.length; i++) {
+            accents.push([]);
+        }
+
+        for (i = 0; i < beatSeparations.length; i++) {
+            accents[j][accentPosition] = true;
+            var prevPosition = accentPosition;
+            var separation = beatSeparations[i];
+            if (isNormalInteger(separation) && parseInt(separation) <= 64) {
+                accentPosition += parseInt(separation);
+                length += parseInt(separation);
+            } else {
+                valid = false;
+            }
+            for (k = prevPosition + 1; k < accentPosition; k++) {
+                accents[j][k] = false;
+            }
+        }
+
+        if (valid) {
+            document.getElementById("numerator").style.backgroundColor = "white";
+            numerators.push(length);
         } else {
-            valid = false;
+            document.getElementById("numerator").style.backgroundColor = "#FF9184";
         }
-        for (j = prevPosition + 1; j < accentPosition; j++) {
-            accents[j] = false;
-        }
-    }
-
-    if (valid) {
-        document.getElementById("numerator").style.backgroundColor = "white";
-        numerator = length;
-    } else {
-        document.getElementById("numerator").style.backgroundColor = "#FF9184";
     }
 
     if (isNormalInteger(givenDenominator)) {
@@ -362,6 +379,7 @@ function stopAll() {
 }
 
 function playBeat(playTime = -1, ssc) {
+
     // SSC identifying is used to cancel playBeat() calls that are from previous stopped measures
     if (ssc != stopStartCount) {
         return;
@@ -373,17 +391,17 @@ function playBeat(playTime = -1, ssc) {
 
     audios = [];
 
-    flyLine();
+    flyLine(-1, 0, measureNumber);
 
-    for (i = 0; i < numerator; i++) {
-        if (accents[i]) {
+    for (i = 0; i < numerators[measureNumber]; i++) {
+        if (accents[measureNumber][i]) {
             playSound(3, playTime / 1000.0 + i * spb);
         } else if (playNonAccentedBeats){
             playSound(0, playTime / 1000.0 + i * spb);
         }
         if (playNonAccentedBeats) {
             if (eighthNoteSub) {
-                playSound(1, playTime / 1000.0 + (i + 0.5) * spb);
+                playSound(1, playTime / 1000.0 + (i + swingValue / 100.0) * spb);
             } else if (sixteenthNoteSub) {
                 playSound(2, playTime / 1000.0 + (i + 0.25) * spb);
                 playSound(2, playTime / 1000.0 + (i + 0.5) * spb);
@@ -400,15 +418,15 @@ function playBeat(playTime = -1, ssc) {
     // Determine how far CPU clock has fallen out of sync, then adjust next delay accordingly
     var sscDuplicate = stopStartCount;
 
-    accurateTimeout(function() {playBeat(playTime + mspb * numerator, sscDuplicate);}, mspb * numerator + playTime - cTime - 20);
-
-    measureNumber += 1;
+    accurateTimeout(function() {measureNumber = (measureNumber + 1) % numerators.length; playBeat(playTime + mspb * numerators[mod(measureNumber - 1, numerators.length)], sscDuplicate);}, mspb * numerators[measureNumber] + playTime - cTime - 20);
 
     return;
 }
 
-function flyLine(frameTime = -1, frame = 0) {
+function flyLine(frameTime = -1, frame = 0, mn) {
     // "Recursive" function which controls the line that goes across the canvas and the animations
+    if (mn != measureNumber) return;
+
     clearCanvas();
 
     if (!play) {
@@ -416,7 +434,7 @@ function flyLine(frameTime = -1, frame = 0) {
         return;
     }
 
-    var lineX = 100 + frame * 1300 / (60 * spb * numerator);
+    var lineX = 100 + frame * 1300 / (60 * spb * numerators[measureNumber]);
 
     drawBeats(lineX);
 
@@ -434,14 +452,14 @@ function flyLine(frameTime = -1, frame = 0) {
     }
     var cTime = context.currentTime * 1000;
 
-    accurateTimeout(function() {flyLine(frameTime + 1000.0/60.0, frame + 1);}, frameTime - cTime + 1000.0/60.0);
+    accurateTimeout(function() {flyLine(frameTime + 1000.0/60.0, frame + 1, mn);}, frameTime - cTime + 1000.0/60.0);
 
     return;
 }
 
 function beatToCoords(beat) {
     // Moves a beat to a pair of coordinates on the canvas
-    return [100 + beat * 1300 / (numerator), 100];
+    return [100 + beat * 1300 / (numerators[measureNumber]), 100];
 }
 
 function drawCircle(coords,radius) {
@@ -470,16 +488,16 @@ function clearCanvas() {
 function drawBeats(lineX) {
     // Draw the beats to the canvas
     if (!eighthNoteSub && !sixteenthNoteSub && !tripletNoteSub) {
-        for (i = 0; i <= numerator; i++) {
+        for (i = 0; i <= numerators[measureNumber]; i++) {
             var circleCoords = beatToCoords(i);
-            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
-                if (accents[i % numerator]) {
+            if (i != numerators[measureNumber] && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+                if (accents[measureNumber][i % numerators[measureNumber]]) {
                     drawFilledCircle(beatToCoords(i), accentCircleRadius);
                 } else if (playNonAccentedBeats) {
                     drawFilledCircle(beatToCoords(i), normalCircleRadius);
                 }
             } else {
-                if (accents[i % numerator]) {
+                if (accents[measureNumber][i % numerators[measureNumber]]) {
                     drawCircle(beatToCoords(i), accentCircleRadius);
                 } else if (playNonAccentedBeats) {
                     drawCircle(beatToCoords(i), normalCircleRadius);
@@ -488,37 +506,44 @@ function drawBeats(lineX) {
         }
     }
     if (eighthNoteSub) {
-        for (i = 0; i <= numerator; i += 0.5) {
-            var circleCoords = beatToCoords(i);
-            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+        for (i = 0; i <= numerators[measureNumber]; i += 0.5) {
+            var circleCoords = null;
+
+            if (i % 1 === 0) {
+                circleCoords = beatToCoords(i);
+            } else {
+                circleCoords = beatToCoords(i + swingValue / 100.0 - 0.5);
+            }
+
+            if (i != numerators[measureNumber]&& Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
                 if (i % 1 === 0) {
-                    if (accents[i % numerator]) {
+                    if (accents[measureNumber][i % numerators[measureNumber]]) {
                         drawFilledCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawFilledCircle(beatToCoords(i), normalCircleRadius);
                     }
                 } else if (playNonAccentedBeats) {
-                    drawFilledCircle(beatToCoords(i), eighthCircleRadius);
+                    drawFilledCircle(beatToCoords(i + swingValue / 100.0 - 0.5), eighthCircleRadius);
                 }
             } else {
                 if (i % 1 === 0) {
-                    if (accents[i % numerator]) {
+                    if (accents[measureNumber][i % numerators[measureNumber]]) {
                         drawCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawCircle(beatToCoords(i), normalCircleRadius);
                     }
                 } else if (playNonAccentedBeats) {
-                    drawCircle(beatToCoords(i), eighthCircleRadius);
+                    drawCircle(beatToCoords(i + swingValue / 100.0 - 0.5), eighthCircleRadius);
                 }
             }
         }
     }
     if (tripletNoteSub) {
-        for (i = 0; i <= numerator; i += 1.0 / 3.0) {
+        for (i = 0; i <= numerators[measureNumber]; i += 1.0 / 3.0) {
             var circleCoords = beatToCoords(i);
-            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+            if (i != numerators[measureNumber]&& Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
                 if (0.5 - Math.abs(i % 1 - 0.5) < 0.01) {
-                    if (accents[Math.round(i) % numerator]) {
+                    if (accents[measureNumber][Math.round(i) % numerators[measureNumber]]) {
                         drawFilledCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawFilledCircle(beatToCoords(i), normalCircleRadius);
@@ -528,7 +553,7 @@ function drawBeats(lineX) {
                 }
             } else {
                 if (0.5 - Math.abs(i % 1 - 0.5) < 0.01) {
-                    if (accents[Math.round(i) % numerator]) {
+                    if (accents[measureNumber][Math.round(i) % numerators[measureNumber]]) {
                         drawCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawCircle(beatToCoords(i), normalCircleRadius);
@@ -540,11 +565,11 @@ function drawBeats(lineX) {
         }
     }
     if (sixteenthNoteSub) {
-        for (i = 0; i <= numerator; i += 0.25) {
+        for (i = 0; i <= numerators[measureNumber]; i += 0.25) {
             var circleCoords = beatToCoords(i);
-            if (i != numerator && Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
+            if (i != numerators[measureNumber]&& Math.abs(circleCoords[0] - lineX + 5.0) < 20.0) {
                 if (i % 1 === 0) {
-                    if (accents[i % numerator]) {
+                    if (accents[measureNumber][i % numerators[measureNumber]]) {
                         drawFilledCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawFilledCircle(beatToCoords(i), normalCircleRadius);
@@ -554,7 +579,7 @@ function drawBeats(lineX) {
                 }
             } else {
                 if (i % 1 === 0) {
-                    if (accents[i % numerator]) {
+                    if (accents[measureNumber][i % numerators[measureNumber]]) {
                         drawCircle(beatToCoords(i), accentCircleRadius);
                     } else if (playNonAccentedBeats) {
                         drawCircle(beatToCoords(i), normalCircleRadius);
@@ -572,6 +597,7 @@ function updateBeatLength(length) {
     // Length is given in quarter notes
     beatLength = length/4.0;
     updateBPM();
+    return;
 }
 
 function updateSubdivisions(subdivision) {
@@ -580,18 +606,22 @@ function updateSubdivisions(subdivision) {
         eighthNoteSub = false;
         tripletNoteSub = false;
         sixteenthNoteSub = false;
+        document.getElementById("swingValue").disabled = true;
     } else if (subdivision === 1) {
         eighthNoteSub = true;
         tripletNoteSub = false;
         sixteenthNoteSub = false;
+        document.getElementById("swingValue").disabled = false;
     } else if (subdivision === 2) {
         eighthNoteSub = false;
         tripletNoteSub = true;
         sixteenthNoteSub = false;
+        document.getElementById("swingValue").disabled = true;
     } else if (subdivision === 3) {
         eighthNoteSub = false;
         tripletNoteSub = false;
         sixteenthNoteSub = true;
+        document.getElementById("swingValue").disabled = true;
     }
 
     if (play) togglePlayback();
@@ -612,24 +642,33 @@ function updatePlayNA() {
 }
 
 function adjustNumeratorWidth() {
+    // Dynamically adjust width of numerator
     var numeratorBox = document.getElementById("numerator");
 
-    function getWidthOfInput() {
-        var tmp = document.createElement("span");
-        tmp.className = "input-element tmp-element";
-        tmp.innerHTML = numeratorBox.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        document.body.appendChild(tmp);
-        var theWidth = tmp.getBoundingClientRect().width;
-        document.body.removeChild(tmp);
-        return Math.max(theWidth,80);
-    }
+    var tmpItem = document.createElement("span");
+    tmpItem.className = "input-element tmp-element";
+    tmpItem.innerHTML = numeratorBox.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    document.body.appendChild(tmpItem);
+    var numWidth = tmpItem.getBoundingClientRect().width;
+    document.body.removeChild(tmpItem);
 
-    function adjustWidthOfInput() {
-        numeratorBox.style.width = getWidthOfInput() + "px";
-        document.getElementById("signature").style.maxWidth = getWidthOfInput() + "px";
-    }
+    numeratorBox.style.width = Math.max(numWidth,80) + "px";
+    document.getElementById("signature").style.maxWidth = Math.max(numWidth,80) + "px";
 
-    adjustWidthOfInput();
+    return;
+}
+
+function updateSwing() {
+    // Update swing for eighth notes
+
+    swingValue = document.getElementById("swingValue").value;
+
+    if (play) togglePlayback();
+
+    clearCanvas();
+    drawBeats();
+
+    return;
 }
 
 function initSequence() {

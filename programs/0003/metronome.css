@@ -1,6 +1,10 @@
 input {
 		vertical-align: middle;
 }
+input[type=checkbox] {
+		position: relative;
+		right: 20px;
+}
 input[type=number] {
 		display: inline-block;
 		max-width: 50px;
@@ -35,7 +39,7 @@ input[type=checkbox] {
 		vertical-align: middle;
 }
 .box {
-		text-align: left;
+		text-align: middle;
 		margin: auto;
 }
 .signature {
