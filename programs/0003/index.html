@@ -74,8 +74,11 @@
     </div>
 		<br>
 		<div class="beat-length-label">
-				<p>Play Non-accented Beats</p>
+				<p>Playback</p>
+				<label for="playNonAccentedBeats">Play Non-accented Beats</label>
 				<input type="checkbox" value="play-non-accented-beats" id="playNonAccentedBeats" onChange="updatePlayNA()" checked>
+				<label for="swingValue">Eighth Swing</label>
+				<input type="range" value="50" id="swingValue" onInput="updateSwing()" min="50" max="75" disabled>
 		</div>
 </div>
 
