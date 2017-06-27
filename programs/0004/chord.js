@@ -11,7 +11,11 @@ var chords = [[4, 7],
 			  [4, 7, 10],
 			  [4, 7, 11],
 			  [4, 8, 10],
-			  [4, 8, 11]
+			  [4, 8, 11],
+			  [2, 4, 7],
+			  [4, 5, 7],
+			  [2, 7],
+			  [5, 7]
 			 ];
 var names = [["Major Triad", ""], 
 			 ["Minor Triad", "m"], 
@@ -24,7 +28,11 @@ var names = [["Major Triad", ""],
 			 ["Dominant Seventh", "<sup>7</sup>"],
 			 ["Major Seventh", "M<sup>7</sup>"],
 			 ["Augmented Seventh", "+<sup>7</sup>"],
-			 ["Augmented Major Seventh", "+<sup>M7</sup>"]
+			 ["Augmented Major Seventh", "+<sup>M7</sup>"],
+			 ["Add Nine", "<sup>2</sup>"],
+			 ["Add Fourth", "<sup>4</sup>"],
+			 ["Suspended Second", "<sup>sus2</sup>"],
+			 ["Suspended Fourth", "<sup>sus4</sup>"]
 			];
 function toggle(x)
 {
