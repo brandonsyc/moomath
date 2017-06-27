@@ -47,7 +47,9 @@ function toggle(x)
     
 	var indices = [], i = -1;
 	while ((i = states.indexOf(true, i + 1)) !== -1) {
-        indices.push(i);
+		if (indices.indexOf(i % 12) === -1) {
+        	indices.push(i % 12);
+		}
     }
 	
 	var chord = "Not a chord";
