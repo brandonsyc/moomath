@@ -1,5 +1,5 @@
 // JavaScript Document
-var states = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+var states = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 var chords = [[4, 7],
 			  [3, 7],
 			  [4, 8],
@@ -32,7 +32,7 @@ var names = [["Major Triad", ""],
 			 ["Add Fourth", "<sup>4</sup>"],
 			 ["Suspended Fourth", "<sup>sus4</sup>"]
 			];
-var notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 function toggle(x)
 {
 	"use strict";
@@ -50,6 +50,8 @@ function toggle(x)
 		if (indices.indexOf(i % 12) === -1) {
         	indices.push(i % 12);
 		}
+		var audio = new Audio("sounds/" + (i + 36) + ".wav");
+		audio.play();
     }
 	
 	var chord = "Not a chord";
