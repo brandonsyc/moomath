@@ -14,7 +14,6 @@ var chords = [[4, 7],
 			  [4, 8, 11],
 			  [2, 4, 7],
 			  [4, 5, 7],
-			  [2, 7],
 			  [5, 7]
 			 ];
 var names = [["Major Triad", ""], 
@@ -31,9 +30,9 @@ var names = [["Major Triad", ""],
 			 ["Augmented Major Seventh", "+<sup>M7</sup>"],
 			 ["Add Nine", "<sup>2</sup>"],
 			 ["Add Fourth", "<sup>4</sup>"],
-			 ["Suspended Second", "<sup>sus2</sup>"],
 			 ["Suspended Fourth", "<sup>sus4</sup>"]
 			];
+var notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 function toggle(x)
 {
 	"use strict";
@@ -74,7 +73,7 @@ function toggle(x)
 			}
 		}
 		if (index > -1) {
-			chord = names[j][0] + " (" + names[j][1] + ")";
+			chord = names[j][0] + " (" + notes[((indices[0] % 12) + 12) % 12] + names[j][1] + ")";
 			break;
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
