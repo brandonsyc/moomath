@@ -2,9 +2,30 @@
 var states = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
 var chords = [[4, 7],
 			  [3, 7],
-			  [3, 8]
+			  [4, 8],
+			  [3, 6],
+			  [3, 6, 9],
+			  [3, 6, 10],
+			  [3, 7, 10],
+			  [3, 7, 11],
+			  [4, 7, 10],
+			  [4, 7, 11],
+			  [4, 8, 10],
+			  [4, 8, 11]
 			 ];
-var names = ["Major Triad", "Minor Triad", "Augmented Triad"];
+var names = [["Major Triad", ""], 
+			 ["Minor Triad", "m"], 
+			 ["Augmented Triad", "aug"],
+			 ["Diminished Triad", "dim"],
+			 ["Diminished Seventh", "<sup>o7</sup>"],
+			 ["Half-Diminished Seventh", "<sup>&oslash;7</sup>"],
+			 ["Minor Seventh", "m<sup>7</sup>"],
+			 ["Minor Major Seventh", "m<sup>M7</sup>"],
+			 ["Dominant Seventh", "<sup>7</sup>"],
+			 ["Major Seventh", "M<sup>7</sup>"],
+			 ["Augmented Seventh", "+<sup>7</sup>"],
+			 ["Augmented Major Seventh", "+<sup>M7</sup>"]
+			];
 function toggle(x)
 {
 	"use strict";
@@ -45,7 +66,7 @@ function toggle(x)
 			}
 		}
 		if (index > -1) {
-			chord = names[j];
+			chord = names[j][0] + " (" + names[j][1] + ")";
 			break;
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
