@@ -357,8 +357,12 @@ function parseMultipliers(string) {
 
 function updateSignature() {
     // Updates the time signature
-    var givenNumerators = parseMultipliers(document.getElementById("numerator").value.replace(" ",""));
+    var givenN = document.getElementById("numerator").value;
+    givenN = givenN.replace(/\s/g, "");
+    var givenNumerators = parseMultipliers(givenN);
     var givenDenominator = document.getElementById("denominator").value;
+
+    console.log(givenN);
 
     if (givenNumerators == false) {
         document.getElementById("numerator").style.backgroundColor = "#FF9184";
@@ -389,7 +393,7 @@ function updateSignature() {
             accents[j][accentPosition] = true;
             var prevPosition = accentPosition;
             var separation = beatSeparations[i];
-            if (isNormalInteger(separation) && parseInt(separation) <= 64) {
+            if (isNormalInteger(separation) && parseInt(separation) <= 100) {
                 accentPosition += parseInt(separation);
                 length += parseInt(separation);
             } else {
