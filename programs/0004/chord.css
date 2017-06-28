@@ -4,14 +4,15 @@
 	user-select: none;
 }
 .key {
+	border-top: 1px solid #eee;
 	border-radius: 5px;
-	box-shadow: inset 0px -5px 0px 1px rgba(51, 51, 51, 0.1);
 	display: inline-block;
 	transition: 0.2s;
-	width: 5%;
 }
 .key:not(.black) {
+	box-shadow: inset 0px -5px 0px 1px rgba(51, 51, 51, 0.1);
 	height: 400px;
+	width: 5%;
 }
 .black {
 	box-shadow: inset 0px -5px 0px 5px rgba(51, 51, 51, 0.1);
@@ -30,6 +31,7 @@
 .down {
 	box-shadow: inset 0px 5px 0px 5px rgba(51, 51, 51, 0.1);
 	background-color: #07a;
+	height: 195px;
 }
 .down:not(.black) {
 	background-color: #eee;
