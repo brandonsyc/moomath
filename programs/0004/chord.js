@@ -45,7 +45,9 @@ function toggle(x)
         key.className = key.className.replace(" down", "");
     }
 	states[x] = !states[x];
-   	play();
+	if (document.getElementById('toggle').checked) {
+   		play();
+	}
 	
 	indices.sort(function(a, b) {
 		return a - b;

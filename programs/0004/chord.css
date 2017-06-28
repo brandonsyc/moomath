@@ -49,6 +49,18 @@
 .break {
 	display: inline-block;
 }
+input {
+	visibility: hidden;
+	width: 0;
+}
+input:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	transition: 0.2s;
+}
 @media only screen and (max-width: 768px) {
 	.break {
 		display: block;
