@@ -9,19 +9,19 @@ var denominator = 4;
 var bpm = 120;
 
 // Beats per second
-var bps = bpm/60.0;
+var bps = bpm / 60.0;
 
 // Beats per millisecond
-var bpms = bps/1000.0;
+var bpms = bps / 1000.0;
 
 // Minutes per beat
-var mpb = 1.0/bpm;
+var mpb = 1.0 / bpm;
 
 // Seconds per beat
-var spb = 1.0/bps;
+var spb = 1.0 / bps;
 
 // Milliseconds per beat
-var mspb = 1.0/bpms
+var mspb = 1.0 / bpms
 
 // Approximate time resolution (ms)
 var timeRes = 30;
@@ -47,6 +47,8 @@ var play = false;
 // Canvas variables
 var canvas = document.getElementById("beater");
 var ctx = canvas.getContext("2d");
+
+ctx.font = "20px Georgia";
 
 // Circle sizes
 var accentCircleRadius = 20;
@@ -125,7 +127,7 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
     }
 
     request.onerror = function() {
-        alert('BufferLoader: XHR error');
+        alert('Error: Could not connect to audio files.');
     }
 
     request.send();
@@ -240,14 +242,130 @@ String.prototype.trim = function(charlist) {
     return this.trimLeft(charlist).trimRight(charlist);
 };
 
+String.prototype.insert = function(index, string) {
+    if (index > 0)
+        return this.substring(0, index) + string + this.substring(index, this.length);
+    else
+        return string + this;
+};
+
 function mod(n, m) {
     return ((n % m) + m) % m;
 }
 
+function parenthesesAreBalanced(string) {
+    var parentheses = "[]{}()", stack = [], i, character, bracePosition;
+
+    for (i = 0; character = string[i]; i++) {
+        bracePosition = parentheses.indexOf(character);
+
+        if (bracePosition === -1) continue;
+
+        if (bracePosition % 2 === 0) {
+            stack.push(bracePosition + 1); // push next expected brace position
+        } else {
+            if (stack.length === 0 || stack.pop() !== bracePosition) {
+                return false;
+            }
+        }
+    }
+
+    return stack.length === 0;
+}
+
+function parseMultipliers(string) {
+    if (!parenthesesAreBalanced(string)) {
+        return false;
+    }
+    string = string.trim("*").trim(",");
+    var tempString = string;
+    var substitutions = 0;
+    for (i = 0; i < string.length - 1; i++) {
+        if (string[i] == "*" && isNormalInteger(string[i+1])) {
+            tempString = tempString.insert(i+1+2*substitutions,'(');
+            j = i;
+            while (j < string.length && isNormalInteger(string[j])) {
+                j += 1;
+            }
+            tempString = tempString.insert(j+3+2*substitutions,')');
+            substitutions += 1;
+        }
+    }
+    string = tempString;
+    var maxDepth = 0;
+    var currentDepth = 0;
+    for (i = 0; i < string.length - 1; i++) {
+        if (string[i] == "*" && string[i+1] == "(") {
+            currentDepth += 1;
+            if (currentDepth > maxDepth) {
+                maxDepth = currentDepth;
+            }
+        } else if (string[i] == ")") {
+            currentDepth -= 1;
+        }
+    }
+    for (depth = maxDepth; depth > 0; depth--) {
+        if (tempString.length > 2000) {
+            return false;
+        }
+        string = tempString;
+        offset = 0;
+        currentDepth = 0;
+        for (i = 0; i < string.length - 1; i++) {
+            if (string[i] == "*" && string[i+1] == "(") {
+                currentDepth += 1;
+                if (depth == currentDepth) {
+                    for (j = i+1; j < string.length; j++) {
+                        if (string[j] == ")") {
+                            var inside = string.substring(i+2,j);
+                            var multiply = null;
+                            var mStart = -1;
+                            for (k = i-1; k >= 0; k--) {
+                                if (!isNormalInteger(string[k])) {
+                                    multiply = string.substring(k+1,i);
+                                    mStart = k;
+                                    break;
+                                }
+                            }
+                            if (multiply == null) {
+                                multiply = string.substring(0,i);
+                            }
+                            if (multiply > 30) {
+                                return false;
+                            }
+                            var result = null;
+                            if (inside[inside.length - 1] != ',') {
+                                inside = inside + '+';
+                                result = inside.repeat(multiply);
+                            } else {
+                                result = inside.repeat(multiply);
+                            }
+                            tempString = tempString.substring(0, mStart + 1 + offset) + result + tempString.substring(j + 1 + offset);
+                            offset += result.length - j + mStart;
+                            break;
+                        }
+                    }
+                }
+            } else if (string[i] == ")") {
+                currentDepth -= 1;
+            }
+        }
+    }
+    string = tempString.replace(/\+\++/g, '+').replace(/\,\,+/g, ',').trim('+').trim(',');
+    return string;
+}
+
 function updateSignature() {
     // Updates the time signature
-    var givenNumerators = document.getElementById("numerator").value.trim(',').split(',');
+    var givenNumerators = parseMultipliers(document.getElementById("numerator").value.replace(" ",""));
     var givenDenominator = document.getElementById("denominator").value;
+
+    if (givenNumerators == false) {
+        document.getElementById("numerator").style.backgroundColor = "#FF9184";
+        return;
+    } else {
+        givenNumerators = givenNumerators.split(',')
+    }
 
     numerators = [];
 
@@ -256,7 +374,7 @@ function updateSignature() {
     // If the numerator is a '+' separated list of whole numbers, it is considered okay
 
     for (j = 0; j < givenNumerators.length; j++) {
-        var beatSeparations = givenNumerators[j].replace(" ","").trim('+').split('+');
+        var beatSeparations = givenNumerators[j].trim('+').split('+');
         if (beatSeparations.length === 0) return;
 
         var accentPosition = 0;
@@ -367,7 +485,8 @@ function timeoutSelfCall(func, desiredTime) {
         return;
     }
 
-    setTimeout(function(){timeoutSelfCall(func,desiredTime);}, Math.max((desiredTime-cTime)/2.0,0));
+    setTimeout(function() {timeoutSelfCall(func,desiredTime);},
+    Math.max((desiredTime-cTime)/2.0,0));
     return;
 }
 
@@ -418,7 +537,10 @@ function playBeat(playTime = -1, ssc) {
     // Determine how far CPU clock has fallen out of sync, then adjust next delay accordingly
     var sscDuplicate = stopStartCount;
 
-    accurateTimeout(function() {measureNumber = (measureNumber + 1) % numerators.length; playBeat(playTime + mspb * numerators[mod(measureNumber - 1, numerators.length)], sscDuplicate);}, mspb * numerators[measureNumber] + playTime - cTime - 20);
+    accurateTimeout(function() {measureNumber = (measureNumber + 1) % numerators.length;
+      playBeat(playTime + mspb * numerators[mod(measureNumber - 1, numerators.length)],
+      sscDuplicate);},
+      mspb * numerators[measureNumber] + playTime - cTime - 20);
 
     return;
 }
@@ -443,8 +565,8 @@ function flyLine(frameTime = -1, frame = 0, mn) {
     }
 
     ctx.beginPath();
-    ctx.moveTo(lineX,0);
-    ctx.lineTo(lineX,200);
+    ctx.moveTo(lineX,100);
+    ctx.lineTo(lineX,300);
     ctx.stroke();
 
     if (frameTime === -1) {
@@ -459,7 +581,7 @@ function flyLine(frameTime = -1, frame = 0, mn) {
 
 function beatToCoords(beat) {
     // Moves a beat to a pair of coordinates on the canvas
-    return [100 + beat * 1300 / (numerators[measureNumber]), 100];
+    return [100 + beat * 1300 / (numerators[measureNumber]), 200];
 }
 
 function drawCircle(coords,radius) {
@@ -486,7 +608,40 @@ function clearCanvas() {
 }
 
 function drawBeats(lineX) {
+
+    if (lineX == null) {
+        lineX = 100;
+    }
     // Draw the beats to the canvas
+    ctx.fillStyle = "black";
+
+    if (numerators.length <= 1) {
+        ctx.fillText("Measure 1",10,30);
+    } else {
+        ctx.fillText("Measure " + (measureNumber + 1) + "/" + numerators.length, 10, 30);
+    }
+
+    ctx.fillText("Time Signature: " + numerators[measureNumber] + "/" + denominator, 10,120);
+
+    var timeSignature = "";
+    var p = 0;
+    for (i = 1; i <= numerators[measureNumber]; i++) {
+        if (accents[measureNumber][i % numerators[measureNumber]]) {
+            timeSignature = timeSignature + String(i - p) + "+";
+            p = i;
+        }
+    }
+
+    ctx.fillText("Accent Pattern: " + timeSignature.substring(0, timeSignature.length-1), 10, 90);
+
+    var beat = Math.min(Math.floor(numerators[measureNumber] * ((lineX - 100)/1300.0) + 1), numerators[measureNumber]);
+
+    if (isNormalInteger(beat)) {
+        ctx.fillText("Beat", 10, 60);
+    } else {
+        ctx.fillText("Beat " + Math.min(Math.floor(numerators[measureNumber] * ((lineX - 100)/1300.0) + 1), numerators[measureNumber]), 10, 60);
+    }
+
     if (!eighthNoteSub && !sixteenthNoteSub && !tripletNoteSub) {
         for (i = 0; i <= numerators[measureNumber]; i++) {
             var circleCoords = beatToCoords(i);
@@ -496,6 +651,7 @@ function drawBeats(lineX) {
                 } else if (playNonAccentedBeats) {
                     drawFilledCircle(beatToCoords(i), normalCircleRadius);
                 }
+
             } else {
                 if (accents[measureNumber][i % numerators[measureNumber]]) {
                     drawCircle(beatToCoords(i), accentCircleRadius);
