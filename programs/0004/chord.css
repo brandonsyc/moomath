@@ -1,0 +1,53 @@
+/* CSS Document */
+.piano {
+	font-size: 0;
+	user-select: none;
+}
+.key {
+	border-top: 1px solid #eee;
+	box-shadow: inset 0px -10px 10px rgba(51, 51, 51, 0.2);
+	display: inline-block;
+	transition: 0.2s;
+	width: 5%;
+}
+.key p {
+	text-align: center;
+}
+.key:not(.black) {
+	height: 400px;
+}
+.black {
+	height: 200px;
+	margin: 0 -2.5%;
+    position: relative;
+}
+.black:not(.down) {
+	background-color: #08b;
+}
+.black p {
+	text-align: center;
+}
+.down:not(.black) {
+	background-color: #ddd;
+}
+.down {
+	box-shadow: inset 0px 0px 10px rgba(51, 51, 51, 0.2);
+	background-color: #068;
+}
+.box p {
+	display: inline-block;
+}
+.break {
+	display: inline-block;
+}
+@media only screen and (max-width: 768px) {
+	.break {
+		display: block;
+	}
+	.key {
+		width: 15%;
+	}
+	.black {
+		margin: 0 -7.5%;
+	}
+}
