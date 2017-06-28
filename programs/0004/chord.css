@@ -4,8 +4,8 @@
 	user-select: none;
 }
 .key {
-	border-top: 1px solid #eee;
-	box-shadow: inset 0px -10px 10px rgba(51, 51, 51, 0.2);
+	border-radius: 5px;
+	box-shadow: inset 0px -5px 0px 1px rgba(51, 51, 51, 0.1);
 	display: inline-block;
 	transition: 0.2s;
 	width: 5%;
@@ -14,23 +14,26 @@
 	height: 400px;
 }
 .black {
+	box-shadow: inset 0px -5px 0px 5px rgba(51, 51, 51, 0.1);
 	height: 200px;
-	margin: 0 -2.5%;
+	margin: 0 -2%;
     position: relative;
 	vertical-align: top;
+	width: 4%;
 }
 .key:not(.black) p {
 	margin-top: 350px;
 }
 .black p {
-	margin-top: 150px;
+	margin-top: 150px;color: #eee;
 }
 .down {
-	box-shadow: inset 0px 0px 10px rgba(51, 51, 51, 0.2);
-	background-color: #068;
+	box-shadow: inset 0px 5px 0px 5px rgba(51, 51, 51, 0.1);
+	background-color: #07a;
 }
 .down:not(.black) {
-	background-color: #ddd;
+	background-color: #eee;
+	height: 395px;
 }
 .black:not(.down) {
 	background-color: #08b;
