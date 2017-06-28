@@ -20,7 +20,7 @@
 <script src="chord.js"></script>
 
 <div class="box">
-	<p>This is a widget that recognizes what chord you input. Click the keys to toggle.</p>
+	<p>This is a widget that recognizes what chord you input. Click the keys to toggle.</p><hr>
 	<div class="piano">
 		<div class="key" onClick="toggle(0)">
 			<p>A</p>
@@ -102,7 +102,9 @@
 	</div>
 
 	<p>Chord:</p>
-	<p id="output">Not a chord</p>
+	<p id="output">Not a chord<sup></sup></p>
+	<hr>
+	<button onClick="play()">Play Chord</button>
 </div>
 
 <div class="separate"></div>

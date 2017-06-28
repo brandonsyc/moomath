@@ -16,10 +16,10 @@ var chords = [[4, 7],
 			  [4, 5, 7],
 			  [5, 7]
 			 ];
-var names = [["Major Triad", ""], 
-			 ["Minor Triad", "m"], 
-			 ["Augmented Triad", "aug"],
-			 ["Diminished Triad", "dim"],
+var names = [["Major Triad", "<sup></sup>"], 
+			 ["Minor Triad", "m<sup></sup>"], 
+			 ["Augmented Triad", "aug<sup></sup>"],
+			 ["Diminished Triad", "dim<sup></sup>"],
 			 ["Diminished Seventh", "<sup>o7</sup>"],
 			 ["Half-Diminished Seventh", "<sup>&oslash;7</sup>"],
 			 ["Minor Seventh", "m<sup>7</sup>"],
@@ -33,6 +33,7 @@ var names = [["Major Triad", ""],
 			 ["Suspended Fourth", "<sup>sus4</sup>"]
 			];
 var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+var indices;
 function toggle(x)
 {
 	"use strict";
@@ -44,18 +45,14 @@ function toggle(x)
         key.className = key.className.replace(" down", "");
     }
 	states[x] = !states[x];
-    
-	var indices = [], i = -1;
-	while ((i = states.indexOf(true, i + 1)) !== -1) {
-		if (indices.indexOf(i % 12) === -1) {
-        	indices.push(i % 12);
-		}
-		var audio = new Audio("sounds/" + (i + 36) + ".wav");
-		audio.play();
-    }
+   	play();
 	
-	var chord = "Not a chord";
-	for (i = 0; i < indices.length; i++) {
+	indices.sort(function(a, b) {
+		return a - b;
+	});
+	
+	var chord = "Not a chord<sup></sup>";
+	for (var i = 0; i < indices.length; i++) {
 		var dist = [];
 		for (var j = 1; j < indices.length; j++) {
 			dist.push(indices[j] - indices[0]);
@@ -84,4 +81,17 @@ function toggle(x)
 		indices.pop();
 	}
 	document.getElementById("output").innerHTML = chord;
+}
+
+function play() { 
+	"use strict";
+	indices = [];
+	var i = -1;
+	while ((i = states.indexOf(true, i + 1)) !== -1) {
+		if (indices.indexOf(i % 12) === -1) {
+        	indices.push(i % 12);
+		}
+		var audio = new Audio("sounds/" + (i + 36) + ".wav");
+		audio.play();
+    }
 }
