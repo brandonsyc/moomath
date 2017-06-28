@@ -18,7 +18,8 @@
 		<img class="avatar" src="https://avatars3.githubusercontent.com/u/26530804?v=3&s=400">
 	</a>
 	<div class="blurb">
-		<h1>anematode</h1>
+		<h1>Timothy Herchen</h1>
+		<p><strong><i>anematode</i></strong></p>
 		<p>Hi! My name is Timothy Herchen (anematode), and I'm a 8th grader living in Palo Alto, CA. My interests include math, programming, photography, music, and cows. Some of my past accomplishments are winning the 2016 BAMO (Bay Area Mathematical Olympiad) and winning the 2017 Stanford ProCo tournament in the Novice division.</p>
 		<p>Email: timothy.herchen@gmail.com<br>AoPS Account: anematode</p>
 		<p>Add me on Hangouts!</p>
@@ -29,8 +30,10 @@
 		<img class="avatar" src="https://avatars3.githubusercontent.com/u/14132594?v=3&s=400">
 	</a>
 	<div class="blurb">
-		<h1>Nichodon</h1>
-		<p>In publishing and graphic design, lorem ipsum is a filler text commonly used to demonstrate the graphic elements of a document or visual presentation. Replacing meaningful content with placeholder text allows designers to design the form of the content before the content itself has been produced.[1]</p><p>The lorem ipsum text is typically a scrambled section of De finibus bonorum et malorum, a 1st-century BC Latin text by Cicero, with words altered, added, and removed to make it nonsensical, improper Latin.[2]</p>
+		<h1>Zason Quezex</h1>
+		<p><strong><i>Nichodon</i></strong></p>
+		<p>Good <span></span>! I'm an incoming high school freshman (as of 10:53 28 June, 2017 CE) in Palo Alto, CA. As the h1 suggests, my name is Zason Q. I have many great accomplishments. Like, once I sort of did some math thing and it was fun. I greatly enjoy math, composing music, programming, and of course, bovine things.</p>
+		<p>Contact: Say "bananabas" &tau; times and you will summon me.<br><span></span></p>
 	</div>
 	<div class="clear"></div>
 </div>
@@ -40,6 +43,25 @@
 <div id="bottom"></div>
 
 <script src="../frame.js"></script>
-
+<script>
+	var span = document.getElementsByTagName("span")[0];
+	var hour = new Date().getHours();
+	if (hour < 6) {
+		span.innerHTML = "morning";
+	}
+	else if (hour < 12) {
+		span.innerHTML = "day";
+	}
+	else if (hour < 18) {
+		span.innerHTML = "afternoon";
+	}
+	else {
+		span.innerHTML = "evening";
+	}
+	span = document.getElementsByTagName("span")[1];
+	if (hour < 3) {
+		span.innerHTML = "Shouldn't you be sleeping right now?";	
+	}
+</script>
 </body>
 </html>
