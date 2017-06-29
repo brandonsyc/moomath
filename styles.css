@@ -13,7 +13,8 @@ body {
 h1,
 h2,
 h3,
-p {
+p,
+label {
 	color: #333;
 	letter-spacing: 1px;
 	line-height: 25px;
@@ -31,7 +32,8 @@ h2 {
 h3 {
 	font-size: 20px;
 }
-p {
+p,
+label {
 	font-size: 15px;
 }
 a {
@@ -89,6 +91,9 @@ button {
 	border: none;
 	box-shadow: 0px 0px 10px #333;
 	color: #fff;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	font-size: 15px;
+	letter-spacing: 1px;
 	transition: 0.5s;
 	padding: 15px;
 }

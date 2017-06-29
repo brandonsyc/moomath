@@ -15,7 +15,7 @@ rawFile.onreadystatechange = function ()
 			var columns = document.createElement("DIV");
 			columns.classList.add("columns");
 			for (var i = array.length - 1; i > -1; i--) {
-				var split = array[i].split(" -- ");
+				var split = array[i].split(" \u2013 ");
 				
 				var fourth = document.createElement("DIV");
 				fourth.classList.add("fourth");

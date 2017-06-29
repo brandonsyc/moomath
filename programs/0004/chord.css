@@ -1,25 +1,42 @@
 /* CSS Document */
 .piano {
 	font-size: 0;
+	height: 400px;
 	user-select: none;
 }
 .key {
 	border-top: 1px solid #eee;
-	box-shadow: inset 0px -10px 10px rgba(51, 51, 51, 0.2);
+	border-radius: 5px;
 	display: inline-block;
 	transition: 0.2s;
-	width: 5%;
-}
-.key p {
-	text-align: center;
 }
 .key:not(.black) {
+	box-shadow: inset 0px -5px 0px 1px rgba(51, 51, 51, 0.1);
 	height: 400px;
+	width: 6%;
 }
 .black {
+	box-shadow: inset 0px -5px 0px 5px rgba(51, 51, 51, 0.1);
 	height: 200px;
 	margin: 0 -2.5%;
     position: relative;
+	vertical-align: top;
+	width: 5%;
+}
+.key:not(.black) p {
+	margin-top: 350px;
+}
+.black p {
+	margin-top: 150px;color: #eee;
+}
+.down {
+	box-shadow: inset 0px 5px 0px 5px rgba(51, 51, 51, 0.1);
+	background-color: #07a;
+	height: 195px;
+}
+.down:not(.black) {
+	background-color: #eee;
+	height: 395px;
 }
 .black:not(.down) {
 	background-color: #08b;
@@ -27,27 +44,33 @@
 .black p {
 	text-align: center;
 }
-.down:not(.black) {
-	background-color: #ddd;
-}
-.down {
-	box-shadow: inset 0px 0px 10px rgba(51, 51, 51, 0.2);
-	background-color: #068;
-}
 .box p {
 	display: inline-block;
 }
 .break {
 	display: inline-block;
 }
+input {
+	visibility: hidden;
+	width: 0;
+}
+input:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	transition: 0.2s;
+}
 @media only screen and (max-width: 768px) {
 	.break {
 		display: block;
 	}
-	.key {
-		width: 15%;
+	.key:not(.black) {
+		width: 16%;
 	}
 	.black {
 		margin: 0 -7.5%;
+		width: 15%;
 	}
 }

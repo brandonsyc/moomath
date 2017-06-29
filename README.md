@@ -7,16 +7,8 @@ Fractals: finish all
 Mandelbrot: split into two?
 
 Converter: add more catagories and units
-
-Polyrhythm: animation, more sounds, gui, etc.
 ## General
-Make a more modern look, whitespace is key
-
-Write bios for about page
-
-Create cantact email
 ## Wish List
-Add JS pagination for article hubs
 
 
 
