@@ -34,6 +34,10 @@ var names = [["Major Triad", "<sup></sup>"],
 			];
 var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 var indices;
+var audio = [];
+for (var i = 36; i < 61; i++) {
+	audio.push(new Audio("sounds/" + i + ".wav"));
+}
 function toggle(x)
 {
 	"use strict";
@@ -45,9 +49,7 @@ function toggle(x)
         key.className = key.className.replace(" down", "");
     }
 	states[x] = !states[x];
-	if (document.getElementById('toggle').checked) {
-   		play();
-	}
+   	together();
 	
 	indices.sort(function(a, b) {
 		return a - b;
@@ -85,7 +87,7 @@ function toggle(x)
 	document.getElementById("output").innerHTML = chord;
 }
 
-function play() { 
+function together() { 
 	"use strict";
 	indices = [];
 	var i = -1;
@@ -93,7 +95,9 @@ function play() {
 		if (indices.indexOf(i % 12) === -1) {
         	indices.push(i % 12);
 		}
-		var audio = new Audio("sounds/" + (i + 36) + ".wav");
-		audio.play();
+		if (!document.getElementById('toggle').checked) {
+			audio[i].currentTime = 0;
+			audio[i].play();
+		}
     }
 }
