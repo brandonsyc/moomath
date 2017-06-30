@@ -22,7 +22,7 @@ function bulb() {
 			if (i !== j) {
 				var other = bodies[j];
 				var distance = Math.hypot(other[0] - body[0], other[1] - body[1]);
-				var magnitude = other[4] / (distance * distance);
+				var magnitude = 0.0008887 * other[4] / (distance * distance);
 				var ax = magnitude * (other[0] - body[0]) / distance;
 				var ay = magnitude * (other[1] - body[1]) / distance;
 				body[2] += ax;
@@ -60,7 +60,7 @@ function clicked() {
 				color = colors[i];
 			}
 		}
-		bodies.push([mouse.x, mouse.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, color]);
+		bodies.push([press.x, press.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, color]);
 	}
 }
 
@@ -71,6 +71,11 @@ function getMousePos(canvas, evt) {
 		x: evt.clientX - rect.left,
 		y: evt.clientY - rect.top
 	};
+}
+
+function goodbye() {
+	"use strict";
+	bodies = [];
 }
 
 canvas.addEventListener('mousemove', function(evt) {
