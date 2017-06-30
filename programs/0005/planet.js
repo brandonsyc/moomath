@@ -7,19 +7,25 @@ var press;
 var colors = ["#096", "#08b", "#c03", "#fd0"];
 var trails = [];
 var last = new Date();
+var count = 0;
+var down;
 
 function bulb() {
 	"use strict";
-	var fps = 1000 / (new Date - last);
+	count++;
+	if (count === 10) {
+		count = 0;
+	}
+	var fps = 1000 / (new Date() - last);
 	last = new Date();
 	document.getElementById("fps").innerHTML = Math.round(fps);
 	ctx.fillStyle = "#333";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < bodies.length; i++) {
 		var body = bodies[i];
-		ctx.fillStyle = body[5];
+		ctx.fillStyle = body[6];
 		ctx.beginPath();
-		ctx.arc(body[0], body[1], 10, 0, 2 * Math.PI);
+		ctx.arc(body[0], body[1], Math.max(0.00426349651 * Math.pow(Math.abs(body[4]), 1 / 3) * Math.pow(Math.abs(body[5]), -2 / 3), 2), 0, 2 * Math.PI);
 		ctx.fill();
 		body[0] += body[2];
 		body[1] += body[3];
@@ -34,31 +40,49 @@ function bulb() {
 				body[3] += ay;
 			}
 		}
-		trails[i].push([body[0], body[1]]);
-		if (trails[i].length > 50) {
-			trails[i].shift();
+		if (count === 0) {
+			trails[i].push([body[0], body[1]]);
+			if (trails[i].length > 10) {
+				trails[i].shift();
+			}
 		}
-		for (j = 0; j < trails[i].length - 1; j++) {
-			ctx.fillStyle = body[5];
+		for (j = 0; j < trails[i].length; j++) {
+			ctx.fillStyle = body[6];
 			ctx.beginPath();
 			ctx.arc(trails[i][j][0], trails[i][j][1], 1, 0, 2 * Math.PI);
 			ctx.fill();
 		}
 	}
 	if (document.getElementById("body").checked) {
-		if (mouse !== undefined) {
+		if (!down) {
+			if (mouse !== undefined) {
+				ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+				ctx.beginPath();
+				ctx.fillRect(mouse.x - 1, mouse.y - 10, 3, 21);
+				ctx.fill();
+				ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+				ctx.beginPath();
+				ctx.fillRect(mouse.x - 10, mouse.y - 1, 21, 3);
+				ctx.fill();
+			}
+		}
+		else if (press !== undefined) {
 			ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
 			ctx.beginPath();
-			ctx.arc(mouse.x, mouse.y, 10, 0, 2 * Math.PI);
+			ctx.fillRect(press.x - 1, press.y - 10, 3, 21);
+			ctx.fill();
+			ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+			ctx.beginPath();
+			ctx.fillRect(press.x - 10, press.y - 1, 21, 3);
 			ctx.fill();
 		}
 	}
-	setTimeout(function() {
-		bulb(); 
-	}, 1000.0/60.0);
 }
 
-bulb();
+setInterval(function() {
+	"use strict";
+	bulb(); 
+}, 1000 / 60);
 
 function pressed() {
 	"use strict";
@@ -76,7 +100,7 @@ function clicked() {
 				color = colors[i];
 			}
 		}
-		bodies.push([press.x, press.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, color]);
+		bodies.push([press.x, press.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, document.getElementById("density").value, color]);
 		trails.push([]);
 	}
 }
@@ -105,3 +129,13 @@ canvas.addEventListener('mouseout', function(evt) {
 	"use strict";
 	mouse = undefined;
 }, false);
+
+document.body.onmousedown = function() {
+	"use strict";
+	down = true;
+};
+
+document.body.onmouseup = function() {
+	"use strict";
+	down = false;
+};
