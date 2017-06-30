@@ -79,6 +79,7 @@ td {
 input {
 	border: 1px solid #bbb;
 	border-radius: 0px;
+	color: #333;
 	display: inline-block;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	font-size: 16px;

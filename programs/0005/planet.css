@@ -1,5 +1,22 @@
 /* CSS Document */
 
 canvas {
-	box-shadow: 0px 0px 10px #096;
+	border: 1px solid #ddd;
+}
+input[type=text] {
+	width: 100px;
+}
+input[type=radio] {
+	visibility: hidden;
+	width: 0;
+}
+input:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	transition: 0.2s;
+}
+.box p {
 }
