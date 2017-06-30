@@ -19,4 +19,38 @@ label {
 	transition: 0.2s;
 }
 .box p {
+	text-align: center;
+}
+.color {
+	display: inline-block;
+}
+.color div {
+	border-radius: 20px;
+	display: inline-block;
+	height: 20px;
+	transition: 0.2s;
+	width: 20px;
+	vertical-align: top;
+}
+.color label {
+	font-size: 0;
+	padding: 0;
+}
+.color input:checked+label {
+	border: none;
+}
+.color input:checked+label div {
+	box-shadow: inset 0px 0px 0px 2px rgba(51, 51, 51, 0.4);
+}
+#green+label div {
+	background-color: #096;
+}
+#blue+label div {
+	background-color: #08b;
+}
+#red+label div {
+	background-color: #c03;
+}
+#yellow+label div {
+	background-color: #fd0;
 }
