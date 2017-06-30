@@ -3,6 +3,7 @@ var canvas = document.getElementsByTagName("canvas")[0];
 var ctx = canvas.getContext("2d");
 var bodies = [[300.0, 200.0, 0, 0.0, 1000], [200.0, 250.0, 0.5, 2.0, 1]];
 var mouse;
+var press;
 var colors = ["#096", "#08b", "#c03", "#fd0"];
 
 function bulb() {
@@ -43,10 +44,17 @@ function bulb() {
 }
 bulb();
 
+function pressed() {
+	"use strict";
+	if (document.getElementById("body").checked) {
+		press = mouse;
+	}
+}
+
 function clicked() {
 	"use strict";
 	if (document.getElementById("body").checked) {
-		bodies.push([mouse.x, mouse.y, -1.5, 0, 100]);
+		bodies.push([mouse.x, mouse.y, (mouse.x - press.x) / 20, (mouse.y - press.y) / 20, document.getElementById("mass").value]);
 	}
 }
 
