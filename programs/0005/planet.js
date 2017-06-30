@@ -5,9 +5,13 @@ var bodies = [];
 var mouse;
 var press;
 var colors = ["#096", "#08b", "#c03", "#fd0"];
+var last = new Date();
 
 function bulb() {
 	"use strict";
+	var fps = 1000 / (new Date - last);
+	last = new Date();
+	document.getElementById("fps").innerHTML = Math.round(fps);
 	ctx.fillStyle = "#333";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < bodies.length; i++) {
@@ -42,6 +46,7 @@ function bulb() {
 		bulb(); 
 	}, 1000.0/60.0);
 }
+
 bulb();
 
 function pressed() {
