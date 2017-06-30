@@ -25,7 +25,7 @@ function bulb() {
 		var body = bodies[i];
 		ctx.fillStyle = body[6];
 		ctx.beginPath();
-		ctx.arc(body[0], body[1], Math.max(0.00426349651 * Math.pow(Math.abs(body[4]), 1 / 3) * Math.pow(Math.abs(body[5]), -2 / 3), 2), 0, 2 * Math.PI);
+		ctx.arc(body[0], body[1], body[7], 0, 2 * Math.PI);
 		ctx.fill();
 		body[0] += body[2];
 		body[1] += body[3];
@@ -38,6 +38,10 @@ function bulb() {
 				var ay = magnitude * (other[1] - body[1]) / distance;
 				body[2] += ax;
 				body[3] += ay;
+				if (body[7] + other[7] > distance) {
+					//body
+					bodies.splice(j, 1);
+				}
 			}
 		}
 		if (count === 0) {
@@ -53,6 +57,7 @@ function bulb() {
 			ctx.fill();
 		}
 	}
+	
 	if (document.getElementById("body").checked) {
 		if (!down) {
 			if (mouse !== undefined) {
@@ -100,7 +105,14 @@ function clicked() {
 				color = colors[i];
 			}
 		}
-		bodies.push([press.x, press.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, document.getElementById("density").value, color]);
+		bodies.push([press.x, 
+					 press.y, 
+					 (mouse.x - press.x) / 40, 
+					 (mouse.y - press.y) / 40, 
+					 document.getElementById("mass").value, 
+					 0, 
+					 color, 
+					 Math.max(0.00426349651 * Math.pow(Math.abs(document.getElementById("mass").value), 1 / 3) * Math.pow(Math.abs(document.getElementById("density").value), -2 / 3), 2)]);
 		trails.push([]);
 	}
 }
@@ -128,6 +140,7 @@ canvas.addEventListener('mousemove', function(evt) {
 canvas.addEventListener('mouseout', function(evt) {
 	"use strict";
 	mouse = undefined;
+	press = undefined;
 }, false);
 
 document.body.onmousedown = function() {
