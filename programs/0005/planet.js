@@ -1,17 +1,18 @@
 // JavaScript Document
 var canvas = document.getElementsByTagName("canvas")[0];
 var ctx = canvas.getContext("2d");
-var bodies = [[300.0, 200.0, 0, 0.0, 1000], [200.0, 250.0, 0.5, 2.0, 1]];
+var bodies = [];
 var mouse;
 var press;
 var colors = ["#096", "#08b", "#c03", "#fd0"];
 
 function bulb() {
 	"use strict";
-   	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	ctx.fillStyle = "#333";
+	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	for (var i = 0; i < bodies.length; i++) {
 		var body = bodies[i];
-		ctx.fillStyle = colors[0];
+		ctx.fillStyle = body[5];
 		ctx.beginPath();
 		ctx.arc(body[0], body[1], 10, 0, 2 * Math.PI);
 		ctx.fill();
@@ -29,10 +30,9 @@ function bulb() {
 			}
 		}
 	}
-	
 	if (document.getElementById("body").checked) {
 		if (mouse !== undefined) {
-			ctx.fillStyle = "rgba(51, 51, 51, 0.1)";
+			ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
 			ctx.beginPath();
 			ctx.arc(mouse.x, mouse.y, 10, 0, 2 * Math.PI);
 			ctx.fill();
@@ -54,7 +54,13 @@ function pressed() {
 function clicked() {
 	"use strict";
 	if (document.getElementById("body").checked) {
-		bodies.push([mouse.x, mouse.y, (mouse.x - press.x) / 20, (mouse.y - press.y) / 20, document.getElementById("mass").value]);
+		var color;
+		for (var i = 0; i < colors.length; i++) {
+			if (document.getElementsByName("color")[i + 1].checked) {
+				color = colors[i];
+			}
+		}
+		bodies.push([mouse.x, mouse.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, color]);
 	}
 }
 
