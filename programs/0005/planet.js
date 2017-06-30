@@ -5,6 +5,7 @@ var bodies = [];
 var mouse;
 var press;
 var colors = ["#096", "#08b", "#c03", "#fd0"];
+var trails = [];
 var last = new Date();
 
 function bulb() {
@@ -32,6 +33,16 @@ function bulb() {
 				body[2] += ax;
 				body[3] += ay;
 			}
+		}
+		trails[i].push([body[0], body[1]]);
+		if (trails[i].length > 50) {
+			trails[i].shift();
+		}
+		for (j = 0; j < trails[i].length - 1; j++) {
+			ctx.fillStyle = body[5];
+			ctx.beginPath();
+			ctx.arc(trails[i][j][0], trails[i][j][1], 1, 0, 2 * Math.PI);
+			ctx.fill();
 		}
 	}
 	if (document.getElementById("body").checked) {
@@ -66,6 +77,7 @@ function clicked() {
 			}
 		}
 		bodies.push([press.x, press.y, (mouse.x - press.x) / 40, (mouse.y - press.y) / 40, document.getElementById("mass").value, color]);
+		trails.push([]);
 	}
 }
 
@@ -81,6 +93,7 @@ function getMousePos(canvas, evt) {
 function goodbye() {
 	"use strict";
 	bodies = [];
+	trails = [];
 }
 
 canvas.addEventListener('mousemove', function(evt) {
