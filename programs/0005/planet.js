@@ -39,7 +39,7 @@ function bulb() {
 				body[2] += ax;
 				body[3] += ay;
 				if (body[7] + other[7] > distance) {
-					//body
+					
 					bodies.splice(j, 1);
 				}
 			}
