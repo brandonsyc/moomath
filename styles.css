@@ -196,7 +196,7 @@ a.icon {
 	height: auto;
 }
 .layer {
-	background-color: rgba(51, 51, 51, 0.8);
+	background: linear-gradient(to right, rgba(51, 51, 51, 0.6) 0%, rgba(51, 51, 51, 0.8) 25%, rgba(51, 51, 51, 0.8) 75%, rgba(51, 51, 51, 0.6) 100%); 
 	text-align: center;
 	padding: 50px 25px;
 	width: 100%;
