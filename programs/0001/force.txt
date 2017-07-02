@@ -1,0 +1,16 @@
+giganewton,giganewtons,GN
+meganewton,meganewtons,MN
+kilonewton,kilonewtons,kN
+newton,newtons,N
+millinewton,millinewtons,mN
+micronewton,micronewtons,&mu;N,uN
+nanonewton,nanonewtons,nN
+megadyne,megadynes,Mdyn
+kilodyne,kilodynes,kdyn
+dyne,dynes,dyn
+millidyne,millidynes,mdyn
+tonne-force,tonne-forces,t-f
+megapond,megaponds,Mp
+kilogram-force,kilogram-forces,kg-f,kgf,kilopond,kiloponds,kp
+gram-force,gram-forces,g-f,gf,pond,ponds,p
+milligram-force,milligram-forces,mg-f,mgf,millipond,milliponds,mp

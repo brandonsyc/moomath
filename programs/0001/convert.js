@@ -4,37 +4,43 @@ var units = [];
 var values = [];
 
 function getEditDistance(a, b) {
-  if (a.length === 0) return b.length; 
-  if (b.length === 0) return a.length; 
+	"use strict";
+	if (a.length === 0) {
+		return b.length; 
+	}
+	if (b.length === 0) {
+		return a.length; 
+	}
 
-  var matrix = [];
+	var matrix = [];
 
   // increment along the first column of each row
-  var i;
-  for (i = 0; i <= b.length; i++) {
-    matrix[i] = [i];
-  }
+	var i;
+	for (i = 0; i <= b.length; i++) {
+		matrix[i] = [i];
+	}
 
   // increment each column in the first row
-  var j;
-  for (j = 0; j <= a.length; j++) {
-    matrix[0][j] = j;
-  }
+	var j;
+	for (j = 0; j <= a.length; j++) {
+		matrix[0][j] = j;
+	}
 
   // Fill in the rest of the matrix
-  for (i = 1; i <= b.length; i++) {
-    for (j = 1; j <= a.length; j++) {
-      if (b.charAt(i-1) == a.charAt(j-1)) {
-        matrix[i][j] = matrix[i-1][j-1];
-      } else {
-        matrix[i][j] = Math.min(matrix[i-1][j-1] + 1, // substitution
-                                Math.min(matrix[i][j-1] + 1, // insertion
-                                         matrix[i-1][j] + 1)); // deletion
-      }
-    }
-  }
+	for (i = 1; i <= b.length; i++) {
+		for (j = 1; j <= a.length; j++) {
+			if (b.charAt(i - 1) === a.charAt(j - 1)) {
+				matrix[i][j] = matrix[i - 1][j - 1];
+			} 
+			else {
+				matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
+				Math.min(matrix[i][j - 1] + 1, // insertion
+				matrix[i - 1][j] + 1)); // deletion
+			}
+		}
+	}
 
-  return matrix[b.length][a.length];
+	return matrix[b.length][a.length];
 }
 
 function search(x)
@@ -81,7 +87,7 @@ function search(x)
 				foundPerfect = true;
 			}
 			if (searchvalue.length < 30) {
-				editDistance = getEditDistance(searchvalue, current[j].toLowerCase().trim())
+				editDistance = getEditDistance(searchvalue, current[j].toLowerCase().trim());
 				if (lowestEditDistance > editDistance) {
 					lowestEditDistance = editDistance;
 					number = i;
@@ -93,7 +99,7 @@ function search(x)
 		}
 	}
 	numbers[x / 2] = number;
-	if (number !== -1) {
+	if (number !== -1 && search.value !== "") {
 		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][2].trim() + ")";
 	}
 	else {
