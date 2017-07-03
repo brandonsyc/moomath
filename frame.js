@@ -6,23 +6,27 @@ document.getElementById("top").innerHTML =
 
 	'<div class="topnav">' +
 		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
-		'<div><a href="https://nichodon.github.io">Home</a>' +
-		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a></div>' +
+		'<div>' +
+			'<a href="https://nichodon.github.io">Home</a>' +
+			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
+			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
+			'<a href="https://nichodon.github.io/about/">About</a>' +
+		'</div>' +
 	'</div>' +
 
 
 	'<div class="topnav" id="sticky">' +
 		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
-		'<div><a href="https://nichodon.github.io">Home</a>' +
-		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a></div>' +
+		'<div>' +
+			'<a href="https://nichodon.github.io">Home</a>' +
+			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
+			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
+			'<a href="https://nichodon.github.io/about/">About</a>' +
+		'</div>' +
 	'</div>';
 
 document.getElementById("bottom").innerHTML =
