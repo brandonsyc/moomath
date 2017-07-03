@@ -17,7 +17,6 @@ p,
 label {
 	color: #333;
 	letter-spacing: 1px;
-	line-height: 25px;
 	margin: 0px;
 	overflow-x: auto;
 	padding: 10px;
@@ -25,16 +24,20 @@ label {
 }
 h1 {
 	font-size: 30px;
+	line-height: 40px;
 }
 h2 {
 	font-size: 25px;
+	line-height: 35px;
 }
 h3 {
 	font-size: 20px;
+	line-height: 30px;
 }
 p,
 label {
 	font-size: 15px;
+	line-height: 25px;
 }
 a {
 	color: #08b;
