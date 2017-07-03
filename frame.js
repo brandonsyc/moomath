@@ -59,6 +59,12 @@ window.onscroll = function() {
 	else {
 		sticky.style.display = "none";
 	}
+	if (window.scrollY > navbar.offsetTop) {
+		sticky.style.boxShadow = "0px 20px 25px rgba(51, 51, 51, 0.2)";
+	}
+	else {
+		sticky.style.boxShadow = "none";
+	}
 };
 
 function show() {
