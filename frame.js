@@ -16,12 +16,13 @@ document.getElementById("top").innerHTML =
 
 
 	'<div class="topnav" id="sticky">' +
-		'<a href="https://nichodon.github.io">Home</a>' +
+		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
+		'<div><a href="https://nichodon.github.io">Home</a>' +
 		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
 		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a>' +
+		'<a href="https://nichodon.github.io/about/">About</a></div>' +
 	'</div>';
 
 document.getElementById("bottom").innerHTML =
@@ -69,11 +70,18 @@ window.onscroll = function() {
 
 function show() {
 	"use strict";
-	var x = document.getElementsByClassName("topnav")[0];
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    }
-    else {
-        x.className = "topnav";
-    }
+	var navbar = document.getElementsByClassName("topnav")[0];
+	var sticky = document.getElementById("sticky");
+  if (navbar.className === "topnav") {
+  	navbar.className += " responsive";
+  }
+  else {
+  	navbar.className = "topnav";
+  }
+	if (sticky.className === "topnav") {
+	  sticky.className += " responsive";
+	}
+	else {
+	  sticky.className = "topnav";
+	}
 }

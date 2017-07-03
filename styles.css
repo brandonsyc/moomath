@@ -351,9 +351,6 @@ img.latex {
 		border-left: 5px solid #075;
 		border-right: 5px solid #075;
 	}
-	#sticky a {
-		display: none;
-	}
 	.fourth {
 		margin: 5px 0;
 		width: 50%;
