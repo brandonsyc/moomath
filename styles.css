@@ -231,7 +231,6 @@ a.icon {
 }
 .fourth img:hover {
 	box-shadow: 0px 0px 10px #333;
-	margin: auto;
 }
 .fourth h3 {
 	overflow: hidden;
