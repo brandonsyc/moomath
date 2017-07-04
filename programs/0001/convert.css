@@ -15,6 +15,7 @@ input:hover {
 }
 input[type=radio] {
 	width: 0;
+	visibility: hidden;
 }
 input[type=radio]:checked+label {
 	border-bottom: 5px solid #08b;
