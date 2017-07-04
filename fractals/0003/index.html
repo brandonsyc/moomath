@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Strange Attractors</title>
+<title>Ces&agrave;ro Fractals</title>
 <link rel="stylesheet" type="text/css" href="../../styles.css">
 <link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,28 +14,162 @@
 <div id="top"></div>
 
 <div class="content">
-<h1>Strange Attractors</h1>
+<h1>Ces&agrave;ro Fractals</h1>
 <p>31 May, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a></p>
 
 <div class="article">
 <div>
     <figure>
-        <img src="article2/mandelbrot.png" alt="Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)">
-        <figcaption>Figure 1: An example of a strange attractor.</figcaption>
+        <img src="images/cesaro1.png" alt="A Ces&agrave;ro Fractal">
+        <figcaption>Figure 1: An example of a Ces&agrave;ro fractal.</figcaption>
     </figure>
 </div>
 
 <p>
-    The Mandelbrot set; one of the most famous fractals (and, really, mathematical objects) of all time. It's striking, really, in how complex it is (pun not intended), yet how simple the rules are. Let's delve deeper into the Mandelbrot set and, hopefully, learn something new. If you're new to the ideas of fractals in the complex plane, you can see my intro <a href="article1.html">here</a>.
+    A Ces&agrave;ro fractal is a self-similar shape, or fractal, determined by two shapes: a base curve, and a motif. (In reality, a Ces&agrave;ro fractal is a particular kind given these two shapes, but as these types of fractal have no universally accepted name, we will use this as a placeholder.) The base curve is not a "curve" in the ordinary sense of a curve; in fact, it is composed of straight lines. To produce the associated fractal, we translate, rotate, and scale the motif, also composed of straight lines, and replace each of the lines in the base curve with a transformed, but geometrically similar, motif. We do the same thing with the resulting curve, again and again, to infinity. Let's see this process in action on an example base curve and motif.
+</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro2a.png" alt="A Ces&agrave;ro Fractal" width=600>
+        <figcaption>Figure 2a: An example base curve and motif.</figcaption>
+    </figure>
+</div>
+
+<p>
+    Here is an example of a base curve and motif. Each item is a series of vectors, or directional line segments, in a sequence. We can effectively treat the base curve and motif like a list of points, telling us what the next point to go to is. For example, the base curve is \((0, 0), (0, 1), (1, 1), (1, 0), (0, 0)\), and the motif is \((0, 0), (0.5, 0.5), (1, 0)\).
 </p>
 
 <p>
-    First, let's precisely define the Mandelbrot set. Define a function \(f_c(z)=z^2+c\). The Mandelbrot set is the set of all complex numbers \(c\) such that when the function is iterated, the resulting sequence's magnitude does not diverge to infinity.
+    Our first step is replacing all the segments in the base curve with the motif. In the following figure, the base curve is highlighted in red, and the new curve is drawn in black.
 </p>
 
+<div>
+    <figure>
+        <img src="images/cesaro2b.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 2b: One step in the fractal generating sequence.</figcaption>
+    </figure>
+</div>
+
 <p>
-    Let's get some idea of scale for the Mandelbrot set. Here's another image overlayed on top of a grid with 0.1 units between lines.
+    We do the same thing with the resulting curve:
 </p>
+
+<div>
+    <figure>
+        <img src="images/cesaro2c.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 2c: The second step in the fractal generating sequence.</figcaption>
+    </figure>
+</div>
+
+<p>
+    We can continue this process out to infinity:
+</p>
+
+<iframe width="560" height="560" src="https://www.youtube.com/embed/eTjeIGTQpdE" frameborder="0" allowfullscreen></iframe>
+
+<p>
+    Note that at every odd step, all line segments are diagonal, relative to the lines of the coordinate plane, whereas at every even step, all line segments are parallel to the coordinate plane. At the end of all that, we get a very interesting curve.
+</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro2d.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 2d: The finished fractal.</figcaption>
+    </figure>
+</div>
+
+<p>
+    Let's try a different motif, but the same base curve. In particular, let's try one with self-intersections, like this one:
+</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro3a.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 3a: A new motif.</figcaption>
+    </figure>
+</div>
+
+<p>We proceed with the same base curve as before, but add our new motif instead:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro3b.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 3b: The first step of the generating sequence.</figcaption>
+    </figure>
+</div>
+
+<p>Here is what it looks like when done to infinity:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro3c.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 3c: The generated fractal.</figcaption>
+    </figure>
+</div>
+
+<p>At each step, the number of lines in the curve is multiplied by the number of lines in the motif, so the growth in complexity is exponential. Let's try one more fractal, but with a different base curve, like so:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro4a.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 4a: A new base curve and motif.</figcaption>
+    </figure>
+</div>
+
+<p>There will be a lot of self intersection in this fractal. Here is what it looks like after one iteration:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro4b.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 4b: The first step of the generating sequence.</figcaption>
+    </figure>
+</div>
+
+<p>And here is what it looks like when completed:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro4c.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 4c: The completed fractal.</figcaption>
+      </figure>
+</div>
+
+<p>There are a lot of interesting things about these curves. For example, consider the perimeter of our first shape, the one depicted in Figure 2d:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro2d.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 2d: The finished fractal.</figcaption>
+    </figure>
+</div>
+
+<p>If we put this on the coordinate grid, we can get a somewhat naïve estimation of the area, like so:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro5.png" alt="A Ces&agrave;ro Fractal" width=400>
+        <figcaption>Figure 5: The perimeter of the fractal, outlined in orange.</figcaption>
+    </figure>
+</div>
+
+<p>It is, in fact, an octagon, with 4 sides of length 1 and 4 sides of length \(\sqrt{2}\), which seems to give us a perimeter of \(4+4\sqrt{2}\). Consider, however, the perimeter at each step of the generating process:</p>
+
+<div>
+    <figure>
+        <img src="images/cesaro6.png" alt="A Ces&agrave;ro Fractal" width=800>
+        <figcaption>Figure 6: The perimeter of the curve at each of its generating steps.</figcaption>
+    </figure>
+</div>
+
+<p>The perimeter increases over time - one would expect it to - but what is it approaching? Well, let's look a bit more closely at the perimeters of each step; in particular, let's look at what determines them.</p>
+
+<p>For the steps whose lines are parallel to lines of the base curve, the perimeter is always a rational number. To see why this is the case, examine what some of those steps look like:</p>
+
+
+
+<canvas id="cesaro" width="1024" height="1024"></canvas>
+
 
 <div class="separate"></div>
 </div>
@@ -44,6 +178,37 @@
 <div id="bottom"></div>
 
 <script src="../../frame.js"></script>
+
+<script id="2d-vertex-shader" type="notjs">
+
+  // an attribute will receive data from a buffer
+  attribute vec4 a_position;
+
+  // all shaders have a main function
+  void main() {
+
+    // gl_Position is a special variable a vertex shader
+    // is responsible for setting
+    gl_Position = a_position;
+  }
+
+</script>
+
+<script id="2d-fragment-shader" type="notjs">
+
+  // fragment shaders don't have a default precision so we need
+  // to pick one. mediump is a good default
+  precision mediump float;
+
+  void main() {
+    // gl_FragColor is a special variable a fragment shader
+    // is responsible for setting
+    gl_FragColor = vec4(1, 0, 0.5, 1); // return redish-purple
+  }
+
+</script>
+
+<script src="cesaro.js"></script>
 
 </body>
 </html>
