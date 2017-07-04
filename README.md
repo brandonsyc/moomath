@@ -1,14 +1,13 @@
-# Nichodon/nichodon.github.io
-If you are not [me](https://github.com/Nichodon), [this guy](https://github.com/Maydoh1239), or [this guy](https://github.com/anematode), then somehow you have landed yourself at our page's Github repo. Good job.
-# Todo
-## Articles
-Fractals: finish all
+# V I S U A L &nbsp; M A T H
+Hi. You are at the repo Nichodon/nichodon.github.io.
 
-Mandelbrot: split into two?
+There's really not much to do here&hellip; Unless you are us&hellip;
 
-Converter: add more catagories and units
-## General
-## Wish List
+Well, enjoy yourself, whatever you do.
 
-
-
+## T o d o
+* Cleaning up the homepage, adding content
+* Worksheets and More Math
+* Finish JS pagination if lots of articles
+* More converter units
+* Fix planet simulator collisions

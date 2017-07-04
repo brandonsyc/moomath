@@ -381,6 +381,14 @@ img.latex {
 	.blurb h1 {
 		text-align: center;
 	}
+	.blurt {
+		display: block;
+		max-width: none;
+		width: 100%;
+	}
+	.blurt h1 {
+		text-align: center;
+	}
 	.figure img {
 		width: 75%;
 	}

@@ -88,3 +88,6 @@ label {
     visibility: hidden;
     white-space: pre;
 }
+canvas {
+	width: 90%;
+}
