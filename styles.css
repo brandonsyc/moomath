@@ -123,7 +123,7 @@ button:focus {
 }
 .header p {
 	color: #bbb;
-	padding: 10px 0 20px 0;
+	padding: 20px 0 25px 0;
 	letter-spacing: 2px;
 }
 .topnav {
@@ -146,7 +146,7 @@ button:focus {
 	border-bottom: 5px solid #fff;
 }
 .topnav a:not(.active):hover {
-	border-bottom: 5px solid #096;
+	border-bottom: 5px solid #bbb;
 }
 .topnav div {
 	overflow: hidden;
@@ -200,7 +200,7 @@ a.icon {
 	height: auto;
 }
 .layer {
-	background: linear-gradient(to right, rgba(51, 51, 51, 0.4) 0%, rgba(51, 51, 51, 0.6) 25%, rgba(51, 51, 51, 0.6) 75%, rgba(51, 51, 51, 0.4) 100%); 
+	background: linear-gradient(to right, rgba(51, 51, 51, 0.4) 0%, rgba(51, 51, 51, 0.6) 25%, rgba(51, 51, 51, 0.6) 75%, rgba(51, 51, 51, 0.4) 100%);
 	text-align: center;
 	padding: 50px 25px;
 	width: 100%;
@@ -348,8 +348,8 @@ img.latex {
 	}
 	.topnav a:not(.active):hover {
 		border-bottom: none;
-		border-left: 5px solid #096;
-		border-right: 5px solid #096;
+		border-left: 5px solid #bbb;
+		border-right: 5px solid #bbb;
 	}
 	.topnav div {
 		max-height: 0;
