@@ -1,5 +1,8 @@
 
 var canvas = document.getElementById("cesaro");
+canvas.style.position = "absolute";
+canvas.style.left = "50%";
+canvas.style.transform = "translate(-50%, -25%)";
 var ctx = canvas.getContext('2d');
 
 var width = canvas.width;
