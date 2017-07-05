@@ -20,6 +20,8 @@ function cow()
   div.style.zIndex = "1";
   document.body.appendChild(div);
   var span = document.getElementsByTagName("span")[0];
+  span.style.transition = "0.5s";
+  span.style.color = "rgba(" + Math.round(Math.random()) * 255 + "," + Math.round(Math.random()) * 255 + "," + Math.round(Math.random()) * 255 + ",1)";
   if (cows === 128)
   {
     window.location.replace("https://nichodon.github.io/");
