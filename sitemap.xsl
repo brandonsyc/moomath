@@ -6,8 +6,10 @@
 <xsl:template match="/">
   <html>
   <head>
-    <title>Sitemap <xsl:text disable-output-escaping="yes">&ndash;</xsl:text> Visual Math</title>
+    <title>Sitemap</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
     <div id="top"></div>
