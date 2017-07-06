@@ -56,11 +56,50 @@
       <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot8.png</image:loc>
     </image:image>
     <image:image>
-      <image:loc>https://nichodon.github.io/images/thumb.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0002</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/cardioid.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/cardioid2.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/disk1.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/disk2.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/iteration1.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/iteration2.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/mandelbrot.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/mandelbrot1.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/mandelbrot2.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/mandelbrot3.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/mandelbrot4.jpg</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/threecycle.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0002/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0003</loc>
@@ -70,23 +109,44 @@
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0001</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0001/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0002</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0002/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0003</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0003/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0004</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0004/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0005</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0005/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/coming_soon</loc>
   </url>
   <url>
     <loc>https://nichodon.github.io/about</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/images/back.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/images/front.png</image:loc>
+    </image:image>
   </url>
 </urlset>
