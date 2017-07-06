@@ -2,3 +2,8 @@ kilogram per cubic metre,kilograms per cubic metre,kg/m&sup3;,kg/m3
 gram per cubic metre,grams per cubic metre,g/m&sup3;,g/m3
 pound per cubic foot,pounds per cubic foot,lb/ft&sup3;,lb/ft3
 pound per cubic yard,pounds per cubic yard,lb/yd&sup3;,lb/yd3
+:
+1
+0.001
+16.018463374
+0.59327642125

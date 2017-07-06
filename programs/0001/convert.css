@@ -15,6 +15,7 @@ input:hover {
 }
 input[type=radio] {
 	width: 0;
+	visibility: hidden;
 }
 input[type=radio]:checked+label {
 	border-bottom: 5px solid #08b;
@@ -29,10 +30,9 @@ button {
 	border: 1px solid #ddd;
 	box-shadow: none;
 	color: #333;
-	font-size: 16px;
 	height: 100%;
 	margin: 20px 0;
-	padding: 10px;
+	padding: 9px 0 10px 0;
 	transition: 0.2s;
 	width: 100%;
 }

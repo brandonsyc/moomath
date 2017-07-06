@@ -19,11 +19,33 @@
 <div class="article">
 <p id="output"></p>
 
-<p>This is a customizable metronome. You can also input more complex time signatures into the numerator, using +'s to denote spaces between accents, commas to denote separate measures, and *'s to denote repetition. For example, 2*(3+2+3,) 4*2 will play two measures in the accent pattern X x x X x X x x and one measure in the accent pattern X x X x X x X x.</p>
-
-<hr>
-
 <div class="box">
+    <p>
+      <strong>Numbers</strong>: Inputting a number defines beat length.<br>
+      This is mandatory. All other syntax is optional.
+      <br><br>
+      <strong>Plus Sign</strong>: Different beats can be added together with "+".<br>
+      Example: 3+3+2 plays 2 3-length beats and a 2-length beat.
+      <br><br>
+      <strong>Asterisk</strong>: The asterisk denotes a repetition of beats.<br>
+      Example: 3+3+3+2 can be written as 3*3+2.
+      <br><br>
+      <strong>Parentheses</strong>: Parentheses are used to group beats.<br>
+      Example: 3+2+3+2 is identical to 2*(3+2).
+      <br><br>
+      <strong>Commas</strong>: Commas are the end of measures.<br>
+      Example: 3+2,3+2+2 is a measure of 5 followed by a measure of 7.
+      <br><br>
+      <strong>Full example</strong>: 2*(3+2+3,) 4*2<br>
+      Two measures in the accent pattern X x x X x X x x and<br>
+      One measure in the accent pattern X x X x X x X x.<br><br>
+      Note that if the comma were <i>outside</i> the parentheses,<br>
+      The first two measures would be combined into one.
+      <br><br>
+      <strong>Denominator</strong>: This must be a power of 2 from 1 and 64.
+    </p>
+
+    <hr>
     <div class="signature-label">
         <p>Time Signature</p>
     </div>
