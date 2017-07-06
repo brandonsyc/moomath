@@ -78,7 +78,14 @@ li a {
 	color: #333;
 }
 li ul {
+	background-color: #fff;
 	margin: 10px;
+}
+li ul li {
+	overflow-x: auto;
+}
+li ul li:hover {
+	background-color: #eee;
 }
 th,
 td {
