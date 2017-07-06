@@ -6,6 +6,7 @@
 <xsl:template match="/">
   <html>
   <head>
+    <title>Sitemap &ndash; Visual Math</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body>
