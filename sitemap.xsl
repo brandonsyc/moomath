@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
-xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+  xmlns:s="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
   <html>
   <head>
@@ -11,8 +12,8 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <div class="content">
       <h1>Sitemap</h1>
       <ul>
-        <xsl:for-each select="urlset/url">
-          <li><xsl:value-of select="loc" /></li>
+        <xsl:for-each select="s:urlset/s:url">
+          <li><xsl:value-of select="s:loc" /></li>
         </xsl:for-each>
       </ul>
     </div>
