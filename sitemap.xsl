@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0"
   xmlns:s="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <xsl:template match="/">
   <html>
@@ -16,8 +17,8 @@
           <li>
             <xsl:value-of select="s:loc" />
             <ul>
-              <xsl:for-each select="s:urlset/s:url/s:image:image">
-                <li><xsl:value-of select="s:image:loc" /></li>
+              <xsl:for-each select="s:urlset/s:url/image:image">
+                <li><xsl:value-of select="image:loc" /></li>
               </xsl:for-each>
             </ul>
           </li>
