@@ -17,7 +17,7 @@
           <li>
             <xsl:value-of select="s:loc" />
             <ul>
-              <xsl:for-each select="s:urlset/s:url/image:image">
+              <xsl:for-each select="image:image">
                 <li><xsl:value-of select="image:loc" /></li>
               </xsl:for-each>
             </ul>
