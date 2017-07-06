@@ -10,18 +10,11 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <div id="top"></div>
     <div class="content">
       <h1>Sitemap</h1>
-      <table>
-        <tr>
-          <th>Title</th>
-          <th>Artist</th>
-        </tr>
-        <xsl:for-each select="catalog/cd">
-        <tr>
-          <td><xsl:value-of select="title" /></td>
-          <td><xsl:value-of select="artist" /></td>
-        </tr>
+      <ul>
+        <xsl:for-each select="url">
+          <li><xsl:value-of select="loc" /></li>
         </xsl:for-each>
-      </table>
+      </ul>
     </div>
     <div id="bottom"></div>
     <script src="frame.js"></script>
