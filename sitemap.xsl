@@ -6,7 +6,7 @@
 <xsl:template match="/">
   <html>
   <head>
-    <title>Sitemap &ndash; Visual Math</title>
+    <title>Sitemap <xsl:text disable-output-escaping="yes">&ndash;</xsl:text> Visual Math</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
   </head>
   <body>
