@@ -13,7 +13,14 @@
       <h1>Sitemap</h1>
       <ul>
         <xsl:for-each select="s:urlset/s:url">
-          <li><xsl:value-of select="s:loc" /></li>
+          <li>
+            <xsl:value-of select="s:loc" />
+            <ul>
+              <xsl:for-each select="s:urlset/s:url/s:image:image">
+                <li><xsl:value-of select="s:image:loc" /></li>
+              </xsl:for-each>
+            </ul>
+          </li>
         </xsl:for-each>
       </ul>
     </div>
