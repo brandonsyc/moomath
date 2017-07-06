@@ -11,7 +11,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
     <div class="content">
       <h1>Sitemap</h1>
       <ul>
-        <xsl:for-each select="url">
+        <xsl:for-each select="urlset/url">
           <li><xsl:value-of select="loc" /></li>
         </xsl:for-each>
       </ul>
