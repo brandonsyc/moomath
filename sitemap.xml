@@ -6,6 +6,8 @@
     <loc>https://nichodon.github.io</loc>
     <image:image>
       <image:loc>https://nichodon.github.io/images/favicon.png</image:loc>
+    </image:image>
+    <image:image>
       <image:loc>https://nichodon.github.io/images/fractal.jpg</image:loc>
     </image:image>
   </url>
