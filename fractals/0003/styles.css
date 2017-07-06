@@ -1,0 +1,41 @@
+.base-motif canvas {
+    display: inline-block;
+}
+.toolbar button {
+    position: relative;
+    left: 165px;
+}
+.toolbar input {
+    width: 430px;
+}
+.toolbar {
+    margin: 0 auto;
+    text-align: left;
+    max-width: 1024px;
+    width: 100%;
+}
+.toolbar p {
+    text-align: center;
+    position: relative;
+    right: 15px;
+}
+.fl {
+    width: 100%;
+    max-width: 512px;
+    float: left;
+}
+.fr {
+    width: 100%;
+    max-width: 512px;
+    float: right;
+}
+.cdf {
+    margin: 0 auto;
+    text-align: center;
+    max-width: 1024px;
+    width: 100%;
+}
+.cdf button {
+    position: relative;
+    left: 230px;
+}
