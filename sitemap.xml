@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<?xml-stylesheet type="text/xsl" href="sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://nichodon.github.io</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/images/favicon.png</image:loc>
+      <image:loc>https://nichodon.github.io/images/fractal.jpg</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals</loc>
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0001</loc>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/complextalbe1.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/fractal1.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/fractal2.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/fractal3.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot1.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot2.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot3.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot4.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot5.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot6.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot7.png</image:loc>
+      <image:loc>https://nichodon.github.io/fractals/0001/images/mandelbrot8.png</image:loc>
+      <image:loc>https://nichodon.github.io/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0002</loc>
