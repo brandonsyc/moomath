@@ -69,12 +69,16 @@ li {
 	margin: -1px 0 0 0;
 	text-align: left;
 	transition: 0.2s;
+	overflow-x: auto;
 }
 li:hover {
 	background-color: #ddd;
 }
 li a {
 	color: #333;
+}
+li ul {
+	margin: 10px;
 }
 th,
 td {
