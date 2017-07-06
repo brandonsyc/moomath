@@ -22,4 +22,27 @@ megaelectronvolt,megaelectronvolts,MeW
 kiloelectronvolt,kiloelectronvolts,keV
 electronvolt,electronvolts,eV
 millielectronvolt,millielectronvolts,meV
-calorie
+calorie,calories,Cal,large calorie,large calories,kilogram calorie,kilogram calories,food calorie,food calories,kilocalorie,kilocalories,kcal
+megacalorie,megacalories,Mcal
+calorie,calories,cal!!!,small calore,small calories,gram calorie,gram calories
+millicalorie,millicalories,mcal
+calorie (thermochemical),calories (thermochemical),Cal-th,kg-cal-th
+megacalorie (thermochemical),megacalories (thermochemical),Mcal-th,g-cal-th
+kilocalorie (thermochemical),kilocalories (thermochemical),kcal-th,g-cal-th
+calorie (thermochemical),calories (thermochemical),cal-th,g-cal-th
+millicalorie (thermochemical),millicalories (thermochemical),mcal-th,g-cal-th
+calorie (15&deg;C),calories (15&deg;C),Cal-15,kg-cal-15
+megacalorie (15&deg;C),megacalories (15&deg;C),Mcal-15,g-cal-15
+kilocalorie (15&deg;C),kilocalories (15&deg;C),kcal-15,g-cal-15
+calorie (15&deg;C),calories (15&deg;C),cal-15,g-cal-15
+millicalorie (15&deg;C),millicalories (15&deg;C),mcal-15,g-cal-15
+calorie (international steam table),calories (internation steam table),Cal-IT,kg-cal-IT
+megacalorie (international steam table),megacalories (internation steam table),Mcal-IT,g-cal-IT
+kilocalorie (international steam table),kilocalories (internation steam table),kcal-IT,g-cal-IT
+calorie (international steam table),calories (internation steam table),cal-IT,g-cal-IT
+millicalorie (international steam table),millicalories (internation steam table),mcal-IT,g-cal-IT
+foot-poundal,foot-poundals,ftpdl,ft-pdl
+foot-pound force,foot-pound forces,ftlbf,ftlb-f,foot per pound,feet per pound,foot pound,foot pounds,ftlb
+inch-pound force,inch-pound forces,inlbf,inlb-f,inch pound,inch pounds,inlb
+inch-ounce force,inch ounce forces,inozf,inoz-f
+horsepower-hour,horsepower-hours,hph,horsepower,hp,mechanical horsepower,imperial horsepower

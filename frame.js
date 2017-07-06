@@ -6,28 +6,33 @@ document.getElementById("top").innerHTML =
 
 	'<div class="topnav">' +
 		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
-		'<div><a href="https://nichodon.github.io">Home</a>' +
-		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a></div>' +
+		'<div>' +
+			'<a href="https://nichodon.github.io">Home</a>' +
+			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
+			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
+			'<a href="https://nichodon.github.io/about/">About</a>' +
+		'</div>' +
 	'</div>' +
 
 
 	'<div class="topnav" id="sticky">' +
-		'<a href="https://nichodon.github.io">Home</a>' +
-		'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
-		'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
-		'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
-		'<a href="https://nichodon.github.io/about/">About</a>' +
+		'<a href="javascript:void(0);" class="icon" onclick="show()">&#9776;</a>' +
+		'<div>' +
+			'<a href="https://nichodon.github.io">Home</a>' +
+			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
+			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">More Math</a>' +
+			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
+			'<a href="https://nichodon.github.io/about/">About</a>' +
+		'</div>' +
 	'</div>';
 
 document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
-		'<p><a href=\"#top\"><strong>Go to Top</strong></a><br>' +
-		'&copy; ' + new Date().getFullYear() + ' CE &ndash; All Rights Reserved &ndash; <a href=\"https://github.com/Nichodon\" target=\"_blank\">Nichodon</a><br>' +
+		'<p><a href="#top"><strong>Go to Top</strong></a><br>' +
+		'&copy; 2017 CE &ndash; ' + new Date().getFullYear() + ' CE <a href="https://github.com/anematode" target="_blank">anematode</a> & <a href="https://github.com/Nichodon" target="_blank">Nichodon</a><br>' +
 		'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Visual%20Math">timothy.herchen@gmail.com</a></p>' +
 	'</div>';
 
@@ -55,19 +60,28 @@ window.onscroll = function() {
 	var sticky = document.getElementById("sticky");
 	if (window.scrollY > navbar.offsetTop) {
 		sticky.style.display = "inline";
+		navbar.style.boxShadow = "none";
 	}
 	else {
 		sticky.style.display = "none";
+		navbar.style.boxShadow = "0px 20px 25px rgba(51, 51, 51, 0.2)";
 	}
 };
 
 function show() {
 	"use strict";
-	var x = document.getElementsByClassName("topnav")[0];
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    }
-    else {
-        x.className = "topnav";
-    }
+	var navbar = document.getElementsByClassName("topnav")[0];
+	var sticky = document.getElementById("sticky");
+  if (navbar.className === "topnav") {
+  	navbar.className += " responsive";
+  }
+  else {
+  	navbar.className = "topnav";
+  }
+	if (sticky.className === "topnav") {
+	  sticky.className += " responsive";
+	}
+	else {
+	  sticky.className = "topnav";
+	}
 }

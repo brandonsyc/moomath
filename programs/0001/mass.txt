@@ -19,6 +19,7 @@ troy ounce,troy ounces,ozt
 pennyweight,pennyweights,dwt
 carat,carats,carat,ct,metric carat,metric carats,CD
 :
+1
 0.001
 0.000001
 0.000000001

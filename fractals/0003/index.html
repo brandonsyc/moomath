@@ -19,7 +19,7 @@
 <p>31 May, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a></p>
 
 <div class="article">
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro1.png" alt="A Base-Motif Fractal">
         <figcaption>Figure 1: An example of a Base-Motif Fractal.</figcaption>
@@ -30,7 +30,7 @@
     A Base-Motif Fractal is a self-similar shape, or fractal, determined by two shapes: a base curve, and a motif. The base curve is not a "curve" in the ordinary sense of a curve; in fact, it is composed of straight lines. To produce the associated fractal, we translate, rotate, and scale the motif, also composed of straight lines, and replace each of the lines in the base curve with a transformed, but geometrically similar, motif. We do the same thing with the resulting curve, again and again, to infinity. Let's see this process in action on an example base curve and motif.
 </p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro2a.png" alt="A Base-Motif Fractal" width=600>
         <figcaption>Figure 2a: An example base curve and motif.</figcaption>
@@ -45,7 +45,7 @@
     Our first step is replacing all the segments in the base curve with the motif. In the following figure, the base curve is highlighted in red, and the new curve is drawn in black.
 </p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro2b.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 2b: One step in the fractal generating sequence.</figcaption>
@@ -56,7 +56,7 @@
     We do the same thing with the resulting curve:
 </p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro2c.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 2c: The second step in the fractal generating sequence.</figcaption>
@@ -67,13 +67,15 @@
     We can continue this process out to infinity:
 </p>
 
-<iframe width="560" height="560" src="https://www.youtube.com/embed/eTjeIGTQpdE" frameborder="0" allowfullscreen></iframe>
+<div class="video">
+	<iframe src="https://www.youtube.com/embed/eTjeIGTQpdE?modestbranding=1" allowfullscreen></iframe>
+</div>
 
 <p>
     Note that at every odd step, all line segments are diagonal, relative to the lines of the coordinate plane, whereas at every even step, all line segments are parallel to the coordinate plane. At the end of all that, we get a very interesting curve.
 </p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro2d.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 2d: The finished fractal.</figcaption>
@@ -84,7 +86,7 @@
     Let's try a different motif, but the same base curve. In particular, let's try one with self-intersections, like this one:
 </p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro3a.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 3a: A new motif.</figcaption>
@@ -93,7 +95,7 @@
 
 <p>We proceed with the same base curve as before, but add our new motif instead:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro3b.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 3b: The first step of the generating sequence.</figcaption>
@@ -102,7 +104,7 @@
 
 <p>Here is what it looks like when done to infinity:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro3c.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 3c: The generated fractal.</figcaption>
@@ -111,7 +113,7 @@
 
 <p>At each step, the number of lines in the curve is multiplied by the number of lines in the motif, so the growth in complexity is exponential. Let's try one more fractal, but with a different base curve, like so:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro4a.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 4a: A new base curve and motif.</figcaption>
@@ -120,7 +122,7 @@
 
 <p>There will be a lot of self intersection in this fractal. Here is what it looks like after one iteration:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro4b.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 4b: The first step of the generating sequence.</figcaption>
@@ -129,16 +131,16 @@
 
 <p>And here is what it looks like when completed:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro4c.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 4c: The completed fractal.</figcaption>
       </figure>
 </div>
 
-<p>There are a lot of interesting things about these curves. For example, consider the perimeter of our first shape, the one depicted in Figure 2d:</p>
+<p>There are a lot of interesting things about these curves. For example, consider the perimeter of our first shape, the one depicted in Figure 2<sub>d</sub>:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro2d.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 2d: The finished fractal.</figcaption>
@@ -147,7 +149,7 @@
 
 <p>If we put this on the coordinate grid, we can get the perimeter, like so:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro5.png" alt="A Base-Motif Fractal" width=400>
         <figcaption>Figure 5: The perimeter of the fractal, outlined in orange.</figcaption>
@@ -156,7 +158,7 @@
 
 <p>It is, in fact, an octagon, with 4 sides of length 1 and 4 sides of length \(\sqrt{2}\), which seems to give us a perimeter of \(4+4\sqrt{2}\). Consider, however, the perimeter at each step of the generating process:</p>
 
-<div>
+<div class="figure">
     <figure>
         <img src="images/cesaro6.png" alt="A Base-Motif Fractal" width=800>
         <figcaption>Figure 6: The perimeter of the curve at each of its generating steps.</figcaption>
@@ -208,6 +210,7 @@ f(s) = \left\{\begin{aligned}
 </div>
 <br>
 <br>
+
 <canvas id="cesaro" width="1024" height="1024"></canvas>
 
 

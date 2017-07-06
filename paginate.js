@@ -16,21 +16,21 @@ rawFile.onreadystatechange = function ()
 			columns.classList.add("columns");
 			for (var i = array.length - 1; i > -1; i--) {
 				var split = array[i].split(" \u2013 ");
-				
+
 				var fourth = document.createElement("DIV");
 				fourth.classList.add("fourth");
-				
+
 				var h3 = document.createElement("H3");
 				h3.appendChild(document.createTextNode(split[0]));
 				fourth.appendChild(h3);
-				
+
 				var thumb = document.createElement("A");
 				thumb.href = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/";
 				var img = document.createElement("IMG");
 				img.src = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/images/thumb.png";
 				thumb.appendChild(img);
 				fourth.appendChild(thumb);
-				
+
 				var p = document.createElement("P");
 				p.appendChild(document.createTextNode(split[1] + " \u2013 "));
 				var people = split[2].split(" & ");
@@ -44,8 +44,13 @@ rawFile.onreadystatechange = function ()
 					}
 				}
 				fourth.appendChild(p);
-				
+
 				columns.appendChild(fourth);
+				if ((array.length - i + 2) % 4 === 0) {
+					var divider = document.createElement("DIV");
+					divider.classList.add("divider");
+					columns.appendChild(divider);
+				}
 				if ((array.length - i) % 4 === 0 || i === 0) {
 					content.appendChild(columns);
 					columns = document.createElement("DIV");
