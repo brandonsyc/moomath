@@ -88,6 +88,8 @@ li ul li {
 li ul li:hover {
 	background-color: #eee;
 }
+	margin: 10px;
+}
 th,
 td {
 	border-bottom: 1px solid #ddd;
