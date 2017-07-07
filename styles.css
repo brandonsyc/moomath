@@ -82,7 +82,8 @@ li ul {
 	margin: 10px;
 }
 li ul li {
-	overflow-x: auto;
+	font-size: 10px;
+	text-align: right;
 }
 li ul li:hover {
 	background-color: #eee;

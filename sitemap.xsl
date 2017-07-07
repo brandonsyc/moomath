@@ -18,10 +18,10 @@
       <ul>
         <xsl:for-each select="s:urlset/s:url">
           <li>
-            Web: <xsl:value-of select="s:loc" />
+            <xsl:value-of select="s:loc" />
             <ul>
               <xsl:for-each select="image:image">
-                <li>Image: <xsl:value-of select="image:loc" /></li>
+                <li><a href="{$image:loc}"><xsl:value-of select="image:loc" /></a> (Image)</li>
               </xsl:for-each>
             </ul>
           </li>
