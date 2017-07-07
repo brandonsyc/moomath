@@ -8,8 +8,8 @@
   <head>
     <title>Sitemap</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
-    <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <div id="top"></div>
@@ -21,7 +21,7 @@
             <xsl:value-of select="s:loc" />
             <ul>
               <xsl:for-each select="image:image">
-                <li><xsl:value-of select="image:loc" /></li>
+                <li><a href="{$image:loc}"><xsl:value-of select="image:loc" /></a> (Image)</li>
               </xsl:for-each>
             </ul>
           </li>

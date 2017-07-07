@@ -78,6 +78,16 @@ li a {
 	color: #333;
 }
 li ul {
+	background-color: #fff;
+	margin: 10px;
+}
+li ul li {
+	font-size: 10px;
+	text-align: right;
+}
+li ul li:hover {
+	background-color: #eee;
+}
 	margin: 10px;
 }
 th,
