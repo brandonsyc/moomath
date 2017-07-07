@@ -646,6 +646,8 @@ function fitPattern(a, b) {
 
 function recurse(depth, tpattern) {
     // The central recursion function
+
+    if (stop) return;
     if (depth >= depthlimit) {
         for (var a = 0; a < tpattern.length - 1; a++) {
             var c = tpattern[a];
@@ -663,15 +665,18 @@ function recurse(depth, tpattern) {
             continue;
         }
 
+        if (stop) return;
         recurse(depth + 1, fitPattern(c, d));
     }
 }
 
 function drawFractal() {
     lastPausalDate = new Date().getTime();
+    console.log(lastPausalDate);
     stop = false;
     clearCanvas();
     setTimeout(recurse(0, base),0);
+    setTimeout(function() {stopComputation();},100);
 }
 
 function stopComputation() {
