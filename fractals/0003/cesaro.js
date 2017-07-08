@@ -1,4 +1,10 @@
+/** This JS file controls all systems and logic behind the
+entirely JavaScript-powered base-motif fractal generator at
+nichodon.github.io/fractals/0003.
 
+Written by anematode, July 7, 2017**/
+
+// Canvas variables
 var canvas = document.getElementById("cesaro");
 canvas.style.position = "absolute";
 canvas.style.left = "50%";
@@ -93,6 +99,7 @@ if (!Math.ceil10) {
     };
 }
 
+// String maniuplation functions
 String.prototype.trimLeft = function(charlist) {
     if (charlist === undefined)
         charlist = "\s";
@@ -140,41 +147,56 @@ var bdragStartX,bdragStartY,tempbxmin,tempbymin,tempbxmax,tempbymax;
 var mdragStartX,mdragStartY,tempmxmin,tempmymin,tempmxmax,tempmymax;
 
 baseMotif.addEventListener('mousedown',function(evt) {
+    // Determines what happens when the mouse is pressed down on the base-motif canvas
     if (!(lastX < btransx || lastX > btransx + bwidth || lastY < btransy || lastY > btransy + height)) {
+        // If the mouse is inside the base grid...
         document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+
+        // Get mouse position relative to canvas
         lastX = evt.offsetX || (evt.pageX - baseMotif.offsetLeft);
         lastY = evt.offsetY || (evt.pageY - baseMotif.offsetTop);
+
+        // Calculate corresponding coordinates
         bdragStartX = (lastX - btransx) / bwidth * (bxmax - bxmin) + bxmin;
         bdragStartY = (bheight - lastY + btransy) / bheight * (bymax - bymin) + bymin;
+
+        // Temporarily save the coordinates
         tempbxmin = bxmin;
         tempbymin = bymin;
         tempbxmax = bxmax;
         tempbymax = bymax;
-        dragged = false;
     }
+
     if (!(lastX < mtransx || lastX > mtransx + mwidth || lastY < mtransy || lastY > mtransy + height)) {
+        // Same for motif grid
         document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+
         lastX = evt.offsetX || (evt.pageX - baseMotif.offsetLeft);
         lastY = evt.offsetY || (evt.pageY - baseMotif.offsetTop);
+
         mdragStartX = (lastX - mtransx) / mwidth * (mxmax - mxmin) + mxmin;
         mdragStartY = (mheight - lastY + mtransy) / mheight * (mymax - mymin) + mymin;
+
         tempmxmin = mxmin;
         tempmymin = mymin;
         tempmxmax = mxmax;
         tempmymax = mymax;
-        dragged = false;
     }
 },false);
 
 baseMotif.addEventListener('mousemove',function(evt) {
+    // Determines what happens when the mouse is moved on the base-motif canvas
     lastX = evt.offsetX || (evt.pageX - baseMotif.offsetLeft);
     lastY = evt.offsetY || (evt.pageY - baseMotif.offsetTop);
     dragged = true;
+
     if (bdragStartX) {
+        // If the mouse has a defined drag starting position, change the bounds of the base grid accordingly
         var dragEndX = (lastX - btransx) / bwidth * (tempbxmax - tempbxmin) + tempbxmin;
         var dragEndY = (bheight - lastY + btransy) / bheight * (tempbymax - tempbymin) + tempbymin;
         if (tempbxmin - dragEndX + bdragStartX < -1000 || tempbxmax - dragEndX + bdragStartX > 1000
           || tempbymin -  dragEndY + bdragStartY < -1000 || tempbymax - dragEndY + bdragStartY > 1000) {
+            // If dragging will move the grid out of a 2000 x 2000 square centered at the origin, return
             return;
         }
         bxmin = (tempbxmin - dragEndX + bdragStartX);
@@ -210,7 +232,7 @@ baseMotif.addEventListener('mouseup',function(evt) {
 },false);
 
 function resetBZoom() {
-    // Reset the base zoom
+    // Reset the base grid zoom
     bxmin = -1;
     bxmax = 1;
     bymin = -1;
@@ -243,6 +265,33 @@ function bZoom(x, y, delta, evt) {
     bymax = Math.pow(zoomrate, delta) * (bymax - trueY) + trueY;
 }
 
+function bLine(x1, y1, x2, y2) {
+    // Draws a line between coords (x1, y1) and (x2, y2) on the base grid
+    bMctx.strokeStyle = "#FF0000";
+    bMctx.lineWidth = 2;
+
+    // Define a clipping region around the base grid so that lines are not drawn outside the grid
+    bMctx.save();
+    bMctx.beginPath();
+    bMctx.moveTo(btransx, btransy);
+    bMctx.lineTo(btransx + bwidth, btransy);
+    bMctx.lineTo(btransx + bwidth, btransy + bwidth);
+    bMctx.lineTo(btransx, btransy + bwidth);
+    bMctx.lineTo(btransx, btransy);
+    bMctx.clip();
+
+    bMctx.beginPath();
+    bMctx.moveTo(bwidth * (x1 - bxmin) / (bxmax - bxmin) + btransx,
+        bheight * (1 - (y1 - bymin) / (bymax - bymin)) + btransy);
+    bMctx.lineTo(bwidth * (x2 - bxmin) / (bxmax - bxmin) + btransx,
+        bheight * (1 - (y2 - bymin) / (bymax - bymin)) + btransy);
+    bMctx.stroke();
+    bMctx.lineWidth = 1;
+
+    bMctx.restore();
+    return;
+}
+
 function drawBaseGrid() {
     // Draws a grid on the base side of the base-motif canvas
 
@@ -252,7 +301,7 @@ function drawBaseGrid() {
     bMctx.fillText("Base Curve",btransx+10,40);
     bMctx.font = axisFont;
 
-
+    // Calculates separation between grid lines and width of view, to the nearest power of 10
     var zoomMag = Math.floor(Math.log10(bxmax - bxmin))-1;
     var separation = Math.pow(10, zoomMag);
 
@@ -270,20 +319,19 @@ function drawBaseGrid() {
             bMctx.strokeStyle = thickLineColor;
             addNumber = true;
 
-            // Line styling logic
+            // Line styling and positioning logic; chooses density based on zoom width
             if (60 * separation < bymax - bymin) {
                 if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 10 - 5) - 5) > 0.01) {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
-            }
-            if (30 * separation < bymax - bymin) {
+            } else if (30 * separation < bymax - bymin) {
                 if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 5 - 2.5) - 2.5) > 0.01) {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
             } else if (10 * separation < bymax - bymin) {
-                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1)-1) > 0.01) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1) - 1) > 0.01) {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
@@ -293,13 +341,14 @@ function drawBaseGrid() {
             bMctx.strokeStyle = thinLineColor;
         }
 
+        // Draw vertical line with style settings
         bMctx.beginPath();
         bMctx.moveTo(xpos, btransy);
         bMctx.lineTo(xpos, bwidth + btransy);
         bMctx.stroke();
 
         if (addNumber) {
-            // Draw the numbers
+            // Draw a number on the x axis
             var addNumberYPos = bheight - bheight * (-bymin) / (bymax - bymin) + btransy;
             if (addNumberYPos < bheight + btransy && addNumberYPos > btransy) {
                 var text = String(Math.round10(i, zoomMag));
@@ -327,14 +376,13 @@ function drawBaseGrid() {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
-            }
-            if (30 * separation < bxmax - bxmin) {
+            } else if (30 * separation < bxmax - bxmin) {
                 if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 5 - 2.5) - 2.5) > 0.01) {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
             } else if (10 * separation < bxmax - bxmin) {
-                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1)-1) > 0.01) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1) - 1) > 0.01) {
                     addNumber = false;
                     bMctx.strokeStyle = thinLineColor;
                 }
@@ -356,6 +404,13 @@ function drawBaseGrid() {
                 bMctx.fillText(text, addNumberXPos - 3, ypos + 14);
             }
         }
+    }
+
+    // Draws the base pattern on the base grid
+    for (i = 0; i < base.length - 1; i++) {
+        var c = base[i];
+        var d = base[i+1];
+        bLine(c[0], c[1], d[0], d[1]);
     }
 }
 
@@ -389,6 +444,32 @@ function mZoom(x, y, delta, evt) {
     mxmax = Math.pow(zoomrate, delta) * (mxmax - trueX) + trueX;
     mymin = Math.pow(zoomrate, delta) * (mymin - trueY) + trueY;
     mymax = Math.pow(zoomrate, delta) * (mymax - trueY) + trueY;
+}
+
+function mLine(x1, y1, x2, y2) {
+    // Draws a line between coords (x1, y1) and (x2, y2) on the base grid
+    bMctx.strokeStyle = "#FF0000";
+    bMctx.lineWidth = 2;
+
+    bMctx.save();
+    bMctx.beginPath();
+    bMctx.moveTo(mtransx, mtransy);
+    bMctx.lineTo(mtransx + mwidth, mtransy);
+    bMctx.lineTo(mtransx + mwidth, mtransy + mwidth);
+    bMctx.lineTo(mtransx, mtransy + mwidth);
+    bMctx.lineTo(mtransx, mtransy);
+    bMctx.clip();
+
+    bMctx.beginPath();
+    bMctx.moveTo(mwidth * (x1 - mxmin) / (mxmax - mxmin) + mtransx,
+        mheight * (1 - (y1 - mymin) / (mymax - mymin)) + mtransy);
+    bMctx.lineTo(mwidth * (x2 - mxmin) / (mxmax - mxmin) + mtransx,
+        mheight * (1 - (y2 - mymin) / (mymax - mymin)) + mtransy);
+    bMctx.stroke();
+    bMctx.lineWidth = 1;
+
+    bMctx.restore();
+    return;
 }
 
 function drawMotifGrid() {
@@ -501,10 +582,16 @@ function drawMotifGrid() {
             }
         }
     }
+
+    for (i = 0; i < pattern.length - 1; i++) {
+        var c = pattern[i];
+        var d = pattern[i+1];
+        mLine(c[0], c[1], d[0], d[1]);
+    }
 }
 
 function redrawBM() {
-    // Redraw entire BM canvas
+    // Redraw entire BM canvas (clear canvas, draw base grid, draw motif grid)
 
     clearBMCanvas();
     drawBaseGrid();
@@ -512,26 +599,32 @@ function redrawBM() {
 }
 
 function updateBM() {
+    // Updates the base-motif input as series of coordinates
+
+    // Coordinates as raw input
     var baseCoords = document.getElementById("baseinput").value;
     var motifCoords = document.getElementById("motifinput").value;
 
+    // Replace {}, [] with (); remove spaces, trim characters
     baseCoords = baseCoords.replace(/\[/g,'(').replace(/\{/g,'(').replace(/\]/g,')').replace(/\}/g,')').replace(/ /g,'').trim('(').trim(')');
     motifCoords = motifCoords.replace(/\[/g,'(').replace(/\{/g,'(').replace(/\]/g,')').replace(/\}/g,')').replace(/ /g,'').trim('(').trim(')');
 
+    // Return list of pairs in the base
     var basePairs = baseCoords.split('),(');
     var valid = (basePairs.length != 1);
 
     var pairs = [];
 
+    // Parse coordinates as 2-tuples of floats
     for (i = 0; i < basePairs.length; i++) {
-        base = basePairs[i].split(',');
+        var bse = basePairs[i].split(',');
         try {
-            var x = parseFloat(base[0]);
-            var y = parseFloat(base[1]);
+            var x = parseFloat(bse[0]);
+            var y = parseFloat(bse[1]);
             if (!isNaN(x) && !isNaN(y)) {
                 pairs.push([x,y]);
             } else {
-                throw "back thursday";
+                throw "";
             }
         } catch (e) {
             valid = false;
@@ -540,6 +633,7 @@ function updateBM() {
     }
 
     if (!valid) {
+        // Color the background of the input "salmon" to denote a bad input
         document.getElementById("baseinput").style.backgroundColor = "#FF9184";
     } else {
         document.getElementById("baseinput").style.backgroundColor = "#FFFFFF";
@@ -551,6 +645,7 @@ function updateBM() {
 
     var pairs = [];
 
+    // Stores the maximum distance between two consecutive pairs
     var maxMotifDis = 0;
 
     for (i = 0; i < motifPairs.length; i++) {
@@ -563,6 +658,7 @@ function updateBM() {
                 var prevPair = pairs[pairs.length-1];
                 var pairDis = Math.hypot(prevPair[0] - x, prevPair[1] - y);
                 if (pairDis > maxMotifDis) {
+                    // Keep track of maxMotifDis
                     maxMotifDis = pairDis;
                 }
             }
@@ -570,17 +666,22 @@ function updateBM() {
             if (!isNaN(x) && !isNaN(y)) {
                 pairs.push([x,y]);
             } else {
-                throw "the udders";
+                throw "";
             }
         } catch (e) {
             valid = false;
             break;
         }
     }
+
     try {
-        var totalDis = Math.hypot(pairs[pairs.length-1][0]-pairs[0][0],pairs[pairs.length-1][1]-pairs[0][1]);
-    } catch (e) {}
+        var totalDis = Math.hypot(pairs[pairs.length - 1][0] - pairs[0][0],
+            pairs[pairs.length - 1][1] - pairs[0][1]);
+    } catch (e) {;}
+
     if (maxMotifDis > 0.9 * totalDis) {
+        /** If the maximum motif distance is greater than 0.9 x totalDis,
+        drawing it will take an unreasonable amount of time, so it is deemed invalid. **/
         valid = false;
     }
 
@@ -590,23 +691,19 @@ function updateBM() {
         document.getElementById("motifinput").style.backgroundColor = "#FFFFFF";
         pattern = pairs;
     }
-
 }
 
-// End baseMotif Logic
+// Begin logic for main canvas
 
-var width = canvas.width;
-var height = canvas.height;
-
-var xmin = -1;
-var xmax = 2;
-var ymin = -1;
-var ymax = 2;
-
+// User defined settings
 var pattern = [[0,0],[0.5,0.5],[1,0]];
-var base = [[0,0],[1,0]];
-var depthlimit = 30;
+var base = [[-0.25,0],[0.25,0]];
+var depthlimit = 5;
+var fractalColor = "#333333";
+var drawGridlines = true;
+var drawAxes = true;
 
+// Last date of a pause in the recursion function
 var lastPausalDate;
 var stop = false;
 
@@ -615,11 +712,11 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function line(x1, y1, x2, y2) {
+function fLine(x1, y1, x2, y2) {
     // Draws a line between coords (x1, y1) and (x2, y2) on the central canvas
     ctx.beginPath();
-    ctx.moveTo(canvas.width * (x1 - xmin) / (xmax - xmin), canvas.height * (1 - (y1 - ymin) / (ymax - ymin)));
-    ctx.lineTo(canvas.width * (x2 - xmin) / (xmax - xmin), canvas.height * (1 - (y2 - ymin) / (ymax - ymin)));
+    ctx.moveTo(fwidth * (x1 - fxmin) / (fxmax - fxmin), fheight * (1 - (y1 - fymin) / (fymax - fymin)));
+    ctx.lineTo(fwidth * (x2 - fxmin) / (fxmax - fxmin), fheight * (1 - (y2 - fymin) / (fymax - fymin)));
     ctx.stroke();
     return;
 }
@@ -644,41 +741,431 @@ function fitPattern(a, b) {
     return retPattern;
 }
 
-function recurse(depth, tpattern) {
+
+function fRecurse(depth, tpattern, callSequence, recall) {
     // The central recursion function
+
+    if (stop) return;
+
     if (depth >= depthlimit) {
+        // If the depth is sufficient, just draw the pattern and return
         for (var a = 0; a < tpattern.length - 1; a++) {
             var c = tpattern[a];
             var d = tpattern[a+1];
-            line(c[0],c[1],d[0],d[1]);
+            fLine(c[0],c[1],d[0],d[1]);
         }
         return;
     }
-    for (var a = 0; a < tpattern.length - 1; a++) {
-        var c = tpattern[a];
-        var d = tpattern[a+1];
 
-        if (Math.hypot(d[0] - c[0], d[1] - c[1]) < 2 * (xmax - xmin) / canvas.width) {
-            line(c[0], c[1], d[0], d[1]);
-            continue;
+    if (!recall) {
+        for (var a = 0; a < tpattern.length - 1; a++) {
+            // For every consecutive pair c,d in the current pattern...
+            var c = tpattern[a];
+            var d = tpattern[a+1];
+
+            // Distance between c and d
+            var ds = Math.hypot(d[0] - c[0], d[1] - c[1]);
+
+            // If the distance between c and d is sufficiently small, draw the line
+            if (ds < (fxmax - fxmin) / canvas.width) {
+                fLine(c[0], c[1], d[0], d[1]);
+                continue;
+            }
+
+            // If the pair is at least ds units outside of the viewing field, continue to next pair
+            if ((c[0] > fxmax + ds && d[0] > fxmax + ds)
+              || (c[0] < fxmin - ds && d[0] < fxmin - ds)
+              || (c[1] > fymax + ds && d[1] > fymax + ds)
+              || (c[1] < fymin - ds && d[1] < fymin - ds)) {
+                continue;
+            }
+
+            if (stop) return false;
+
+            if (depth < 3) {
+                // If the depth is smaller than 3...
+
+                // Keep track of the call sequence leading up to the current position in the recursion.
+
+                var newCallSequence = callSequence;
+                newCallSequence.push(a);
+
+                // If we haven't paused recursion in the past 40 ms,
+                if (lastPausalDate + 40 < new Date().getTime()) {
+                    // Update the lastPausalDate, then do a setTimeout for a recursion recall in 10 ms to give other JS time to run
+                    setTimeout(function() {lastPausalDate = new Date().getTime();
+                      fRecurse(0, base, newCallSequence, true);}, 10);
+
+                    // Return false, which will signal all antecedent recursions to return false and exit recursion (until the setTimeout runs)
+                    return false;
+                } else {
+                    // If we have paused recursion recently, continue as usual
+                    if (fRecurse(depth + 1, fitPattern(c, d), newCallSequence, false) === false) return false;
+                }
+            } else {
+                // If the depth is greater than 3, don't keep track of the call sequence for performance purposes
+                if (fRecurse(depth + 1, fitPattern(c, d), [], false) === false) return false;
+            }
+        }
+    } else {
+        // If we're performing a recursion recall...
+        for (var a = callSequence[depth] - 1; a < tpattern.length - 1; a++) {
+            if (a === -1) continue;
+
+            // For every pair c,d starting with the pair we ended off on at this recursion depth
+            c = tpattern[a];
+            d = tpattern[a + 1];
+
+            // If the distance is sufficiently small, draw the line
+            if (Math.hypot(d[0] - c[0], d[1] - c[1]) < (fxmax - fxmin) / canvas.width) {
+                line(c[0], c[1], d[0], d[1]);
+                continue;
+            }
+
+            if (stop) return;
+
+            if (depth < callSequence.length - 1) {
+                // If the depth is less than the callSequence length, continue the recall by recursing at the next step
+                if (fRecurse(depth + 1, fitPattern(c, d), callSequence, true) === false) return false;
+            } else {
+                // Otherwise, we have finished the recall process and can recurse normally
+                if (fRecurse(depth + 1, fitPattern(c, d), [], false) === false) return false;
+            }
+        }
+    }
+}
+
+// Variables for canvas size
+var fxmin = -1;
+var fxmax = 1;
+var fymin = -1;
+var fymax = 1;
+
+// Variables for canvas displacement
+var ftransx = 0;
+var ftransy = 0;
+
+var fwidth = 1024;
+var fheight = 1024;
+
+// Scroll fractal reupdate timeout
+var sFRT = null;
+
+function drawFractalGrid() {
+    // Draws a grid on the fractal canvas
+
+    var zoomMag = Math.floor(Math.log10(fxmax - fxmin))-1;
+    var separation = Math.pow(10, zoomMag);
+
+    for (i = Math.round10(fxmin, zoomMag) + separation; i < Math.round10(fxmax, zoomMag) - separation/2; i += separation) {
+        // Vertical lines
+        var xpos = Math.round(fwidth * (i - fxmin) / (fxmax - fxmin)) + ftransx + 0.5;
+        var addNumber = false;
+
+        ctx.lineWidth = 1;
+
+        if (Math.abs(i) < separation/100.0) {
+            ctx.strokeStyle = axesColor;
+            ctx.lineWidth = 2;
+
+            // If drawing axes is turned off, draw it as a normal line if drawGridlines is true, or do nothing if it is false
+            if (!drawAxes) {
+                if (!drawGridlines) continue;
+                ctx.strokeStyle = thickLineColor;
+
+                ctx.beginPath();
+                ctx.moveTo(xpos, ftransy);
+                ctx.lineTo(xpos, fwidth + ftransy);
+                ctx.stroke();
+
+                continue;
+            }
+
+        } else if (Math.abs(Math.round10(i, zoomMag) - i) < separation/100.0) {
+
+            if (!drawGridlines) continue;
+            ctx.strokeStyle = thickLineColor;
+            addNumber = true;
+
+            if (60 * separation < fymax - fymin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 10 - 5) - 5) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            } else if (30 * separation < fymax - fymin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 5 - 2.5) - 2.5) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            } else if (10 * separation < fymax - fymin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1)-1) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            }
+
+        } else {
+            ctx.strokeStyle = thinLineColor;
         }
 
-        recurse(depth + 1, fitPattern(c, d));
+        ctx.beginPath();
+        ctx.moveTo(xpos, ftransy);
+        ctx.lineTo(xpos, fwidth + ftransy);
+        ctx.stroke();
+
+        if (addNumber && drawAxes) {
+            // Only draw numbers if drawAxes is true
+            var addNumberYPos = fheight - fheight * (-fymin) / (fymax - fymin) + ftransy;
+            if (addNumberYPos < fheight + ftransy && addNumberYPos > ftransy) {
+                var text = String(Math.round10(i, zoomMag));
+                ctx.textAlign = "right";
+                ctx.fillText(text, xpos - 3, addNumberYPos + 14);
+            }
+        }
+    }
+
+    for (i = Math.round10(fymin, zoomMag) + separation; i < Math.round10(fymax, zoomMag) - separation/2; i += separation) {
+        // Horizontal lines
+        var ypos = Math.round10(fheight - fheight * (i - fymin) / (fymax - fymin)) + ftransy + 0.5;
+        var addNumber = false;
+
+        ctx.lineWidth = 1;
+
+        if (Math.abs(i) < separation/100.0) {
+            ctx.strokeStyle = axesColor;
+            ctx.lineWidth = 2;
+
+            if (!drawAxes) {
+                if (!drawGridlines) continue;
+                ctx.strokeStyle = thickLineColor;
+
+                ctx.beginPath();
+                ctx.moveTo(ftransx, ypos);
+                ctx.lineTo(ftransx + fwidth, ypos);
+                ctx.stroke();
+
+                continue;
+            }
+
+        } else if (Math.abs(Math.round10(i, zoomMag) - i) < separation/100.0) {
+
+            if (!drawGridlines) continue;
+            ctx.strokeStyle = thickLineColor;
+            addNumber = true;
+            if (60 * separation < fxmax - fxmin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 10 - 5) - 5) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            } else if (30 * separation < fxmax - fxmin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 5 - 2.5) - 2.5) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            } else if (10 * separation < fxmax - fxmin) {
+                if (Math.abs(Math.abs((Math.round10(Math.abs(i), zoomMag) / separation) % 2 - 1)-1) > 0.01) {
+                    addNumber = false;
+                    ctx.strokeStyle = thinLineColor;
+                }
+            }
+        } else {
+            ctx.strokeStyle = thinLineColor;
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(ftransx, ypos);
+        ctx.lineTo(ftransx + fwidth, ypos);
+        ctx.stroke();
+
+        if (addNumber && drawAxes) {
+            var addNumberXPos = fwidth * (-fxmin) / (fxmax - fxmin) + ftransx;
+            if (addNumberXPos < fwidth + ftransx && addNumberXPos > ftransx) {
+                var text = String(Math.round10(i, zoomMag));
+                ctx.textAlign = "right";
+                ctx.fillText(text, addNumberXPos - 3, ypos + 14);
+            }
+        }
     }
 }
 
 function drawFractal() {
-    lastPausalDate = new Date().getTime();
+    // Draw the fractal
     stop = false;
     clearCanvas();
-    setTimeout(recurse(0, base),0);
+
+    // Update the lastPausalDate so it does not unnecessarily pause immediately
+    lastPausalDate = new Date().getTime();
+    drawFractalGrid();
+
+    // Asynchronously call fRecurse so that other processes can (jerkily) run
+    setTimeout(function() {ctx.strokeStyle = fractalColor; fRecurse(0, base, [], false);}, 0);
 }
 
-function stopComputation() {
-    stop = true;
+function resetFZoom() {
+    // Reset the fractal zoom
+    fxmin = -1;
+    fxmax = 1;
+    fymin = -1;
+    fymax = 1;
+
+    drawFractal();
 }
 
-drawFractal();
+function fZoom(x, y, delta, evt) {
+    // Update zoom on fractal curve graph
+    evt.preventDefault();
+    if (((fxmin < -1000 || fxmax > 1000 || fymin < -1000 || fymax > 1000)
+      && (delta > 0)) || ((fxmax - fxmin < 0.001) && (delta < 0))) {
+        // Return if zoom will go out of bounds
+        return;
+    }
+    if (x < ftransx || x > ftransx + fwidth || y < ftransy || y > ftransy + fheight) {
+        // Return if cursor is outside of graph
+        return;
+    }
+    // Prevent the event from scrolling the page
 
-drawBaseGrid();
-drawMotifGrid();
+    // Calculate new bounds
+    var trueX = (x - ftransx) / fwidth * (fxmax - fxmin) + fxmin;
+    var trueY = (fheight - y + ftransy) / fheight * (fymax - fymin) + fymin;
+
+    fxmin = Math.pow(zoomrate, delta) * (fxmin - trueX) + trueX;
+    fxmax = Math.pow(zoomrate, delta) * (fxmax - trueX) + trueX;
+    fymin = Math.pow(zoomrate, delta) * (fymin - trueY) + trueY;
+    fymax = Math.pow(zoomrate, delta) * (fymax - trueY) + trueY;
+}
+
+// Variables for keeping track of dragging on the fractal canvas
+var fdragStartX,fdragStartY,tempfxmin,tempfymin,tempfxmax,tempfymax;
+var flastX = 512;
+var flastY = 512;
+
+canvas.addEventListener('mousedown',function(evt) {
+    if (!(flastX < ftransx || flastX > ftransx + fwidth || flastY < ftransy || flastY > ftransy + height)) {
+
+        // Try to clear out the sFRT timeout so the fractal doesn't draw while we're dragging
+        try {clearTimeout(sFRT);} catch (e) {;}
+
+        document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
+        lastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+        lastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+
+        fdragStartX = (flastX - ftransx) / fwidth * (fxmax - fxmin) + fxmin;
+        fdragStartY = (fheight - flastY + ftransy) / fheight * (fymax - fymin) + fymin;
+
+        tempfxmin = fxmin;
+        tempfymin = fymin;
+        tempfxmax = fxmax;
+        tempfymax = fymax;
+    }
+},false);
+
+canvas.addEventListener('mousemove',function(evt) {
+    flastX = evt.offsetX || (evt.pageX - canvas.offsetLeft);
+    flastY = evt.offsetY || (evt.pageY - canvas.offsetTop);
+
+    if (fdragStartX) {
+        try {clearTimeout(sFRT);} catch (e) {;}
+
+        var dragEndX = (flastX - ftransx) / fwidth * (tempfxmax - tempfxmin) + tempfxmin;
+        var dragEndY = (fheight - flastY + ftransy) / fheight * (tempfymax - tempfymin) + tempfymin;
+
+        if (tempfxmin - dragEndX + fdragStartX < -1000 || tempfxmax - dragEndX + fdragStartX > 1000
+          || tempfymin - dragEndY + fdragStartY < -1000 || tempfymax - dragEndY + fdragStartY > 1000) {
+            return;
+        }
+
+        fxmin = (tempfxmin - dragEndX + fdragStartX);
+        fymin = (tempfymin - dragEndY + fdragStartY);
+        fxmax = (tempfxmax - dragEndX + fdragStartX);
+        fymax = (tempfymax - dragEndY + fdragStartY);
+
+        clearCanvas();
+        drawFractalGrid();
+    }
+},false);
+
+canvas.addEventListener('mouseup',function(evt) {
+    // Stop dragging if mouse is up
+
+    fdragStartX = null;
+    fdragStartY = null;
+
+    drawFractal();
+
+},false);
+
+canvas.onwheel = function(evt) {
+    // Ran when scrolling
+
+    var delta = evt.wheelDelta ? evt.wheelDelta/40 : evt.detail ? -evt.detail : 0;
+    if (delta) {
+        fZoom(evt.offsetX, evt.offsetY, delta, evt);
+
+        if (depthlimit < 6) {
+            // If the curve complexity is sufficiently small, draw the fractal live
+            drawFractal();
+        } else {
+            clearCanvas();
+            drawFractalGrid();
+            try {
+                // Try to cancel previous sFRT timeouts, so the fractal only draws some time after scrolling stops
+                clearTimeout(sFRT);
+            } catch (e) {
+                ;
+            }
+            // Set the sFRT timeout
+            sFRT = setTimeout(drawFractal, depthlimit * 20);
+        }
+    }
+};
+
+function updateIterations() {
+    // Update the number of iterations (depthlimit) drawn on the canvas
+    depthlimit = document.getElementById("iterations").value;
+
+    drawFractal();
+}
+
+function updateColor() {
+    // Update the color of the fractal, given as a hex value
+    var color = document.getElementById("color").value.replace(/ /g,'');
+
+    // Tests if the color is a valid hex color
+    if (/(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i.test(color)) {
+        fractalColor = color;
+        document.getElementById("color").style.backgroundColor = "#FFFFFF";
+    } else {
+        document.getElementById("color").style.backgroundColor = "#FF9184";
+    }
+
+    try {
+        // This is the same timeout system as canvas.onwheel
+        clearTimeout(sFRT);
+    } catch (e) {
+        ;
+    }
+    sFRT = setTimeout(drawFractal, 500);
+}
+
+function updateDrawGrid() {
+    // Update whether to draw the grid on the fractal canvas
+    drawGridlines = document.getElementById("drawGrid").checked;
+
+    drawFractal();
+}
+
+function updateDrawAxes() {
+    // Update whether the draw the axes on the fractal canvas
+    drawAxes = document.getElementById("drawAxes").checked;
+
+    drawFractal();
+}
+
+window.onload = function() {
+    // Draw the fractal and grids as soon as the window loads
+
+    drawFractal();
+    drawBaseGrid();
+    drawMotifGrid();
+}

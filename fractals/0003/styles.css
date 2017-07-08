@@ -3,14 +3,20 @@
 }
 .toolbar button {
     position: relative;
-    left: 165px;
+    right: 30px;
 }
-.toolbar input {
+.toolbar input[type="text"] {
     width: 430px;
+}
+.toolbar input[type="number"] {
+    width: 50px;
+}
+.toolbar input[type="checkbox"] {
+    width: 50px;
 }
 .toolbar {
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
     max-width: 1024px;
     width: 100%;
 }
@@ -36,6 +42,7 @@
     width: 100%;
 }
 .cdf button {
-    position: relative;
-    left: 230px;
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
 }
