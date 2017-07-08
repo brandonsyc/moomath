@@ -148,7 +148,7 @@ var mdragStartX,mdragStartY,tempmxmin,tempmymin,tempmxmax,tempmymax;
 
 baseMotif.addEventListener('mousedown',function(evt) {
     // Determines what happens when the mouse is pressed down on the base-motif canvas
-    if (!(lastX < btransx || lastX > btransx + bwidth || lastY < btransy || lastY > btransy + height)) {
+    if (!(lastX < btransx || lastX > btransx + bwidth || lastY < btransy || lastY > btransy + bheight)) {
         // If the mouse is inside the base grid...
         document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
 
@@ -167,7 +167,7 @@ baseMotif.addEventListener('mousedown',function(evt) {
         tempbymax = bymax;
     }
 
-    if (!(lastX < mtransx || lastX > mtransx + mwidth || lastY < mtransy || lastY > mtransy + height)) {
+    if (!(lastX < mtransx || lastX > mtransx + mwidth || lastY < mtransy || lastY > mtransy + mheight)) {
         // Same for motif grid
         document.body.style.mozUserSelect = document.body.style.webkitUserSelect = document.body.style.userSelect = 'none';
 
@@ -584,8 +584,8 @@ function drawMotifGrid() {
     }
 
     for (i = 0; i < pattern.length - 1; i++) {
-        var c = pattern[i];
-        var d = pattern[i+1];
+        var c = gPairs[i];
+        var d = gPairs[i+1];
         mLine(c[0], c[1], d[0], d[1]);
     }
 }
@@ -599,6 +599,7 @@ function redrawBM() {
 }
 
 function updateBM() {
+    console.log('3');
     // Updates the base-motif input as series of coordinates
 
     // Coordinates as raw input
@@ -679,18 +680,40 @@ function updateBM() {
             pairs[pairs.length - 1][1] - pairs[0][1]);
     } catch (e) {;}
 
-    if (maxMotifDis > 0.9 * totalDis) {
+    if (maxMotifDis > 0.9 * totalDis && valid) {
         /** If the maximum motif distance is greater than 0.9 x totalDis,
         drawing it will take an unreasonable amount of time, so it is deemed invalid. **/
+        document.getElementById("warningP").innerHTML = "The motif cannot contain a line segment longer than its size.";
         valid = false;
+
+        gPairs = pairs;
+    } else {
+        document.getElementById("warningP").innerHTML = "&nbsp;";
     }
 
     if (!valid) {
         document.getElementById("motifinput").style.backgroundColor = "#FF9184";
     } else {
         document.getElementById("motifinput").style.backgroundColor = "#FFFFFF";
-        pattern = pairs;
+
+        // Rotate the given motif to start at (0,0) and end at (1,0), which is needed for the algorithm
+        var npairs = [];
+        var fpairs = [];
+
+        for (i = 0; i < pairs.length; i++) {
+            npairs.push([(pairs[i][0] - pairs[0][0])/totalDis, (pairs[i][1] - pairs[0][1])/totalDis]);
+        }
+
+        var angle = Math.atan2(npairs[npairs.length - 1][1], npairs[npairs.length - 1][0]);
+        for (i = 0; i < npairs.length; i++) {
+            fpairs.push(rotatePoint(npairs[i], -angle));
+        }
+
+        pattern = fpairs;
+        gPairs = pairs;
     }
+
+    redrawBM();
 }
 
 // Begin logic for main canvas
@@ -698,13 +721,17 @@ function updateBM() {
 // User defined settings
 var pattern = [[0,0],[0.5,0.5],[1,0]];
 var base = [[-0.25,0],[0.25,0]];
-var depthlimit = 5;
+var depthlimit = 25;
 var fractalColor = "#333333";
 var drawGridlines = true;
 var drawAxes = true;
+var gPairs = pattern;
 
 // Last date of a pause in the recursion function
 var lastPausalDate;
+var recallFinished = true;
+var gcSequence = [];
+var startDate = new Date().getTime();
 var stop = false;
 
 function clearCanvas() {
@@ -723,8 +750,8 @@ function fLine(x1, y1, x2, y2) {
 
 function rotatePoint(a, angle) {
     // Rotates a point (x1, y1) by some angle in radians about the origin, counterclockwise
-    s = Math.sin(angle);
-    c = Math.cos(angle);
+    var s = Math.sin(angle);
+    var c = Math.cos(angle);
     return [a[0] * c - a[1] * s, a[0] * s + a[1] * c];
 }
 
@@ -741,11 +768,10 @@ function fitPattern(a, b) {
     return retPattern;
 }
 
-
-function fRecurse(depth, tpattern, callSequence, recall) {
+function fRecurse(depth, tpattern, callSequence) {
     // The central recursion function
 
-    if (stop) return;
+    if (stop) return false;
 
     if (depth >= depthlimit) {
         // If the depth is sufficient, just draw the pattern and return
@@ -757,81 +783,61 @@ function fRecurse(depth, tpattern, callSequence, recall) {
         return;
     }
 
-    if (!recall) {
-        for (var a = 0; a < tpattern.length - 1; a++) {
-            // For every consecutive pair c,d in the current pattern...
-            var c = tpattern[a];
-            var d = tpattern[a+1];
+    // Starting limit, in case it's a recall recursion
+    var lim = 0;
 
-            // Distance between c and d
-            var ds = Math.hypot(d[0] - c[0], d[1] - c[1]);
+    if (depth >= gcSequence.length-1) {
+        recallFinished = true;
+    }
 
-            // If the distance between c and d is sufficiently small, draw the line
-            if (ds < (fxmax - fxmin) / canvas.width) {
-                fLine(c[0], c[1], d[0], d[1]);
-                continue;
-            }
+    if (!recallFinished) {
+        lim = gcSequence[depth];
+    }
 
-            // If the pair is at least ds units outside of the viewing field, continue to next pair
-            if ((c[0] > fxmax + ds && d[0] > fxmax + ds)
-              || (c[0] < fxmin - ds && d[0] < fxmin - ds)
-              || (c[1] > fymax + ds && d[1] > fymax + ds)
-              || (c[1] < fymin - ds && d[1] < fymin - ds)) {
-                continue;
-            }
+    for (a = lim; a < tpattern.length - 1; a++) {
 
-            if (stop) return false;
+        // For every consecutive pair c,d in the current pattern...
+        var c = tpattern[a];
+        var d = tpattern[a+1];
 
-            if (depth < 3) {
-                // If the depth is smaller than 3...
+        // Distance between c and d
+        var ds = Math.hypot(d[0] - c[0], d[1] - c[1]);
 
-                // Keep track of the call sequence leading up to the current position in the recursion.
-
-                var newCallSequence = callSequence;
-                newCallSequence.push(a);
-
-                // If we haven't paused recursion in the past 40 ms,
-                if (lastPausalDate + 40 < new Date().getTime()) {
-                    // Update the lastPausalDate, then do a setTimeout for a recursion recall in 10 ms to give other JS time to run
-                    setTimeout(function() {lastPausalDate = new Date().getTime();
-                      fRecurse(0, base, newCallSequence, true);}, 10);
-
-                    // Return false, which will signal all antecedent recursions to return false and exit recursion (until the setTimeout runs)
-                    return false;
-                } else {
-                    // If we have paused recursion recently, continue as usual
-                    if (fRecurse(depth + 1, fitPattern(c, d), newCallSequence, false) === false) return false;
-                }
-            } else {
-                // If the depth is greater than 3, don't keep track of the call sequence for performance purposes
-                if (fRecurse(depth + 1, fitPattern(c, d), [], false) === false) return false;
-            }
+        // If the distance between c and d is sufficiently small, draw the line
+        if (ds < (fxmax - fxmin) / canvas.width) {
+            fLine(c[0], c[1], d[0], d[1]);
+            continue;
         }
-    } else {
-        // If we're performing a recursion recall...
-        for (var a = callSequence[depth] - 1; a < tpattern.length - 1; a++) {
-            if (a === -1) continue;
 
-            // For every pair c,d starting with the pair we ended off on at this recursion depth
-            c = tpattern[a];
-            d = tpattern[a + 1];
+        ds *= 2;
 
-            // If the distance is sufficiently small, draw the line
-            if (Math.hypot(d[0] - c[0], d[1] - c[1]) < (fxmax - fxmin) / canvas.width) {
-                line(c[0], c[1], d[0], d[1]);
-                continue;
-            }
-
-            if (stop) return;
-
-            if (depth < callSequence.length - 1) {
-                // If the depth is less than the callSequence length, continue the recall by recursing at the next step
-                if (fRecurse(depth + 1, fitPattern(c, d), callSequence, true) === false) return false;
-            } else {
-                // Otherwise, we have finished the recall process and can recurse normally
-                if (fRecurse(depth + 1, fitPattern(c, d), [], false) === false) return false;
-            }
+        // If the pair is at least 2*ds units outside of the viewing field, continue to next pair
+        if ((c[0] > fxmax + ds && d[0] > fxmax + ds)
+          || (c[0] < fxmin - ds && d[0] < fxmin - ds)
+          || (c[1] > fymax + ds && d[1] > fymax + ds)
+          || (c[1] < fymin - ds && d[1] < fymin - ds)) {
+            continue;
         }
+
+        // Keep track of current call sequence
+        var newCallSequence = callSequence.slice(0);
+        newCallSequence.push(a);
+
+        if (lastPausalDate + 30 < new Date().getTime()) {
+
+            // setTimeout to do a recall into the recursion later
+            setTimeout(function() {lastPausalDate = new Date().getTime();
+              recallFinished = false;
+              document.getElementById("progress").innerHTML = "Rendering Time: " + String(lastPausalDate - startDate) + " ms";
+              gcSequence = callSequence.slice();
+              fRecurse(0, base, []);}, 15);
+
+            console.log(callSequence);
+
+            return false;
+        }
+
+        if (fRecurse(depth + 1, fitPattern(c, d), newCallSequence) === false) return false;
     }
 }
 
@@ -990,15 +996,17 @@ function drawFractalGrid() {
 
 function drawFractal() {
     // Draw the fractal
-    stop = false;
+    stop = true;
+    recallFinished = true;
     clearCanvas();
 
     // Update the lastPausalDate so it does not unnecessarily pause immediately
     lastPausalDate = new Date().getTime();
     drawFractalGrid();
 
-    // Asynchronously call fRecurse so that other processes can (jerkily) run
-    setTimeout(function() {ctx.strokeStyle = fractalColor; fRecurse(0, base, [], false);}, 0);
+    // Asynchronously call fRecurse so that other processes can run for the period of cancelling time
+    setTimeout(function() {stop = false; ctx.strokeStyle = fractalColor; startDate = new Date().getTime(); fRecurse(0, base, [], false);}, 40);
+
 }
 
 function resetFZoom() {
@@ -1115,7 +1123,7 @@ canvas.onwheel = function(evt) {
                 ;
             }
             // Set the sFRT timeout
-            sFRT = setTimeout(drawFractal, depthlimit * 20);
+            sFRT = setTimeout(drawFractal, depthlimit * 10);
         }
     }
 };
@@ -1160,6 +1168,10 @@ function updateDrawAxes() {
     drawAxes = document.getElementById("drawAxes").checked;
 
     drawFractal();
+}
+
+function stopDrawing() {
+    stop = true;
 }
 
 window.onload = function() {
