@@ -191,7 +191,7 @@ f(s) = \left\{\begin{aligned}
 <br>
 <div class="toolbar">
   <div class="fl">
-    <input type="text" id="baseinput" oninput="updateBM()" value="(0,0), (1,0)">
+    <input type="text" id="baseinput" oninput="updateBM()" value="(-0.25,0), (0.25,0)">
     <br>
     <br>
     <button type="button" onclick="resetBZoom()">Reset Zoom</button>
@@ -205,8 +205,29 @@ f(s) = \left\{\begin{aligned}
     <br>
   </div>
 </div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br> <!-- How to separate things -->
+<div class="toolbar">
+  <label for="iterations">Iterations</label>
+  <input type="number" id="iterations" oninput="updateIterations()" value="5" min="0" max="100">
+  <label for="color">Fractal Color (optional)</label>
+  <input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
+  <label for="drawGrid">Draw Grid</label>
+  <input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
+  <label for="drawAxes">Draw Axes</label>
+  <input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
+</div>
+<br>
+<br>
 <div class="cdf">
-  <button type="button" onclick="drawFractal()" style>Draw Fractal</button>
+  <button type="button" onclick="drawFractal()">Draw Fractal</button>
+  <button type="button" onclick="resetFZoom()">Reset Zoom</button>
 </div>
 <br>
 <br>
@@ -222,7 +243,7 @@ f(s) = \left\{\begin{aligned}
 
 <script src="../../frame.js"></script>
 
-<script src="cesaro.js"></script>
+<script src="cesaro.min.js"></script>
 
 </body>
 </html>
