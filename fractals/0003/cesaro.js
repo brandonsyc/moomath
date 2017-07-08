@@ -1041,7 +1041,7 @@ var flastX = 512;
 var flastY = 512;
 
 canvas.addEventListener('mousedown',function(evt) {
-    if (!(flastX < ftransx || flastX > ftransx + fwidth || flastY < ftransy || flastY > ftransy + height)) {
+    if (!(flastX < ftransx || flastX > ftransx + fwidth || flastY < ftransy || flastY > ftransy + fheight)) {
 
         // Try to clear out the sFRT timeout so the fractal doesn't draw while we're dragging
         try {clearTimeout(sFRT);} catch (e) {;}
