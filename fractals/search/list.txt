@@ -1,3 +1,4 @@
 Fractals in the Complex Plane – 18 May, 2017 – anematode
 The Mandelbrot Set – 31 May, 2017 – anematode
-Base-Motif Fractals – 31 May, 2017 – anematode
+Base-Motif Fractals – 6 July, 2017 – anematode
+The Lévy C curve – 7 July, 2017 – anematode
