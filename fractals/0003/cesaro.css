@@ -6,14 +6,8 @@
 .base-motif canvas {
     display: inline-block;
 }
-.tbr button {
-    position: relative;
-    right: 30px;
-}
 .tbr input[type="text"] {
-    position: relative;
     width: 430px;
-    right: 30px;
 }
 .tbr {
     margin: 0 auto;
@@ -21,9 +15,9 @@
     max-width: 1024px;
     width: 100%;
 }
-.toolbar button {
-    position: relative;
-    right: 30px;
+.fl {
+	display: inline-block;
+	width: 49%;
 }
 .toolbar input[type="text"] {
     position: relative;
@@ -43,18 +37,6 @@
 }
 .toolbar p {
     text-align: center;
-    position: relative;
-    right: 15px;
-}
-.fl {
-    width: 100%;
-    max-width: 512px;
-    float: left;
-}
-.fr {
-    width: 100%;
-    max-width: 512px;
-    float: right;
 }
 .cdf {
     margin: 0 auto;
@@ -64,8 +46,21 @@
 }
 .cdf button {
     display: inline-block;
-    position: relative;
-    margin-left: 10px;
-    margin-right: 10px;
-    right: 15px;
+    margin: 0 10px;
+}
+#base-motif {
+	position: relative;
+	left: 30px;
+}
+input[type=checkbox] {
+	margin: -10px;
+	visibility: hidden;
+	width: 0;
+}
+input:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	transition: 0.2s;
 }

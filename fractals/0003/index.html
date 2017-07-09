@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Base-Motif Fractals</title>
 <link rel="stylesheet" type="text/css" href="../../styles.css">
-<link rel="stylesheet" type="text/css" href="styles.css">
+<link rel="stylesheet" type="text/css" href="cesaro.css">
 <link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
@@ -183,61 +183,54 @@ f(s) = \left\{\begin{aligned}
 <p>We'll explore these fractals in much more depth later, but for now, here is a widget which you can use to make fractals like this for yourself!</p>
 <hr>
 <br>
-<div class=toolbar>
-  <p>Enter in a base curve and motif as a comma-separated list of ordered pairs.</p>
-</div>
+
+
+
+
 <canvas id="base-motif" width="1024" height="512"></canvas>
-<br>
+
 <div class="tbr">
   <div class="fl">
-    <div class="warning">
+    <div class="warn2">
       <p>&nbsp;</p>
     </div>
     <input type="text" id="baseinput" oninput="updateBM()" value="(-0.25,0), (0.25,0)">
-    <br>
-    <br>
+    <br><br>
     <button type="button" onclick="resetBZoom()">Reset Zoom</button>
   </div>
-  <div class="fr">
-    <div class="warning">
+  <div class="fl fr">
+    <div class="warn2">
       <p id="warningP">&nbsp;</p>
     </div>
     <input type="text" id="motifinput" oninput="updateBM()" value="(0,0), (0.5,0.5), (1,0)">
-    <br>
-    <br>
+    <br><br>
     <button type="button" onclick="resetMZoom()">Reset Zoom</button>
-    <br>
-    <br>
   </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br> <!-- How to separate things -->
+
+<div class="separate"></div>
+
 <div class="toolbar">
   <label for="iterations">Iterations</label>
   <input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
   <label for="color">Fractal Color </label>
   <input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
-  <label for="drawGrid">Draw Grid</label>
   <input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
-  <label for="drawAxes">Draw Axes</label>
+  <label for="drawGrid">Draw Grid</label>
   <input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
+  <label for="drawAxes">Draw Axes</label>
 </div>
-<br>
-<br>
+
+<div class="separate"></div>
+
 <div class="cdf">
   <button type="button" onclick="drawFractal()">Draw Fractal</button>
   <button type="button" onclick="resetFZoom()">Reset Zoom</button>
   <button type="button" onclick="stopDrawing()">Stop Drawing</button>
 </div>
-<br>
-<br>
+
+<div class="separate"></div>
+
 <div class="warning">
   <p id="progress">hi</p>
 </div>
@@ -245,7 +238,6 @@ f(s) = \left\{\begin{aligned}
 <div style="height: 1024px;">
 <canvas id="cesaro" width="1024" height="1024"></canvas>
 </div>
-
 
 <div class="separate"></div>
 
