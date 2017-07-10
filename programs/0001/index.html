@@ -20,7 +20,8 @@
 <script src="convert.js"></script>
 
 <p>
-	This unit converter is exact in every calculation to 16 places and has a vast collection of different units in area and mass (and soon more).<br>The converter will attempt to guess the unit based on the search query.
+	This unit converter is exact in every calculation to 16 places and has a vast collection of different units in area and mass (and soon more).<br>The converter will attempt to guess the unit based on the search query.<br><br>
+	<strong>NOTE</strong>: This program is in the midst of being updated. Some features may not work as expected!
 </p>
 
 <hr>
@@ -41,7 +42,20 @@
 <label for="speed">Speed</label>
 <input type="radio" id="temperature" name="type" value="area" onClick="update()">
 <label for="temperature">Temperature</label>
-<input type="radio" id="volume" name="type" value="area" onClick="update()">
+<button class="mbut" onClick="more()">&#8943;</button>
+<br>
+<div class="more">
+	<input type="radio" id="ard" name="type" value="ard" onClick="update()">
+	<label for="ard">Absorbed Radiation Dose</label>
+	<input type="radio" id="acceleration" name="type" value="acceleration" onClick="update()">
+	<label for="acceleration">Acceleration</label>
+	<input type="radio" id="apua" name="type" value="apua" onClick="update()">
+	<label for="apua">Area Per Unit Area</label>
+	<input type="radio" id="charge" name="type" value="charge" onClick="update()">
+	<label for="charge">Charge</label>
+	<input type="radio" id="ca" name="type" value="ca" onClick="update()">
+	<label for="ca">Chemical Amount</label>
+</div>
 
 <div class="box">
 	<div class="side">
@@ -64,6 +78,18 @@
 </div>
 
 <div id="bottom"></div>
+
+<script>
+	function more() {
+		var div = document.getElementsByClassName("more")[0];
+		if (div.className === "more") {
+			div.className += " most";
+		}
+		else {
+			div.className = "more";
+		}
+	}
+</script>
 
 <script src="../../frame.js"></script>
 
