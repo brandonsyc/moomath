@@ -1,33 +1,47 @@
-square kilometre,square kilometres,km&sup2;,km2,square kilometer,square kilometers
-square hectometre,square hectometres,hm&sup2;,hm2,hectare,hectares,ha,square hectometer,square hectometers
-square decametre,square decametres,dam&sup2;,dam2,square decameter,square decameters
-square metre,square metres,m&sup2;,m2,square meter,square meters
-square decimetre,square decimetres,dm&sup2;,dm2,square decimeter,square decimeters
-square centimetre,square centimetres,cm&sup2;,cm2,square centimeter,square centimeters
-square millimetre,square millimetres,mm&sup2;,mm2,square millimeter,square millimeters
-square mile,square miles,sqmi
-acre,acres,acre,ac
-square yard,square yards,sqyd,gaj
-square foot,square feet,sqft,ft2,sqfoot,foot2;
-square inch,square inches,sqin
-square nautical mile,square nautical miles,sqnmi,nmi2
-dunam,dunams,dunam,metric dunam,metric dunams,cypriot dunam,cypriot dunams,iraqi dunam,iraqi dunams,old dunam,old dunams,donum,donums,dunum,dunums,old stremma,old stremmas,turkish stremma,turkish stremmas,ottoman stremma,ottoman stremmas,new dunam,new dunams
-tsubo,tsubos,tsubo,pyeong,pyeongs,py,ping,pings
-cuerda,cuerdas,cda,spanish acre,spanish acres
+thousand square feet,1000 sq ft,1000sqft
+are,a
+acre,acre,acre-sing,acres
+arpent,arpent,sq arp
+cuerda,cda
+decare,daa,dunam,dunum
+hectare,ha
+irish acre,irish acres
+square metre,m&sup2;,m2,square meter,sqm
+pondemaat,pond
+pyeong,pyeong,tsubo
+rai,rai
+rood,rood
+square foot,sq ft,sqfoot,sqft,square feet,foot2,ft2
+square inch,sq in,sqin,square inches,in2
+square mile,sq mi,sqmi,mi2
+square nautical mile,sq nmi,sqnmi,nautical mile,nmi2
+perch,perch,sqperch,perches
+square verst,square verst,sqverst,verst,verst2
+square yard,sq yd,sqyd,yd2
+square kilometre,km&sup2;,km2,square kilometer,sqkm
+million acre,e6acre,million acre-sing,million acres
+million hectare,e6ha
 :
-1000000
-10000
+92.90304
 100
+4046.8564224
+3418.89
+3930.395625
+1000
+10000
+6555.2385024
 1
-0.01
-0.0001
-0.000001
-2589988.110336
-40468564224000
-0.83612736
+3674.363358816
+400/121
+1600
+1011.7141056
 0.09290304
 0.00064516
+2589988.110336
 3429904
-1000
-400000000/121
-3930395625000
+25.29285264
+1138062.24
+0.83612736
+1000000
+4046856422.4
+10000000000

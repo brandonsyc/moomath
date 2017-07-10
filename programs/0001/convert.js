@@ -6,10 +6,10 @@ var values = [];
 function getEditDistance(a, b) {
 	"use strict";
 	if (a.length === 0) {
-		return b.length; 
+		return b.length;
 	}
 	if (b.length === 0) {
-		return a.length; 
+		return a.length;
 	}
 
 	var matrix = [];
@@ -31,7 +31,7 @@ function getEditDistance(a, b) {
 		for (j = 1; j <= a.length; j++) {
 			if (b.charAt(i - 1) === a.charAt(j - 1)) {
 				matrix[i][j] = matrix[i - 1][j - 1];
-			} 
+			}
 			else {
 				matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
 				Math.min(matrix[i][j - 1] + 1, // insertion
@@ -67,7 +67,7 @@ function search(x)
 		}
 	};
 	rawFile.send(null);
-	
+
 	var search = document.getElementsByClassName("search")[x];
 	var unit = document.getElementsByClassName("unit")[x / 2];
 	var number = -1;
@@ -100,7 +100,7 @@ function search(x)
 	}
 	numbers[x / 2] = number;
 	if (number !== -1 && search.value !== "") {
-		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][2].trim() + ")";
+		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][1].trim() + ")";
 	}
 	else {
 		unit.innerHTML = "Input";
@@ -130,7 +130,7 @@ function change()
 	search(2);
 }
 
-function update() 
+function update()
 {
 	"use strict";
 	units = [];
