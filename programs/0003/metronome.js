@@ -625,7 +625,7 @@ function drawBeats(lineX) {
         ctx.fillText("Measure " + (measureNumber + 1) + "/" + numerators.length, 10, 30);
     }
 
-    ctx.fillText("Time Signature: " + numerators[measureNumber] + "/" + denominator, 10,120);
+    ctx.fillText("Time Signature: " + (isNaN(numerators[measureNumber]) ? 0 : numerators[measureNumber]) + "/" + denominator, 10,120);
 
     var timeSignature = "";
     var p = 0;
@@ -636,12 +636,14 @@ function drawBeats(lineX) {
         }
     }
 
-    ctx.fillText("Accent Pattern: " + timeSignature.substring(0, timeSignature.length-1), 10, 90);
+    ctx.fillText("Accent Pattern: " + (timeSignature.length == 0 ? 0 : timeSignature.substring(0, timeSignature.length-1)), 10, 90);
 
     var beat = Math.min(Math.floor(numerators[measureNumber] * ((lineX - 100)/1300.0) + 1), numerators[measureNumber]);
 
     if (isNormalInteger(beat)) {
         ctx.fillText("Beat", 10, 60);
+    } else if (isNaN(beat)) {
+        ctx.fillText("Beat 1", 10, 60);
     } else {
         ctx.fillText("Beat " + Math.min(Math.floor(numerators[measureNumber] * ((lineX - 100)/1300.0) + 1), numerators[measureNumber]), 10, 60);
     }
@@ -750,7 +752,6 @@ function drawBeats(lineX) {
             }
         }
     }
-    return;
 }
 
 function updateBeatLength(length) {
@@ -809,7 +810,7 @@ function adjustNumeratorWidth() {
     tmpItem.className = "input-element tmp-element";
     tmpItem.innerHTML = numeratorBox.value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     document.body.appendChild(tmpItem);
-    var numWidth = tmpItem.getBoundingClientRect().width;
+    var numWidth = tmpItem.getBoundingClientRect().width+20;
     document.body.removeChild(tmpItem);
 
     numeratorBox.style.width = Math.max(numWidth,80) + "px";
