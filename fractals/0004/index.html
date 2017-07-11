@@ -20,6 +20,106 @@
 
 <div class="article">
 
+<div class="figure">
+    <figure>
+        <img src="images/levy1.png" alt="The Lévy C Curve">
+        <figcaption>Figure 1: The Lévy C Curve.</figcaption>
+    </figure>
+</div>
+
+<p>
+  The Lévy C curve is a interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="nichodon.github.io/fractals/0003">previous article</a>.
+</p>
+
+<h2>Definition</h2>
+
+<p>
+  There are a variety of ways to define the C curve, some of which are more intuitive than others. One way to define it is in terms of a process known as a Lindenmayer system (L-system), which I will briefly present here. Start by defining three operations, F, +, and -, meaning move forward by one unit, turn clockwise by 45°, and turn counterclockwise by 45°. We can treat a sequence of these operations as a path on the coordinate plane. For example, the path F+F-F looks like so:
+</p>
+
+<canvas width=512 height=512 id="l1"></canvas>
+<div class="toolbar">
+  <input type="text" id="sequence1" onInput="calculateSystem(1)" value="F+F-F">
+  <button onclick="calculateSystem(1);playSystem(1)">Play</button>
+</div>
+
+<br>
+
+<p>
+  To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. Then, we replace every F in the sequence with the sequence (+F--F+), giving us +(+F--F+)--(+F--F+)+, which is iteration 2. If we continually apply this process, we get the C curve. Here's what it looks like for iterations 1-7:
+</p>
+
+<canvas width=512 height=512 id="l2"></canvas>
+<div class="toolbar">
+  <input type="text" id="sequence2" onInput="calculateSystem(2)" value="+F--F+" disabled>
+  <button onclick="updateSystem2Iters();playSystem(2)">Play</button>
+</div>
+<br>
+<div class="toolbar">
+  <label for="iter2">Iteration</label>
+  <input type="number" id="iter2" onInput="updateSystem2Iters()" value="1" min="1" max="7">
+</div>
+
+<p>
+  As we take the number of iterations to infinity, the resulting curve becomes the Lévy C curve. The problem is that this construction, in order to produce a complete fractal with finite size, must necessarily use infinitesimally small step sizes. Let's use a slightly more geometrical definition, one which fits our idea of the base-motif fractal from the <a href="nichodon.github.io/fractals/0003">previous article</a>.
+</p>
+
+<p>
+  We begin with two "curves", a base curve and the motif. In the case of the C curve, they look like this:
+</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy2.png" alt="The Base and Motif">
+        <figcaption>Figure 2: The base curve and motif for the C curve.<figcaption>
+    </figure>
+</div>
+
+<p>
+  In our definition, we will let the base curve be the directional vector between \((-0.5,0)\) and \((0.5,0)\), and the motif go from \((0,0)\) to \((0.5,0.5)\) to \((1,0)\). (Any geometrically similar figure will do, but these have relatively simple coordinates.) To generate the fractal, we rotate and translate the motif so that its endpoints coincide with the endpoints of the base curve, like so:
+</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy3.png" alt="Step 1">
+        <figcaption>Figure 3a: Step 1 of the construction.</figcaption>
+    </figure>
+</div>
+
+<p>
+  This gives us a curve with two segments. For every segment in the resulting curve, we rotate and translate the motif to coincide with the segment's endpoints, like so:
+</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy4.png" alt="Step 2">
+        <figcaption>Figure 3b: Step 2 of the construction.</figcaption>
+    </figure>
+</div>
+
+<p>
+  When we take this process to infinity, it looks like this:
+</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy5.png" alt="Step 2">
+        <figcaption>Figure 3c: The finished fractal.</figcaption>
+    </figure>
+</div>
+
+<p>This is our new definition of the Lévy C curve.</p>
+
+<p>Let the width of the base curve be \(w\). The rest of the properties and dimensions of our curve can be described in terms of \(w\), since this is the only variable needed to describe any size C curve.</p>
+
+<h2>Properties</h2>
+
+<p>Let's first describe some properties of the shape of the fractal.</p>
+
+<p>The fractal can be subdivided into two copies of itself, each a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, like so:</p>
+
+
+
 <hr>
 <div class="toolbar">
   <p>This is the Lévy C curve.</p>
