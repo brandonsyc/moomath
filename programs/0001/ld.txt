@@ -1,0 +1,11 @@
+decitex,dtex
+kilogram per centimetre,kg/cm,kilograms per centimetre,kilogram per centimeter,kilograms per centimeter
+kilogram per metre,kg/m,kilograms per metre,kilogram per meter,kilograms per meter
+pound per foot,lb/ft,pounds per foot
+pound per yard,lb/yd,pounds per yard
+:
+0.0000001
+100
+1
+4535.9237/3048
+4535.9237/9144

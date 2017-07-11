@@ -1,0 +1,18 @@
+british thermal unit per pound,BTU/lb,british thermal units per second
+calorie per gram,cal/g,calories per gram
+gigajoule per kilogram,GJ/kg,gigajoules per kilogram
+joule per gram,J/g,joules per gram,kilojoule per kilogram,kJ/kg,kilojoules per kilogram
+kilocalorie per gram,kJ/g,kilojoules per gram
+kiloton of TNT per metric ton,ktonTNT/MT,kilotons of TNT per metric ton,kilotonne of TNT per tonne,ktTNT/t,kilotonnes of TNT per tonne
+megaton of TNT per metric ton,MtonTNT/MT,megatons of TNT per metric ton,megatonne of TNT per tonne,MtTNT/MT,megatonnes of TNT per tonne
+terajoule per kilogram,TJ/kg,terajoules per kilogram
+:
+947.817120/2.20462262
+4184
+1000000000
+1000
+4181000
+1000000
+4184000000
+4184000000000
+1000000000000
