@@ -85,8 +85,8 @@ label {
 		transition: 0.2s;
 }
 .tmp-element {
-    visibility: hidden;
     white-space: pre;
+		font-size: 20px;
 }
 canvas {
 	width: 90%;
