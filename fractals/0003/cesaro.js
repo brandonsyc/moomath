@@ -599,7 +599,6 @@ function redrawBM() {
 }
 
 function updateBM() {
-    console.log('3');
     // Updates the base-motif input as series of coordinates
 
     // Coordinates as raw input
@@ -831,8 +830,6 @@ function fRecurse(depth, tpattern, callSequence) {
               document.getElementById("progress").innerHTML = "Rendering Time: " + String(lastPausalDate - startDate) + " ms";
               gcSequence = callSequence.slice();
               fRecurse(0, base, []);}, 15);
-
-            console.log(callSequence);
 
             return false;
         }

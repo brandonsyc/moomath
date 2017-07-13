@@ -714,8 +714,6 @@ function fRecurse(depth, tpattern, callSequence) {
               gcSequence = callSequence.slice();
               fRecurse(0, base, []);}, 15);
 
-            console.log(callSequence);
-
             return false;
         }
 
@@ -1062,4 +1060,289 @@ window.onload = function() {
     drawFractal();
     drawBaseGrid();
     drawMotifGrid();
+}
+
+var mSystem = "";
+
+var turtlex = 256;
+var turtley = 256;
+var prevx,prevy;
+var angle = 0;
+
+var fDistance = 1;
+
+var mCanv1 = document.getElementById("l1");
+var mCanvCtx1 = mCanv1.getContext('2d');
+
+var mCanv2 = document.getElementById("l2");
+var mCanvCtx2 = mCanv2.getContext('2d');
+
+
+function clearSystem(cnum) {
+    if (cnum == 1) {
+        mCanvCtx1.clearRect(0,0,512,512);
+    } else if (cnum == 2) {
+        mCanvCtx2.clearRect(0,0,512,512);
+    }
+}
+
+function calculateSystem(s,iff=true) {
+    // Calculate the movement system
+
+    var system = null;
+    if (iff) {
+        system = document.getElementById("sequence" + String(s)).value.replace(/ /g,'').replace(/\(/g,'').replace(/\)/g,'');
+    } else {
+        system = mSystem;
+    }
+
+    for (j = 0; j < system.length; j++) {
+        var i = system[j];
+        if (i != 'F' && i != 'f' && i != '+' && i != '-') {
+            // If system[j] is invalid, change background color and return
+
+            document.getElementById("sequence" + String(s)).style.backgroundColor = "#FF9184";
+            return;
+        }
+    }
+
+    document.getElementById("sequence" + String(s)).style.backgroundColor = "#FFFFFF";
+
+    var tTurtleX = 0;
+    var tTurtleY = 0;
+    var tAngle = 0;
+
+    var maxDis = 0;
+
+    for (i = 0; i < system.length; i++) {
+        if (system[i] == 'F') {
+            tTurtleX += Math.cos(tAngle);
+            tTurtleY += Math.sin(tAngle);
+        } else if (system[i] == '+') {
+            tAngle -= Math.PI/4;
+        } else {
+            tAngle += Math.PI/4;
+        }
+
+        if (maxDis < Math.abs(tTurtleX)) {
+            maxDis = Math.abs(tTurtleX);
+        }
+        if (maxDis < Math.abs(tTurtleY)) {
+            maxDis = Math.abs(tTurtleY);
+        }
+    }
+
+    fDistance = 240.0/maxDis;
+
+    mSystem = system;
+}
+
+function playSystem(cnum) {
+    clearSystem(cnum);
+
+    turtlex = 256;
+    turtley = 256;
+    angle = 0;
+
+    prevx = turtlex;
+    prevy = turtley;
+
+    var currentContext = null;
+
+    if (cnum == 1) {
+        currentContext = mCanvCtx1;
+    } else if (cnum == 2) {
+        currentContext = mCanvCtx2;
+    }
+
+    for (i = 0; i < mSystem.length; i++) {
+        (function() {var b = i;
+          setTimeout(function() {
+            if (mSystem[b] == 'F') {
+                turtlex += fDistance * Math.cos(angle);
+                turtley += fDistance * Math.sin(angle);
+                for (j = 0; j < 30 / mSystem.length; j++) {
+                    (function() {
+                      var c = j;
+                      var tprevx = prevx;
+                      var tprevy = prevy;
+                      var tturtlex = turtlex;
+                      var tturtley = turtley;
+                      var vx = tprevx + (tturtlex - tprevx) * (c * mSystem.length / 30);
+                      var vy = tprevy + (tturtley - tprevy) * (c * mSystem.length / 30);
+
+                      setTimeout(function() {
+                        clearSystem(cnum);
+
+                        var vturtlex = 256;
+                        var vturtley = 256;
+                        var vprevx = vturtlex;
+                        var vprevy = vturtley;
+                        var vangle = 0;
+
+                        for (k = 0; k < b; k++) {
+                            if (mSystem[k] == 'F') {
+                                vturtlex += fDistance * Math.cos(vangle);
+                                vturtley += fDistance * Math.sin(vangle);
+                            } else if (mSystem[k] == '+') {
+                                vangle -= Math.PI/4;
+                            } else {
+                                vangle += Math.PI/4;
+                            }
+
+                            currentContext.beginPath();
+                            currentContext.moveTo(Math.round(vprevx), Math.round(vprevy));
+                            currentContext.lineTo(Math.round(vturtlex), Math.round(vturtley));
+                            currentContext.stroke();
+
+                            vprevx = vturtlex;
+                            vprevy = vturtley;
+                        }
+
+                        currentContext.beginPath();
+                        currentContext.moveTo(Math.round(vturtlex),Math.round(vturtley));
+                        currentContext.lineTo(Math.round(vx), Math.round(vy));
+                        currentContext.stroke();
+
+                        currentContext.beginPath();
+                        currentContext.moveTo(Math.round(vx), Math.round(vy));
+                        currentContext.lineTo(Math.round(vx + 15*Math.cos(angle+0.4-Math.PI)),
+                          Math.round(vy + 15*Math.sin(angle+0.4-Math.PI)));
+                        currentContext.lineTo(Math.round(vx + 15*Math.cos(angle-0.4-Math.PI)),
+                          Math.round(vy + 15*Math.sin(angle-0.4-Math.PI)));
+                        currentContext.lineTo(Math.round(vx), Math.round(vy));
+
+                        currentContext.fillStyle = 'green';
+                        currentContext.fill();
+                        currentContext.stroke();
+
+                        currentContext.fillStyle = 'black';
+                      }, c * 1000.0/30.0)})();
+                }
+
+            } else if (mSystem[b] == '+') {
+                for (j = 0; j < 30 / mSystem.length; j++) {
+                    (function() {
+
+                      var c = j;
+                      var tangle = (angle - Math.PI/4 * (c / Math.floor(30 / mSystem.length)));
+                      var vx = turtlex;
+                      var vy = turtley;
+                      setTimeout(function() {
+
+                        clearSystem(cnum);
+
+                        var vturtlex = 256;
+                        var vturtley = 256;
+                        var vprevx = vturtlex;
+                        var vprevy = vturtley;
+                        var vangle = 0;
+
+                        for (k = 0; k < b; k++) {
+
+                            if (mSystem[k] == 'F') {
+                                vturtlex += fDistance * Math.cos(vangle);
+                                vturtley += fDistance * Math.sin(vangle);
+                            } else if (mSystem[k] == '+') {
+                                vangle -= Math.PI/4;
+                            } else {
+                                vangle += Math.PI/4;
+                            }
+
+                            currentContext.beginPath();
+                            currentContext.moveTo(Math.round(vprevx), Math.round(vprevy));
+                            currentContext.lineTo(Math.round(vturtlex), Math.round(vturtley));
+                            currentContext.stroke();
+
+                            vprevx = vturtlex;
+                            vprevy = vturtley;
+                        }
+
+                        currentContext.beginPath();
+                        currentContext.moveTo(Math.round(vx), Math.round(vy));
+                        currentContext.lineTo(Math.round(vx + 15*Math.cos(tangle+0.4-Math.PI)), Math.round(vy + 15*Math.sin(tangle+0.4-Math.PI)));
+                        currentContext.lineTo(Math.round(vx + 15*Math.cos(tangle-0.4-Math.PI)), Math.round(vy + 15*Math.sin(tangle-0.4-Math.PI)));
+                        currentContext.lineTo(Math.round(vx), Math.round(vy));
+
+                        currentContext.fillStyle = 'green';
+                        currentContext.fill();
+                        currentContext.stroke();
+
+                        currentContext.fillStyle = 'black';
+                      }, c * 1000.0/30.0)})();
+                }
+                angle -= Math.PI/4;
+            } else {
+                for (j = 0; j <= 30 / mSystem.length; j++) {
+                    (function() {
+                      var c = j;
+                      var tangle = (angle + Math.PI/4 * (c * 1 / Math.floor(30 / mSystem.length)));
+                      var vx = turtlex;
+                      var vy = turtley;
+                      setTimeout(function() {
+
+                        clearSystem(cnum);
+
+                        var vturtlex = 256;
+                        var vturtley = 256;
+                        var vprevx = vturtlex;
+                        var vprevy = vturtley;
+                        var vangle = 0;
+
+                        for (k = 0; k < b; k++) {
+
+                            if (mSystem[k] == 'F') {
+                                vturtlex += fDistance * Math.cos(vangle);
+                                vturtley += fDistance * Math.sin(vangle);
+                            } else if (mSystem[k] == '+') {
+                                vangle -= Math.PI/4;
+                            } else {
+                                vangle += Math.PI/4;
+                            }
+
+                            currentContext.beginPath();
+                            currentContext.moveTo(vprevx, vprevy);
+                            currentContext.lineTo(vturtlex, vturtley);
+                            currentContext.stroke();
+
+                            vprevx = vturtlex;
+                            vprevy = vturtley;
+                        }
+
+                        currentContext.beginPath();
+                        currentContext.moveTo(vx,vy);
+                        currentContext.lineTo(vx + 15*Math.cos(tangle+0.4-Math.PI),vy + 15*Math.sin(tangle+0.4-Math.PI));
+                        currentContext.lineTo(vx + 15*Math.cos(tangle-0.4-Math.PI),vy + 15*Math.sin(tangle-0.4-Math.PI));
+                        currentContext.lineTo(vx,vy);
+
+                        currentContext.fillStyle = 'green';
+                        currentContext.fill();
+                        currentContext.stroke();
+
+                        currentContext.fillStyle = 'black';
+                      }, c * 1000.0/30.0)})();
+                }
+                angle += Math.PI/4;
+            }
+
+            prevx = turtlex;
+            prevy = turtley;}, b * 1000 / mSystem.length);
+          })();
+    }
+}
+
+function updateSystem2Iters() {
+    var iters = document.getElementById("iter2").value;
+
+    var systemf = "+F--F+";
+
+    for (i = 1; i < iters; i++) {
+        systemf = systemf.replace(/F/g,'(+F--F+)');
+    }
+
+    document.getElementById("sequence2").value = systemf.substr(0,140);
+
+    mSystem = systemf.replace(/\(/g,'').replace(/\)/g,'');
+
+    calculateSystem(2,false);
 }
