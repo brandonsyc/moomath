@@ -1,6 +1,6 @@
 /** This JS file controls all systems and logic behind the
 entirely JavaScript-powered base-motif fractal generator at
-nichodon.github.io/fractals/0003.
+nichodon.github.io/fractals/0004.
 
 Written by anematode, July 7, 2017**/
 
