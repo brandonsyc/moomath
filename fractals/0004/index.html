@@ -28,7 +28,7 @@
 </div>
 
 <p>
-  The Lévy C curve is a interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="nichodon.github.io/fractals/0003">previous article</a>.
+  The Lévy C curve, also known as the Lévy Dragon, is a very interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="nichodon.github.io/fractals/0003">previous article</a>.
 </p>
 
 <h2>Definition</h2>
@@ -103,7 +103,7 @@
 
 <div class="figure">
     <figure>
-        <img src="images/levy5.png" alt="Step 2">
+        <img src="images/levy5.png" alt="The finished C curve">
         <figcaption>Figure 3c: The finished fractal.</figcaption>
     </figure>
 </div>
@@ -118,11 +118,111 @@
 
 <p>The fractal can be subdivided into two copies of itself, each a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, like so:</p>
 
+<br>
 
+<div class="figure">
+    <figure>
+        <img src="images/levy6.png" alt="A breakdown of the C curve">
+        <figcaption>Figure 4: Breaking down the C curve.</figcaption>
+    </figure>
+</div>
+
+<p>Since there are 2 pieces of the fractal, each with a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, we can calculate the fractal dimension as $$-\frac{\log 2}{\log \frac{\sqrt{2}}{2}} = 2.$$</p>
+
+<p>Thus, it is an example of a fractal with integer dimension, though it is not space-filling. Describing the outside boundary, however, is slightly more difficult. We can do it by breaking the fractal up into an infinite number of geometrically similar pieces:</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy7.png" alt="A breakdown of the C curve">
+        <figcaption>Figure 5: Another way to break down the C curve.</figcaption>
+    </figure>
+</div>
+
+<p>Every subsequent smaller shape is a factor of \(\frac{\sqrt{2}}{2}\) the size of the previous shape. Consider the largest one of these shapes.</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy8.png" alt="The largest shape">
+        <figcaption>Figure 6: The largest shape, with dimensions labeled.</figcaption>
+    </figure>
+</div>
+
+<p>If we can describe the perimeter of this shape in terms of \(w\), then we can describe the entire fractal as well, since it is composed of an infinite number of these shapes.</p>
+
+<p>The length of the top segment of the boundary is simply \(w\). We can find the remaining perimeter by taking advantage of the high degree of self similarity in this shape; in particular, we can treat the perimeter as an infinite sum of lengths, labeled in green, whose lengths are easy to determine.</p>
+
+<p>The total length of the green segments is \(\frac{w}{8} + \frac{w\sqrt{2}}{8} + \frac{3w}{16} = \frac{5w+2w\sqrt{2}}{16}\). The next analogous shape, labeled in purple, is half that, and the next is half of that, and so on. To get the length of half the bottom of the shape, as labeled in orange, we calculate: $$\sum _ {n=0}^{\infty} \left(\frac{1}{2}\right)^n \left(\frac{5w+2w\sqrt{2}}{16}\right) = \frac{5w+2w\sqrt{2}}{8}.$$</p>
+
+<p>Multiplying by 2 to get the perimeter of the entire bottom part of the shape and adding the length of the top segment, we get a perimeter of \(\frac{5w+2w\sqrt{2}}{4}+w=\frac{9w+2w\sqrt{2}}{4}\).</p>
+
+<p>To get the perimeter of the entire fractal, we go through a similar process, summing up the perimeters of all these shapes like so: $$P = \underbrace{\frac{9w+2w\sqrt{2}}{4}} _ {\text{Largest Shape}} + 2\underbrace{\sum _ {n = 1} ^ {\infty} \left(\frac{\sqrt{2}}{2}\right)^n\frac{9w+2w\sqrt{2}}{4}} _ {\text{Half of Remaining Fractal}} = \left(\frac{9w+2w\sqrt{2}}{4}\right)(3+2\sqrt{2}) = \frac{35 w}{4} + 6w\sqrt{2}.$$</p>
+
+<p>In the case of \(w=1\), the C curve has perimeter \(\frac{35}{4} + 6\sqrt{2} \approx 17.2353\). That's quite a bit for such a small size! This is what a square with that perimeter would look like placed next to the C curve:</p>
+
+<div class="figure">
+    <figure>
+        <img src="images/levy9.png" alt="The largest shape">
+        <figcaption>Figure 7: The C curve next to a square.</figcaption>
+    </figure>
+</div>
+
+<p>The length of the C curve itself, of course, is infinite. At any iteration \(i\), the length of the curve is simply \(\sqrt{2}^i = 2^{i/2}\), and \(\displaystyle\lim _ {i \to \infty} 2^{i/2} = \infty\).</p>
+
+<h2>Facts at a Glance</h2>
+
+<table>
+  <tr>
+      <th>Property</th>
+      <th>Value</th>
+      <th>Remarks</th>
+  </tr>
+  <tr>
+      <td>Area Enclosed</td>
+      <td>\(\frac{19}{36}w^2\)</td>
+      <td>Calculated with a similar method to calculating the outside perimeter.</td>
+  </tr>
+  <tr>
+      <td>Outside Perimeter</td>
+      <td>\(\frac{35 w}{4} + 6w\sqrt{2}\)</td>
+      <td></td>
+  </tr>
+  <tr>
+      <td>Hausdorff Dimension<br>(Fractal)</td>
+      <td>\(2\)</td>
+      <td>The C curve is an example of a fractal with integer dimension.</td>
+  </tr>
+  <tr>
+      <td>Hausdorff Dimension<br>(Boundary)</td>
+      <td>\(1.934\)</td>
+      <td>Estimated; proven to lie in the interval \((1.734512,1.96252)\) in <a href="https://arxiv.org/abs/math/9907145">this lovely paper</a>. Here, boundary means the interface between the fractal its complement, which is much more convoluted (and has provably infinite perimeter).</td>
+  </tr>
+  <tr>
+      <td>Box-Counting Dimension<br>(Boundary)</td>
+      <td>N/A</td>
+      <td>I am currently running an analysis of the fractal that will try to approximate the dimension of the boundary using box counting. Mathematically, this and the previous dimension should be equal.</td>
+  </tr>
+  <tr>
+      <td>Height</td>
+      <td>\(\frac{5w}{4}\)</td>
+      <td></td>
+  </tr>
+  <tr>
+      <td>Width</td>
+      <td>\(2w\)</td>
+      <td></td>
+  </tr>
+
+</table>
+
+<!-- <p>A much more difficult task (and the last we have time here for) is describing the boundary between points inside the set and outside the set, depicted in red here:</p> -->
+
+
+
+<p>An extra bit: If you'd like good quality pictures of the C curve itself, you can find some <a href="https://drive.google.com/open?id=0BykNyHuFqpGXTW9PQ0pHNm8xWGs" target="_blank">here</a>. (Resolutions: 128x128, 256x256, 512x512, ... , 32768x32768.)
 
 <hr>
 <div class="toolbar">
-  <p>This is the Lévy C curve.</p>
+  <p>Take a tour of the Lévy C curve! Want to try some different bases and motifs? Try the customizable fractal generator <a href="https://nichodon.github.io/fractals/0003/#base-motif" target="_blank">here</a>.</p>
 </div>
 
 <canvas id="base-motif" width="1024" height="512"></canvas>
