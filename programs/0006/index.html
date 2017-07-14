@@ -4,6 +4,7 @@
 		<title>3d test</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" type="text/css" href="3dsimulator.css">
 	</head>
 	<script id="vertexShader" type="x-shader/x-vertex">
 uniform vec3 viewVector;
@@ -63,8 +64,10 @@ void main() {
 </script>
 	<body id="udder">
 		<div id="webgl-container">
-
+			<div id="controls">
+			</div>
 		</div>
+
 	</body>
 	<script src="three.js"></script>
 	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>

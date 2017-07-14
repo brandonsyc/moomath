@@ -25,6 +25,14 @@ var minMajorPlanetSize = 30;
 // Minimum dwarf planet
 var minDwarfPlanetSize = 5;
 
+// Show planets to scale or not (true: show true scale, false: show mins)
+var trueScale = false;
+
+// Between 0 and 1, scale factor of planets
+var planetScaleFactor = 0.3;
+
+var bodyPositions = {Mercury:[-39.130642832,2.45818266093,-13.8494256687],Venus:[72.5257419198,-4.17311808207,0.880448760399],Earth:[37.3289535303,0.00386952200515,-94.5458508643],Moon:[37.581303542,-0.00530856874143,-94.6035418718],Mars:[-76.7092526208,4.89556028888,143.779696323],Jupiter:[-492.520447708,11.9897043349,-233.332683645]};
+
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
@@ -61,7 +69,9 @@ function init() {
 		gridXZ.setColors( new THREE.Color(0xff0000), new THREE.Color(0xffffff) );
 		scene.add(gridXZ);
 
-		document.getElementById('webgl-container').appendChild(renderer.domElement);
+		var wbglcontainer = document.getElementById('webgl-container');
+
+		wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
 		renderer.render(scene, camera);
@@ -118,9 +128,9 @@ function onDocumentMouseDown( event ) {
 function addSun() {
 
 		THREE.ImageUtils.crossOrigin = '';
-		var sunTexture = THREE.ImageUtils.loadTexture('http://i.imgur.com/DxEUvetr.jpg',THREE.SphericalRefractionMapping);
+		var sunTexture = THREE.ImageUtils.loadTexture('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.8});
+		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.95});
 
 		var glowMaterial = new THREE.ShaderMaterial(
 		{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
@@ -155,15 +165,17 @@ function addSun() {
 
 function addEarth() {
 		THREE.ImageUtils.crossOrigin = '';
-		var earthTexture = THREE.ImageUtils.loadTexture('http://i.imgur.com/nI5Qx0l.jpg',THREE.SphericalRefractionMapping);
+		var earthTexture = THREE.ImageUtils.loadTexture('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
 
 		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0});
 
 		earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
-		earth.position.x = 100*3.571108873714297E-1;
-		earth.position.z = 100*-9.517262002262744E-01;
-		earth.position.y = 100*-3.840370853737805E-05;
+		earth.position.x = bodyPositions.Earth[0];
+		earth.position.y = bodyPositions.Earth[1];
+		earth.position.z = bodyPositions.Earth[2];
+
+		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
 
 		scene.add(earth);
 
@@ -172,15 +184,15 @@ function addEarth() {
 
 function addVenus() {
 		THREE.ImageUtils.crossOrigin = '';
-		var venusTexture = THREE.ImageUtils.loadTexture('http://i.imgur.com/5tSSa8U.jpg',THREE.SphericalRefractionMapping);
+		var venusTexture = THREE.ImageUtils.loadTexture('images/venusTexture.jpg',THREE.SphericalRefractionMapping);
 
 		var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
 
 		venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
 
-		venus.position.x = 100*-3.571108873714297E-1;
-		venus.position.z = 100*-9.517262002262744E-01;
-		venus.position.y = 100*-3.840370853737805E-05;
+		venus.position.x = bodyPositions.Venus[0];
+		venus.position.y = bodyPositions.Venus[1];
+		venus.position.z = bodyPositions.Venus[2];
 
 		scene.add(venus);
 
@@ -189,25 +201,65 @@ function addVenus() {
 
 function addMercury() {
 		THREE.ImageUtils.crossOrigin = '';
-		var venusTexture = THREE.ImageUtils.loadTexture('http://i.imgur.com/5tSSa8U.jpg',THREE.SphericalRefractionMapping);
+		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
+		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
-		var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
+		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
 
-		venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
+		mercury.position.x = bodyPositions.Mercury[0];
+		mercury.position.y = bodyPositions.Mercury[1];
+		mercury.position.z = bodyPositions.Mercury[2];
 
-		venus.position.x = 100*-3.571108873714297E-1;
-		venus.position.z = 100*-9.517262002262744E-01;
-		venus.position.y = 100*-3.840370853737805E-05;
+		scene.add(mercury);
 
-		scene.add(venus);
-
-		bodies[3] = [venus, null, "Venus", 0.004, "planet", "udder2"];
+		bodies[3] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
 }
 
-function update() {
-		controls.update();
-  	renderer.render(scene, camera);
+function addMoon() {
+		THREE.ImageUtils.crossOrigin = '';
+		var moonTexture = THREE.ImageUtils.loadTexture('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
+		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
 
+		moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
+
+		moon.position.x = bodyPositions.Moon[0];
+		moon.position.y = bodyPositions.Moon[1];
+		moon.position.z = bodyPositions.Moon[2];
+
+		scene.add(moon);
+
+		bodies[4] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
+}
+
+function addMars() {
+		THREE.ImageUtils.crossOrigin = '';
+		var marsTexture = THREE.ImageUtils.loadTexture('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
+		var marsMaterial = new THREE.MeshPhongMaterial({ map: marsTexture, shininess: 0});
+
+		mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
+
+		mars.position.x = bodyPositions.Mars[0];
+		mars.position.y = bodyPositions.Mars[1];
+		mars.position.z = bodyPositions.Mars[2];
+
+		scene.add(mars);
+
+		bodies[4] = [mars, null, "Mars", 0.00226, "majorsat", "udder2"];
+}
+
+function getOffset( el ) {
+    var _x = 0;
+    var _y = 0;
+    while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return {top: _y, left: _x};
+}
+var x = getOffset(document.getElementById('yourElId')).left;
+
+function update() {
 		for (i = 0; i < bodies.length; i++) {
 				var vFOV = camera.fov * Math.PI / 180;
 				var height = 2 * Math.tan(vFOV / 2) * Math.hypot(
@@ -217,17 +269,20 @@ function update() {
 				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
 				var scaleFactor = 1;
-				if (bodies[i][4] == "star") {
-						if (bodyPixelSize < minStarSize) {
-								scaleFactor = minStarSize / bodyPixelSize;
-						}
-				} else if (bodies[i][4] == "planet") {
-						if (bodyPixelSize < minMajorPlanetSize) {
-								scaleFactor = minMajorPlanetSize / bodyPixelSize;
-						}
-				} else if (bodies[i][4] == "dwarf") {
-						if (bodyPixelSize < minDwarfPlanetSize) {
-								scaleFactor = minDwarfPlanetSize / bodyPixelSize;
+
+				if (!trueScale) {
+						if (bodies[i][4] == "star") {
+								if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
+										scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "planet") {
+								if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "dwarf") {
+								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
 						}
 				}
 
@@ -244,6 +299,9 @@ function update() {
 						bodies[i][1].scale.z = scaleFactor;
 				}
 		}
+
+		controls.update();
+  	renderer.render(scene, camera);
 
   	requestAnimationFrame(update);
 }
