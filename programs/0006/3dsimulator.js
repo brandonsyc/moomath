@@ -499,6 +499,30 @@ function getOffset(el) {
     return {top: _y, left: _x};
 }
 
+function renderComparator(obj1, obj2) {
+   if (obj1[1] < obj2[1]) return -1;
+   if (obj1[1] > obj2[1]) return 1;
+   return 0;
+ }
+
+function updateRenderOrder() {
+		var objDist = [];
+		for (i = 0; i < bodies.length; i++) {
+				objDist.push([bodies[i][0], Math.hypot(
+					bodies[i][0].position.x-camera.position.x,
+					bodies[i][0].position.y-camera.position.y,
+					bodies[i][0].position.z-camera.position.z)])
+				if (bodies[i][1]) {
+					objDist.push([bodies[i][1], Math.hypot(
+						bodies[i][1].position.x-camera.position.x,
+						bodies[i][1].position.y-camera.position.y,
+						bodies[i][1].position.z-camera.position.z)])
+				}
+		}
+		objDist = objDist.sort(renderComparator);
+		console.log(objDist);
+}
+
 function update() {
 		for (i = 0; i < bodies.length; i++) {
 				var vFOV = camera.fov * Math.PI / 180;
@@ -548,6 +572,7 @@ function update() {
 		}
 
 		controls.update();
+		updateRenderOrder();
   	renderer.render(scene, camera);
 
   	requestAnimationFrame(update);
