@@ -184,7 +184,7 @@ function addMercury() {
 		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
 		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
-		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
+		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
 
 		mercury.position.x = bodyPositions.Mercury[0];
 		mercury.position.y = bodyPositions.Mercury[1];
