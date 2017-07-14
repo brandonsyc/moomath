@@ -226,22 +226,6 @@ function addEarth() {
 		bodies[3] = [earth, null, "Earth", 0.0042, "planet", "udder"];
 }
 
-function addMoon() {
-		THREE.ImageUtils.crossOrigin = '';
-		var moonTexture = THREE.ImageUtils.loadTexture('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
-		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
-
-		moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
-
-		moon.position.x = bodyPositions.Moon[0];
-		moon.position.y = bodyPositions.Moon[1];
-		moon.position.z = bodyPositions.Moon[2];
-
-		scene.add(moon);
-
-		bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
-}
-
 function addMars() {
 		THREE.ImageUtils.crossOrigin = '';
 		var marsTexture = THREE.ImageUtils.loadTexture('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
@@ -320,6 +304,22 @@ function addNeptune() {
 		scene.add(neptune);
 
 		bodies[8] = [neptune, null, "Neptune", 0.01646, "majorsat", "udder2"];
+}
+
+function addMoon() {
+		THREE.ImageUtils.crossOrigin = '';
+		var moonTexture = THREE.ImageUtils.loadTexture('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
+		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
+
+		moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
+
+		moon.position.x = bodyPositions.Moon[0];
+		moon.position.y = bodyPositions.Moon[1];
+		moon.position.z = bodyPositions.Moon[2];
+
+		scene.add(moon);
+
+		bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
 }
 
 function getOffset( el ) {
