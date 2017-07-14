@@ -95,6 +95,7 @@ function init() {
 		addSun();
 		addPlanets();
 		addMoons();
+		addDwarves();
 
 		var light = new THREE.AmbientLight(0x404040); // soft white light
 		scene.add(light);
@@ -185,6 +186,11 @@ function addMoons() {
 		addIapetus();	// IAPETUSSS!
 		addTethys();
 		addDione();
+}
+
+function addDwarves() {
+		addPluto();
+		addCeres();
 }
 
 function addSun() {
@@ -616,6 +622,8 @@ function updateRenderOrder() {
 function update() {
 		// Update the animation frame
 
+		var depthTestDisabled = true;
+
 		for (i = 0; i < bodies.length; i++) {
 
 				var vFOV = camera.fov * Math.PI / 180;
@@ -627,6 +635,11 @@ function update() {
 				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
 				var scaleFactor = 1;
+
+				if (cameraDistance < 0.5) {
+						renderer.context.enable(renderer.context.DEPTH_TEST);
+						depthTestDisabled = false;
+				}
 
 				if (!trueScale) {
 						if (bodies[i][4] == "star") {
@@ -665,8 +678,12 @@ function update() {
 		}
 
 		controls.update();
-		updateRenderOrder();
+		if (depthTestDisabled) {
+				updateRenderOrder();
+		}
   	renderer.render(scene, camera);
+
+		renderer.context.disable(renderer.context.DEPTH_TEST);
 
   	requestAnimationFrame(update);
 }
