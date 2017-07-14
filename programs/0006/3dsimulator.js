@@ -25,6 +25,12 @@ var minMajorPlanetSize = 30;
 // Minimum dwarf planet
 var minDwarfPlanetSize = 5;
 
+// Minimum major satellite
+var minVisibleMajorSatelliteSize = 7;
+
+// Distance at which major satellites are displayed, in 1/100 AU
+var majorSatelliteDisplayDistance = 0.05;
+
 // Show planets to scale or not (true: show true scale, false: show mins)
 var trueScale = false;
 
@@ -196,7 +202,7 @@ function addMercury() {
 		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
 		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
-		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
+		var mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
 
 		mercury.position.x = bodyPositions.Mercury[0];
 		mercury.position.y = bodyPositions.Mercury[1];
@@ -213,7 +219,7 @@ function addVenus() {
 
 		var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
 
-		venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
+		var venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
 
 		venus.position.x = bodyPositions.Venus[0];
 		venus.position.y = bodyPositions.Venus[1];
@@ -230,7 +236,7 @@ function addEarth() {
 
 		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0});
 
-		earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
+		var earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
 		earth.position.x = bodyPositions.Earth[0];
 		earth.position.y = bodyPositions.Earth[1];
@@ -248,7 +254,7 @@ function addMars() {
 		var marsTexture = THREE.ImageUtils.loadTexture('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
 		var marsMaterial = new THREE.MeshPhongMaterial({ map: marsTexture, shininess: 0});
 
-		mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
+		var mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
 
 		mars.position.x = bodyPositions.Mars[0];
 		mars.position.y = bodyPositions.Mars[1];
@@ -280,7 +286,7 @@ function addSaturn() {
 		var saturnTexture = THREE.ImageUtils.loadTexture('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
 		var saturnMaterial = new THREE.MeshPhongMaterial({ map: saturnTexture, shininess: 0});
 
-		saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
+		var saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
 
 		saturn.position.x = bodyPositions.Saturn[0];
 		saturn.position.y = bodyPositions.Saturn[1];
@@ -306,7 +312,7 @@ function addUranus() {
 		var uranusTexture = THREE.ImageUtils.loadTexture('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
 		var uranusMaterial = new THREE.MeshPhongMaterial({ map: uranusTexture, shininess: 0});
 
-		uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
+		var uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
 
 		uranus.position.x = bodyPositions.Uranus[0];
 		uranus.position.y = bodyPositions.Uranus[1];
@@ -322,7 +328,7 @@ function addNeptune() {
 		var neptuneTexture = THREE.ImageUtils.loadTexture('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
 		var neptuneMaterial = new THREE.MeshPhongMaterial({ map: neptuneTexture, shininess: 0});
 
-		neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
+		var neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
 
 		neptune.position.x = bodyPositions.Neptune[0];
 		neptune.position.y = bodyPositions.Neptune[1];
@@ -338,7 +344,7 @@ function addMoon() {
 		var moonTexture = THREE.ImageUtils.loadTexture('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
 		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
 
-		moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
+		var moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
 
 		moon.position.x = bodyPositions.Moon[0];
 		moon.position.y = bodyPositions.Moon[1];
@@ -354,7 +360,7 @@ function addGanymede() {
 		var ganymedeTexture = THREE.ImageUtils.loadTexture('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
 		var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
 
-		ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
+		var ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
 
 		ganymede.position.x = bodyPositions.Ganymede[0];
 		ganymede.position.y = bodyPositions.Ganymede[1];
@@ -370,7 +376,7 @@ function addCallisto() {
 		var callistoTexture = THREE.ImageUtils.loadTexture('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
 		var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
 
-		callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
+		var callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
 
 		callisto.position.x = bodyPositions.Callisto[0];
 		callisto.position.y = bodyPositions.Callisto[1];
@@ -386,7 +392,7 @@ function addIo() {
 		var ioTexture = THREE.ImageUtils.loadTexture('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
 		var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
 
-		io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
+		var io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
 
 		io.position.x = bodyPositions.Io[0];
 		io.position.y = bodyPositions.Io[1];
@@ -402,7 +408,7 @@ function addEuropa() {
 		var europaTexture = THREE.ImageUtils.loadTexture('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
 		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0});
 
-		europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
+		var europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
 
 		europa.position.x = bodyPositions.Europa[0];
 		europa.position.y = bodyPositions.Europa[1];
@@ -415,34 +421,34 @@ function addEuropa() {
 
 function addTitan() {
 		THREE.ImageUtils.crossOrigin = '';
-		var TitanTexture = THREE.ImageUtils.loadTexture('images/TitanTexture.jpg',THREE.SphericalRefractionMapping);
-		var TitanMaterial = new THREE.MeshPhongMaterial({ map: TitanTexture, shininess: 0});
+		var titanTexture = THREE.ImageUtils.loadTexture('images/titanTexture.jpg',THREE.SphericalRefractionMapping);
+		var titanMaterial = new THREE.MeshPhongMaterial({ map: titanTexture, shininess: 0});
 
-		Titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), TitanMaterial);
+		var titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), titanMaterial);
 
-		Titan.position.x = bodyPositions.Titan[0];
-		Titan.position.y = bodyPositions.Titan[1];
-		Titan.position.z = bodyPositions.Titan[2];
+		titan.position.x = bodyPositions.Titan[0];
+		titan.position.y = bodyPositions.Titan[1];
+		titan.position.z = bodyPositions.Titan[2];
 
-		scene.add(Titan);
+		scene.add(titan);
 
-		bodies[14] = [Titan, null, "Titan", 0.00172, "majorsat", "udder2"];
+		bodies[14] = [titan, null, "Titan", 0.00172, "majorsat", "udder2"];
 }
 
 function addTitania() {
 		THREE.ImageUtils.crossOrigin = '';
-		var TitaniaTexture = THREE.ImageUtils.loadTexture('images/TitaniaTexture.jpg',THREE.SphericalRefractionMapping);
-		var TitaniaMaterial = new THREE.MeshPhongMaterial({ map: TitaniaTexture, shininess: 0});
+		var titaniaTexture = THREE.ImageUtils.loadTexture('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
+		var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
 
-		Titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TitaniaMaterial);
+		titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
 
-		Titania.position.x = bodyPositions.Titania[0];
-		Titania.position.y = bodyPositions.Titania[1];
-		Titania.position.z = bodyPositions.Titania[2];
+		titania.position.x = bodyPositions.Titania[0];
+		titania.position.y = bodyPositions.Titania[1];
+		titania.position.z = bodyPositions.Titania[2];
 
-		scene.add(Titania);
+		scene.add(titania);
 
-		bodies[15] = [Titania, null, "Titania", 0.00090469, "majorsat", "udder2"];
+		bodies[15] = [titania, null, "Titania", 0.0005273, "majorsat", "udder2"];
 }
 
 function addTriton() {
@@ -476,10 +482,11 @@ var x = getOffset(document.getElementById('yourElId')).left;
 function update() {
 		for (i = 0; i < bodies.length; i++) {
 				var vFOV = camera.fov * Math.PI / 180;
-				var height = 2 * Math.tan(vFOV / 2) * Math.hypot(
+				var cameraDistance = Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
 					bodies[i][0].position.y-camera.position.y,
 					bodies[i][0].position.z-camera.position.z);
+				var height = 2 * Math.tan(vFOV / 2) * cameraDistance
 				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
 				var scaleFactor = 1;
@@ -496,6 +503,12 @@ function update() {
 						} else if (bodies[i][4] == "dwarf") {
 								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
 										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "majorsat") {
+								if (cameraDistance < majorSatelliteDisplayDistance) {
+										if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
+												scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+										}
 								}
 						}
 				}
