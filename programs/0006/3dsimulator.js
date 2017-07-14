@@ -132,8 +132,6 @@ function onDocumentMouseDown( event ) {
 		var intersects = raycaster.intersectObjects(getObjects(), true);
 
 		if (intersects.length > 0) {
-
-				console.log(intersects[0]);
 				var x = intersects[0].object.position.x;
 				var y = intersects[0].object.position.y;
 				var z = intersects[0].object.position.z;
@@ -246,8 +244,6 @@ function addEarth() {
 		earth.position.x = bodyPositions.Earth[0];
 		earth.position.y = bodyPositions.Earth[1];
 		earth.position.z = bodyPositions.Earth[2];
-
-		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
 
 		scene.add(earth);
 
@@ -506,6 +502,8 @@ function renderComparator(obj1, obj2) {
  }
 
 function updateRenderOrder() {
+		/* Updates the render order of all objects based on their distance,
+		 a more accurate render compared to that produced by the z-buffer. */
 		var objDist = [];
 		for (i = 0; i < bodies.length; i++) {
 				objDist.push([bodies[i][0], Math.hypot(
@@ -523,12 +521,14 @@ function updateRenderOrder() {
 		for (i = 0; i < objDist.length; i++) {
 				objDist[i][0].renderOrder = i;
 		}
-		console.log(objDist);
 		return;
 }
 
 function update() {
+		// Update the animation frame
+
 		for (i = 0; i < bodies.length; i++) {
+			
 				var vFOV = camera.fov * Math.PI / 180;
 				var cameraDistance = Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
