@@ -1,9 +1,25 @@
-kilogram per cubic metre,kilograms per cubic metre,kg/m&sup3;,kg/m3
-gram per cubic metre,grams per cubic metre,g/m&sup3;,g/m3
-pound per cubic foot,pounds per cubic foot,lb/ft&sup3;,lb/ft3
-pound per cubic yard,pounds per cubic yard,lb/yd&sup3;,lb/yd3
+gram per cubic decimetre,g/dm&sup3;,g/dm3,grams per cubic decimetre,gram per cubic decimeter,grams per cubic decimeter,gram per litre,g/L,gram per litre,grams per liter,grams per liter,kilogram per cubic metre,kg/m&sup3;,kg/m3,kilograms per cubic metre,kilogram per cubic meter,kilograms per cubic meter
+gram per millilitre,g/mL,grams per millilitre,gram per milliliter,grams per milliliter,g/ml,kilogram per cubic decimetre,kg/dm&sup3;,kg/dm3,kilograms per cubic decimetre,kilogram per cubic decimeter,kilograms per cubic decimeter,kilogram per litre,kg/L,kilograms per litre,kilogram per liter,kilograms per liter,kg/l,gram per cubic centimetre,g/cm&sup3;,g/cm3,grams per cubic centimetre,gram per cubic centimeter,grams per cubic centimeter
+pound per cubic foot,lb/cu ft,lb/cuft,pounds per cubic foot,lb/ft3
+pound per cubid inch,lb/cu in,lb/cuin,pounds per cubic,lb/in3 inch,lb/in3,pound mass per cubic inch,lbm/cu in,lbm/cuin,pounds mass per cubic inch
+pound per cubid yard,lb/cu yd,lb/cuyd,pounds per cubic yard,lb/yd3
+pound per imperial gallon,lb/imp gal,lb/impgal,pounds per imperial gallon
+pound per U.S. gallon,lb/U.S. gal,lb/U.S.gal,pounds per U.S. gallon,pound per US gallon,lb/US gal,lb/USgal,pounds per US gallon
+pound per US bushel,lb/US bu,lb/USbu,pounds per US bushel
+milligram per litre,mg/L,milligrams per litre,milligram per liter,milligrams per liter,gram per cubic metre,g/m&sup3,g/m3,grams per cubic metre,gram per cubic meter,grams per cubic meter
+ounce per cubic inch,oz/cu in,oz/cuin,ounces per cubic inch,oz/in3
+megagram per cubic metre,Mg/m&sup3,g/Mm3,megagrams per cubic metre,megagram per cubic meter,megagrams per cubic meter,microgram per litre,&#120583;g/l,micrograms per litre,microgram per liter,micrograms per liter,ug/l
+microgram per decilitre,&#120583;g/dL,micrograms per decilitre,microgram per deciliter,micrograms per deciliter,mcg/dL,ug/dL,&mu;g/dL
 :
 1
+1000
+45359237/2831684.6592
+45359237/1638.7064
+45359237/76455485.7984
+45359237/454609
+589081/4916.1192
+45359237/3523907.016688
 0.001
-16.018463374
-0.59327642125
+725747792/1638.7064
+0.000001
+0.00001

@@ -1,0 +1,5 @@
+sievert,Sv
+rem,rem,roentgen equivalent man
+:
+1
+0.01

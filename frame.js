@@ -1,6 +1,6 @@
 document.getElementById("top").innerHTML =
 	'<div class="header">' +
-		'<h1>VISUAL MATH</h1>' +
+		'<h1>MOOMATH</h1>' +
 		'<p>A lovely math blog</p>' +
 	'</div>' +
 
@@ -33,7 +33,7 @@ document.getElementById("bottom").innerHTML =
 	'<div class="footer">' +
 		'<p><a href="#top"><strong>Go to Top</strong></a><br>' +
 		'&copy; 2017 CE &ndash; ' + new Date().getFullYear() + ' CE <a href="https://github.com/anematode" target="_blank">anematode</a> & <a href="https://github.com/Nichodon" target="_blank">Nichodon</a><br>' +
-		'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Visual%20Math">timothy.herchen@gmail.com</a><br>' +
+		'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Moomath">timothy.herchen@gmail.com</a><br>' +
 		'<a href="https://nichodon.github.io/sitemap">Sitemap</a></p>' +
 	'</div>';
 

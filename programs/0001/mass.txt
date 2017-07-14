@@ -1,41 +1,59 @@
-kilogram,kilograms,kg,kilogramme,kilogrammes,IPK
-gram,grams,g,gramme,grammes
-milligram,milligrams,mg,milligramme,milligrammes
-microgram,micrograms,&mu;g,ug,mcg,microgramme,microgrammes
-tonne,tonnes,t,metric ton,megagram
-long ton,long tons,LT,imperial ton,displacement ton
-short ton,short tons,ST
-long hundredweight,long hundredweights,long cwt,long centum weight,long centum weights,long quintal,long quintals
-short hundredweight,short hundredweights,short cwt,short centum weight,short centum weight,short quintal,short quintals
-long quarter,long quarters,long qtr
-short quarter,short quarters,short qtr
-stone,stones,st,stone weight,stone weights
-pound,pounds,lb,pound-mass,pound-masses,lbm,#
-ounce,ounces,oz
-drachm,drachms,drachm,dram,drams,dr,fluid dram,fluid drams,fluid drachm,fluid drachms,fluidram,fluidrams,fluidrachm,fluidrachms,fl dr
-grain,grains,gr,troy grain,troy grains,jeweller's grain,jeweller's grains,pearl grain,pearl grains
-troy pound,troy pounds,troy pound
-troy ounce,troy ounces,ozt
-pennyweight,pennyweights,dwt
-carat,carats,carat,ct,metric carat,metric carats,CD
+hundredweight,cwt,Lcwt,long hundredweight,long cwt,lcwt
+short hundredweight,Scwt,short cwt,scwt
+short ton,ST
+carat,carat
+drachm,drachm,dram
+pennyweight,dwt
+deadweight ton,deadweight ton,DWton
+deadweight tonne,deadweight tonne,DWtonne,metric ton,metric ton,t,MT,tonne,tonnes
+gram,g
+grain,gr
+gigatonne,Gt,billion tonne,e9t
+imperial gallon of water,imp gal H&#8322;O,impgalh20,imperial gallons of water
+kilotonne,kt,thousand tonne,e3t
+pound,lb,lbs
+long quarter,long qtr,quarter,qtr
+long ton,long ton,LT,lt
+megatonne,Mt,million tonne,e6t
+ounce,oz
+troy ounce,ozt
+pounder,pdr
+short quarter,short qtr
+short ton,short ton,ST,sh tn,shtn,ton,shton
+solar mass,&#119872;&#9737;,solar masses
+stone,st
+troy pound,troy pound,lbt
+US gallon of water,US gal H&#8322;O,usgalh2o,US gallons of water,U.S. gallon of water,U.S. gallons of water
+viss,viss
+kilogram,kg
+microgram,&#120583;g,mcg
 :
-1
-0.001
-0.000001
-0.000000001
-1000
-1016.0469088
-907.18474
 50.80234544
 45.359237
-12.70058636
-11.33980925
-6.35029318
-0.45359237
-0.02834952312
-0.00177184519
-0.00006479891
-0.3732417216
-0.0311034768
-0.00155517384
+907.18474
 0.0002
+0.001771845195
+0.00155517384
+1016.0469088
+1000
+0.001
+0.00006479891
+1000000000000
+1000/220.46226218488
+1000000
+0.45359237
+12.70058636
+1016.0469088
+1000000000
+0.028349523125
+0.0311034768
+0.45359237
+11.33980925
+907.18474
+1988550000000000000000000000000
+6.35029318
+0.3732417216
+3785411784/1002062197.13184
+1.632932532
+1
+0.000001

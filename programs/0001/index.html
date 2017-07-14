@@ -20,7 +20,10 @@
 <script src="convert.js"></script>
 
 <p>
-	This unit converter is exact in every calculation to 16 places and has a vast collection of different units in area and mass (and soon more).<br>The converter will attempt to guess the unit based on the search query.
+	This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.<br><br>
+	<strong>NOTE</strong>: This program is in the midst of being updated. Some features may not work as expected!<br>
+	Acceleration, apua, ard, area, ca, charge, c02puv, density, ee, epum, erd, ld, mass, mf, mfs, mr are currently up to date and will convert correctly. However, some of these might be subject to change (additions / removals of units).<br>
+	Note to self: do energy, epul, flow, force, gradient, length, etc. So much!
 </p>
 
 <hr>
@@ -41,13 +44,49 @@
 <label for="speed">Speed</label>
 <input type="radio" id="temperature" name="type" value="area" onClick="update()">
 <label for="temperature">Temperature</label>
-<input type="radio" id="volume" name="type" value="area" onClick="update()">
+<button class="mbut" onClick="more()">&#8943;</button>
+<br>
+<div class="more">
+	<input type="radio" id="ard" name="type" value="ard" onClick="update()">
+	<label for="ard">Absorbed Radiation Dose</label>
+	<input type="radio" id="acceleration" name="type" value="acceleration" onClick="update()">
+	<label for="acceleration">Acceleration</label>
+	<input type="radio" id="apua" name="type" value="apua" onClick="update()">
+	<label for="apua">Area Per Unit Area</label>
+	<input type="radio" id="charge" name="type" value="charge" onClick="update()">
+	<label for="charge">Charge</label>
+	<input type="radio" id="ca" name="type" value="ca" onClick="update()">
+	<label for="ca">Chemical Amount</label>
+	<input type="radio" id="c02puv" name="type" value="c02puv" onClick="update()">
+	<label for="c02puv">CO2 Per Unit Volume</label>
+	<input type="radio" id="epul" name="type" value="epul" onClick="update()">
+	<label for="epul">Energy Per Unit Length</label>
+	<input type="radio" id="epum" name="type" value="epum" onClick="update()">
+	<label for="epum">Energy Per Unit Mass</label>
+	<input type="radio" id="erd" name="type" value="erd" onClick="update()">
+	<label for="erd">Equivalent Radiation Dose</label>
+	<input type="radio" id="ee" name="type" value="ee" onClick="update()">
+	<label for="ee">Exhaust Emission</label>
+	<input type="radio" id="ld" name="type" value="ld" onClick="update()">
+	<label for="ld">Linear Density</label>
+	<input type="radio" id="mfs" name="type" value="mfs" onClick="update()">
+	<label for="mfs">Magnetic Field Strength</label>
+	<input type="radio" id="mf" name="type" value="mf" onClick="update()">
+	<label for="mf">Magnetizing Field</label>
+	<input type="radio" id="mpup" name="type" value="mpup" onClick="update()">
+	<label for="mpup">Mass Per Unit Power</label>
+	<input type="radio" id="mr" name="type" value="mr" onClick="update()">
+	<label for="mr">Molar Rate</label>
+	<input type="radio" id="pua" name="type" value="pua" onClick="update()">
+	<label for="pua">Per Unit Area</label>
+</div>
 
 <div class="box">
 	<div class="side">
 		<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search">
 		<p class="unit">Input</p>
 		<input placeholder="Number of units" class="search" onKeyUp="check()" type="number">
+		<div class="square"></div>
 	</div>
 	<div class="switch">
 		<button onClick="change()">&#8652;</button>
@@ -56,6 +95,7 @@
 		<input placeholder="Unit name or symbol" onKeyUp="search(2)" class="search">
 		<p class="unit">Input</p>
 		<input readonly class="search disabled">
+		<div class="square"></div>
 	</div>
 </div>
 
@@ -68,6 +108,18 @@
 	<div class="separate"></div>
 </div>
 <div id="bottom"></div>
+
+<script>
+	function more() {
+		var div = document.getElementsByClassName("more")[0];
+		if (div.className === "more") {
+			div.className += " most";
+		}
+		else {
+			div.className = "more";
+		}
+	}
+</script>
 
 <script src="../../frame.js"></script>
 

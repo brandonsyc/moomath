@@ -1,0 +1,11 @@
+gram per kilometre,g/km,grams per kilometre,gram per kilometer,grams per kilometer,gram of CO&#8322; per kilometre,g(CO&#8322;)/km,gCO2/km,grams of CO&#8322; per kilometre,gram of CO&#8322; per kilometer,grams of CO&#8322; per kilometer
+gram per mile,g/mi,grams per mile,gram of CO&#8322; per mile,g(CO&#8322;)/mi,gCO2/mi,grams of CO&#8322; per mile
+kilogram per kilometre,kg/km,kilograms per kilometre,kilogram per kilometer,kilograms per kilometer,kilogram of CO&#8322; per kilometre,kg(CO&#8322;)/km,kgCO2/km,kilograms of CO&#8322; per kilometre,kilogram of CO&#8322; per kilometer,kilograms of CO&#8322; per kilometer
+pound per mile,lb/mi,pounds per mile,pound of CO&#8322; per mile,lb(CO&#8322;)/mi,lbCO2/mi,pounds of CO&#8322; per mile
+ounce per mile,oz/mi,ounces per mile,ounce of CO&#8322; per mile,oz(CO&#8322;)/mi,ozCO2/mi,ounces of CO&#8322; per mile
+:
+0.000001
+1/1609344
+0.001
+453.59237/1609344
+28.349523125/1609344

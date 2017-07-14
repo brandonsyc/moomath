@@ -6,10 +6,10 @@ var values = [];
 function getEditDistance(a, b) {
 	"use strict";
 	if (a.length === 0) {
-		return b.length; 
+		return b.length;
 	}
 	if (b.length === 0) {
-		return a.length; 
+		return a.length;
 	}
 
 	var matrix = [];
@@ -31,7 +31,7 @@ function getEditDistance(a, b) {
 		for (j = 1; j <= a.length; j++) {
 			if (b.charAt(i - 1) === a.charAt(j - 1)) {
 				matrix[i][j] = matrix[i - 1][j - 1];
-			} 
+			}
 			else {
 				matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, // substitution
 				Math.min(matrix[i][j - 1] + 1, // insertion
@@ -48,7 +48,7 @@ function search(x)
 	"use strict";
 	var type = document.querySelector('input[name = "type"]:checked').value;
 	var rawFile = new XMLHttpRequest();
-	rawFile.open("GET", type + ".txt", false);
+	rawFile.open("GET", "https://nichodon.github.io/programs/0001/" + type + ".txt", false);
 	rawFile.onreadystatechange = function ()
 	{
 		if(rawFile.readyState === 4)
@@ -67,15 +67,14 @@ function search(x)
 		}
 	};
 	rawFile.send(null);
-	
+
 	var search = document.getElementsByClassName("search")[x];
 	var unit = document.getElementsByClassName("unit")[x / 2];
+	var square = document.getElementsByClassName("square")[x / 2];
 	var number = -1;
 
 	var lowestEditDistance = 15;
-
 	var foundPerfect = false;
-
 	var editDistance = null;
 
 	var searchvalue = search.value.toLowerCase();
@@ -100,10 +99,12 @@ function search(x)
 	}
 	numbers[x / 2] = number;
 	if (number !== -1 && search.value !== "") {
-		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][2].trim() + ")";
+		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][1].trim() + ")";
+		square.className = "square " + ["green", "blue"][x / 2];
 	}
 	else {
 		unit.innerHTML = "Input";
+		square.className = "square";
 	}
 	check();
 }
@@ -113,8 +114,23 @@ function check()
 	"use strict";
 	var input = document.getElementsByClassName("search")[1];
 	var output = document.getElementsByClassName("search")[3];
-	if (numbers[0] > -1 && numbers[1] > -1 && input.value !== "") {
-		output.value = input.value * values[numbers[0]] / values[numbers[1]];
+	var squares = document.getElementsByClassName("square");
+	if (numbers[0] > -1 && numbers[1] > -1) {
+		if (input.value !== "") {
+			output.value = input.value * values[numbers[0]] / values[numbers[1]];
+		}
+		if (values[numbers[0]] - values[numbers[1]] > 0) {
+			squares[0].style.width = "100%";
+			squares[0].style.paddingTop = "100%";
+			squares[1].style.width = values[numbers[1]] * 100 / values[numbers[0]] + "%";
+			squares[1].style.paddingTop = values[numbers[1]] * 100 / values[numbers[0]] + "%";
+		}
+		else {
+			squares[0].style.width = values[numbers[0]] * 100 / values[numbers[1]] + "%";
+			squares[0].style.paddingTop = values[numbers[0]] * 100 / values[numbers[1]] + "%";
+			squares[1].style.width = "100%";
+			squares[1].style.paddingTop = "100%";
+		}
 	}
 	else {
 		output.value = "";
@@ -130,7 +146,7 @@ function change()
 	search(2);
 }
 
-function update() 
+function update()
 {
 	"use strict";
 	units = [];

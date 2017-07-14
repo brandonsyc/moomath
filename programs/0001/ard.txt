@@ -1,0 +1,5 @@
+gray,gy
+rad,rad
+:
+1
+0.01

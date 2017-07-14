@@ -1,0 +1,5 @@
+kilogram per litre,kg(CO&#8322;)/L,kgCO2/L,kilograms per litre,kilogram per liter,kilograms per liter
+pound per US gallon,lbCO2/US gal,lbCO2/USgal,pounds per US gallon
+:
+1000
+0.45359237/0.003785411784

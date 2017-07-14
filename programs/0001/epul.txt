@@ -1,0 +1,4 @@
+kilowatt-hour per 100 kilometres,kW&sdot;h/100 km,kWh/100 km,kilowatt-hours per 100 kilometres,kilowatt-hour per 100 kilometers,kilowatt-hours per 100 kilometers
+kilowatt-hour per 100 miles,kW&sdot;h/100 mi,kWh/100 mi,kilowatt-hours per 100 miles
+megajoule per 100 kilometres,MJ/100 km,megajoules per 100 kilometres,megajoule per 100 kilometers,megajoules per 100 kilometers
+mile per gallon gasoline equivalent,mpg-e,mpge,miles per gallon gasoline equivalent

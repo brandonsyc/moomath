@@ -21,7 +21,7 @@
             <xsl:value-of select="s:loc" />
             <ul>
               <xsl:for-each select="image:image">
-                <li><xsl:value-of select="image:loc" />< (Image)</li>
+                <li><xsl:value-of select="image:loc" /> (Image)</li>
               </xsl:for-each>
             </ul>
           </li>
