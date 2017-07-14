@@ -225,6 +225,15 @@ a.icon {
 .layer p {
 	color: #eee;
 }
+.source-link {
+	max-width: 300px;
+	width: 100%;
+	text-align: center;
+	margin: 0 auto;
+}
+.source-link p {
+	color: #888;
+}
 /* Elements */
 .content {
 	align-content: center;
