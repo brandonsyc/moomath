@@ -128,12 +128,12 @@ function addPlanets() {
 		addMercury();
 		addEarth();
 		addVenus();
-		addMoon();
 		addMars();
 		addJupiter();
 		addSaturn();
 		addUranus();
 		addNeptune();
+		addMoon();
 }
 
 function addSun() {
