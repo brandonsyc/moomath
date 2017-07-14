@@ -47,7 +47,7 @@ var displayGridHelper = false;
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 0.0001;
+		var NEAR = 20;
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
@@ -68,6 +68,7 @@ function init() {
 		scene.add(camera);
 
 		renderer.setSize(window.innerWidth, window.innerHeight);
+		renderer.context.disable(renderer.context.DEPTH_TEST);
 
 		addSun();
 		addPlanets();
@@ -195,7 +196,7 @@ function addSun() {
 
 		bodies[0] = [sun, sunGlow, "Sun", 0.46, "star", "test"];
 
-		var sunLightSource = new THREE.PointLight(0xffffff, 1.6, 100, decay = 0.1);
+		var sunLightSource = new THREE.PointLight(0xffffff, 1.7, 100, decay = 0);
 
 		sunLightSource.position.set(0, 0, 0);
 		scene.add(sunLightSource);
