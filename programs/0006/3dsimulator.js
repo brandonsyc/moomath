@@ -23,13 +23,13 @@ var minStarSize = 50;
 var minMajorPlanetSize = 30;
 
 // Minimum dwarf planet
-var minDwarfPlanetSize = 5;
+var minDwarfPlanetSize = 15;
 
 // Minimum major satellite
-var minVisibleMajorSatelliteSize = 7;
+var minVisibleMajorSatelliteSize = 12;
 
 // Distance at which major satellites are displayed, in 1/100 AU
-var majorSatelliteDisplayDistance = 0.05;
+var majorSatelliteDisplayDistance = 0.2;
 
 // Size at which planets are not displayed
 
@@ -113,6 +113,8 @@ function init() {
 		renderer.sortObjects = true;
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
+		controls.enableDamping = true;
+		controls.rotateSpeed = 0.8;
 		renderer.render(scene, camera);
 
 		requestAnimationFrame(update);
