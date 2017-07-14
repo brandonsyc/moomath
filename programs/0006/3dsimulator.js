@@ -521,8 +521,9 @@ function updateRenderOrder() {
 		}
 		objDist = objDist.sort(renderComparator);
 		for (i = 0; i < objDist.length; i++) {
-				objDist[0].renderOrder = i;
+				objDist[i][0].renderOrder = i;
 		}
+		console.log(objDist);
 		return;
 }
 
