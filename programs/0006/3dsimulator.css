@@ -1,0 +1,15 @@
+#udder
+{
+  position: relative;
+}
+#controls input
+{
+  left: 25px;
+  top: 25px;
+  position: absolute;
+}
+
+* {
+margin: 0;
+padding: 0;
+}

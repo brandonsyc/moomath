@@ -25,6 +25,14 @@ var minMajorPlanetSize = 30;
 // Minimum dwarf planet
 var minDwarfPlanetSize = 5;
 
+// Show planets to scale or not (true: show true scale, false: show mins)
+var trueScale = false;
+
+// Between 0 and 1, scale factor of planets
+var planetScaleFactor = 0.3;
+
+var bodyPositions = {Mercury:[-39.1340971128,-13.8248193328,2.46051020206],Venus:[72.5260617929,0.860875454615,-4.17340502697],Earth:[37.3136687431,-94.5519234202,0.00386927407619],Moon:[37.5659191692,-94.6101727344,-0.00526211156356],Mars:[-76.6977638319,143.784941765,4.89538825518],Jupiter:[-492.523502045,-233.326394193,11.9897465813]};
+
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
@@ -61,7 +69,9 @@ function init() {
 		gridXZ.setColors( new THREE.Color(0xff0000), new THREE.Color(0xffffff) );
 		scene.add(gridXZ);
 
-		document.getElementById('webgl-container').appendChild(renderer.domElement);
+		var wbglcontainer = document.getElementById('webgl-container');
+
+		wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
 		renderer.render(scene, camera);
@@ -120,7 +130,7 @@ function addSun() {
 		THREE.ImageUtils.crossOrigin = '';
 		var sunTexture = THREE.ImageUtils.loadTexture('http://i.imgur.com/DxEUvetr.jpg',THREE.SphericalRefractionMapping);
 
-		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.8});
+		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.95});
 
 		var glowMaterial = new THREE.ShaderMaterial(
 		{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
@@ -161,9 +171,11 @@ function addEarth() {
 
 		earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
-		earth.position.x = 100*3.571108873714297E-1;
-		earth.position.z = 100*-9.517262002262744E-01;
-		earth.position.y = 100*-3.840370853737805E-05;
+		earth.position.x = bodyPositions.Earth[0];
+		earth.position.z = bodyPositions.Earth[1];
+		earth.position.y = bodyPositions.Earth[2];
+
+		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
 
 		scene.add(earth);
 
@@ -204,10 +216,19 @@ function addMercury() {
 		bodies[3] = [venus, null, "Venus", 0.004, "planet", "udder2"];
 }
 
-function update() {
-		controls.update();
-  	renderer.render(scene, camera);
+function getOffset( el ) {
+    var _x = 0;
+    var _y = 0;
+    while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return {top: _y, left: _x};
+}
+var x = getOffset(document.getElementById('yourElId')).left;
 
+function update() {
 		for (i = 0; i < bodies.length; i++) {
 				var vFOV = camera.fov * Math.PI / 180;
 				var height = 2 * Math.tan(vFOV / 2) * Math.hypot(
@@ -217,17 +238,20 @@ function update() {
 				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
 				var scaleFactor = 1;
-				if (bodies[i][4] == "star") {
-						if (bodyPixelSize < minStarSize) {
-								scaleFactor = minStarSize / bodyPixelSize;
-						}
-				} else if (bodies[i][4] == "planet") {
-						if (bodyPixelSize < minMajorPlanetSize) {
-								scaleFactor = minMajorPlanetSize / bodyPixelSize;
-						}
-				} else if (bodies[i][4] == "dwarf") {
-						if (bodyPixelSize < minDwarfPlanetSize) {
-								scaleFactor = minDwarfPlanetSize / bodyPixelSize;
+
+				if (!trueScale) {
+						if (bodies[i][4] == "star") {
+								if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
+										scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "planet") {
+								if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "dwarf") {
+								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
 						}
 				}
 
@@ -244,6 +268,9 @@ function update() {
 						bodies[i][1].scale.z = scaleFactor;
 				}
 		}
+
+		controls.update();
+  	renderer.render(scene, camera);
 
   	requestAnimationFrame(update);
 }
