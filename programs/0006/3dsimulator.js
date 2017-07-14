@@ -39,7 +39,7 @@ var displayGridHelper = false;
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 0.001;
+		var NEAR = 0.00001;
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
@@ -63,6 +63,7 @@ function init() {
 
 		addSun();
 		addPlanets();
+		addMoons();
 
 		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 		scene.add(light);
@@ -139,6 +140,17 @@ function addPlanets() {
 		addUranus();
 		addNeptune();
 		addMoon();
+}
+
+function addMoons() {
+		addMoon();
+		addGanymede();
+		addCallisto();
+		addIo();
+		addEuropa();
+		addTitan();
+		addTitania();
+		addTriton();
 }
 
 function addSun() {
@@ -342,7 +354,7 @@ function addGanymede() {
 		var ganymedeTexture = THREE.ImageUtils.loadTexture('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
 		var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
 
-		ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
+		ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
 
 		ganymede.position.x = bodyPositions.Ganymede[0];
 		ganymede.position.y = bodyPositions.Ganymede[1];
@@ -358,7 +370,7 @@ function addCallisto() {
 		var callistoTexture = THREE.ImageUtils.loadTexture('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
 		var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
 
-		callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
+		callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
 
 		callisto.position.x = bodyPositions.Callisto[0];
 		callisto.position.y = bodyPositions.Callisto[1];
@@ -366,7 +378,7 @@ function addCallisto() {
 
 		scene.add(callisto);
 
-		bodies[11] = [callisto, null, "Callisto", 0.001758, "majorsat", "udder2"];
+		bodies[11] = [callisto, null, "Callisto", 0.00161, "majorsat", "udder2"];
 }
 
 function addIo() {
@@ -374,7 +386,7 @@ function addIo() {
 		var ioTexture = THREE.ImageUtils.loadTexture('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
 		var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
 
-		io = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
+		io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
 
 		io.position.x = bodyPositions.Io[0];
 		io.position.y = bodyPositions.Io[1];
@@ -382,7 +394,7 @@ function addIo() {
 
 		scene.add(io);
 
-		bodies[12] = [io, null, "Io", 0.001758, "majorsat", "udder2"];
+		bodies[12] = [io, null, "Io", 0.001217, "majorsat", "udder2"];
 }
 
 function addEuropa() {
@@ -390,7 +402,7 @@ function addEuropa() {
 		var europaTexture = THREE.ImageUtils.loadTexture('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
 		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0});
 
-		europa = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
+		europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
 
 		europa.position.x = bodyPositions.Europa[0];
 		europa.position.y = bodyPositions.Europa[1];
@@ -398,7 +410,55 @@ function addEuropa() {
 
 		scene.add(europa);
 
-		bodies[13] = [europa, null, "Europa", 0.001758, "majorsat", "udder2"];
+		bodies[13] = [europa, null, "Europa", 0.001043, "majorsat", "udder2"];
+}
+
+function addTitan() {
+		THREE.ImageUtils.crossOrigin = '';
+		var TitanTexture = THREE.ImageUtils.loadTexture('images/TitanTexture.jpg',THREE.SphericalRefractionMapping);
+		var TitanMaterial = new THREE.MeshPhongMaterial({ map: TitanTexture, shininess: 0});
+
+		Titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), TitanMaterial);
+
+		Titan.position.x = bodyPositions.Titan[0];
+		Titan.position.y = bodyPositions.Titan[1];
+		Titan.position.z = bodyPositions.Titan[2];
+
+		scene.add(Titan);
+
+		bodies[14] = [Titan, null, "Titan", 0.00172, "majorsat", "udder2"];
+}
+
+function addTitania() {
+		THREE.ImageUtils.crossOrigin = '';
+		var TitaniaTexture = THREE.ImageUtils.loadTexture('images/TitaniaTexture.jpg',THREE.SphericalRefractionMapping);
+		var TitaniaMaterial = new THREE.MeshPhongMaterial({ map: TitaniaTexture, shininess: 0});
+
+		Titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TitaniaMaterial);
+
+		Titania.position.x = bodyPositions.Titania[0];
+		Titania.position.y = bodyPositions.Titania[1];
+		Titania.position.z = bodyPositions.Titania[2];
+
+		scene.add(Titania);
+
+		bodies[15] = [Titania, null, "Titania", 0.00090469, "majorsat", "udder2"];
+}
+
+function addTriton() {
+		THREE.ImageUtils.crossOrigin = '';
+		var TritonTexture = THREE.ImageUtils.loadTexture('images/TritonTexture.jpg',THREE.SphericalRefractionMapping);
+		var TritonMaterial = new THREE.MeshPhongMaterial({ map: TritonTexture, shininess: 0});
+
+		Triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TritonMaterial);
+
+		Triton.position.x = bodyPositions.Triton[0];
+		Triton.position.y = bodyPositions.Triton[1];
+		Triton.position.z = bodyPositions.Triton[2];
+
+		scene.add(Triton);
+
+		bodies[16] = [Triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
 }
 
 function getOffset( el ) {
