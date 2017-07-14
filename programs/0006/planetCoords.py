@@ -18,9 +18,9 @@ updates = (updates.upper() == "Y")
 horizons.read_until('Horizons> ')
 
 objs = ["Mercury","Venus","Earth","Moon","Mars","Jupiter", "Saturn", "Uranus", "Neptune", "Ganymede",
-        "Callisto","Io","Europa","Pluto","Titan","Titania","Ceres","Triton"]
+        "Callisto","Io","Europa","Pluto","Titan","Titania","Ceres","Triton","Iapetus","Tethys","Dione"]
 objids = [199, 299, 399, 301, 499, 599, 699, 799, 899, 503,
-          504, 501, 502, 999, 606, 703, 2000001, 801]
+          504, 501, 502, 999, 606, 703, 2000001, 801, 608, 603, 604]
 
 isfirstrun = True
 
@@ -28,7 +28,7 @@ currenttime = time.strftime("%Y-%B-%d %H:%M")
 if updates:
     print "\nCurrent Ephemeris Time: " + currenttime + ".\n"
 
-command = "var bodyPositions = {"
+command = "var bodyPositions = {\n"
 
 for i,obj in enumerate(objs):
     if updates:
@@ -85,13 +85,13 @@ for i,obj in enumerate(objs):
         print "Collected data for " + obj + ". (%s%% done)\n" \
               % (round(100 * i/float(len(objs)),3))
 
-    command = command + obj + ":[" + ','.join(newcoords) + '],'
+    command = '\t' + command + obj + ":[" + ','.join(newcoords) + '],\n'
     
     isfirstrun = False
 
 horizons.close()
 
-command = command[:-1] + "};"
+command = 'v' + command[:-2] + "};"
 
 print "Completed query of " + str(len(objs)) + " bodies! Paste the following into the JS:\n\n"
 

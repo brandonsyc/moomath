@@ -39,7 +39,29 @@ var trueScale = false;
 // Between 0 and 1, scale factor of planets
 var planetScaleFactor = 0.3;
 
-var bodyPositions = {Mercury:[-39.0637324236,2.41478441798,-14.3054131615],Venus:[72.518840034,-4.16773380816,1.24393982177],Earth:[37.6126354983,0.0038740054243,-94.4326179915],Moon:[37.8666091989,-0.00616300071877,-94.4798936481],Mars:[-76.922525796,4.89874945763,143.682112376],Jupiter:[-492.463710464,11.9889192293,-233.449483985],Saturn:[-85.4225410072,20.817834883,-1002.10345553],Uranus:[1802.16097215,-20.1829888139,848.618526761],Neptune:[2852.40533132,-46.9744514011,-911.221951655],Ganymede:[-492.832724389,11.96087569,-234.061992441],Callisto:[-491.343617368,11.9862482893,-234.005772277],Io:[-492.506704013,11.9783987347,-233.727923967],Europa:[-492.189645291,11.9783311268,-233.808083269],Pluto:[1025.52753973,42.9638172752,-3174.834283],Titan:[-84.6344825435,20.7860691003,-1002.19358573],Titania:[1802.30543194,-19.9295493623,848.622298347],Ceres:[29.294968368,2.98813148936,266.454311728],Triton:[2852.35769514,-47.1109949803,-911.409896677]};
+var bodyPositions = {
+Mercury:[-39.0194060099,2.38758068596,-14.5885671894],
+Venus:[72.5136170661,-4.16432596262,1.47040747204],
+Earth:[37.7892192997,0.00387667752922,-94.3616270401],
+Moon:[38.0439865727,-0.00668693660424,-94.4023730406],
+Mars:[-77.0553248556,4.90073104281,143.621148364],
+Jupiter:[-492.428344472,11.9884295423,-233.522256309],
+Saturn:[-85.3633985402,20.8155818981,-1002.10904643],
+Uranus:[1802.14184064,-20.1825994952,848.656425163],
+Neptune:[2852.41589213,-46.9753950288,-911.188165466],
+Ganymede:[-492.735008671,11.9599525915,-234.168031998],
+Callisto:[-491.285603673,11.9876009973,-234.029948286],
+Io:[-492.35950765,11.9796949816,-233.795046294],
+Europa:[-492.089215333,11.9816113415,-233.820948653],
+Pluto:[1025.56188422,42.9536504448,-3174.83082786],
+Titan:[-84.5729151643,20.7666057257,-1002.16625217],
+Titania:[1802.30573287,-19.9412778803,848.654236274],
+Ceres:[29.1770247393,3.01001246499,266.45869175],
+Triton:[2852.34464407,-47.0962957406,-911.379328695],
+Iapetus:[-86.6077562811,20.5944187799,-1000.06730292],
+Tethys:[-85.2039736091,20.7494902911,-1002.01407282],
+Dione:[-85.511871372,20.9211865396,-1002.28326267]
+};
 
 // Display GridHelper
 var displayGridHelper = false;
@@ -47,7 +69,7 @@ var displayGridHelper = false;
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 20;
+		var NEAR = 0.000001;
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
@@ -132,8 +154,6 @@ function onDocumentMouseDown( event ) {
 		var intersects = raycaster.intersectObjects(getObjects(), true);
 
 		if (intersects.length > 0) {
-
-				console.log(intersects[0]);
 				var x = intersects[0].object.position.x;
 				var y = intersects[0].object.position.y;
 				var z = intersects[0].object.position.z;
@@ -162,6 +182,9 @@ function addMoons() {
 		addTitan();
 		addTitania();
 		addTriton();
+		addIapetus();	// IAPETUSSS!
+		addTethys();
+		addDione();
 }
 
 function addSun() {
@@ -246,8 +269,6 @@ function addEarth() {
 		earth.position.x = bodyPositions.Earth[0];
 		earth.position.y = bodyPositions.Earth[1];
 		earth.position.z = bodyPositions.Earth[2];
-
-		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
 
 		scene.add(earth);
 
@@ -445,7 +466,7 @@ function addTitania() {
 		var titaniaTexture = THREE.ImageUtils.loadTexture('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
 		var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
 
-		var titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
+		var titania = new THREE.Mesh(new THREE.SphereGeometry(0.0005273, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
 
 		titania.position.x = bodyPositions.Titania[0];
 		titania.position.y = bodyPositions.Titania[1];
@@ -474,18 +495,82 @@ function addTriton() {
 
 function addDione() {
 		THREE.ImageUtils.crossOrigin = '';
-		var TritonTexture = THREE.ImageUtils.loadTexture('images/TritonTexture.jpg',THREE.SphericalRefractionMapping);
-		var TritonMaterial = new THREE.MeshPhongMaterial({ map: TritonTexture, shininess: 0});
+		var dioneTexture = THREE.ImageUtils.loadTexture('images/dioneTexture.jpg',THREE.SphericalRefractionMapping);
+		var dioneMaterial = new THREE.MeshPhongMaterial({ map: dioneTexture, shininess: 0});
 
-		var Triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TritonMaterial);
+		var dione = new THREE.Mesh(new THREE.SphereGeometry(0.000376, sphereSegmentPrecision, sphereRingPrecision), dioneMaterial);
 
-		Triton.position.x = bodyPositions.Triton[0];
-		Triton.position.y = bodyPositions.Triton[1];
-		Triton.position.z = bodyPositions.Triton[2];
+		dione.position.x = bodyPositions.Dione[0];
+		dione.position.y = bodyPositions.Dione[1];
+		dione.position.z = bodyPositions.Dione[2];
 
-		scene.add(Triton);
+		scene.add(dione);
 
-		bodies[16] = [Triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
+		bodies.push([dione, null, "Dione", 0.000376, "majorsat", "udder2"]);
+}
+
+function addIapetus() {
+		THREE.ImageUtils.crossOrigin = '';
+		var iapetusTexture = THREE.ImageUtils.loadTexture('images/iapetusTexture.jpg',THREE.SphericalRefractionMapping);
+		var iapetusMaterial = new THREE.MeshPhongMaterial({ map: iapetusTexture, shininess: 0});
+
+		var iapetus = new THREE.Mesh(new THREE.SphereGeometry(0.000491, sphereSegmentPrecision, sphereRingPrecision), iapetusMaterial);
+
+		iapetus.position.x = bodyPositions.Iapetus[0];
+		iapetus.position.y = bodyPositions.Iapetus[1];
+		iapetus.position.z = bodyPositions.Iapetus[2];
+
+		scene.add(iapetus);
+
+		bodies.push([iapetus, null, "Iapetus", 0.000491, "majorsat", "udder2"]);
+}
+
+function addTethys() {
+		THREE.ImageUtils.crossOrigin = '';
+		var tethysTexture = THREE.ImageUtils.loadTexture('images/tethysTexture.jpg',THREE.SphericalRefractionMapping);
+		var tethysMaterial = new THREE.MeshPhongMaterial({ map: tethysTexture, shininess: 0});
+
+		var tethys = new THREE.Mesh(new THREE.SphereGeometry(0.0003585, sphereSegmentPrecision, sphereRingPrecision), tethysMaterial);
+
+		tethys.position.x = bodyPositions.Tethys[0];
+		tethys.position.y = bodyPositions.Tethys[1];
+		tethys.position.z = bodyPositions.Tethys[2];
+
+		scene.add(tethys);
+
+		bodies.push([tethys, null, "Tethys", 0.0003585, "majorsat", "udder2"]);
+}
+
+function addCeres() {
+		THREE.ImageUtils.crossOrigin = '';
+		var ceresTexture = THREE.ImageUtils.loadTexture('images/ceresTexture.jpg',THREE.SphericalRefractionMapping);
+		var ceresMaterial = new THREE.MeshPhongMaterial({ map: ceresTexture, shininess: 0});
+
+		var ceres = new THREE.Mesh(new THREE.SphereGeometry(0.0003183, sphereSegmentPrecision, sphereRingPrecision), ceresMaterial);
+
+		ceres.position.x = bodyPositions.Ceres[0];
+		ceres.position.y = bodyPositions.Ceres[1];
+		ceres.position.z = bodyPositions.Ceres[2];
+
+		scene.add(ceres);
+
+		bodies.push([ceres, null, "Ceres", 0.0003183, "dwarf", "udder2"]);
+}
+
+function addPluto() {
+		THREE.ImageUtils.crossOrigin = '';
+		var plutoTexture = THREE.ImageUtils.loadTexture('images/plutoTexture.jpg',THREE.SphericalRefractionMapping);
+		var plutoMaterial = new THREE.MeshPhongMaterial({ map: plutoTexture, shininess: 0});
+
+		var pluto = new THREE.Mesh(new THREE.SphereGeometry(0.0007921, sphereSegmentPrecision, sphereRingPrecision), plutoMaterial);
+
+		pluto.position.x = bodyPositions.Pluto[0];
+		pluto.position.y = bodyPositions.Pluto[1];
+		pluto.position.z = bodyPositions.Pluto[2];
+
+		scene.add(pluto);
+
+		bodies.push([pluto, null, "Pluto", 0.0007921, "dwarf", "udder2"]);
 }
 
 function getOffset(el) {
@@ -506,6 +591,8 @@ function renderComparator(obj1, obj2) {
  }
 
 function updateRenderOrder() {
+		/* Updates the render order of all objects based on their distance,
+		 a more accurate render compared to that produced by the z-buffer. */
 		var objDist = [];
 		for (i = 0; i < bodies.length; i++) {
 				objDist.push([bodies[i][0], Math.hypot(
@@ -523,12 +610,14 @@ function updateRenderOrder() {
 		for (i = 0; i < objDist.length; i++) {
 				objDist[i][0].renderOrder = i;
 		}
-		console.log(objDist);
 		return;
 }
 
 function update() {
+		// Update the animation frame
+
 		for (i = 0; i < bodies.length; i++) {
+
 				var vFOV = camera.fov * Math.PI / 180;
 				var cameraDistance = Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
