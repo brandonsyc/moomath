@@ -174,23 +174,20 @@ function addSun() {
 		scene.add(sunLightSource);
 }
 
-function addEarth() {
+function addMercury() {
 		THREE.ImageUtils.crossOrigin = '';
-		var earthTexture = THREE.ImageUtils.loadTexture('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
+		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
+		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
-		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0});
+		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
 
-		earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
+		mercury.position.x = bodyPositions.Mercury[0];
+		mercury.position.y = bodyPositions.Mercury[1];
+		mercury.position.z = bodyPositions.Mercury[2];
 
-		earth.position.x = bodyPositions.Earth[0];
-		earth.position.y = bodyPositions.Earth[1];
-		earth.position.z = bodyPositions.Earth[2];
+		scene.add(mercury);
 
-		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
-
-		scene.add(earth);
-
-		bodies[2] = [earth, null, "Earth", 0.0042, "planet", "udder"];
+		bodies[1] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
 }
 
 function addVenus() {
@@ -207,23 +204,26 @@ function addVenus() {
 
 		scene.add(venus);
 
-		bodies[1] = [venus, null, "Venus", 0.004, "planet", "udder2"];
+		bodies[2] = [venus, null, "Venus", 0.004, "planet", "udder2"];
 }
 
-function addMercury() {
+function addEarth() {
 		THREE.ImageUtils.crossOrigin = '';
-		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
-		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
+		var earthTexture = THREE.ImageUtils.loadTexture('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
 
-		mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
+		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0});
 
-		mercury.position.x = bodyPositions.Mercury[0];
-		mercury.position.y = bodyPositions.Mercury[1];
-		mercury.position.z = bodyPositions.Mercury[2];
+		earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
-		scene.add(mercury);
+		earth.position.x = bodyPositions.Earth[0];
+		earth.position.y = bodyPositions.Earth[1];
+		earth.position.z = bodyPositions.Earth[2];
 
-		bodies[0] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
+		console.log(bodyPositions.Earth[0], bodyPositions.Earth[1], bodyPositions.Earth[2])
+
+		scene.add(earth);
+
+		bodies[3] = [earth, null, "Earth", 0.0042, "planet", "udder"];
 }
 
 function addMoon() {
