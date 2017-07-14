@@ -500,8 +500,8 @@ function getOffset(el) {
 }
 
 function renderComparator(obj1, obj2) {
-   if (obj1[1] < obj2[1]) return -1;
-   if (obj1[1] > obj2[1]) return 1;
+   if (obj1[1] < obj2[1]) return 1;
+   if (obj1[1] > obj2[1]) return -1;
    return 0;
  }
 
@@ -520,7 +520,10 @@ function updateRenderOrder() {
 				}
 		}
 		objDist = objDist.sort(renderComparator);
-		console.log(objDist);
+		for (i = 0; i < objDist.length; i++) {
+				objDist[0].renderOrder = i;
+		}
+		return;
 }
 
 function update() {
