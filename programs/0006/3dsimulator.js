@@ -47,7 +47,7 @@ var displayGridHelper = false;
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 0.00001;
+		var NEAR = 0.0001;
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
@@ -85,6 +85,8 @@ function init() {
 		var wbglcontainer = document.getElementById('webgl-container');
 
 		wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
+
+		renderer.sortObjects = false;
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
 		renderer.render(scene, camera);
@@ -166,7 +168,7 @@ function addSun() {
 		THREE.ImageUtils.crossOrigin = '';
 		var sunTexture = THREE.ImageUtils.loadTexture('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.95});
+		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.95, transparent: false});
 
 		var glowMaterial = new THREE.ShaderMaterial(
 		{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
@@ -236,7 +238,7 @@ function addEarth() {
 		THREE.ImageUtils.crossOrigin = '';
 		var earthTexture = THREE.ImageUtils.loadTexture('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0});
+		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0.03});
 
 		var earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
@@ -408,7 +410,7 @@ function addIo() {
 function addEuropa() {
 		THREE.ImageUtils.crossOrigin = '';
 		var europaTexture = THREE.ImageUtils.loadTexture('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
-		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0});
+		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0.04});
 
 		var europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
 
@@ -442,7 +444,7 @@ function addTitania() {
 		var titaniaTexture = THREE.ImageUtils.loadTexture('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
 		var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
 
-		titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
+		var titania = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
 
 		titania.position.x = bodyPositions.Titania[0];
 		titania.position.y = bodyPositions.Titania[1];
@@ -455,10 +457,26 @@ function addTitania() {
 
 function addTriton() {
 		THREE.ImageUtils.crossOrigin = '';
+		var tritonTexture = THREE.ImageUtils.loadTexture('images/tritonTexture.jpg',THREE.SphericalRefractionMapping);
+		var tritonMaterial = new THREE.MeshPhongMaterial({ map: tritonTexture, shininess: 0});
+
+		var triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), tritonMaterial);
+
+		triton.position.x = bodyPositions.Triton[0];
+		triton.position.y = bodyPositions.Triton[1];
+		triton.position.z = bodyPositions.Triton[2];
+
+		scene.add(triton);
+
+		bodies[16] = [triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
+}
+
+function addDione() {
+		THREE.ImageUtils.crossOrigin = '';
 		var TritonTexture = THREE.ImageUtils.loadTexture('images/TritonTexture.jpg',THREE.SphericalRefractionMapping);
 		var TritonMaterial = new THREE.MeshPhongMaterial({ map: TritonTexture, shininess: 0});
 
-		Triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TritonMaterial);
+		var Triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), TritonMaterial);
 
 		Triton.position.x = bodyPositions.Triton[0];
 		Triton.position.y = bodyPositions.Triton[1];
