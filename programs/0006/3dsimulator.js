@@ -58,9 +58,8 @@ function init() {
 
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		addEarth();
 		addSun();
-		addVenus();
+		addPlanets();
 
 		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 		scene.add(light);
@@ -123,6 +122,14 @@ function onDocumentMouseDown( event ) {
 				var z = intersects[0].object.position.z;
 				shiftCameraFocus(x,y,z);
 		}
+}
+
+function addPlanets() {
+		addMercury();
+		addEarth();
+		addVenus();
+		addMoon();
+		addMars();
 }
 
 function addSun() {
