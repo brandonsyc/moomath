@@ -113,6 +113,8 @@ function init() {
 		renderer.sortObjects = true;
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
+		controls.enableDamping = true;
+		controls.rotateSpeed = 0.8;
 		renderer.render(scene, camera);
 
 		requestAnimationFrame(update);
