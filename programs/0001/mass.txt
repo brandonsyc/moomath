@@ -26,7 +26,7 @@ troy pound,troy pound,lbt
 US gallon of water,US gal H&#8322;O,usgalh2o,US gallons of water,U.S. gallon of water,U.S. gallons of water
 viss,viss
 kilogram,kg
-microgram,&mu;g,mcg
+microgram,&#120583;g,mcg
 :
 50.80234544
 45.359237

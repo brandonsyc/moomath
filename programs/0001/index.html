@@ -22,8 +22,8 @@
 <p>
 	This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.<br><br>
 	<strong>NOTE</strong>: This program is in the midst of being updated. Some features may not work as expected!<br>
-	Acceleration, apua, ard, area, ca, charge, c02puv, epum, erd, ld, mf, mfs are currently up to date and will convert correctly. However, some of these might be subject to change (additions / removals of units).<br>
-	Note to self: do density, ee, energy, epul, flow, force, gradient, length, etc. So much!
+	Acceleration, apua, ard, area, ca, charge, c02puv, density, ee, epum, erd, ld, mass, mf, mfs, mr are currently up to date and will convert correctly. However, some of these might be subject to change (additions / removals of units).<br>
+	Note to self: do energy, epul, flow, force, gradient, length, etc. So much!
 </p>
 
 <hr>
@@ -67,6 +67,18 @@
 	<label for="erd">Equivalent Radiation Dose</label>
 	<input type="radio" id="ee" name="type" value="ee" onClick="update()">
 	<label for="ee">Exhaust Emission</label>
+	<input type="radio" id="ld" name="type" value="ld" onClick="update()">
+	<label for="ld">Linear Density</label>
+	<input type="radio" id="mfs" name="type" value="mfs" onClick="update()">
+	<label for="mfs">Magnetic Field Strength</label>
+	<input type="radio" id="mf" name="type" value="mf" onClick="update()">
+	<label for="mf">Magnetizing Field</label>
+	<input type="radio" id="mpup" name="type" value="mpup" onClick="update()">
+	<label for="mpup">Mass Per Unit Power</label>
+	<input type="radio" id="mr" name="type" value="mr" onClick="update()">
+	<label for="mr">Molar Rate</label>
+	<input type="radio" id="pua" name="type" value="pua" onClick="update()">
+	<label for="pua">Per Unit Area</label>
 </div>
 
 <div class="box">
@@ -74,6 +86,7 @@
 		<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search">
 		<p class="unit">Input</p>
 		<input placeholder="Number of units" class="search" onKeyUp="check()" type="number">
+		<div class="square"></div>
 	</div>
 	<div class="switch">
 		<button onClick="change()">&#8652;</button>
@@ -82,6 +95,7 @@
 		<input placeholder="Unit name or symbol" onKeyUp="search(2)" class="search">
 		<p class="unit">Input</p>
 		<input readonly class="search disabled">
+		<div class="square"></div>
 	</div>
 </div>
 

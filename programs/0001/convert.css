@@ -53,6 +53,7 @@ button:active {
 }
 .side {
 	display: inline-block;
+	min-width: 300px;
 	width: 40%;
 }
 .switch {
@@ -81,4 +82,33 @@ button:active {
 	transition: max-height 0.5s, opacity 0.2s 0.5s;
 	opacity: 1;
 	visibility: visible;
+}
+.square {
+	background-color: rgba(204, 0, 51, 0.2);
+	box-shadow: 0px 0px 5px #c03;
+	padding-top: 100%;
+  position: relative;
+	width: 100%;
+}
+.blue {
+	background-color: rgba(0, 136, 187, 0.2);
+	box-shadow: 0px 0px 5px #08b;
+}
+.green {
+	background-color: rgba(0, 153, 102, 0.2);
+	box-shadow: 0px 0px 5px #096;
+}
+@media only screen and (max-width: 768px) {
+	.side {
+		display: block;
+		margin: auto;
+		max-width: 300px;
+		min-width: 0;
+		width: 100%;
+	}
+	.switch {
+		max-width: 300px;
+		min-width: 0;
+		width: 100%;
+	}
 }

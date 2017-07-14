@@ -1,1 +1,7 @@
-I HAVE TO REDO ALL THIS?????? NUUUUU!!!!!!!!!!!!
+board of trade unit,B.O.T.U.
+barrel of oil equivalent,bboe,barrels of oil equivalent,BOE
+british thermal unit,BTU
+british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
+british thermal unit (59&deg;F),BTU&#8325;&#8329;&deg;F,BTU-59F,british thermal units (59&deg;F)
+british thermal unit (60&deg;F),BTU&#8326;&#8329;&deg;F,BTU-60F,british thermal units (60&deg;F)
+british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
