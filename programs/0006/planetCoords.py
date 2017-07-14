@@ -17,8 +17,10 @@ updates = (updates.upper() == "Y")
 
 horizons.read_until('Horizons> ')
 
-objs = ["Mercury","Venus","Earth","Moon","Mars","Jupiter"]
-objids = [199, 299, 399, 301, 499, 599]
+objs = ["Mercury","Venus","Earth","Moon","Mars","Jupiter", "Saturn", "Uranus", "Neptune", "Ganymede",
+        "Callisto","Io","Europa","Pluto","Titan","Titania","Ceres","Triton"]
+objids = [199, 299, 399, 301, 499, 599, 699, 799, 899, 503,
+          504, 501, 502, 999, 606, 703, 2000001, 801]
 
 isfirstrun = True
 
