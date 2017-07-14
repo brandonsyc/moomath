@@ -47,7 +47,7 @@ var displayGridHelper = false;
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 0.0001;
+		var NEAR = 20;
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
