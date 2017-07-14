@@ -87,7 +87,7 @@ function init() {
 
 		wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
 
-		renderer.sortObjects = false;
+		renderer.sortObjects = true;
 
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
 		renderer.render(scene, camera);
