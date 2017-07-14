@@ -58,9 +58,8 @@ function init() {
 
 		renderer.setSize(window.innerWidth, window.innerHeight);
 
-		addEarth();
 		addSun();
-		addVenus();
+		addPlanets();
 
 		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 		scene.add(light);
@@ -125,6 +124,18 @@ function onDocumentMouseDown( event ) {
 		}
 }
 
+function addPlanets() {
+		addMercury();
+		addEarth();
+		addVenus();
+		addMoon();
+		addMars();
+		addJupiter();
+		addSaturn();
+		addUranus();
+		addNeptune();
+}
+
 function addSun() {
 
 		THREE.ImageUtils.crossOrigin = '';
@@ -179,7 +190,7 @@ function addEarth() {
 
 		scene.add(earth);
 
-		bodies[1] = [earth, null, "Earth", 0.0042, "planet", "udder"];
+		bodies[2] = [earth, null, "Earth", 0.0042, "planet", "udder"];
 }
 
 function addVenus() {
@@ -196,7 +207,7 @@ function addVenus() {
 
 		scene.add(venus);
 
-		bodies[2] = [venus, null, "Venus", 0.004, "planet", "udder2"];
+		bodies[1] = [venus, null, "Venus", 0.004, "planet", "udder2"];
 }
 
 function addMercury() {
@@ -212,7 +223,7 @@ function addMercury() {
 
 		scene.add(mercury);
 
-		bodies[3] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
+		bodies[0] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
 }
 
 function addMoon() {
@@ -228,7 +239,7 @@ function addMoon() {
 
 		scene.add(moon);
 
-		bodies[4] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
+		bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
 }
 
 function addMars() {
@@ -245,6 +256,70 @@ function addMars() {
 		scene.add(mars);
 
 		bodies[4] = [mars, null, "Mars", 0.00226, "majorsat", "udder2"];
+}
+
+function addJupiter() {
+		THREE.ImageUtils.crossOrigin = '';
+		var jupiterTexture = THREE.ImageUtils.loadTexture('images/jupiterTexture.jpg',THREE.SphericalRefractionMapping);
+		var jupiterMaterial = new THREE.MeshPhongMaterial({ map: jupiterTexture, shininess: 0});
+
+		jupiter = new THREE.Mesh(new THREE.SphereGeometry(0.0467, sphereSegmentPrecision, sphereRingPrecision), jupiterMaterial);
+
+		jupiter.position.x = bodyPositions.Jupiter[0];
+		jupiter.position.y = bodyPositions.Jupiter[1];
+		jupiter.position.z = bodyPositions.Jupiter[2];
+
+		scene.add(jupiter);
+
+		bodies[5] = [jupiter, null, "Jupiter", 0.0467, "majorsat", "udder2"];
+}
+
+function addSaturn() {
+		THREE.ImageUtils.crossOrigin = '';
+		var saturnTexture = THREE.ImageUtils.loadTexture('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
+		var saturnMaterial = new THREE.MeshPhongMaterial({ map: saturnTexture, shininess: 0});
+
+		saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
+
+		saturn.position.x = bodyPositions.Saturn[0];
+		saturn.position.y = bodyPositions.Saturn[1];
+		saturn.position.z = bodyPositions.Saturn[2];
+
+		scene.add(saturn);
+
+		bodies[6] = [saturn, null, "Saturn", 0.0389, "majorsat", "udder2"];
+}
+
+function addUranus() {
+		THREE.ImageUtils.crossOrigin = '';
+		var uranusTexture = THREE.ImageUtils.loadTexture('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
+		var uranusMaterial = new THREE.MeshPhongMaterial({ map: uranusTexture, shininess: 0});
+
+		uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
+
+		uranus.position.x = bodyPositions.Uranus[0];
+		uranus.position.y = bodyPositions.Uranus[1];
+		uranus.position.z = bodyPositions.Uranus[2];
+
+		scene.add(uranus);
+
+		bodies[7] = [uranus, null, "Uranus", 0.01695, "majorsat", "udder2"];
+}
+
+function addNeptune() {
+		THREE.ImageUtils.crossOrigin = '';
+		var neptuneTexture = THREE.ImageUtils.loadTexture('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
+		var neptuneMaterial = new THREE.MeshPhongMaterial({ map: neptuneTexture, shininess: 0});
+
+		neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
+
+		neptune.position.x = bodyPositions.Neptune[0];
+		neptune.position.y = bodyPositions.Neptune[1];
+		neptune.position.z = bodyPositions.Neptune[2];
+
+		scene.add(neptune);
+
+		bodies[8] = [neptune, null, "Neptune", 0.01646, "majorsat", "udder2"];
 }
 
 function getOffset( el ) {
