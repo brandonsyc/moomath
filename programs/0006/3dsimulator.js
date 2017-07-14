@@ -239,7 +239,7 @@ function addMars() {
 
 		scene.add(mars);
 
-		bodies[4] = [mars, null, "Mars", 0.00226, "majorsat", "udder2"];
+		bodies[4] = [mars, null, "Mars", 0.00226, "planet", "udder2"];
 }
 
 function addJupiter() {
@@ -255,7 +255,7 @@ function addJupiter() {
 
 		scene.add(jupiter);
 
-		bodies[5] = [jupiter, null, "Jupiter", 0.0467, "majorsat", "udder2"];
+		bodies[5] = [jupiter, null, "Jupiter", 0.0467, "planet", "udder2"];
 }
 
 function addSaturn() {
@@ -271,7 +271,15 @@ function addSaturn() {
 
 		scene.add(saturn);
 
-		bodies[6] = [saturn, null, "Saturn", 0.0389, "majorsat", "udder2"];
+		var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * 0.0389, 2 * 0.0389, 64, 5, 0, Math.PI * 2),
+		 new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('images/saturnRings.png'),
+		  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
+
+		rings.position.x = saturn.position.x;
+		rings.position.y = saturn.position.y;
+		rings.position.z = saturn.position.z;
+
+		bodies[6] = [saturn, rings, "Saturn", 0.0389, "planet", "udder2"];
 }
 
 function addUranus() {
@@ -287,7 +295,7 @@ function addUranus() {
 
 		scene.add(uranus);
 
-		bodies[7] = [uranus, null, "Uranus", 0.01695, "majorsat", "udder2"];
+		bodies[7] = [uranus, null, "Uranus", 0.01695, "planet", "udder2"];
 }
 
 function addNeptune() {
@@ -303,7 +311,7 @@ function addNeptune() {
 
 		scene.add(neptune);
 
-		bodies[8] = [neptune, null, "Neptune", 0.01646, "majorsat", "udder2"];
+		bodies[8] = [neptune, null, "Neptune", 0.01646, "planet", "udder2"];
 }
 
 function addMoon() {
