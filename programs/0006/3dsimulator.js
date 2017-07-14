@@ -31,6 +31,8 @@ var minVisibleMajorSatelliteSize = 7;
 // Distance at which major satellites are displayed, in 1/100 AU
 var majorSatelliteDisplayDistance = 0.05;
 
+// Size at which planets are not displayed
+
 // Show planets to scale or not (true: show true scale, false: show mins)
 var trueScale = false;
 
@@ -71,7 +73,7 @@ function init() {
 		addPlanets();
 		addMoons();
 
-		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
+		var light = new THREE.AmbientLight(0x404040); // soft white light
 		scene.add(light);
 
 		if (displayGridHelper) {
@@ -191,7 +193,7 @@ function addSun() {
 
 		bodies[0] = [sun, sunGlow, "Sun", 0.46, "star", "test"];
 
-		var sunLightSource = new THREE.PointLight(0xffffff, 2, 100, decay = 0);
+		var sunLightSource = new THREE.PointLight(0xffffff, 1.6, 100, decay = 0.1);
 
 		sunLightSource.position.set(0, 0, 0);
 		scene.add(sunLightSource);
@@ -467,7 +469,7 @@ function addTriton() {
 		bodies[16] = [Triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
 }
 
-function getOffset( el ) {
+function getOffset(el) {
     var _x = 0;
     var _y = 0;
     while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
@@ -477,7 +479,6 @@ function getOffset( el ) {
     }
     return {top: _y, left: _x};
 }
-var x = getOffset(document.getElementById('yourElId')).left;
 
 function update() {
 		for (i = 0; i < bodies.length; i++) {
