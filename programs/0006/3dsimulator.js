@@ -33,6 +33,9 @@ var planetScaleFactor = 0.3;
 
 var bodyPositions = {Mercury:[-39.0637324236,2.41478441798,-14.3054131615],Venus:[72.518840034,-4.16773380816,1.24393982177],Earth:[37.6126354983,0.0038740054243,-94.4326179915],Moon:[37.8666091989,-0.00616300071877,-94.4798936481],Mars:[-76.922525796,4.89874945763,143.682112376],Jupiter:[-492.463710464,11.9889192293,-233.449483985],Saturn:[-85.4225410072,20.817834883,-1002.10345553],Uranus:[1802.16097215,-20.1829888139,848.618526761],Neptune:[2852.40533132,-46.9744514011,-911.221951655],Ganymede:[-492.832724389,11.96087569,-234.061992441],Callisto:[-491.343617368,11.9862482893,-234.005772277],Io:[-492.506704013,11.9783987347,-233.727923967],Europa:[-492.189645291,11.9783311268,-233.808083269],Pluto:[1025.52753973,42.9638172752,-3174.834283],Titan:[-84.6344825435,20.7860691003,-1002.19358573],Titania:[1802.30543194,-19.9295493623,848.622298347],Ceres:[29.294968368,2.98813148936,266.454311728],Triton:[2852.35769514,-47.1109949803,-911.409896677]};
 
+// Display GridHelper
+var displayGridHelper = false;
+
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
@@ -64,9 +67,11 @@ function init() {
 		var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 		scene.add(light);
 
-		var gridXZ = new THREE.GridHelper(1000, 100);
-		gridXZ.setColors( new THREE.Color(0xff0000), new THREE.Color(0xffffff) );
-		scene.add(gridXZ);
+		if (displayGridHelper) {
+				var gridXZ = new THREE.GridHelper(1000, 100);
+				gridXZ.setColors(new THREE.Color(0xffffff), new THREE.Color(0xdddddd));
+				scene.add(gridXZ);
+		}
 
 		var wbglcontainer = document.getElementById('webgl-container');
 
@@ -279,6 +284,8 @@ function addSaturn() {
 		rings.position.y = saturn.position.y;
 		rings.position.z = saturn.position.z;
 
+		scene.add(rings);
+
 		bodies[6] = [saturn, rings, "Saturn", 0.0389, "planet", "udder2"];
 }
 
@@ -328,6 +335,70 @@ function addMoon() {
 		scene.add(moon);
 
 		bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
+}
+
+function addGanymede() {
+		THREE.ImageUtils.crossOrigin = '';
+		var ganymedeTexture = THREE.ImageUtils.loadTexture('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
+		var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
+
+		ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
+
+		ganymede.position.x = bodyPositions.Ganymede[0];
+		ganymede.position.y = bodyPositions.Ganymede[1];
+		ganymede.position.z = bodyPositions.Ganymede[2];
+
+		scene.add(ganymede);
+
+		bodies[10] = [ganymede, null, "Ganymede", 0.001758, "majorsat", "udder2"];
+}
+
+function addCallisto() {
+		THREE.ImageUtils.crossOrigin = '';
+		var callistoTexture = THREE.ImageUtils.loadTexture('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
+		var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
+
+		callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
+
+		callisto.position.x = bodyPositions.Callisto[0];
+		callisto.position.y = bodyPositions.Callisto[1];
+		callisto.position.z = bodyPositions.Callisto[2];
+
+		scene.add(callisto);
+
+		bodies[11] = [callisto, null, "Callisto", 0.001758, "majorsat", "udder2"];
+}
+
+function addIo() {
+		THREE.ImageUtils.crossOrigin = '';
+		var ioTexture = THREE.ImageUtils.loadTexture('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
+		var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
+
+		io = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
+
+		io.position.x = bodyPositions.Io[0];
+		io.position.y = bodyPositions.Io[1];
+		io.position.z = bodyPositions.Io[2];
+
+		scene.add(io);
+
+		bodies[12] = [io, null, "Io", 0.001758, "majorsat", "udder2"];
+}
+
+function addEuropa() {
+		THREE.ImageUtils.crossOrigin = '';
+		var europaTexture = THREE.ImageUtils.loadTexture('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
+		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0});
+
+		europa = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
+
+		europa.position.x = bodyPositions.Europa[0];
+		europa.position.y = bodyPositions.Europa[1];
+		europa.position.z = bodyPositions.Europa[2];
+
+		scene.add(europa);
+
+		bodies[13] = [europa, null, "Europa", 0.001758, "majorsat", "udder2"];
 }
 
 function getOffset( el ) {
