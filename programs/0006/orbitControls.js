@@ -25,6 +25,9 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// Is the controller currently moving (in smoothDollyIn/smoothDollyOut)
 	this.zooming = false;
 
+	// Is the controller currently panning (in smoothPanIntoBody)
+	this.moving = false;
+
 	// "target" sets the location of focus, where the object orbits around
 	this.target = new THREE.Vector3();
 
@@ -263,19 +266,44 @@ THREE.OrbitControls = function ( object, domElement ) {
 		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
 		var apparentBodySize = 2 * bodySize / height;
 
-		if (apparentBodySize > 0.9) {
+		if (apparentBodySize > 0.6) {
 				return;
 		}
 
 		var frames = Math.ceil(time/60.0);
-		var totalDollyAmount = 4 / apparentBodySize;
-
-		console.log(apparentBodySize, bodySize);
+		var totalDollyAmount = 2 / apparentBodySize;
 
 		dollyIn(Math.pow(totalDollyAmount, 1/60.0));
 
 		var that = this;
 		setTimeout(function() {that.smoothDollyIntoBody(bodySize, time - 1000/60)}, 1000/60);
+	}
+
+	this.smoothPanIntoBody = function(x,y,z,time=1000) {
+		if (time < 20) {
+			this.moving = false;
+			return;
+		}
+		if (time == 1000) {			// Call from 3dsimulator.js
+			if (this.moving) {
+				return;
+			}
+			this.moving = true;
+		}
+
+		var secs = 1-time/1000.0;
+		var intermediatex = this.target.x + (x - this.target.x) * secs;
+		var intermediatey = this.target.y + (y - this.target.y) * secs;
+		var intermediatez = this.target.z + (z - this.target.z) * secs;
+
+		this.target.x = intermediatex;
+		this.target.y = intermediatey;
+		this.target.z = intermediatez;
+
+		this.update();
+
+		var that = this;
+		setTimeout(function() {that.smoothPanIntoBody(x,y,z,time-1000/60)}, 1000/60);
 	}
 
 	//

@@ -169,7 +169,7 @@ function getObjects() {
 function shiftCameraFocus(x,y=null,z=null) {
 		if (y != null && z != null) {
 				//camera.lookAt(new THREE.Vector3(x,y,z));
-				controls.target = new THREE.Vector3(x,y,z)
+				controls.smoothPanIntoBody(x,y,z);
 		} else {
 				//camera.lookAt(x);
 				controls.target = x;
@@ -179,10 +179,11 @@ function shiftCameraFocus(x,y=null,z=null) {
 }
 
 var dblClickSFRT = null;
+var lastClickedEntity = null;
 
 function onDocumentClick( event, run = false) {
 
-		event.preventDefault();
+		//event.preventDefault();
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
 		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
@@ -196,15 +197,18 @@ function onDocumentClick( event, run = false) {
 						dblClickSFRT.cancel();
 				} catch (e) {;}
 
-				dblClickSFRT = setTimeout(function() {onDocumentClick(event, run=true)}, 500);
+				//dblClickSFRT = setTimeout(function() {onDocumentClick(event, run=true)}, 500);
+				lastClickedEntity = intersects[0];
 
-				if (run) {
-						var x = intersects[0].object.position.x;
-						var y = intersects[0].object.position.y;
-						var z = intersects[0].object.position.z;
-						shiftCameraFocus(x,y,z);
+				var x = intersects[0].object.position.x;
+				var y = intersects[0].object.position.y;
+				var z = intersects[0].object.position.z;
+				shiftCameraFocus(x,y,z);
 
-						focusBody = intersects[0];
+				focusBody = intersects[0];
+		} else {
+				if (!controls.moving) {
+						lastClickedEntity = null;
 				}
 		}
 }
@@ -212,21 +216,14 @@ function onDocumentClick( event, run = false) {
 function onDocumentDblClick(event) {
 		event.preventDefault();
 
-		mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
-		mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
-
-		raycaster.setFromCamera(mouse, camera);
-
-		var intersects = raycaster.intersectObjects(getObjects(), true);
-
-		if (intersects.length > 0) {
+		if (lastClickedEntity) {
 				try {
 						dblClickSFRT.cancel();
 				} catch (e) {;}
 
-				var x = intersects[0].object.position.x;
-				var y = intersects[0].object.position.y;
-				var z = intersects[0].object.position.z;
+				var x = lastClickedEntity.object.position.x;
+				var y = lastClickedEntity.object.position.y;
+				var z = lastClickedEntity.object.position.z;
 				shiftCameraFocus(x,y,z);
 
 				var vFOV = camera.fov * Math.PI / 180;
@@ -235,32 +232,11 @@ function onDocumentDblClick(event) {
 					controls.target.y-camera.position.y,
 					controls.target.z-camera.position.z);
 				var height = Math.tan(vFOV / 2) * cameraDistance;
-				var bodySize = bodies[intersects[0].object.name][3];
+				var bodySize = bodies[lastClickedEntity.object.name][3];
 
 				controls.smoothDollyIntoBody(bodySize);
 
-				focusBody = intersects[0];
-		}
-}
-
-function onDocumentClick(event) {
-		event.preventDefault();
-
-		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
-
-		raycaster.setFromCamera(mouse, camera);
-
-		var intersects = raycaster.intersectObjects(getObjects(), true);
-
-		if (intersects.length > 0) {
-				var x = intersects[0].object.position.x;
-				var y = intersects[0].object.position.y;
-				var z = intersects[0].object.position.z;
-
-				focusBody = intersects[0].object;
-
-				shiftCameraFocus(x,y,z);
+				focusBody = lastClickedEntity;
 		}
 }
 
@@ -285,7 +261,7 @@ function updateRenderOrder() {
 		/* Updates the render order of all objects based on their distance,
 		 a more accurate render compared to that produced by the z-buffer. */
 		var objDist = [];
-		objDist.push([cGrid,1e12]);
+		// objDist.push([cGrid,1e12]);
 		for (i = 0; i < bodies.length; i++) {
 				objDist.push([bodies[i][0], Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
@@ -325,7 +301,7 @@ function update() {
 
 				var scaleFactor = 1;
 
-				if (bodies[i][2] == "Saturn" && cameraDistance < 500) {
+				if (cameraDistance < 10) {
 						renderer.context.enable(renderer.context.DEPTH_TEST);
 						depthTestDisabled = false;
 				}
@@ -376,12 +352,14 @@ function update() {
 			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
 			controls.target.z-camera.position.z);
 
-		try {
+		if (displayGridHelper) {
 				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
 
-				if (newWidth != cGridLineWidth) {
+				if (newWidth != cGridLineWidth || !scene.getObjectByName('gridy')) {
 						cGridLineWidth = newWidth;
-						scene.remove(scene.getObjectByName('gridy'));
+						try {
+								scene.remove(scene.getObjectByName('gridy'));
+						} catch (e) {;}
 						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
 							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
 						cGrid.name = 'gridy';
@@ -395,7 +373,11 @@ function update() {
 						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
 						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
 				}
-		} catch (e) {;}
+		} else {
+				try {
+						scene.remove(scene.getObjectByName('gridy'));
+				} catch(e) {;}
+		}
 
 		controls.update();
 		if (depthTestDisabled) {
@@ -430,6 +412,10 @@ function updatePlanetarySize() {
 		} else {
 				document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 2)) + '&times;';
 		}
+}
+
+function updateShowGrid() {
+		displayGridHelper = document.getElementById("testc").checked;
 }
 
 window.onload = function() {
