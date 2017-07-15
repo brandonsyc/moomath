@@ -73,11 +73,51 @@
 			<input type="radio" id="r3" name="testr">
 			<label for="r3">Test Check</label>
 		</div>
+		<p>Test Input</p>
+		<input type="text">
+		<div class="wrapper">
+			<button class="bslide" onMouseDown="press(1, -0.5)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar1"></div>
+			</div>
+			<button class="bslide right" onMouseDown="press(1, 0.5)" onMouseUp="lift()">&raquo;</button>
+		</div>
 	</div>
 	<div id="webgl-container"></div>
+	<script>
+		var name = "";
+		var diff = "";
+		function press(a, b) {
+			name = a;
+			diff = b;
+			down();
+		}
+		function lift() {
+			name = "";
+			diff = "";
+		}
+		function down() {
+			if (name !== "")
+			{
+				var bar = document.getElementById("bar" + name);
+				if (bar.style.width === "") {
+					bar.style.width = "50%";
+				}
+				bar.style.width = parseFloat(bar.style.width) + diff + "%";
+				if (parseFloat(bar.style.width) < 0) {
+					bar.style.width = "0%";
+				}
+				if (parseFloat(bar.style.width) > 100) {
+					bar.style.width = "100%";
+				}
+				setTimeout("down()", 1);
+			}
+		}
+	</script>
 </body>
-	<script src="three.js"></script>
-	<script src="xRingGeometry.js"></script>
-	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
-	<script src="3dsimulator.js"></script>
+
+<script src="three.js"></script>
+<script src="xRingGeometry.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="3dsimulator.js"></script>
 </html>
