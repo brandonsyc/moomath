@@ -23,10 +23,10 @@ var sunGlowScale = 1.2;
 var minStarSize = 50;
 
 // Minimum major planet
-var minMajorPlanetSize = 30;
+var minMajorPlanetSize = 48;
 
 // Minimum dwarf planet
-var minDwarfPlanetSize = 15;
+var minDwarfPlanetSize = 23;
 
 // Minimum major satellite
 var minVisibleMajorSatelliteSize = 12;
@@ -82,7 +82,7 @@ var cGridTransX = 0;
 var cGridLineWidth = 10;
 
 // Align grid to object
-var alignGridToTarget = false;
+var alignGridToTarget = true;
 
 // Gridline color
 var alignGridColor = "#777777";
@@ -118,10 +118,14 @@ function init() {
 		renderer.setSize(window.innerWidth, window.innerHeight);
 		renderer.context.disable(renderer.context.DEPTH_TEST);
 
+		console.log("Loading textures...");
+
 		addSun();
 		addPlanets();
 		addMoons();
 		addDwarves();
+
+		console.log("Loaded textures.")
 
 		var light = new THREE.AmbientLight(0x404040); // soft white light
 		scene.add(light);
@@ -301,6 +305,9 @@ function updateRenderOrder() {
 		return;
 }
 
+var lastUpdate = 0;
+var finished = false;
+
 function update() {
 		// Update the animation frame
 
@@ -398,6 +405,11 @@ function update() {
 
 		renderer.context.disable(renderer.context.DEPTH_TEST);
 
+		if (!finished && new Date().getTime() - lastUpdate < 1000/30.0) {
+				finished = true;
+				console.log("Finished setup #2");
+		}
+		lastUpdate = new Date().getTime();
   	requestAnimationFrame(update);
 }
 
@@ -411,9 +423,17 @@ window.addEventListener('resize', function() {
 
 function updatePlanetarySize() {
 		var bar = document.getElementById("bar1").style.width;
-		minMajorPlanetSize = parseFloat(bar.substr(0,bar.length-1)) - 1;
-		minDwarfPlanetSize = minMajorPlanetSize; // This is temporary
-		document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 1)) + '&times;';
+		minMajorPlanetSize = parseFloat(bar.substr(0,bar.length-1)) - 2;
+		minDwarfPlanetSize = (minMajorPlanetSize + 2) / 2 - 2; // This is most likely going to be temporary
+		if (minMajorPlanetSize == -1) {
+				document.getElementById('bar1-contents').innerHTML = "Real Size";
+		} else {
+				document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 2)) + '&times;';
+		}
+}
+
+window.onload = function() {
+		console.log("Finished setup.");
 }
 
 init();
