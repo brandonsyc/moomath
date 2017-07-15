@@ -169,7 +169,7 @@ function getObjects() {
 function shiftCameraFocus(x,y=null,z=null) {
 		if (y != null && z != null) {
 				//camera.lookAt(new THREE.Vector3(x,y,z));
-				controls.target = new THREE.Vector3(x,y,z)
+				controls.smoothPanIntoBody(x,y,z);
 		} else {
 				//camera.lookAt(x);
 				controls.target = x;
