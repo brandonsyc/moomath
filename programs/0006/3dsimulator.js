@@ -5,7 +5,7 @@ var sunLightSource = null;
 
 // bodies[0] is always the sun, bodies[1] is mercury, bodies[2] is venus, bodies[3] is earth, etc., until bodies[7]: neptune. The remaining ones are dynamically allocated.
 
-// Format of body in bodies: [three.js element, second element (if necessary, otherwise null), name, radius (1/100 AU), type, information]
+// Format of body in bodies: [three.js element, second element (if necessary, otherwise null), name, radius (1/100 AU), type, information, point underneath obj]
 
 // Types: star = sun, planet = one of 8 planets, dwarf = one of the dwarf planets, majorsat = round moon, minorsat = irregular moon
 
@@ -39,6 +39,10 @@ var trueScale = false;
 // Between 0 and 1, scale factor of planets
 var planetScaleFactor = 0.3;
 
+var focusBody = null;
+
+var subdots = [];
+
 var bodyPositions = {
 Mercury:[-39.0194060099,2.38758068596,-14.5885671894],
 Venus:[72.5136170661,-4.16432596262,1.47040747204],
@@ -64,7 +68,26 @@ Dione:[-85.511871372,20.9211865396,-1002.28326267]
 };
 
 // Display GridHelper
-var displayGridHelper = false;
+var displayGridHelper = true;
+
+var cGrid = null;
+
+var cGridTransZ = 0;
+var cGridTransY = 0;
+var cGridTransX = 0;
+
+var cGridLineWidth = 10;
+
+// Align grid to object
+var alignGridToTarget = false;
+
+// Gridline color
+var alignGridColor = "#777777";
+
+// Sun emissiveIntensity
+var sunEmissive = 0.95;
+
+var subDots = [];
 
 function init() {
 		var VIEW_ANGLE = 45;
@@ -101,9 +124,9 @@ function init() {
 		scene.add(light);
 
 		if (displayGridHelper) {
-				var gridXZ = new THREE.GridHelper(1000, 100);
-				gridXZ.setColors(new THREE.Color(0xffffff), new THREE.Color(0xdddddd));
-				scene.add(gridXZ);
+				cGrid = new THREE.GridHelper(1000, 100, colorCenterLine = alignGridColor, colorGrid = alignGridColor);
+				cGrid.name = 'gridy';
+				scene.add(cGrid);
 		}
 
 		var wbglcontainer = document.getElementById('webgl-container');
@@ -115,6 +138,7 @@ function init() {
 		controls = new THREE.OrbitControls(camera, renderer.domElement);
 		controls.enableDamping = true;
 		controls.rotateSpeed = 0.8;
+		controls.keyPanSpeed = 2;
 		renderer.render(scene, camera);
 
 		requestAnimationFrame(update);
@@ -200,7 +224,8 @@ function addSun() {
 		THREE.ImageUtils.crossOrigin = '';
 		var sunTexture = THREE.ImageUtils.loadTexture('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white", emissiveIntensity: 0.95, transparent: false});
+		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white",
+		emissiveIntensity: 0.95, transparent: false});
 
 		var glowMaterial = new THREE.ShaderMaterial(
 		{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
@@ -231,6 +256,15 @@ function addSun() {
 
 		sunLightSource.position.set(0, 0, 0);
 		scene.add(sunLightSource);
+}
+
+function constructSubDot(x,y,z,radius) {
+		var subDot = new THREE.Mesh(new THREE.CircleGeometry(radius,sphereRingPrecision),new THREE.LineBasicMaterial({color: 0x000077}));
+		subDot.rotateX(Math.PI / 2);
+		subDot.material.side = THREE.DoubleSide;
+		scene.add(subDot);
+
+		subdots.push(subDot.object);
 }
 
 function addMercury() {
@@ -626,14 +660,14 @@ function update() {
 
 		var depthTestDisabled = true;
 
-		for (i = 0; i < bodies.length; i++) {
+		var vFOV = camera.fov * Math.PI / 180;
 
-				var vFOV = camera.fov * Math.PI / 180;
+		for (i = 0; i < bodies.length; i++) {
 				var cameraDistance = Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
 					bodies[i][0].position.y-camera.position.y,
 					bodies[i][0].position.z-camera.position.z);
-				var height = 2 * Math.tan(vFOV / 2) * cameraDistance
+				var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
 				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
 				var scaleFactor = 1;
@@ -677,7 +711,38 @@ function update() {
 						bodies[i][1].scale.y = scaleFactor;
 						bodies[i][1].scale.z = scaleFactor;
 				}
+
+				/* constructSubDot(bodies[i][0].position.x,
+					alignGridToTarget ? bodies[i][0].position.y : 0,
+					bodies[i][0].position.z,
+					bodies[i][3] * scaleFactor); */
 		}
+
+		var height = 2 * Math.tan(vFOV / 2) *
+			Math.hypot(controls.target.x-camera.position.x,
+			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
+			controls.target.z-camera.position.z);
+
+		try {
+				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
+
+				if (newWidth != cGridLineWidth) {
+						cGridLineWidth = newWidth;
+						scene.remove(scene.getObjectByName('gridy'));
+						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
+							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
+						cGrid.name = 'gridy';
+						scene.add(cGrid);
+						cGrid.translateX(Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth);
+						cGridTransX = Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth;
+						if (alignGridToTarget) {
+								cGrid.translateY(controls.target.y);
+								cGridTransY = controls.target.y;
+						}
+						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
+						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
+				}
+		} catch (e) {;}
 
 		controls.update();
 		if (depthTestDisabled) {
