@@ -22,6 +22,7 @@ padding: 0;
   position: fixed;
   text-align: center;
   line-height: 100px;
+  overflow-x: auto;
   width: 100%;
 }
 
