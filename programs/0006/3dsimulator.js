@@ -301,7 +301,7 @@ function update() {
 
 				var scaleFactor = 1;
 
-				if (cameraDistance < 50) {
+				if (cameraDistance < 10) {
 						renderer.context.enable(renderer.context.DEPTH_TEST);
 						depthTestDisabled = false;
 				}
@@ -352,12 +352,14 @@ function update() {
 			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
 			controls.target.z-camera.position.z);
 
-		try {
+		if (displayGridHelper) {
 				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
 
-				if (newWidth != cGridLineWidth) {
+				if (newWidth != cGridLineWidth || !scene.getObjectByName('gridy')) {
 						cGridLineWidth = newWidth;
-						scene.remove(scene.getObjectByName('gridy'));
+						try {
+								scene.remove(scene.getObjectByName('gridy'));
+						} catch (e) {;}
 						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
 							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
 						cGrid.name = 'gridy';
@@ -371,7 +373,11 @@ function update() {
 						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
 						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
 				}
-		} catch (e) {;}
+		} else {
+				try {
+						scene.remove(scene.getObjectByName('gridy'));
+				} catch(e) {;}
+		}
 
 		controls.update();
 		if (depthTestDisabled) {
@@ -406,6 +412,10 @@ function updatePlanetarySize() {
 		} else {
 				document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 2)) + '&times;';
 		}
+}
+
+function updateShowGrid() {
+		displayGridHelper = document.getElementById("testc").checked;
 }
 
 window.onload = function() {
