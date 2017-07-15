@@ -85,9 +85,7 @@ var alignGridToTarget = false;
 var alignGridColor = "#777777";
 
 // Sun emissiveIntensity
-var sunEmissive = 0.95;
-
-var subDots = [];
+var sunEmissive = 0.92;
 
 var isInToolbar = false;
 
@@ -273,23 +271,28 @@ function getOffset(el) {
 function renderComparator(obj1, obj2) {
    if (obj1[1] < obj2[1]) return 1;
    if (obj1[1] > obj2[1]) return -1;
-   return 0;
+   return 1;
  }
 
 function updateRenderOrder() {
 		/* Updates the render order of all objects based on their distance,
 		 a more accurate render compared to that produced by the z-buffer. */
 		var objDist = [];
+		objDist.push([cGrid,1e12]);
 		for (i = 0; i < bodies.length; i++) {
 				objDist.push([bodies[i][0], Math.hypot(
 					bodies[i][0].position.x-camera.position.x,
 					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z)])
+					bodies[i][0].position.z-camera.position.z)]);
 				if (bodies[i][1]) {
 					objDist.push([bodies[i][1], Math.hypot(
-						bodies[i][1].position.x-camera.position.x,
-						bodies[i][1].position.y-camera.position.y,
-						bodies[i][1].position.z-camera.position.z)])
+						bodies[i][0].position.x-camera.position.x,
+						bodies[i][0].position.y-camera.position.y,
+						bodies[i][0].position.z-camera.position.z)]);
+					console.log(Math.hypot(
+						bodies[i][0].position.x-camera.position.x,
+						bodies[i][0].position.y-camera.position.y,
+						bodies[i][0].position.z-camera.position.z));
 				}
 		}
 		objDist = objDist.sort(renderComparator);
@@ -316,7 +319,7 @@ function update() {
 
 				var scaleFactor = 1;
 
-				if (cameraDistance < 0.5) {
+				if (bodies[i][2] == "Saturn" && cameraDistance < 500) {
 						renderer.context.enable(renderer.context.DEPTH_TEST);
 						depthTestDisabled = false;
 				}
@@ -406,6 +409,13 @@ window.addEventListener('resize', function() {
       camera.aspect = WIDTH / HEIGHT;
       camera.updateProjectionMatrix();
     });
+
+function updatePlanetarySize() {
+		var bar = document.getElementById("bar1").style.width;
+		minMajorPlanetSize = parseFloat(bar.substr(0,bar.length-1)) - 1;
+		minDwarfPlanetSize = minMajorPlanetSize; // This is temporary
+		document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 1)) + '&times;';
+}
 
 init();
 

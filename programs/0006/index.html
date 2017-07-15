@@ -76,11 +76,14 @@
 		<p>Test Input</p>
 		<input type="text">
 		<div class="wrapper">
-			<button class="bslide" onMouseDown="press(1, -0.5)" onMouseUp="lift()">&laquo;</button>
+			<label for="bslide">Planetary Size</label>
+			<button class="bslide" onMouseDown="press(1, -1.5)" onMouseUp="lift()">&laquo;</button>
 			<div class="slider">
-				<div class="bar" id="bar1"></div>
+				<div class="bar" id="bar1">
+				</div>
+				<p id="bar1-contents">&nbsp;</p>
 			</div>
-			<button class="bslide right" onMouseDown="press(1, 0.5)" onMouseUp="lift()">&raquo;</button>
+			<button class="bslide right" onMouseDown="press(1, 1.5)" onMouseUp="lift()">&raquo;</button>
 		</div>
 	</div>
 	<div id="webgl-container"></div>
@@ -97,6 +100,7 @@
 			diff = "";
 		}
 		function down() {
+			updatePlanetarySize();
 			if (name !== "")
 			{
 				var bar = document.getElementById("bar" + name);
@@ -110,7 +114,7 @@
 				if (parseFloat(bar.style.width) > 100) {
 					bar.style.width = "100%";
 				}
-				setTimeout("down()", 1);
+				setTimeout("down()", 1000/60);
 			}
 		}
 	</script>

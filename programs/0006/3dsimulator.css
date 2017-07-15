@@ -113,3 +113,8 @@ button:active {
   height: 41px;
   width: 50%;
 }
+
+.slider p {
+  position: relative;
+  bottom: 45px;
+}
