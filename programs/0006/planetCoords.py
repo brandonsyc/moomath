@@ -1,4 +1,4 @@
-import telnetlib,sys,time
+import telnetlib,sys,time,datetime
 
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
