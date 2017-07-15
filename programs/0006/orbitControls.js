@@ -22,6 +22,9 @@ THREE.OrbitControls = function ( object, domElement ) {
 	// Set to false to disable this control
 	this.enabled = true;
 
+	// Is the controller currently moving (in smoothDollyIn/smoothDollyOut)
+	this.zooming = false;
+
 	// "target" sets the location of focus, where the object orbits around
 	this.target = new THREE.Vector3();
 
@@ -234,6 +237,46 @@ THREE.OrbitControls = function ( object, domElement ) {
 		//scope.dispatchEvent( { type: 'dispose' } ); // should this be added here?
 
 	};
+
+	this.dollyIn = function(dollyScale) {
+		dollyIn(dollyScale);
+	}
+
+	this.dollyOut = function(dollyScale) {
+		dollyOut(dollyScale);
+	}
+
+	this.smoothDollyIntoBody = function(bodySize,zoomtime=1000,time=1000,date=null) {
+		time = zoomtime;
+		if (time < 20) {
+				this.zooming = false;
+				return;
+		}
+		var newdate = date;
+		if (date == null) {			// Call from 3dsimulator.js
+			this.zooming = true;
+		}
+		newdate = new Date().getTime();
+
+		var vFOV = scope.object.fov * Math.PI / 180;
+		var cameraDistance = Math.hypot(
+			this.target.x-scope.object.position.x,
+			this.target.y-scope.object.position.y,
+			this.target.z-scope.object.position.z);
+		var height = Math.tan(vFOV / 2) * cameraDistance;
+		var apparentBodySize = bodySize / height;
+
+		var currDate = new Date().getTime();
+		var frames = Math.ceil(time/60.0);
+		var totalDollyAmount = apparentBodySize / 0.25;
+
+		console.log(totalDollyAmount,frames,time);
+
+		dollyIn(Math.pow(totalDollyAmount, 1/60.0));
+
+		var that = this;
+		setTimeout(function() {that.smoothDollyIntoBody(bodySize, time - 1000/60, newdate+1000/60)}, 1000/60);
+	}
 
 	//
 	// internals
