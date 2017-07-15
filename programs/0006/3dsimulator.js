@@ -146,7 +146,8 @@ function init() {
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
-		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener('click', onDocumentClick, false);
+		document.addEventListener( 'dblclick', onDocumentDblClick, false );
 }
 
 function getObjects() {
@@ -169,7 +170,7 @@ function shiftCameraFocus(x,y=null,z=null) {
 		camera.updateProjectionMatrix();
 }
 
-function onDocumentMouseDown( event ) {
+function onDocumentClick( event ) {
 
 		event.preventDefault();
 
@@ -185,6 +186,48 @@ function onDocumentMouseDown( event ) {
 				var y = intersects[0].object.position.y;
 				var z = intersects[0].object.position.z;
 				shiftCameraFocus(x,y,z);
+
+				focusBody = intersects[0];
+		}
+}
+
+function onDocumentDblClick(event) {
+		console.log(3);
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		raycaster.setFromCamera(mouse, camera);
+
+		var intersects = raycaster.intersectObjects(getObjects(), true);
+
+		if (intersects.length > 0) {
+				var x = intersects[0].object.position.x;
+				var y = intersects[0].object.position.y;
+				var z = intersects[0].object.position.z;
+				shiftCameraFocus(x,y,z);
+
+				controls.dollyIn(3);
+
+				focusBody = intersects[0];
+		}
+}
+
+function onDocumentClick(event) {
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		raycaster.setFromCamera(mouse, camera);
+
+		var intersects = raycaster.intersectObjects(getObjects(), true);
+
+		if (intersects.length > 0) {
+				var x = intersects[0].object.position.x;
+				var y = intersects[0].object.position.y;
+				var z = intersects[0].object.position.z;
 		}
 }
 
