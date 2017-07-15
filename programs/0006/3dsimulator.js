@@ -96,7 +96,7 @@ function init() {
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
-		renderer = new THREE.WebGLRenderer();
+		renderer = new THREE.WebGLRenderer({antialias: true });
 		camera =
 		    new THREE.PerspectiveCamera(
 		        VIEW_ANGLE,
@@ -146,13 +146,15 @@ function init() {
 		raycaster = new THREE.Raycaster();
 		mouse = new THREE.Vector2();
 
-		document.addEventListener( 'mousedown', onDocumentMouseDown, false );
+		document.addEventListener('click', onDocumentClick, false);
+		document.addEventListener( 'dblclick', onDocumentDblClick, false );
 }
 
 function getObjects() {
 		var objects = [];
 		for (i = 0; i < bodies.length; i++) {
 				objects.push(bodies[i][0]);
+				objects[i].name = i;
 		}
 		return objects;
 }
@@ -169,8 +171,72 @@ function shiftCameraFocus(x,y=null,z=null) {
 		camera.updateProjectionMatrix();
 }
 
-function onDocumentMouseDown( event ) {
+var dblClickSFRT = null;
 
+function onDocumentClick( event, run = false) {
+
+		event.preventDefault();
+
+		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+
+		raycaster.setFromCamera(mouse, camera);
+
+		var intersects = raycaster.intersectObjects(getObjects(), true);
+
+		if (intersects.length > 0) {
+				try {
+						dblClickSFRT.cancel();
+				} catch (e) {;}
+
+				dblClickSFRT = setTimeout(function() {onDocumentClick(event, run=true)}, 500);
+
+				if (run) {
+						var x = intersects[0].object.position.x;
+						var y = intersects[0].object.position.y;
+						var z = intersects[0].object.position.z;
+						shiftCameraFocus(x,y,z);
+
+						focusBody = intersects[0];
+				}
+		}
+}
+
+function onDocumentDblClick(event) {
+		event.preventDefault();
+
+		mouse.x = (event.clientX / renderer.domElement.clientWidth) * 2 - 1;
+		mouse.y = -(event.clientY / renderer.domElement.clientHeight) * 2 + 1;
+
+		raycaster.setFromCamera(mouse, camera);
+
+		var intersects = raycaster.intersectObjects(getObjects(), true);
+
+		if (intersects.length > 0) {
+				try {
+						dblClickSFRT.cancel();
+				} catch (e) {;}
+
+				var x = intersects[0].object.position.x;
+				var y = intersects[0].object.position.y;
+				var z = intersects[0].object.position.z;
+				shiftCameraFocus(x,y,z);
+
+				var vFOV = camera.fov * Math.PI / 180;
+				var cameraDistance = Math.hypot(
+					controls.target.x-camera.position.x,
+					controls.target.y-camera.position.y,
+					controls.target.z-camera.position.z);
+				var height = Math.tan(vFOV / 2) * cameraDistance;
+				var bodySize = bodies[intersects[0].object.name][3] / height;
+
+				controls.smoothDollyIntoBody(0.25 / bodySize);
+
+				focusBody = intersects[0];
+		}
+}
+
+function onDocumentClick(event) {
 		event.preventDefault();
 
 		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
@@ -184,9 +250,162 @@ function onDocumentMouseDown( event ) {
 				var x = intersects[0].object.position.x;
 				var y = intersects[0].object.position.y;
 				var z = intersects[0].object.position.z;
+
+				focusBody = intersects[0].object;
+
 				shiftCameraFocus(x,y,z);
 		}
 }
+
+function getOffset(el) {
+    var _x = 0;
+    var _y = 0;
+    while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
+        _x += el.offsetLeft - el.scrollLeft;
+        _y += el.offsetTop - el.scrollTop;
+        el = el.offsetParent;
+    }
+    return {top: _y, left: _x};
+}
+
+function renderComparator(obj1, obj2) {
+   if (obj1[1] < obj2[1]) return 1;
+   if (obj1[1] > obj2[1]) return -1;
+   return 0;
+ }
+
+function updateRenderOrder() {
+		/* Updates the render order of all objects based on their distance,
+		 a more accurate render compared to that produced by the z-buffer. */
+		var objDist = [];
+		for (i = 0; i < bodies.length; i++) {
+				objDist.push([bodies[i][0], Math.hypot(
+					bodies[i][0].position.x-camera.position.x,
+					bodies[i][0].position.y-camera.position.y,
+					bodies[i][0].position.z-camera.position.z)])
+				if (bodies[i][1]) {
+					objDist.push([bodies[i][1], Math.hypot(
+						bodies[i][1].position.x-camera.position.x,
+						bodies[i][1].position.y-camera.position.y,
+						bodies[i][1].position.z-camera.position.z)])
+				}
+		}
+		objDist = objDist.sort(renderComparator);
+		for (i = 0; i < objDist.length; i++) {
+				objDist[i][0].renderOrder = i;
+		}
+		return;
+}
+
+function update() {
+		// Update the animation frame
+
+		var depthTestDisabled = true;
+
+		var vFOV = camera.fov * Math.PI / 180;
+
+		for (i = 0; i < bodies.length; i++) {
+				var cameraDistance = Math.hypot(
+					bodies[i][0].position.x-camera.position.x,
+					bodies[i][0].position.y-camera.position.y,
+					bodies[i][0].position.z-camera.position.z);
+				var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
+				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
+
+				var scaleFactor = 1;
+
+				if (cameraDistance < 0.5) {
+						renderer.context.enable(renderer.context.DEPTH_TEST);
+						depthTestDisabled = false;
+				}
+
+				if (!trueScale) {
+						if (bodies[i][4] == "star") {
+								if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
+										scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "planet") {
+								if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "dwarf") {
+								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
+										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+								}
+						} else if (bodies[i][4] == "majorsat") {
+								if (cameraDistance < majorSatelliteDisplayDistance) {
+										if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
+												scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+										}
+								}
+						}
+				}
+
+				bodies[i][0].scale.x = scaleFactor;
+				bodies[i][0].scale.y = scaleFactor;
+				bodies[i][0].scale.z = scaleFactor;
+
+				if (bodies[i][1]) {
+						if (bodies[i][4] == "star") {
+								scaleFactor *= sunGlowScale;
+						}
+						bodies[i][1].scale.x = scaleFactor;
+						bodies[i][1].scale.y = scaleFactor;
+						bodies[i][1].scale.z = scaleFactor;
+				}
+
+				/* constructSubDot(bodies[i][0].position.x,
+					alignGridToTarget ? bodies[i][0].position.y : 0,
+					bodies[i][0].position.z,
+					bodies[i][3] * scaleFactor); */
+		}
+
+		var height = 2 * Math.tan(vFOV / 2) *
+			Math.hypot(controls.target.x-camera.position.x,
+			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
+			controls.target.z-camera.position.z);
+
+		try {
+				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
+
+				if (newWidth != cGridLineWidth) {
+						cGridLineWidth = newWidth;
+						scene.remove(scene.getObjectByName('gridy'));
+						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
+							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
+						cGrid.name = 'gridy';
+						scene.add(cGrid);
+						cGrid.translateX(Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth);
+						cGridTransX = Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth;
+						if (alignGridToTarget) {
+								cGrid.translateY(controls.target.y);
+								cGridTransY = controls.target.y;
+						}
+						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
+						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
+				}
+		} catch (e) {;}
+
+		controls.update();
+		if (depthTestDisabled) {
+				updateRenderOrder();
+		}
+  	renderer.render(scene, camera);
+
+		renderer.context.disable(renderer.context.DEPTH_TEST);
+
+  	requestAnimationFrame(update);
+}
+
+window.addEventListener('resize', function() {
+      var WIDTH = window.innerWidth,
+          HEIGHT = window.innerHeight;
+      renderer.setSize(WIDTH, HEIGHT);
+      camera.aspect = WIDTH / HEIGHT;
+      camera.updateProjectionMatrix();
+    });
+
+init();
 
 function addPlanets() {
 		addMercury();
@@ -219,6 +438,8 @@ function addDwarves() {
 		addCeres();
 }
 
+// Body data
+
 function addSun() {
 
 		THREE.ImageUtils.crossOrigin = '';
@@ -239,9 +460,11 @@ function addSun() {
 
 		sun.overdraw = true;
 
-		sun.position.x = 0
-		sun.position.y = 0
-		sun.position.z = 0
+		sun.position.x = 0;
+		sun.position.y = 0;
+		sun.position.z = 0;
+
+		sun.name = '0';
 
 		scene.add(sun);
 
@@ -278,6 +501,8 @@ function addMercury() {
 		mercury.position.y = bodyPositions.Mercury[1];
 		mercury.position.z = bodyPositions.Mercury[2];
 
+		mercury.name = '1';
+
 		scene.add(mercury);
 
 		bodies[1] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
@@ -294,6 +519,8 @@ function addVenus() {
 		venus.position.x = bodyPositions.Venus[0];
 		venus.position.y = bodyPositions.Venus[1];
 		venus.position.z = bodyPositions.Venus[2];
+
+		venus.name = '2';
 
 		scene.add(venus);
 
@@ -312,6 +539,8 @@ function addEarth() {
 		earth.position.y = bodyPositions.Earth[1];
 		earth.position.z = bodyPositions.Earth[2];
 
+		earth.name = '3';
+
 		scene.add(earth);
 
 		bodies[3] = [earth, null, "Earth", 0.0042, "planet", "udder"];
@@ -327,6 +556,8 @@ function addMars() {
 		mars.position.x = bodyPositions.Mars[0];
 		mars.position.y = bodyPositions.Mars[1];
 		mars.position.z = bodyPositions.Mars[2];
+
+		mars.name = '4';
 
 		scene.add(mars);
 
@@ -344,6 +575,8 @@ function addJupiter() {
 		jupiter.position.y = bodyPositions.Jupiter[1];
 		jupiter.position.z = bodyPositions.Jupiter[2];
 
+		jupiter.name = '5';
+
 		scene.add(jupiter);
 
 		bodies[5] = [jupiter, null, "Jupiter", 0.0467, "planet", "udder2"];
@@ -359,6 +592,8 @@ function addSaturn() {
 		saturn.position.x = bodyPositions.Saturn[0];
 		saturn.position.y = bodyPositions.Saturn[1];
 		saturn.position.z = bodyPositions.Saturn[2];
+
+		saturn.name = '6';
 
 		scene.add(saturn);
 
@@ -386,6 +621,8 @@ function addUranus() {
 		uranus.position.y = bodyPositions.Uranus[1];
 		uranus.position.z = bodyPositions.Uranus[2];
 
+		uranus.name = '7';
+
 		scene.add(uranus);
 
 		bodies[7] = [uranus, null, "Uranus", 0.01695, "planet", "udder2"];
@@ -401,6 +638,8 @@ function addNeptune() {
 		neptune.position.x = bodyPositions.Neptune[0];
 		neptune.position.y = bodyPositions.Neptune[1];
 		neptune.position.z = bodyPositions.Neptune[2];
+
+		neptune.name = '8';
 
 		scene.add(neptune);
 
@@ -614,153 +853,3 @@ function addPluto() {
 
 		bodies.push([pluto, null, "Pluto", 0.0007921, "dwarf", "udder2"]);
 }
-
-function getOffset(el) {
-    var _x = 0;
-    var _y = 0;
-    while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-        _x += el.offsetLeft - el.scrollLeft;
-        _y += el.offsetTop - el.scrollTop;
-        el = el.offsetParent;
-    }
-    return {top: _y, left: _x};
-}
-
-function renderComparator(obj1, obj2) {
-   if (obj1[1] < obj2[1]) return 1;
-   if (obj1[1] > obj2[1]) return -1;
-   return 0;
- }
-
-function updateRenderOrder() {
-		/* Updates the render order of all objects based on their distance,
-		 a more accurate render compared to that produced by the z-buffer. */
-		var objDist = [];
-		for (i = 0; i < bodies.length; i++) {
-				objDist.push([bodies[i][0], Math.hypot(
-					bodies[i][0].position.x-camera.position.x,
-					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z)])
-				if (bodies[i][1]) {
-					objDist.push([bodies[i][1], Math.hypot(
-						bodies[i][1].position.x-camera.position.x,
-						bodies[i][1].position.y-camera.position.y,
-						bodies[i][1].position.z-camera.position.z)])
-				}
-		}
-		objDist = objDist.sort(renderComparator);
-		for (i = 0; i < objDist.length; i++) {
-				objDist[i][0].renderOrder = i;
-		}
-		return;
-}
-
-function update() {
-		// Update the animation frame
-
-		var depthTestDisabled = true;
-
-		var vFOV = camera.fov * Math.PI / 180;
-
-		for (i = 0; i < bodies.length; i++) {
-				var cameraDistance = Math.hypot(
-					bodies[i][0].position.x-camera.position.x,
-					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z);
-				var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
-				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
-
-				var scaleFactor = 1;
-
-				if (cameraDistance < 0.5) {
-						renderer.context.enable(renderer.context.DEPTH_TEST);
-						depthTestDisabled = false;
-				}
-
-				if (!trueScale) {
-						if (bodies[i][4] == "star") {
-								if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
-										scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "planet") {
-								if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
-										scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "dwarf") {
-								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
-										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "majorsat") {
-								if (cameraDistance < majorSatelliteDisplayDistance) {
-										if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
-												scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-										}
-								}
-						}
-				}
-
-				bodies[i][0].scale.x = scaleFactor;
-				bodies[i][0].scale.y = scaleFactor;
-				bodies[i][0].scale.z = scaleFactor;
-
-				if (bodies[i][1]) {
-						if (bodies[i][4] == "star") {
-								scaleFactor *= sunGlowScale;
-						}
-						bodies[i][1].scale.x = scaleFactor;
-						bodies[i][1].scale.y = scaleFactor;
-						bodies[i][1].scale.z = scaleFactor;
-				}
-
-				/* constructSubDot(bodies[i][0].position.x,
-					alignGridToTarget ? bodies[i][0].position.y : 0,
-					bodies[i][0].position.z,
-					bodies[i][3] * scaleFactor); */
-		}
-
-		var height = 2 * Math.tan(vFOV / 2) *
-			Math.hypot(controls.target.x-camera.position.x,
-			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
-			controls.target.z-camera.position.z);
-
-		try {
-				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
-
-				if (newWidth != cGridLineWidth) {
-						cGridLineWidth = newWidth;
-						scene.remove(scene.getObjectByName('gridy'));
-						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
-							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
-						cGrid.name = 'gridy';
-						scene.add(cGrid);
-						cGrid.translateX(Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth);
-						cGridTransX = Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth;
-						if (alignGridToTarget) {
-								cGrid.translateY(controls.target.y);
-								cGridTransY = controls.target.y;
-						}
-						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
-						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
-				}
-		} catch (e) {;}
-
-		controls.update();
-		if (depthTestDisabled) {
-				updateRenderOrder();
-		}
-  	renderer.render(scene, camera);
-
-		renderer.context.disable(renderer.context.DEPTH_TEST);
-
-  	requestAnimationFrame(update);
-}
-
-window.addEventListener('resize', function() {
-      var WIDTH = window.innerWidth,
-          HEIGHT = window.innerHeight;
-      renderer.setSize(WIDTH, HEIGHT);
-      camera.aspect = WIDTH / HEIGHT;
-      camera.updateProjectionMatrix();
-    });
-
-init();
