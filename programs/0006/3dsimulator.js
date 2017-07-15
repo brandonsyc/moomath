@@ -96,7 +96,7 @@ function init() {
 		var FAR = 1000000;
 
 		container = document.querySelector('#container');
-		renderer = new THREE.WebGLRenderer();
+		renderer = new THREE.WebGLRenderer({antialias: true });
 		camera =
 		    new THREE.PerspectiveCamera(
 		        VIEW_ANGLE,
