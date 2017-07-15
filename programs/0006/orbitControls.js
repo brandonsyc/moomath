@@ -246,36 +246,36 @@ THREE.OrbitControls = function ( object, domElement ) {
 		dollyOut(dollyScale);
 	}
 
-	this.smoothDollyIntoBody = function(bodySize,zoomtime=1000,time=1000,date=null) {
-		time = zoomtime;
+	this.smoothDollyIntoBody = function(bodySize,time=1000) {
 		if (time < 20) {
 				this.zooming = false;
 				return;
 		}
-		var newdate = date;
-		if (date == null) {			// Call from 3dsimulator.js
+		if (time == 1000) {			// Call from 3dsimulator.js
 			this.zooming = true;
 		}
-		newdate = new Date().getTime();
 
 		var vFOV = scope.object.fov * Math.PI / 180;
 		var cameraDistance = Math.hypot(
 			this.target.x-scope.object.position.x,
 			this.target.y-scope.object.position.y,
 			this.target.z-scope.object.position.z);
-		var height = Math.tan(vFOV / 2) * cameraDistance;
-		var apparentBodySize = bodySize / height;
+		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
+		var apparentBodySize = 2 * bodySize / height;
 
-		var currDate = new Date().getTime();
+		if (apparentBodySize > 0.9) {
+				return;
+		}
+
 		var frames = Math.ceil(time/60.0);
-		var totalDollyAmount = apparentBodySize / 0.25;
+		var totalDollyAmount = 4 / apparentBodySize;
 
-		console.log(totalDollyAmount,frames,time);
+		console.log(apparentBodySize, bodySize);
 
 		dollyIn(Math.pow(totalDollyAmount, 1/60.0));
 
 		var that = this;
-		setTimeout(function() {that.smoothDollyIntoBody(bodySize, time - 1000/60, newdate+1000/60)}, 1000/60);
+		setTimeout(function() {that.smoothDollyIntoBody(bodySize, time - 1000/60)}, 1000/60);
 	}
 
 	//
