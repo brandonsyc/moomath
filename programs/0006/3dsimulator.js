@@ -253,9 +253,7 @@ function onDocumentClick(event) {
 
 				focusBody = intersects[0].object;
 
-				controls.target.x = x;
-				controls.target.y = y;
-				controls.target.z = z;
+				shiftCameraFocus(x,y,z);
 		}
 }
 
