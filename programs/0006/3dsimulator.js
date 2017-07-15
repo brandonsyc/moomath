@@ -89,6 +89,8 @@ var sunEmissive = 0.95;
 
 var subDots = [];
 
+var isInToolbar = false;
+
 function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
@@ -228,9 +230,9 @@ function onDocumentDblClick(event) {
 					controls.target.y-camera.position.y,
 					controls.target.z-camera.position.z);
 				var height = Math.tan(vFOV / 2) * cameraDistance;
-				var bodySize = bodies[intersects[0].object.name][3] / height;
+				var bodySize = bodies[intersects[0].object.name][3];
 
-				controls.smoothDollyIntoBody(0.25 / bodySize);
+				controls.smoothDollyIntoBody(bodySize);
 
 				focusBody = intersects[0];
 		}
