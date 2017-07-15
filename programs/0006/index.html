@@ -1,36 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>3d test</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width">
-		<link rel="stylesheet" type="text/css" href="3dsimulator.css">
-	</head>
-	<script id="vertexShader" type="x-shader/x-vertex">
-uniform vec3 viewVector;
-uniform float c;
-uniform float p;
-varying float intensity;
-void main()
-{
-    vec3 vNormal = normalize( normalMatrix * normal );
-	vec3 vNormel = normalize( normalMatrix * viewVector );
-	intensity = pow( c - dot(vNormal, vNormel), p );
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3D Solar System</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="3dsimulator.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
-}
+<script id="vertexShader" type="x-shader/x-vertex">
+	uniform vec3 viewVector;
+	uniform float c;
+	uniform float p;
+	varying float intensity;
+	void main()
+	{
+		vec3 vNormal = normalize( normalMatrix * normal );
+		vec3 vNormel = normalize( normalMatrix * viewVector );
+		intensity = pow( c - dot(vNormal, vNormel), p );
+
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+	}
 </script>
-
 
 <!-- fragment shader a.k.a. pixel shader -->
 <script id="fragmentShader" type="x-shader/x-vertex">
-uniform vec3 glowColor;
-varying float intensity;
-void main()
-{
-	vec3 glow = glowColor * intensity;
-    gl_FragColor = vec4( glow, 1.0 );
-}
+	uniform vec3 glowColor;
+	varying float intensity;
+	void main()
+	{
+		vec3 glow = glowColor * intensity;
+		gl_FragColor = vec4( glow, 1.0 );
+	}
 </script>
 
 <script id="sun" type="x-shader/x-vertex">
@@ -41,11 +42,9 @@ void main()
  * by Three.js) to get a final
  * vertex position
  */
-void main() {
-  gl_Position = projectionMatrix *
-                modelViewMatrix *
-                vec4(position,1.0);
-}
+	void main() {
+		gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+	}
 </script>
 
 <script id="sun" type="x-shader/x-vertex">
@@ -55,22 +54,31 @@ void main() {
  * Vector, R,G,B and A and each part
  * runs from 0.0 to 1.0
  */
-void main() {
-  gl_FragColor = vec4(1.0,  // R
-                      0.0,  // G
-                      1.0,  // B
-                      1.0); // A
-}
+	void main() {
+		gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0); // RGBA()
+	}
 </script>
-	<body id="udder">
-		<div id="webgl-container">
-			<div id="controls">
-			</div>
-		</div>
 
-	</body>
-	<script src="three.js"></script>
-	<script src="xRingGeometry.js"></script>
-	<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
-	<script src="3dsimulator.js"></script>
+<body>
+	<div class="controls">
+		<p>Test P</p>
+		<input type="checkbox" id="testc">
+		<label for="testc">Test Check</label>
+		<div class="wrapper">
+			<p>Test Radio</p>
+			<input type="radio" id="r1" name="testr" checked>
+			<label for="r1">Test Check</label>
+			<input type="radio" id="r2" name="testr">
+			<label for="r2">Test Check</label>
+			<input type="radio" id="r3" name="testr">
+			<label for="r3">Test Check</label>
+		</div>
+	</div>
+	<div id="webgl-container"></div>
+</body>
+
+<script src="three.js"></script>
+<script src="xRingGeometry.js"></script>
+<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+<script src="3dsimulator.js"></script>
 </html>
