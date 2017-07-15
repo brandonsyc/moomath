@@ -1,5 +1,8 @@
 var renderer,scene,camera,controls,raycaster,mouse;
 
+// Texture loader
+var loader = new THREE.TextureLoader();
+
 var bodies = [];
 var sunLightSource = null;
 
@@ -289,10 +292,6 @@ function updateRenderOrder() {
 						bodies[i][0].position.x-camera.position.x,
 						bodies[i][0].position.y-camera.position.y,
 						bodies[i][0].position.z-camera.position.z)]);
-					console.log(Math.hypot(
-						bodies[i][0].position.x-camera.position.x,
-						bodies[i][0].position.y-camera.position.y,
-						bodies[i][0].position.z-camera.position.z));
 				}
 		}
 		objDist = objDist.sort(renderComparator);
@@ -455,7 +454,7 @@ function addDwarves() {
 function addSun() {
 
 		THREE.ImageUtils.crossOrigin = '';
-		var sunTexture = THREE.ImageUtils.loadTexture('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
+		var sunTexture = loader.load('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
 
 		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white",
 		emissiveIntensity: 0.95, transparent: false});
@@ -504,7 +503,7 @@ function constructSubDot(x,y,z,radius) {
 
 function addMercury() {
 		THREE.ImageUtils.crossOrigin = '';
-		var mercuryTexture = THREE.ImageUtils.loadTexture('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
+		var mercuryTexture = loader.load('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
 		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
 		var mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
@@ -522,7 +521,7 @@ function addMercury() {
 
 function addVenus() {
 		THREE.ImageUtils.crossOrigin = '';
-		var venusTexture = THREE.ImageUtils.loadTexture('images/venusTexture.jpg',THREE.SphericalRefractionMapping);
+		var venusTexture = loader.load('images/venusTexture.jpg',THREE.SphericalRefractionMapping);
 
 		var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
 
@@ -541,7 +540,7 @@ function addVenus() {
 
 function addEarth() {
 		THREE.ImageUtils.crossOrigin = '';
-		var earthTexture = THREE.ImageUtils.loadTexture('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
+		var earthTexture = loader.load('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
 
 		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0.03});
 
@@ -560,7 +559,7 @@ function addEarth() {
 
 function addMars() {
 		THREE.ImageUtils.crossOrigin = '';
-		var marsTexture = THREE.ImageUtils.loadTexture('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
+		var marsTexture = loader.load('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
 		var marsMaterial = new THREE.MeshPhongMaterial({ map: marsTexture, shininess: 0});
 
 		var mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
@@ -578,7 +577,7 @@ function addMars() {
 
 function addJupiter() {
 		THREE.ImageUtils.crossOrigin = '';
-		var jupiterTexture = THREE.ImageUtils.loadTexture('images/jupiterTexture.jpg',THREE.SphericalRefractionMapping);
+		var jupiterTexture = loader.load('images/jupiterTexture.jpg',THREE.SphericalRefractionMapping);
 		var jupiterMaterial = new THREE.MeshPhongMaterial({ map: jupiterTexture, shininess: 0});
 
 		jupiter = new THREE.Mesh(new THREE.SphereGeometry(0.0467, sphereSegmentPrecision, sphereRingPrecision), jupiterMaterial);
@@ -596,7 +595,7 @@ function addJupiter() {
 
 function addSaturn() {
 		THREE.ImageUtils.crossOrigin = '';
-		var saturnTexture = THREE.ImageUtils.loadTexture('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
+		var saturnTexture = loader.load('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
 		var saturnMaterial = new THREE.MeshPhongMaterial({ map: saturnTexture, shininess: 0});
 
 		var saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
@@ -610,7 +609,7 @@ function addSaturn() {
 		scene.add(saturn);
 
 		var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * 0.0389, 2 * 0.0389, 64, 5, 0, Math.PI * 2),
-		 new THREE.MeshBasicMaterial({ map: THREE.ImageUtils.loadTexture('images/saturnRings.png'),
+		 new THREE.MeshBasicMaterial({ map: loader.load('images/saturnRings.png'),
 		  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
 
 		rings.position.x = saturn.position.x;
@@ -624,7 +623,7 @@ function addSaturn() {
 
 function addUranus() {
 		THREE.ImageUtils.crossOrigin = '';
-		var uranusTexture = THREE.ImageUtils.loadTexture('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
+		var uranusTexture = loader.load('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
 		var uranusMaterial = new THREE.MeshPhongMaterial({ map: uranusTexture, shininess: 0});
 
 		var uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
@@ -642,7 +641,7 @@ function addUranus() {
 
 function addNeptune() {
 		THREE.ImageUtils.crossOrigin = '';
-		var neptuneTexture = THREE.ImageUtils.loadTexture('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
+		var neptuneTexture = loader.load('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
 		var neptuneMaterial = new THREE.MeshPhongMaterial({ map: neptuneTexture, shininess: 0});
 
 		var neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
@@ -660,7 +659,7 @@ function addNeptune() {
 
 function addMoon() {
 		THREE.ImageUtils.crossOrigin = '';
-		var moonTexture = THREE.ImageUtils.loadTexture('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
+		var moonTexture = loader.load('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
 		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
 
 		var moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
@@ -676,7 +675,7 @@ function addMoon() {
 
 function addGanymede() {
 		THREE.ImageUtils.crossOrigin = '';
-		var ganymedeTexture = THREE.ImageUtils.loadTexture('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
+		var ganymedeTexture = loader.load('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
 		var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
 
 		var ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
@@ -692,7 +691,7 @@ function addGanymede() {
 
 function addCallisto() {
 		THREE.ImageUtils.crossOrigin = '';
-		var callistoTexture = THREE.ImageUtils.loadTexture('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
+		var callistoTexture = loader.load('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
 		var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
 
 		var callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
@@ -708,7 +707,7 @@ function addCallisto() {
 
 function addIo() {
 		THREE.ImageUtils.crossOrigin = '';
-		var ioTexture = THREE.ImageUtils.loadTexture('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
+		var ioTexture = loader.load('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
 		var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
 
 		var io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
@@ -724,7 +723,7 @@ function addIo() {
 
 function addEuropa() {
 		THREE.ImageUtils.crossOrigin = '';
-		var europaTexture = THREE.ImageUtils.loadTexture('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
+		var europaTexture = loader.load('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
 		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0.04});
 
 		var europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
@@ -740,7 +739,7 @@ function addEuropa() {
 
 function addTitan() {
 		THREE.ImageUtils.crossOrigin = '';
-		var titanTexture = THREE.ImageUtils.loadTexture('images/titanTexture.jpg',THREE.SphericalRefractionMapping);
+		var titanTexture = loader.load('images/titanTexture.jpg',THREE.SphericalRefractionMapping);
 		var titanMaterial = new THREE.MeshPhongMaterial({ map: titanTexture, shininess: 0});
 
 		var titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), titanMaterial);
@@ -756,7 +755,7 @@ function addTitan() {
 
 function addTitania() {
 		THREE.ImageUtils.crossOrigin = '';
-		var titaniaTexture = THREE.ImageUtils.loadTexture('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
+		var titaniaTexture = loader.load('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
 		var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
 
 		var titania = new THREE.Mesh(new THREE.SphereGeometry(0.0005273, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
@@ -772,7 +771,7 @@ function addTitania() {
 
 function addTriton() {
 		THREE.ImageUtils.crossOrigin = '';
-		var tritonTexture = THREE.ImageUtils.loadTexture('images/tritonTexture.jpg',THREE.SphericalRefractionMapping);
+		var tritonTexture = loader.load('images/tritonTexture.jpg',THREE.SphericalRefractionMapping);
 		var tritonMaterial = new THREE.MeshPhongMaterial({ map: tritonTexture, shininess: 0});
 
 		var triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), tritonMaterial);
@@ -788,7 +787,7 @@ function addTriton() {
 
 function addDione() {
 		THREE.ImageUtils.crossOrigin = '';
-		var dioneTexture = THREE.ImageUtils.loadTexture('images/dioneTexture.jpg',THREE.SphericalRefractionMapping);
+		var dioneTexture = loader.load('images/dioneTexture.jpg',THREE.SphericalRefractionMapping);
 		var dioneMaterial = new THREE.MeshPhongMaterial({ map: dioneTexture, shininess: 0});
 
 		var dione = new THREE.Mesh(new THREE.SphereGeometry(0.000376, sphereSegmentPrecision, sphereRingPrecision), dioneMaterial);
@@ -804,7 +803,7 @@ function addDione() {
 
 function addIapetus() {
 		THREE.ImageUtils.crossOrigin = '';
-		var iapetusTexture = THREE.ImageUtils.loadTexture('images/iapetusTexture.jpg',THREE.SphericalRefractionMapping);
+		var iapetusTexture = loader.load('images/iapetusTexture.jpg',THREE.SphericalRefractionMapping);
 		var iapetusMaterial = new THREE.MeshPhongMaterial({ map: iapetusTexture, shininess: 0});
 
 		var iapetus = new THREE.Mesh(new THREE.SphereGeometry(0.000491, sphereSegmentPrecision, sphereRingPrecision), iapetusMaterial);
@@ -820,7 +819,7 @@ function addIapetus() {
 
 function addTethys() {
 		THREE.ImageUtils.crossOrigin = '';
-		var tethysTexture = THREE.ImageUtils.loadTexture('images/tethysTexture.jpg',THREE.SphericalRefractionMapping);
+		var tethysTexture = loader.load('images/tethysTexture.jpg',THREE.SphericalRefractionMapping);
 		var tethysMaterial = new THREE.MeshPhongMaterial({ map: tethysTexture, shininess: 0});
 
 		var tethys = new THREE.Mesh(new THREE.SphereGeometry(0.0003585, sphereSegmentPrecision, sphereRingPrecision), tethysMaterial);
@@ -836,7 +835,7 @@ function addTethys() {
 
 function addCeres() {
 		THREE.ImageUtils.crossOrigin = '';
-		var ceresTexture = THREE.ImageUtils.loadTexture('images/ceresTexture.jpg',THREE.SphericalRefractionMapping);
+		var ceresTexture = loader.load('images/ceresTexture.jpg',THREE.SphericalRefractionMapping);
 		var ceresMaterial = new THREE.MeshPhongMaterial({ map: ceresTexture, shininess: 0});
 
 		var ceres = new THREE.Mesh(new THREE.SphereGeometry(0.0003183, sphereSegmentPrecision, sphereRingPrecision), ceresMaterial);
@@ -852,7 +851,7 @@ function addCeres() {
 
 function addPluto() {
 		THREE.ImageUtils.crossOrigin = '';
-		var plutoTexture = THREE.ImageUtils.loadTexture('images/plutoTexture.jpg',THREE.SphericalRefractionMapping);
+		var plutoTexture = loader.load('images/plutoTexture.jpg',THREE.SphericalRefractionMapping);
 		var plutoMaterial = new THREE.MeshPhongMaterial({ map: plutoTexture, shininess: 0});
 
 		var pluto = new THREE.Mesh(new THREE.SphereGeometry(0.0007921, sphereSegmentPrecision, sphereRingPrecision), plutoMaterial);
