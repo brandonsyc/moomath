@@ -40,7 +40,7 @@ var majorSatelliteDisplayDistance = 0.2;
 var trueScale = false;
 
 // Between 0 and 1, scale factor of planets
-var planetScaleFactor = 0.3;
+var planetScaleFactor = 0.5;
 
 var focusBody = null;
 
