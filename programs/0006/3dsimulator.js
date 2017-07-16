@@ -71,7 +71,7 @@ Dione:[-85.511871372,20.9211865396,-1002.28326267]
 };
 
 // Display GridHelper
-var displayGridHelper = true;
+var displayGridHelper = false;
 
 var cGrid = null;
 
