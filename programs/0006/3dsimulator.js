@@ -254,7 +254,7 @@ function getOffset(el) {
 function renderComparator(obj1, obj2) {
    if (obj1[1] < obj2[1]) return 1;
    if (obj1[1] > obj2[1]) return -1;
-   return 1;
+   return -1;
  }
 
 function updateRenderOrder() {
@@ -263,21 +263,32 @@ function updateRenderOrder() {
 		var objDist = [];
 		// objDist.push([cGrid,1e12]);
 		for (i = 0; i < bodies.length; i++) {
-				objDist.push([bodies[i][0], Math.hypot(
-					bodies[i][0].position.x-camera.position.x,
-					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z)]);
+				if (bodies[i][0].children.length > 0) {
+					for (j = 0; j < bodies[i][0].children.length; j++) {
+						var child = bodies[i][0].children[j];
+						objDist.push([child, Math.hypot(
+							child.position.x-camera.position.x,
+							child.position.y-camera.position.y,
+							child.position.z-camera.position.z)]);
+					}
+				} else {
+					objDist.push([bodies[i][0], Math.hypot(
+						bodies[i][0].position.x-camera.position.x,
+						bodies[i][0].position.y-camera.position.y,
+						bodies[i][0].position.z-camera.position.z)]);
+				}
 				if (bodies[i][1]) {
 					objDist.push([bodies[i][1], Math.hypot(
 						bodies[i][0].position.x-camera.position.x,
 						bodies[i][0].position.y-camera.position.y,
-						bodies[i][0].position.z-camera.position.z)]);
+						bodies[i][0].position.z-camera.position.z), 'udder']);
 				}
 		}
 		objDist = objDist.sort(renderComparator);
 		for (i = 0; i < objDist.length; i++) {
 				objDist[i][0].renderOrder = i;
 		}
+		console.log(objDist);
 		return;
 }
 
@@ -380,9 +391,7 @@ function update() {
 		}
 
 		controls.update();
-		if (depthTestDisabled) {
 				updateRenderOrder();
-		}
   	renderer.render(scene, camera);
 
 		renderer.context.disable(renderer.context.DEPTH_TEST);
@@ -471,26 +480,31 @@ function addSun() {
 			viewVector: {type: "v3", value: camera.position}
 		}, vertexShader: document.getElementById('vertexShader').textContent,
 		fragmentShader: document.getElementById('fragmentShader').textContent,
-		side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: true});
+		side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: false});
+		
+		glowMaterial.depthTest = true;
 
 		var sun = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), sunMaterial);
 
-		sun.overdraw = true;
+		// sun.overdraw = true;
 
 		sun.position.x = 0;
 		sun.position.y = 0;
 		sun.position.z = 0;
 
-		sun.name = '0';
-
-		scene.add(sun);
+		var sunGroup = new THREE.Group();
+		sunGroup.add(sun);
 
 		var sunGlow = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), glowMaterial);
 		sunGlow.position = sun.position;
 		sunGlow.scale.multiplyScalar(sunGlowScale);
-		scene.add(sunGlow);
+		sunGroup.add(sunGlow);
 
-		bodies[0] = [sun, sunGlow, "Sun", 0.46, "star", "test"];
+		sunGroup.name = '0';
+
+		scene.add(sunGroup);
+
+		bodies[0] = [sunGroup, null, "Sun", 0.46, "star", "test"];
 
 		var sunLightSource = new THREE.PointLight(0xffffff, 1.7, 100, decay = 0);
 
@@ -513,7 +527,6 @@ function addMercury() {
 		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
 		var mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
-
 		mercury.position.x = bodyPositions.Mercury[0];
 		mercury.position.y = bodyPositions.Mercury[1];
 		mercury.position.z = bodyPositions.Mercury[2];
