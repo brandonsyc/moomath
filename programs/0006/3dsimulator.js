@@ -96,7 +96,7 @@ function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
 		var NEAR = 0.000001;
-		var FAR = 1000000;
+		var FAR = 1000000000;
 
 		container = document.querySelector('#container');
 		renderer = new THREE.WebGLRenderer({antialias: true });
