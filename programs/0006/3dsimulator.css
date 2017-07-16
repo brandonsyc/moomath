@@ -23,6 +23,8 @@ padding: 0;
   text-align: center;
   line-height: 100px;
   overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
   width: 100%;
 }
 
@@ -116,6 +118,5 @@ button:active {
 }
 
 .slider p {
-  position: relative;
-  bottom: 45px;
+  margin-top: -140px;
 }
