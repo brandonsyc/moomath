@@ -40,7 +40,7 @@ var majorSatelliteDisplayDistance = 0.2;
 var trueScale = false;
 
 // Between 0 and 1, scale factor of planets
-var planetScaleFactor = 0.3;
+var planetScaleFactor = 0.5;
 
 var focusBody = null;
 
@@ -71,7 +71,7 @@ Dione:[-85.511871372,20.9211865396,-1002.28326267]
 };
 
 // Display GridHelper
-var displayGridHelper = true;
+var displayGridHelper = false;
 
 var cGrid = null;
 
@@ -96,7 +96,7 @@ function init() {
 		var VIEW_ANGLE = 45;
 		var ASPECT = window.innerWidth / window.innerHeight;
 		var NEAR = 0.000001;
-		var FAR = 1000000;
+		var FAR = 1000000000;
 
 		container = document.querySelector('#container');
 		renderer = new THREE.WebGLRenderer({antialias: true });
