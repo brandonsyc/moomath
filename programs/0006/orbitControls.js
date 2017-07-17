@@ -271,7 +271,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 		}
 
 		var frames = Math.ceil(time/60.0);
-		var totalDollyAmount = 2 / apparentBodySize;
+		var totalDollyAmount = window.innerHeight / apparentBodySize;
 
 		dollyIn(Math.pow(totalDollyAmount, 1/60.0));
 
