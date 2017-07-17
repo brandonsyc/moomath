@@ -20,6 +20,7 @@ padding: 0;
   box-shadow: 0px 0px 10px rgba(0, 136, 187, 0.5);
   height: 100px;
   position: fixed;
+  padding: 0 10px;
   text-align: center;
   line-height: 100px;
   overflow-x: auto;
@@ -36,6 +37,7 @@ p, label {
 p, label, input, button {
   color: rgba(255, 255, 255, 0.5);
   display: inline-block;
+  height: 20px;
   margin-top: -50px;
   vertical-align: middle;
 }
@@ -57,52 +59,42 @@ input[type=checkbox], input[type=radio] {
 
 input {
   background-color: rgba(255, 255, 255, 0.5);
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: none;
   border-radius: 100px;
-  height: 17px;
   width: 100px;
 }
 
 label {
   background-color: rgba(255, 255, 255, 0);
-  border: 2px solid rgba(255, 255, 255, 0);
   border-radius: 0px;
 	transition: 0.5s;
 }
 
 input:checked+label {
   background-color: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.5);
   border-radius: 100px;
 }
 
-button:not(go) {
+button {
   background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: none;
+  height: 40px;
+  line-height: 0px;
+}
+
+button:not(.go) {
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
-  box-shadow: none;
-  line-height: 0px;
-  height: 41px;
-  width: 41px;
+  width: 40px;
 }
 
 .go {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-top-left-radius: 100px;
-  border-bottom-left-radius: 100px;
-  border-top-right-radius: 100px;
-  border-bottom-right-radius: 100px;
-  box-shadow: none;
-  line-height: 0px;
-  height: 41px;
-  width: 60px;
+  border-radius: 100px;
   margin-left: 15px;
   margin-right: 5px;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 100px;
 }
 
-.right {
+.right:not(.go) {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-right-radius: 100px;
@@ -121,7 +113,7 @@ button:active {
 .slider {
   background-color: rgba(255, 255, 255, 0.5);
   display: inline-block;
-  height: 41px;
+  height: 40px;
   width: 100px;
   margin-top: -50px;
   vertical-align: middle;
@@ -129,7 +121,7 @@ button:active {
 
 .bar {
   background-color: rgba(0, 136, 187, 0.5);
-  height: 41px;
+  height: 40px;
   width: 50%;
 }
 
