@@ -1,4 +1,4 @@
-var renderer,scene,camera,controls,raycaster,mouse;
+var renderer,scene,camera,controls,raycaster,mouse,rendererStats;
 
 // Texture loader
 var loader = new THREE.TextureLoader();
@@ -32,7 +32,7 @@ var minDwarfPlanetSize = 23;
 var minVisibleMajorSatelliteSize = 12;
 
 // Distance at which major satellites are displayed, in 1/100 AU
-var majorSatelliteDisplayDistance = 0.2;
+var majorSatelliteDisplayDistance = 4;
 
 // Size at which planets are not displayed
 
@@ -99,7 +99,7 @@ function init() {
 		var FAR = 1000000000;
 
 		container = document.querySelector('#container');
-		renderer = new THREE.WebGLRenderer({antialias: true });
+		renderer = new THREE.WebGLRenderer({antialias: true, logarithmicDepthBuffer: true});
 		camera =
 		    new THREE.PerspectiveCamera(
 		        VIEW_ANGLE,
@@ -147,6 +147,13 @@ function init() {
 		controls.rotateSpeed = 0.8;
 		controls.keyPanSpeed = 2;
 		renderer.render(scene, camera);
+		
+		rendererStats = new THREEx.RendererStats();
+		
+		rendererStats.domElement.style.position	= 'absolute';
+		rendererStats.domElement.style.left	= '0px';
+		rendererStats.domElement.style.bottom	= '0px';
+		document.body.appendChild(rendererStats.domElement);
 
 		requestAnimationFrame(update);
 
@@ -288,7 +295,6 @@ function updateRenderOrder() {
 		for (i = 0; i < objDist.length; i++) {
 				objDist[i][0].renderOrder = i;
 		}
-		console.log(objDist);
 		return;
 }
 
@@ -312,7 +318,7 @@ function update() {
 
 				var scaleFactor = 1;
 
-				if (cameraDistance < 10) {
+				if (cameraDistance < 1e20) {
 						renderer.context.enable(renderer.context.DEPTH_TEST);
 						depthTestDisabled = false;
 				}
@@ -333,7 +339,7 @@ function update() {
 						} else if (bodies[i][4] == "majorsat") {
 								if (cameraDistance < majorSatelliteDisplayDistance) {
 										if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
-												scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
+												scaleFactor = (minVisibleMajorSatelliteSize * planetScaleFactor + 1) / bodyPixelSize;
 										}
 								}
 						}
@@ -391,8 +397,8 @@ function update() {
 		}
 
 		controls.update();
-				updateRenderOrder();
-  	renderer.render(scene, camera);
+		updateRenderOrder();
+  		renderer.render(scene, camera);
 
 		renderer.context.disable(renderer.context.DEPTH_TEST);
 
@@ -401,6 +407,7 @@ function update() {
 				console.log("Finished setup #2");
 		}
 		lastUpdate = new Date().getTime();
+	rendererStats.update(renderer);
   	requestAnimationFrame(update);
 }
 
@@ -421,6 +428,10 @@ function updatePlanetarySize() {
 		} else {
 				document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 2)) + '&times;';
 		}
+}
+
+function updateMoonSize() {
+		var bar = document.getElementById("bar2").style.width;
 }
 
 function updateShowGrid() {
@@ -480,7 +491,7 @@ function addSun() {
 			viewVector: {type: "v3", value: camera.position}
 		}, vertexShader: document.getElementById('vertexShader').textContent,
 		fragmentShader: document.getElementById('fragmentShader').textContent,
-		side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: false});
+		side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: true});
 		
 		glowMaterial.depthTest = true;
 
