@@ -84,6 +84,15 @@
 			</div>
 			<button class="bslide right" onMouseDown="press(1, 1.5)" onMouseUp="lift()">&raquo;</button>
 		</div>
+		<div class="wrapper">
+			<label for="bslide">Moon Size</label>
+			<button class="bslide" onMouseDown="press(2, -1.5)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar2"></div>
+				<p id="bar1-contents">50&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(2, 1.5)" onMouseUp="lift()">&raquo;</button>
+		</div>
 	</div>
 	<div id="webgl-container"></div>
 	<script>
@@ -99,7 +108,6 @@
 			diff = "";
 		}
 		function down() {
-			updatePlanetarySize();
 			if (name !== "")
 			{
 				var bar = document.getElementById("bar" + name);
@@ -113,6 +121,11 @@
 				if (parseFloat(bar.style.width) > 100) {
 					bar.style.width = "100%";
 				}
+				if (name == "1") {
+					updatePlanetarySize();
+				} else if (name == "2") {
+					updateMoonSize();
+				}
 				setTimeout("down()", 1000/60);
 			}
 		}
@@ -122,5 +135,6 @@
 <script src="three.js"></script>
 <script src="xRingGeometry.js"></script>
 <script src="orbitControls.js"></script>
+<script src="rendererstats.js"></script>
 <script src="3dsimulator.js"></script>
 </html>
