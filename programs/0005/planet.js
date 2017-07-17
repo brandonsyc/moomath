@@ -21,43 +21,59 @@ function bulb() {
 	document.getElementById("fps").innerHTML = Math.round(fps);
 	ctx.fillStyle = "#333";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	var remove = [];
 	for (var i = 0; i < bodies.length; i++) {
-		var body = bodies[i];
-		ctx.fillStyle = body[6];
-		ctx.beginPath();
-		ctx.arc(body[0], body[1], body[7], 0, 2 * Math.PI);
-		ctx.fill();
-		body[0] += body[2];
-		body[1] += body[3];
-		for (var j = 0; j < bodies.length; j++) {
-			if (i !== j) {
-				var other = bodies[j];
-				var distance = Math.hypot(other[0] - body[0], other[1] - body[1]);
-				var magnitude = 0.0008887 * other[4] / (distance * distance);
-				var ax = magnitude * (other[0] - body[0]) / distance;
-				var ay = magnitude * (other[1] - body[1]) / distance;
-				body[2] += ax;
-				body[3] += ay;
-				if (body[7] + other[7] > distance) {
-					
-					bodies.splice(j, 1);
-				}
-			}
-		}
-		if (count === 0) {
-			trails[i].push([body[0], body[1]]);
-			if (trails[i].length > 10) {
-				trails[i].shift();
-			}
-		}
-		for (j = 0; j < trails[i].length; j++) {
+		if (!remove.includes(i)) {
+			var body = bodies[i];
 			ctx.fillStyle = body[6];
 			ctx.beginPath();
-			ctx.arc(trails[i][j][0], trails[i][j][1], 1, 0, 2 * Math.PI);
+			ctx.arc(body[0], body[1], body[7], 0, 2 * Math.PI);
 			ctx.fill();
+			body[0] += body[2];
+			body[1] += body[3];
+			for (var j = 0; j < bodies.length; j++) {
+				if (i !== j && !remove.includes(j)) {
+					var other = bodies[j];
+					var distance = Math.hypot(other[0] - body[0], other[1] - body[1]);
+					var magnitude = 0.0008887 * other[4] / (distance * distance);
+					var ax = magnitude * (other[0] - body[0]) / distance;
+					var ay = magnitude * (other[1] - body[1]) / distance;
+					body[2] += ax;
+					body[3] += ay;
+					if (body[7] + other[7] > distance) {
+						bodies[i] = [getBarycenter([body, other])[0],
+									 getBarycenter([body, other])[1],
+								 	 (body[2] * body[4] + other[2] * other[4]) / (body[4] + other[4]),
+								 	 (body[3] * body[4] + other[3] * other[4]) / (body[4] + other[4]),
+								 	 body[4] + other[4],
+								 	 Math.min(body[5], other[5]),
+								 	 body[6],
+								 	 Math.max(0.00426349651 * Math.pow(Math.abs(body[4] + other[4]), 1 / 3) * Math.pow(Math.abs(Math.min(body[5], other[5])), -2 / 3), 2)];
+						trails[i] = [];
+						remove.push(j);
+							console.log(bodies);
+								console.log(trails);
+					}
+				}
+			}
+			if (count === 0) {
+				trails[i].push([body[0], body[1]]);
+				if (trails[i].length > 16) {
+					trails[i].shift();
+				}
+			}
+			for (j = 0; j < trails[i].length; j++) {
+				ctx.fillStyle = body[6];
+				ctx.beginPath();
+				ctx.arc(trails[i][j][0], trails[i][j][1], 1, 0, 2 * Math.PI);
+				ctx.fill();
+			}
 		}
 	}
-	
+	for (var i = remove.length - 1; i > -1; i--) {
+		bodies.splice(remove[i], 1);
+			trails.splice(remove[i], 1);
+	}
 	if (document.getElementById("body").checked) {
 		if (!down) {
 			if (mouse !== undefined) {
@@ -86,8 +102,21 @@ function bulb() {
 
 setInterval(function() {
 	"use strict";
-	bulb(); 
+	bulb();
 }, 1000 / 60);
+
+function getBarycenter(bodies) {
+	"use strict";
+	var numx = 0;
+	var numy = 0;
+	var den = 0;
+	for (var i = 0; i < bodies.length; i++) {
+		numx += bodies[i][4] * bodies[i][0];
+		numy += bodies[i][4] * bodies[i][1];
+		den += bodies[i][4];
+	}
+	return [numx / den, numy / den];
+}
 
 function pressed() {
 	"use strict";
@@ -105,13 +134,13 @@ function clicked() {
 				color = colors[i];
 			}
 		}
-		bodies.push([press.x, 
-					 press.y, 
-					 (mouse.x - press.x) / 40, 
-					 (mouse.y - press.y) / 40, 
-					 document.getElementById("mass").value, 
-					 0, 
-					 color, 
+		bodies.push([press.x,
+					 press.y,
+					 (mouse.x - press.x) / 40,
+					 (mouse.y - press.y) / 40,
+					 parseInt(document.getElementById("mass").value),
+					 document.getElementById("density").value,
+					 color,
 					 Math.max(0.00426349651 * Math.pow(Math.abs(document.getElementById("mass").value), 1 / 3) * Math.pow(Math.abs(document.getElementById("density").value), -2 / 3), 2)]);
 		trails.push([]);
 	}
