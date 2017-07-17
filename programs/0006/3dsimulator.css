@@ -76,7 +76,7 @@ input:checked+label {
   border-radius: 100px;
 }
 
-button {
+button:not(go) {
   background-color: rgba(255, 255, 255, 0.5);
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
@@ -84,6 +84,22 @@ button {
   line-height: 0px;
   height: 41px;
   width: 41px;
+}
+
+.go {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top-left-radius: 100px;
+  border-bottom-left-radius: 100px;
+  border-top-right-radius: 100px;
+  border-bottom-right-radius: 100px;
+  box-shadow: none;
+  line-height: 0px;
+  height: 41px;
+  width: 60px;
+  margin-left: 15px;
+  margin-right: 5px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 100px;
 }
 
 .right {

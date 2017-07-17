@@ -1,4 +1,4 @@
-var renderer,scene,camera,controls,raycaster,mouse;
+var renderer,scene,camera,controls,raycaster,mouse,rendererStats;
 
 // Texture loader
 var loader = new THREE.TextureLoader();
@@ -8,7 +8,7 @@ var sunLightSource = null;
 
 // bodies[0] is always the sun, bodies[1] is mercury, bodies[2] is venus, bodies[3] is earth, etc., until bodies[7]: neptune. The remaining ones are dynamically allocated.
 
-// Format of body in bodies: [three.js element, second element (if necessary, otherwise null), name, radius (1/100 AU), type, information, point underneath obj]
+// Format of body in bodies: [three.js element, second element (if necessary, otherwise null), name, radius (1/100 AU), type, mass]
 
 // Types: star = sun, planet = one of 8 planets, dwarf = one of the dwarf planets, majorsat = round moon, minorsat = irregular moon
 
@@ -28,11 +28,11 @@ var minMajorPlanetSize = 48;
 // Minimum dwarf planet
 var minDwarfPlanetSize = 23;
 
-// Minimum major satellite
-var minVisibleMajorSatelliteSize = 12;
+// Minimum major satellite size
+var minVisibleMajorSatelliteSize = 25;
 
 // Distance at which major satellites are displayed, in 1/100 AU
-var majorSatelliteDisplayDistance = 0.2;
+var majorSatelliteDisplayDistance = 10;
 
 // Size at which planets are not displayed
 
@@ -42,10 +42,10 @@ var trueScale = false;
 // Between 0 and 1, scale factor of planets
 var planetScaleFactor = 0.5;
 
+// Body which the camera is pointing at
 var focusBody = null;
 
-var subdots = [];
-
+// The positions of the bodies
 var bodyPositions = {
 Mercury:[-39.0194060099,2.38758068596,-14.5885671894],
 Venus:[72.5136170661,-4.16432596262,1.47040747204],
@@ -70,15 +70,18 @@ Tethys:[-85.2039736091,20.7494902911,-1002.01407282],
 Dione:[-85.511871372,20.9211865396,-1002.28326267]
 };
 
-// Display GridHelper
+// Whether to display the grid
 var displayGridHelper = false;
 
+// The grid variable
 var cGrid = null;
 
+// The translation of the grid relative to (0,0,0)
 var cGridTransZ = 0;
 var cGridTransY = 0;
 var cGridTransX = 0;
 
+// The spacing between grid lines in units (changes dynamically to nearest power of 10)
 var cGridLineWidth = 10;
 
 // Align grid to object
@@ -90,92 +93,97 @@ var alignGridColor = "#777777";
 // Sun emissiveIntensity
 var sunEmissive = 0.92;
 
-var isInToolbar = false;
-
 function init() {
-		var VIEW_ANGLE = 45;
-		var ASPECT = window.innerWidth / window.innerHeight;
-		var NEAR = 0.000001;
-		var FAR = 1000000000;
+	// Initialization sequence
+	var VIEW_ANGLE = 45;	// FOV of camera
+	var ASPECT = window.innerWidth / window.innerHeight;
+	var NEAR = 0.000001;
+	var FAR = 1000000000;
 
-		container = document.querySelector('#container');
-		renderer = new THREE.WebGLRenderer({antialias: true });
-		camera =
-		    new THREE.PerspectiveCamera(
-		        VIEW_ANGLE,
-		        ASPECT,
-		        NEAR,
-		        FAR
-		    );
+	container = document.querySelector('#container');
+	renderer = new THREE.WebGLRenderer({antialias: true, logarithmicDepthBuffer: true});
+	camera =
+	    new THREE.PerspectiveCamera(
+	        VIEW_ANGLE,
+	        ASPECT,
+	        NEAR,
+	        FAR
+	    );
 
-		scene = new THREE.Scene();
+	scene = new THREE.Scene();
 
-		camera.position.y = 16;
-		camera.position.z = 250;
+	camera.position.y = 16;
+	camera.position.z = 250;
 
-		scene.add(camera);
+	scene.add(camera);
 
-		renderer.setSize(window.innerWidth, window.innerHeight);
-		renderer.context.disable(renderer.context.DEPTH_TEST);
+	renderer.setSize(window.innerWidth, window.innerHeight);
 
-		console.log("Loading textures...");
+	console.log("Loading textures...");
 
-		addSun();
-		addPlanets();
-		addMoons();
-		addDwarves();
+	addSun();
+	addPlanets();
+	addMoons();
+	addDwarves();
 
-		console.log("Loaded textures.")
+	console.log("Loaded textures.")
 
-		var light = new THREE.AmbientLight(0x404040); // soft white light
-		scene.add(light);
+	var light = new THREE.AmbientLight(0x404040); // soft white light
+	scene.add(light);
 
-		if (displayGridHelper) {
-				cGrid = new THREE.GridHelper(1000, 100, colorCenterLine = alignGridColor, colorGrid = alignGridColor);
-				cGrid.name = 'gridy';
-				scene.add(cGrid);
-		}
+	if (displayGridHelper) {
+		cGrid = new THREE.GridHelper(1000, 100, colorCenterLine = alignGridColor, colorGrid = alignGridColor);
+		cGrid.name = 'gridy';
+		scene.add(cGrid);
+	}
 
-		var wbglcontainer = document.getElementById('webgl-container');
+	var wbglcontainer = document.getElementById('webgl-container');
 
-		wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
+	wbglcontainer.insertBefore(renderer.domElement,wbglcontainer.firstChild);
 
-		renderer.sortObjects = true;
+	renderer.sortObjects = true;
 
-		controls = new THREE.OrbitControls(camera, renderer.domElement);
-		controls.enableDamping = true;
-		controls.rotateSpeed = 0.8;
-		controls.keyPanSpeed = 2;
-		renderer.render(scene, camera);
+	controls = new THREE.OrbitControls(camera, renderer.domElement);
+	controls.enableDamping = true;
+	controls.rotateSpeed = 0.8;
+	controls.keyPanSpeed = 2;
+	renderer.render(scene, camera);
+	
+	rendererStats = new THREEx.RendererStats();
+	
+	rendererStats.domElement.style.position	= 'absolute';
+	rendererStats.domElement.style.left	= '0px';
+	rendererStats.domElement.style.bottom	= '0px';
+	document.body.appendChild(rendererStats.domElement);
 
-		requestAnimationFrame(update);
+	requestAnimationFrame(update);
 
-		raycaster = new THREE.Raycaster();
-		mouse = new THREE.Vector2();
+	raycaster = new THREE.Raycaster();
+	mouse = new THREE.Vector2();
 
-		document.addEventListener('click', onDocumentClick, false);
-		document.addEventListener( 'dblclick', onDocumentDblClick, false );
+	document.addEventListener('click', onDocumentClick, false);
+	document.addEventListener( 'dblclick', onDocumentDblClick, false );
 }
 
 function getObjects() {
-		var objects = [];
-		for (i = 0; i < bodies.length; i++) {
-				objects.push(bodies[i][0]);
-				objects[i].name = i;
-		}
-		return objects;
+	var objects = [];
+	for (i = 0; i < bodies.length; i++) {
+		objects.push(bodies[i][0]);
+		objects[i].name = i;
+	}
+	return objects;
 }
 
 function shiftCameraFocus(x,y=null,z=null) {
-		if (y != null && z != null) {
-				//camera.lookAt(new THREE.Vector3(x,y,z));
-				controls.smoothPanIntoBody(x,y,z);
-		} else {
-				//camera.lookAt(x);
-				controls.target = x;
-		}
-		camera.fov = 45;
-		camera.updateProjectionMatrix();
+	if (y != null && z != null) {
+		//camera.lookAt(new THREE.Vector3(x,y,z));
+		controls.smoothPanIntoBody(x,y,z);
+	} else {
+		//camera.lookAt(x);
+		controls.target = x;
+	}
+	camera.fov = 45;
+	camera.updateProjectionMatrix();
 }
 
 var dblClickSFRT = null;
@@ -183,215 +191,166 @@ var lastClickedEntity = null;
 
 function onDocumentClick( event, run = false) {
 
-		//event.preventDefault();
+	//event.preventDefault();
 
-		mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
-		mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
+	mouse.x = ( event.clientX / renderer.domElement.clientWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / renderer.domElement.clientHeight ) * 2 + 1;
 
-		raycaster.setFromCamera(mouse, camera);
+	raycaster.setFromCamera(mouse, camera);
 
-		var intersects = raycaster.intersectObjects(getObjects(), true);
+	var intersects = raycaster.intersectObjects(getObjects(), true);
 
-		if (intersects.length > 0) {
-				try {
-						dblClickSFRT.cancel();
-				} catch (e) {;}
+	if (intersects.length > 0) {
+		try {
+			dblClickSFRT.cancel();
+		} catch (e) {;}
 
-				//dblClickSFRT = setTimeout(function() {onDocumentClick(event, run=true)}, 500);
-				lastClickedEntity = intersects[0];
+		//dblClickSFRT = setTimeout(function() {onDocumentClick(event, run=true)}, 500);
+		lastClickedEntity = intersects[0];
 
-				var x = intersects[0].object.position.x;
-				var y = intersects[0].object.position.y;
-				var z = intersects[0].object.position.z;
-				shiftCameraFocus(x,y,z);
+		var x = intersects[0].object.position.x;
+		var y = intersects[0].object.position.y;
+		var z = intersects[0].object.position.z;
+		shiftCameraFocus(x,y,z);
 
-				focusBody = intersects[0];
-		} else {
-				if (!controls.moving) {
-						lastClickedEntity = null;
-				}
+		focusBody = intersects[0];
+	} else {
+		if (!controls.moving) {
+			lastClickedEntity = null;
 		}
+	}
 }
 
 function onDocumentDblClick(event) {
-		event.preventDefault();
+	event.preventDefault();
 
-		if (lastClickedEntity) {
-				try {
-						dblClickSFRT.cancel();
-				} catch (e) {;}
+	if (lastClickedEntity) {
+		try {
+			dblClickSFRT.cancel();
+		} catch (e) {;}
 
-				var x = lastClickedEntity.object.position.x;
-				var y = lastClickedEntity.object.position.y;
-				var z = lastClickedEntity.object.position.z;
-				shiftCameraFocus(x,y,z);
+		var x = lastClickedEntity.object.position.x;
+		var y = lastClickedEntity.object.position.y;
+		var z = lastClickedEntity.object.position.z;
+		shiftCameraFocus(x,y,z);
 
-				var vFOV = camera.fov * Math.PI / 180;
-				var cameraDistance = Math.hypot(
-					controls.target.x-camera.position.x,
-					controls.target.y-camera.position.y,
-					controls.target.z-camera.position.z);
-				var height = Math.tan(vFOV / 2) * cameraDistance;
-				var bodySize = bodies[lastClickedEntity.object.name][3];
+		var vFOV = camera.fov * Math.PI / 180;
+		var cameraDistance = Math.hypot(
+			controls.target.x-camera.position.x,
+			controls.target.y-camera.position.y,
+			controls.target.z-camera.position.z);
+		var height = Math.tan(vFOV / 2) * cameraDistance;
+		var bodySize = bodies[lastClickedEntity.object.name][3];
 
-				controls.smoothDollyIntoBody(bodySize);
+		controls.smoothDollyIntoBody(bodySize);
 
-				focusBody = lastClickedEntity;
-		}
-}
-
-function getOffset(el) {
-    var _x = 0;
-    var _y = 0;
-    while(el && !isNaN(el.offsetLeft) && !isNaN(el.offsetTop)) {
-        _x += el.offsetLeft - el.scrollLeft;
-        _y += el.offsetTop - el.scrollTop;
-        el = el.offsetParent;
-    }
-    return {top: _y, left: _x};
-}
-
-function renderComparator(obj1, obj2) {
-   if (obj1[1] < obj2[1]) return 1;
-   if (obj1[1] > obj2[1]) return -1;
-   return 1;
- }
-
-function updateRenderOrder() {
-		/* Updates the render order of all objects based on their distance,
-		 a more accurate render compared to that produced by the z-buffer. */
-		var objDist = [];
-		// objDist.push([cGrid,1e12]);
-		for (i = 0; i < bodies.length; i++) {
-				objDist.push([bodies[i][0], Math.hypot(
-					bodies[i][0].position.x-camera.position.x,
-					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z)]);
-				if (bodies[i][1]) {
-					objDist.push([bodies[i][1], Math.hypot(
-						bodies[i][0].position.x-camera.position.x,
-						bodies[i][0].position.y-camera.position.y,
-						bodies[i][0].position.z-camera.position.z)]);
-				}
-		}
-		objDist = objDist.sort(renderComparator);
-		for (i = 0; i < objDist.length; i++) {
-				objDist[i][0].renderOrder = i;
-		}
-		return;
+		focusBody = lastClickedEntity;
+	}
 }
 
 var lastUpdate = 0;
 var finished = false;
 
 function update() {
-		// Update the animation frame
+	// Update the animation frame
 
-		var depthTestDisabled = true;
+	var vFOV = camera.fov * Math.PI / 180;
 
-		var vFOV = camera.fov * Math.PI / 180;
+	for (i = 0; i < bodies.length; i++) {
+		var cameraDistance = Math.hypot(
+			bodies[i][0].position.x-camera.position.x,
+			bodies[i][0].position.y-camera.position.y,
+			bodies[i][0].position.z-camera.position.z);
+		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
+		var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
 
-		for (i = 0; i < bodies.length; i++) {
-				var cameraDistance = Math.hypot(
-					bodies[i][0].position.x-camera.position.x,
-					bodies[i][0].position.y-camera.position.y,
-					bodies[i][0].position.z-camera.position.z);
-				var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
-				var bodyPixelSize = bodies[i][3] / height * window.innerHeight;
+		var scaleFactor = 1;
 
-				var scaleFactor = 1;
-
-				if (cameraDistance < 10) {
-						renderer.context.enable(renderer.context.DEPTH_TEST);
-						depthTestDisabled = false;
+		if (!trueScale) {
+			if (bodies[i][4] == "star") {
+				if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
+					scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
 				}
-
-				if (!trueScale) {
-						if (bodies[i][4] == "star") {
-								if (bodyPixelSize < minStarSize * planetScaleFactor + 1) {
-										scaleFactor = (minStarSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "planet") {
-								if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
-										scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "dwarf") {
-								if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
-										scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-								}
-						} else if (bodies[i][4] == "majorsat") {
-								if (cameraDistance < majorSatelliteDisplayDistance) {
-										if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
-												scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
-										}
-								}
-						}
+			} else if (bodies[i][4] == "planet") {
+				if (bodyPixelSize < minMajorPlanetSize * planetScaleFactor + 1) {
+					scaleFactor = (minMajorPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
 				}
-
-				bodies[i][0].scale.x = scaleFactor;
-				bodies[i][0].scale.y = scaleFactor;
-				bodies[i][0].scale.z = scaleFactor;
-
-				if (bodies[i][1]) {
-						if (bodies[i][4] == "star") {
-								scaleFactor *= sunGlowScale;
-						}
-						bodies[i][1].scale.x = scaleFactor;
-						bodies[i][1].scale.y = scaleFactor;
-						bodies[i][1].scale.z = scaleFactor;
+			} else if (bodies[i][4] == "dwarf") {
+				if (bodyPixelSize < minDwarfPlanetSize * planetScaleFactor + 1) {
+					scaleFactor = (minDwarfPlanetSize * planetScaleFactor + 1) / bodyPixelSize;
 				}
-
-				/* constructSubDot(bodies[i][0].position.x,
-					alignGridToTarget ? bodies[i][0].position.y : 0,
-					bodies[i][0].position.z,
-					bodies[i][3] * scaleFactor); */
+			} else if (bodies[i][4] == "majorsat") {
+				if (cameraDistance < majorSatelliteDisplayDistance) {
+					if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
+						scaleFactor = (minVisibleMajorSatelliteSize * planetScaleFactor + 1) / bodyPixelSize;
+					}
+				}
+			}
 		}
 
-		var height = 2 * Math.tan(vFOV / 2) *
-			Math.hypot(controls.target.x-camera.position.x,
-			(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
-			controls.target.z-camera.position.z);
+		bodies[i][0].scale.x = scaleFactor;
+		bodies[i][0].scale.y = scaleFactor;
+		bodies[i][0].scale.z = scaleFactor;
 
-		if (displayGridHelper) {
-				var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
+		if (bodies[i][1]) {
+			if (bodies[i][4] == "star") {
+				scaleFactor *= sunGlowScale;
+			}
+			bodies[i][1].scale.x = scaleFactor;
+			bodies[i][1].scale.y = scaleFactor;
+			bodies[i][1].scale.z = scaleFactor;
+		}
 
-				if (newWidth != cGridLineWidth || !scene.getObjectByName('gridy')) {
-						cGridLineWidth = newWidth;
-						try {
-								scene.remove(scene.getObjectByName('gridy'));
-						} catch (e) {;}
-						cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
-							colorCenterLine = alignGridColor, colorGrid = alignGridColor);
-						cGrid.name = 'gridy';
-						scene.add(cGrid);
-						cGrid.translateX(Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth);
-						cGridTransX = Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth;
-						if (alignGridToTarget) {
-								cGrid.translateY(controls.target.y);
-								cGridTransY = controls.target.y;
-						}
-						cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
-						cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
-				}
+		if (bodyPixelSize * scaleFactor < 0.01) {
+			bodies[i][0].visible = false;
+			if (bodies[i][1]) bodies[i][1].visible = false;
 		} else {
-				try {
-						scene.remove(scene.getObjectByName('gridy'));
-				} catch(e) {;}
+			bodies[i][0].visible = true;
+			if (bodies[i][1]) bodies[i][1].visible = true;
 		}
+	}
 
-		controls.update();
-		if (depthTestDisabled) {
-				updateRenderOrder();
+	var height = 2 * Math.tan(vFOV / 2) *
+		Math.hypot(controls.target.x-camera.position.x,
+		(alignGridToTarget ? controls.target.y : 0)-camera.position.y,
+		controls.target.z-camera.position.z);
+
+	if (displayGridHelper) {
+		var newWidth = Math.pow(10, Math.floor(Math.log10(height)) - 1);
+
+		if (newWidth != cGridLineWidth || !scene.getObjectByName('gridy')) {
+			cGridLineWidth = newWidth;
+			try {
+				scene.remove(scene.getObjectByName('gridy'));
+			} catch (e) {;}
+			cGrid = new THREE.GridHelper(100 * cGridLineWidth, 100,
+				colorCenterLine = alignGridColor, colorGrid = alignGridColor);
+			cGrid.name = 'gridy';
+			scene.add(cGrid);
+			cGrid.translateX(Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth);
+			cGridTransX = Math.floor(controls.target.x / cGridLineWidth) * cGridLineWidth;
+			if (alignGridToTarget) {
+				cGrid.translateY(controls.target.y);
+				cGridTransY = controls.target.y;
+			}
+			cGrid.translateZ(Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth);
+			cGridTransZ = Math.floor(controls.target.z / cGridLineWidth) * cGridLineWidth;
 		}
+	} else {
+		try {
+			scene.remove(scene.getObjectByName('gridy'));
+		} catch(e) {;}
+	}
+
+	controls.update();
   	renderer.render(scene, camera);
 
-		renderer.context.disable(renderer.context.DEPTH_TEST);
-
-		if (!finished && new Date().getTime() - lastUpdate < 1000/30.0) {
-				finished = true;
-				console.log("Finished setup #2");
-		}
-		lastUpdate = new Date().getTime();
+	if (!finished && new Date().getTime() - lastUpdate < 1000/30.0) {
+		finished = true;
+		console.log("Finished setup #2");
+	}
+	lastUpdate = new Date().getTime();
+	rendererStats.update(renderer);
   	requestAnimationFrame(update);
 }
 
@@ -404,469 +363,497 @@ window.addEventListener('resize', function() {
     });
 
 function updatePlanetarySize() {
-		var bar = document.getElementById("bar1").style.width;
-		minMajorPlanetSize = parseFloat(bar.substr(0,bar.length-1)) - 2;
-		minDwarfPlanetSize = (minMajorPlanetSize + 2) / 2 - 2; // This is most likely going to be temporary
-		if (minMajorPlanetSize == -1) {
-				document.getElementById('bar1-contents').innerHTML = "Real Size";
-		} else {
-				document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize + 2)) + '&times;';
-		}
+	var bar = document.getElementById("bar1").style.width;
+	minMajorPlanetSize = parseFloat(bar.substr(0,bar.length-1));
+	if (minMajorPlanetSize > 100) {
+		minMajorPlanetSize = 100;
+	}
+	minDwarfPlanetSize = Math.floor(minMajorPlanetSize / 2); // This is most likely going to be temporary
+	if (minMajorPlanetSize == 0) {
+		document.getElementById('bar1-contents').innerHTML = "Real Size";
+	} else {
+		document.getElementById('bar1-contents').innerHTML = parseInt(Math.round(minMajorPlanetSize)) + '&times;';
+	}
+}
+
+function updateMoonSize() {
+	var bar = document.getElementById("bar2").style.width;
+	minVisibleMajorSatelliteSize = parseFloat(bar.substr(0,bar.length-1)) / 2;
+	if (minVisibleMajorSatelliteSize > 50) {
+		minVisibleMajorSatelliteSize = 50;
+	}
+	if (minVisibleMajorSatelliteSize == 0) {
+		document.getElementById('bar2-contents').innerHTML = "Real Size";
+	} else {
+		document.getElementById('bar2-contents').innerHTML = minVisibleMajorSatelliteSize + '&times;';
+	}
 }
 
 function updateShowGrid() {
-		displayGridHelper = document.getElementById("testc").checked;
+	displayGridHelper = document.getElementById("testc").checked;
+}
+
+function doGoTo() {
+	var bodyName = document.getElementById("goto").value.replace(/ /g,'').toLowerCase();
+	for (i = 0; i < bodies.length; i++) {
+		if (bodies[i][2].toLowerCase() === bodyName) {
+			var x = bodies[i][0].position.x;
+			var y = bodies[i][0].position.y;
+			var z = bodies[i][0].position.z;
+			focusBody = bodies[i][0];
+			shiftCameraFocus(x,y,z);
+
+			var bodySize = bodies[i][3];
+			setTimeout(function() {controls.smoothDollyIntoBody(bodySize)},1020);
+		}
+	}
 }
 
 window.onload = function() {
-		console.log("Finished setup.");
+	console.log("Finished setup.");
 }
 
 init();
 
 function addPlanets() {
-		addMercury();
-		addEarth();
-		addVenus();
-		addMars();
-		addJupiter();
-		addSaturn();
-		addUranus();
-		addNeptune();
-		addMoon();
+	addMercury();
+	addEarth();
+	addVenus();
+	addMars();
+	addJupiter();
+	addSaturn();
+	addUranus();
+	addNeptune();
+	addMoon();
 }
 
 function addMoons() {
-		addMoon();
-		addGanymede();
-		addCallisto();
-		addIo();
-		addEuropa();
-		addTitan();
-		addTitania();
-		addTriton();
-		addIapetus();	// IAPETUSSS!
-		addTethys();
-		addDione();
+	addMoon();
+	addGanymede();
+	addCallisto();
+	addIo();
+	addEuropa();
+	addTitan();
+	addTitania();
+	addTriton();
+	addIapetus();	// IAPETUSSS!
+	addTethys();
+	addDione();
 }
 
 function addDwarves() {
-		addPluto();
-		addCeres();
+	addPluto();
+	addCeres();
 }
 
 // Body data
 
 function addSun() {
 
-		THREE.ImageUtils.crossOrigin = '';
-		var sunTexture = loader.load('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
+	THREE.ImageUtils.crossOrigin = '';
+	var sunTexture = loader.load('images/sunTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white",
-		emissiveIntensity: 0.95, transparent: false});
+	var sunMaterial = new THREE.MeshPhongMaterial({ map: sunTexture, emissive: "white",
+	emissiveIntensity: 0.95, transparent: false});
 
-		var glowMaterial = new THREE.ShaderMaterial(
-		{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
-			glowColor: {type: "c", value: new THREE.Color(0xffff66)},
-			viewVector: {type: "v3", value: camera.position}
-		}, vertexShader: document.getElementById('vertexShader').textContent,
-		fragmentShader: document.getElementById('fragmentShader').textContent,
-		side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: true});
+	var glowMaterial = new THREE.ShaderMaterial(
+	{uniforms:{"c": { type: "f", value: 1.0 }, "p": { type: "f", value: 1.4 },
+		glowColor: {type: "c", value: new THREE.Color(0xffff66)},
+		viewVector: {type: "v3", value: camera.position}
+	}, vertexShader: document.getElementById('vertexShader').textContent,
+	fragmentShader: document.getElementById('fragmentShader').textContent,
+	side: THREE.FrontSide, blending: THREE.AdditiveBlending, transparent: true});
+	
+	glowMaterial.depthTest = true;
 
-		var sun = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), sunMaterial);
+	var sun = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), sunMaterial);
 
-		sun.overdraw = true;
+	// sun.overdraw = true;
 
-		sun.position.x = 0;
-		sun.position.y = 0;
-		sun.position.z = 0;
+	sun.position.x = 0;
+	sun.position.y = 0;
+	sun.position.z = 0;
 
-		sun.name = '0';
+	var sunGroup = new THREE.Group();
+	sunGroup.add(sun);
 
-		scene.add(sun);
+	var sunGlow = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), glowMaterial);
+	sunGlow.position = sun.position;
+	sunGlow.scale.multiplyScalar(sunGlowScale);
+	sunGroup.add(sunGlow);
 
-		var sunGlow = new THREE.Mesh(new THREE.SphereGeometry(0.46, sphereSegmentPrecision, sphereRingPrecision), glowMaterial);
-		sunGlow.position = sun.position;
-		sunGlow.scale.multiplyScalar(sunGlowScale);
-		scene.add(sunGlow);
+	sunGroup.name = '0';
 
-		bodies[0] = [sun, sunGlow, "Sun", 0.46, "star", "test"];
+	scene.add(sunGroup);
 
-		var sunLightSource = new THREE.PointLight(0xffffff, 1.7, 100, decay = 0);
+	bodies[0] = [sunGroup, null, "Sun", 0.46, "star", "test"];
 
-		sunLightSource.position.set(0, 0, 0);
-		scene.add(sunLightSource);
-}
+	var sunLightSource = new THREE.PointLight(0xffffff, 1.7, 100, decay = 0);
 
-function constructSubDot(x,y,z,radius) {
-		var subDot = new THREE.Mesh(new THREE.CircleGeometry(radius,sphereRingPrecision),new THREE.LineBasicMaterial({color: 0x000077}));
-		subDot.rotateX(Math.PI / 2);
-		subDot.material.side = THREE.DoubleSide;
-		scene.add(subDot);
-
-		subdots.push(subDot.object);
+	sunLightSource.position.set(0, 0, 0);
+	scene.add(sunLightSource);
 }
 
 function addMercury() {
-		THREE.ImageUtils.crossOrigin = '';
-		var mercuryTexture = loader.load('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
-		var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var mercuryTexture = loader.load('images/mercuryTexture.jpg',THREE.SphericalRefractionMapping);
+	var mercuryMaterial = new THREE.MeshPhongMaterial({ map: mercuryTexture, shininess: 0});
 
-		var mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
+	var mercury = new THREE.Mesh(new THREE.SphereGeometry(0.00116, sphereSegmentPrecision, sphereRingPrecision), mercuryMaterial);
+	mercury.position.x = bodyPositions.Mercury[0];
+	mercury.position.y = bodyPositions.Mercury[1];
+	mercury.position.z = bodyPositions.Mercury[2];
 
-		mercury.position.x = bodyPositions.Mercury[0];
-		mercury.position.y = bodyPositions.Mercury[1];
-		mercury.position.z = bodyPositions.Mercury[2];
+	mercury.name = '1';
 
-		mercury.name = '1';
+	scene.add(mercury);
 
-		scene.add(mercury);
-
-		bodies[1] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
+	bodies[1] = [mercury, null, "Mercury", 0.00116, "planet", "udder2"];
 }
 
 function addVenus() {
-		THREE.ImageUtils.crossOrigin = '';
-		var venusTexture = loader.load('images/venusTexture.jpg',THREE.SphericalRefractionMapping);
+	THREE.ImageUtils.crossOrigin = '';
+	var venusTexture = loader.load('images/venusTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
+	var venusMaterial = new THREE.MeshPhongMaterial({ map: venusTexture, shininess: 0});
 
-		var venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
+	var venus = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), venusMaterial);
 
-		venus.position.x = bodyPositions.Venus[0];
-		venus.position.y = bodyPositions.Venus[1];
-		venus.position.z = bodyPositions.Venus[2];
+	venus.position.x = bodyPositions.Venus[0];
+	venus.position.y = bodyPositions.Venus[1];
+	venus.position.z = bodyPositions.Venus[2];
 
-		venus.name = '2';
+	venus.name = '2';
 
-		scene.add(venus);
+	scene.add(venus);
 
-		bodies[2] = [venus, null, "Venus", 0.004, "planet", "udder2"];
+	bodies[2] = [venus, null, "Venus", 0.004, "planet", "udder2"];
 }
 
 function addEarth() {
-		THREE.ImageUtils.crossOrigin = '';
-		var earthTexture = loader.load('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
+	THREE.ImageUtils.crossOrigin = '';
+	var earthTexture = loader.load('images/earthTexture.jpg',THREE.SphericalRefractionMapping);
 
-		var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0.03});
+	var earthMaterial = new THREE.MeshPhongMaterial({ map: earthTexture, shininess: 0.03});
 
-		var earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
+	var earth = new THREE.Mesh(new THREE.SphereGeometry(0.0042, sphereSegmentPrecision, sphereRingPrecision), earthMaterial);
 
-		earth.position.x = bodyPositions.Earth[0];
-		earth.position.y = bodyPositions.Earth[1];
-		earth.position.z = bodyPositions.Earth[2];
+	earth.position.x = bodyPositions.Earth[0];
+	earth.position.y = bodyPositions.Earth[1];
+	earth.position.z = bodyPositions.Earth[2];
 
-		earth.name = '3';
+	earth.name = '3';
 
-		scene.add(earth);
+	scene.add(earth);
 
-		bodies[3] = [earth, null, "Earth", 0.0042, "planet", "udder"];
+	bodies[3] = [earth, null, "Earth", 0.0042, "planet", "udder"];
 }
 
 function addMars() {
-		THREE.ImageUtils.crossOrigin = '';
-		var marsTexture = loader.load('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
-		var marsMaterial = new THREE.MeshPhongMaterial({ map: marsTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var marsTexture = loader.load('images/marsTexture.jpg',THREE.SphericalRefractionMapping);
+	var marsMaterial = new THREE.MeshPhongMaterial({ map: marsTexture, shininess: 0});
 
-		var mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
+	var mars = new THREE.Mesh(new THREE.SphereGeometry(0.00226, sphereSegmentPrecision, sphereRingPrecision), marsMaterial);
 
-		mars.position.x = bodyPositions.Mars[0];
-		mars.position.y = bodyPositions.Mars[1];
-		mars.position.z = bodyPositions.Mars[2];
+	mars.position.x = bodyPositions.Mars[0];
+	mars.position.y = bodyPositions.Mars[1];
+	mars.position.z = bodyPositions.Mars[2];
 
-		mars.name = '4';
+	mars.name = '4';
 
-		scene.add(mars);
+	scene.add(mars);
 
-		bodies[4] = [mars, null, "Mars", 0.00226, "planet", "udder2"];
+	bodies[4] = [mars, null, "Mars", 0.00226, "planet", "udder2"];
 }
 
 function addJupiter() {
-		THREE.ImageUtils.crossOrigin = '';
-		var jupiterTexture = loader.load('images/jupiterTexture.jpg',THREE.SphericalRefractionMapping);
-		var jupiterMaterial = new THREE.MeshPhongMaterial({ map: jupiterTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var jupiterTexture = loader.load('images/jupiterTexture.jpg',THREE.SphericalRefractionMapping);
+	var jupiterMaterial = new THREE.MeshPhongMaterial({ map: jupiterTexture, shininess: 0});
 
-		jupiter = new THREE.Mesh(new THREE.SphereGeometry(0.0467, sphereSegmentPrecision, sphereRingPrecision), jupiterMaterial);
+	jupiter = new THREE.Mesh(new THREE.SphereGeometry(0.0467, sphereSegmentPrecision, sphereRingPrecision), jupiterMaterial);
 
-		jupiter.position.x = bodyPositions.Jupiter[0];
-		jupiter.position.y = bodyPositions.Jupiter[1];
-		jupiter.position.z = bodyPositions.Jupiter[2];
+	jupiter.position.x = bodyPositions.Jupiter[0];
+	jupiter.position.y = bodyPositions.Jupiter[1];
+	jupiter.position.z = bodyPositions.Jupiter[2];
 
-		jupiter.name = '5';
+	jupiter.name = '5';
 
-		scene.add(jupiter);
+	scene.add(jupiter);
 
-		bodies[5] = [jupiter, null, "Jupiter", 0.0467, "planet", "udder2"];
+	bodies[5] = [jupiter, null, "Jupiter", 0.0467, "planet", "udder2"];
 }
 
 function addSaturn() {
-		THREE.ImageUtils.crossOrigin = '';
-		var saturnTexture = loader.load('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
-		var saturnMaterial = new THREE.MeshPhongMaterial({ map: saturnTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var saturnTexture = loader.load('images/saturnTexture.jpg',THREE.SphericalRefractionMapping);
+	var saturnMaterial = new THREE.MeshPhongMaterial({ map: saturnTexture, shininess: 0});
 
-		var saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
+	var saturn = new THREE.Mesh(new THREE.SphereGeometry(0.0389, sphereSegmentPrecision, sphereRingPrecision), saturnMaterial);
 
-		saturn.position.x = bodyPositions.Saturn[0];
-		saturn.position.y = bodyPositions.Saturn[1];
-		saturn.position.z = bodyPositions.Saturn[2];
+	saturn.position.x = bodyPositions.Saturn[0];
+	saturn.position.y = bodyPositions.Saturn[1];
+	saturn.position.z = bodyPositions.Saturn[2];
 
-		saturn.name = '6';
+	var saturnGroup = new THREE.Group();
 
-		scene.add(saturn);
+	saturnGroup.add(saturn);
 
-		var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * 0.0389, 2 * 0.0389, 64, 5, 0, Math.PI * 2),
-		 new THREE.MeshBasicMaterial({ map: loader.load('images/saturnRings.png'),
-		  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
+	var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * 0.0389, 2 * 0.0389, 64, 5, 0, Math.PI * 2),
+	 new THREE.MeshBasicMaterial({ map: loader.load('images/saturnRings.png'),
+	  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
 
-		rings.position.x = saturn.position.x;
-		rings.position.y = saturn.position.y;
-		rings.position.z = saturn.position.z;
+	rings.position.x = saturn.position.x;
+	rings.position.y = saturn.position.y;
+	rings.position.z = saturn.position.z;
 
-		scene.add(rings);
+	saturnGroup.add(rings);
+	scene.add(saturnGroup);
 
-		bodies[6] = [saturn, rings, "Saturn", 0.0389, "planet", "udder2"];
+	bodies[6] = [saturn, rings, "Saturn", 0.0389, "planet", "udder2"];
 }
 
 function addUranus() {
-		THREE.ImageUtils.crossOrigin = '';
-		var uranusTexture = loader.load('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
-		var uranusMaterial = new THREE.MeshPhongMaterial({ map: uranusTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var uranusTexture = loader.load('images/uranusTexture.jpg',THREE.SphericalRefractionMapping);
+	var uranusMaterial = new THREE.MeshPhongMaterial({ map: uranusTexture, shininess: 0});
 
-		var uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
+	var uranus = new THREE.Mesh(new THREE.SphereGeometry(0.01695, sphereSegmentPrecision, sphereRingPrecision), uranusMaterial);
 
-		uranus.position.x = bodyPositions.Uranus[0];
-		uranus.position.y = bodyPositions.Uranus[1];
-		uranus.position.z = bodyPositions.Uranus[2];
+	uranus.position.x = bodyPositions.Uranus[0];
+	uranus.position.y = bodyPositions.Uranus[1];
+	uranus.position.z = bodyPositions.Uranus[2];
 
-		uranus.name = '7';
+	uranus.name = '7';
 
-		scene.add(uranus);
+	scene.add(uranus);
 
-		bodies[7] = [uranus, null, "Uranus", 0.01695, "planet", "udder2"];
+	bodies[7] = [uranus, null, "Uranus", 0.01695, "planet", "udder2"];
 }
 
 function addNeptune() {
-		THREE.ImageUtils.crossOrigin = '';
-		var neptuneTexture = loader.load('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
-		var neptuneMaterial = new THREE.MeshPhongMaterial({ map: neptuneTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var neptuneTexture = loader.load('images/neptuneTexture.jpg',THREE.SphericalRefractionMapping);
+	var neptuneMaterial = new THREE.MeshPhongMaterial({ map: neptuneTexture, shininess: 0});
 
-		var neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
+	var neptune = new THREE.Mesh(new THREE.SphereGeometry(0.01646, sphereSegmentPrecision, sphereRingPrecision), neptuneMaterial);
 
-		neptune.position.x = bodyPositions.Neptune[0];
-		neptune.position.y = bodyPositions.Neptune[1];
-		neptune.position.z = bodyPositions.Neptune[2];
+	neptune.position.x = bodyPositions.Neptune[0];
+	neptune.position.y = bodyPositions.Neptune[1];
+	neptune.position.z = bodyPositions.Neptune[2];
 
-		neptune.name = '8';
+	neptune.name = '8';
 
-		scene.add(neptune);
+	scene.add(neptune);
 
-		bodies[8] = [neptune, null, "Neptune", 0.01646, "planet", "udder2"];
+	bodies[8] = [neptune, null, "Neptune", 0.01646, "planet", "udder2"];
 }
 
 function addMoon() {
-		THREE.ImageUtils.crossOrigin = '';
-		var moonTexture = loader.load('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
-		var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var moonTexture = loader.load('images/moonTexture.jpg',THREE.SphericalRefractionMapping);
+	var moonMaterial = new THREE.MeshPhongMaterial({ map: moonTexture, shininess: 0});
 
-		var moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
+	var moon = new THREE.Mesh(new THREE.SphereGeometry(0.00163, sphereSegmentPrecision, sphereRingPrecision), moonMaterial);
 
-		moon.position.x = bodyPositions.Moon[0];
-		moon.position.y = bodyPositions.Moon[1];
-		moon.position.z = bodyPositions.Moon[2];
+	moon.position.x = bodyPositions.Moon[0];
+	moon.position.y = bodyPositions.Moon[1];
+	moon.position.z = bodyPositions.Moon[2];
 
-		scene.add(moon);
+	scene.add(moon);
 
-		bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
+	bodies[9] = [moon, null, "Moon", 0.00116, "majorsat", "udder2"];
 }
 
 function addGanymede() {
-		THREE.ImageUtils.crossOrigin = '';
-		var ganymedeTexture = loader.load('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
-		var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var ganymedeTexture = loader.load('images/ganymedeTexture.jpg',THREE.SphericalRefractionMapping);
+	var ganymedeMaterial = new THREE.MeshPhongMaterial({ map: ganymedeTexture, shininess: 0});
 
-		var ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
+	var ganymede = new THREE.Mesh(new THREE.SphereGeometry(0.001758, sphereSegmentPrecision, sphereRingPrecision), ganymedeMaterial);
 
-		ganymede.position.x = bodyPositions.Ganymede[0];
-		ganymede.position.y = bodyPositions.Ganymede[1];
-		ganymede.position.z = bodyPositions.Ganymede[2];
+	ganymede.position.x = bodyPositions.Ganymede[0];
+	ganymede.position.y = bodyPositions.Ganymede[1];
+	ganymede.position.z = bodyPositions.Ganymede[2];
 
-		scene.add(ganymede);
+	scene.add(ganymede);
 
-		bodies[10] = [ganymede, null, "Ganymede", 0.001758, "majorsat", "udder2"];
+	bodies[10] = [ganymede, null, "Ganymede", 0.001758, "majorsat", "udder2"];
 }
 
 function addCallisto() {
-		THREE.ImageUtils.crossOrigin = '';
-		var callistoTexture = loader.load('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
-		var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var callistoTexture = loader.load('images/callistoTexture.jpg',THREE.SphericalRefractionMapping);
+	var callistoMaterial = new THREE.MeshPhongMaterial({ map: callistoTexture, shininess: 0});
 
-		var callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
+	var callisto = new THREE.Mesh(new THREE.SphereGeometry(0.00161, sphereSegmentPrecision, sphereRingPrecision), callistoMaterial);
 
-		callisto.position.x = bodyPositions.Callisto[0];
-		callisto.position.y = bodyPositions.Callisto[1];
-		callisto.position.z = bodyPositions.Callisto[2];
+	callisto.position.x = bodyPositions.Callisto[0];
+	callisto.position.y = bodyPositions.Callisto[1];
+	callisto.position.z = bodyPositions.Callisto[2];
 
-		scene.add(callisto);
+	scene.add(callisto);
 
-		bodies[11] = [callisto, null, "Callisto", 0.00161, "majorsat", "udder2"];
+	bodies[11] = [callisto, null, "Callisto", 0.00161, "majorsat", "udder2"];
 }
 
 function addIo() {
-		THREE.ImageUtils.crossOrigin = '';
-		var ioTexture = loader.load('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
-		var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var ioTexture = loader.load('images/ioTexture.jpg',THREE.SphericalRefractionMapping);
+	var ioMaterial = new THREE.MeshPhongMaterial({ map: ioTexture, shininess: 0});
 
-		var io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
+	var io = new THREE.Mesh(new THREE.SphereGeometry(0.001217, sphereSegmentPrecision, sphereRingPrecision), ioMaterial);
 
-		io.position.x = bodyPositions.Io[0];
-		io.position.y = bodyPositions.Io[1];
-		io.position.z = bodyPositions.Io[2];
+	io.position.x = bodyPositions.Io[0];
+	io.position.y = bodyPositions.Io[1];
+	io.position.z = bodyPositions.Io[2];
 
-		scene.add(io);
+	scene.add(io);
 
-		bodies[12] = [io, null, "Io", 0.001217, "majorsat", "udder2"];
+	bodies[12] = [io, null, "Io", 0.001217, "majorsat", "udder2"];
 }
 
 function addEuropa() {
-		THREE.ImageUtils.crossOrigin = '';
-		var europaTexture = loader.load('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
-		var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0.04});
+	THREE.ImageUtils.crossOrigin = '';
+	var europaTexture = loader.load('images/europaTexture.jpg',THREE.SphericalRefractionMapping);
+	var europaMaterial = new THREE.MeshPhongMaterial({ map: europaTexture, shininess: 0.04});
 
-		var europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
+	var europa = new THREE.Mesh(new THREE.SphereGeometry(0.001043, sphereSegmentPrecision, sphereRingPrecision), europaMaterial);
 
-		europa.position.x = bodyPositions.Europa[0];
-		europa.position.y = bodyPositions.Europa[1];
-		europa.position.z = bodyPositions.Europa[2];
+	europa.position.x = bodyPositions.Europa[0];
+	europa.position.y = bodyPositions.Europa[1];
+	europa.position.z = bodyPositions.Europa[2];
 
-		scene.add(europa);
+	scene.add(europa);
 
-		bodies[13] = [europa, null, "Europa", 0.001043, "majorsat", "udder2"];
+	bodies[13] = [europa, null, "Europa", 0.001043, "majorsat", "udder2"];
 }
 
 function addTitan() {
-		THREE.ImageUtils.crossOrigin = '';
-		var titanTexture = loader.load('images/titanTexture.jpg',THREE.SphericalRefractionMapping);
-		var titanMaterial = new THREE.MeshPhongMaterial({ map: titanTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var titanTexture = loader.load('images/titanTexture.jpg',THREE.SphericalRefractionMapping);
+	var titanMaterial = new THREE.MeshPhongMaterial({ map: titanTexture, shininess: 0});
 
-		var titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), titanMaterial);
+	var titan = new THREE.Mesh(new THREE.SphereGeometry(0.00172, sphereSegmentPrecision, sphereRingPrecision), titanMaterial);
 
-		titan.position.x = bodyPositions.Titan[0];
-		titan.position.y = bodyPositions.Titan[1];
-		titan.position.z = bodyPositions.Titan[2];
+	titan.position.x = bodyPositions.Titan[0];
+	titan.position.y = bodyPositions.Titan[1];
+	titan.position.z = bodyPositions.Titan[2];
 
-		scene.add(titan);
+	scene.add(titan);
 
-		bodies[14] = [titan, null, "Titan", 0.00172, "majorsat", "udder2"];
+	bodies[14] = [titan, null, "Titan", 0.00172, "majorsat", "udder2"];
 }
 
 function addTitania() {
-		THREE.ImageUtils.crossOrigin = '';
-		var titaniaTexture = loader.load('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
-		var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var titaniaTexture = loader.load('images/titaniaTexture.jpg',THREE.SphericalRefractionMapping);
+	var titaniaMaterial = new THREE.MeshPhongMaterial({ map: titaniaTexture, shininess: 0});
 
-		var titania = new THREE.Mesh(new THREE.SphereGeometry(0.0005273, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
+	var titania = new THREE.Mesh(new THREE.SphereGeometry(0.0005273, sphereSegmentPrecision, sphereRingPrecision), titaniaMaterial);
 
-		titania.position.x = bodyPositions.Titania[0];
-		titania.position.y = bodyPositions.Titania[1];
-		titania.position.z = bodyPositions.Titania[2];
+	titania.position.x = bodyPositions.Titania[0];
+	titania.position.y = bodyPositions.Titania[1];
+	titania.position.z = bodyPositions.Titania[2];
 
-		scene.add(titania);
+	scene.add(titania);
 
-		bodies[15] = [titania, null, "Titania", 0.0005273, "majorsat", "udder2"];
+	bodies[15] = [titania, null, "Titania", 0.0005273, "majorsat", "udder2"];
 }
 
 function addTriton() {
-		THREE.ImageUtils.crossOrigin = '';
-		var tritonTexture = loader.load('images/tritonTexture.jpg',THREE.SphericalRefractionMapping);
-		var tritonMaterial = new THREE.MeshPhongMaterial({ map: tritonTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var tritonTexture = loader.load('images/tritonTexture.jpg',THREE.SphericalRefractionMapping);
+	var tritonMaterial = new THREE.MeshPhongMaterial({ map: tritonTexture, shininess: 0});
 
-		var triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), tritonMaterial);
+	var triton = new THREE.Mesh(new THREE.SphereGeometry(0.00090469, sphereSegmentPrecision, sphereRingPrecision), tritonMaterial);
 
-		triton.position.x = bodyPositions.Triton[0];
-		triton.position.y = bodyPositions.Triton[1];
-		triton.position.z = bodyPositions.Triton[2];
+	triton.position.x = bodyPositions.Triton[0];
+	triton.position.y = bodyPositions.Triton[1];
+	triton.position.z = bodyPositions.Triton[2];
 
-		scene.add(triton);
+	scene.add(triton);
 
-		bodies[16] = [triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
+	bodies[16] = [triton, null, "Triton", 0.00090469, "majorsat", "udder2"];
 }
 
 function addDione() {
-		THREE.ImageUtils.crossOrigin = '';
-		var dioneTexture = loader.load('images/dioneTexture.jpg',THREE.SphericalRefractionMapping);
-		var dioneMaterial = new THREE.MeshPhongMaterial({ map: dioneTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var dioneTexture = loader.load('images/dioneTexture.jpg',THREE.SphericalRefractionMapping);
+	var dioneMaterial = new THREE.MeshPhongMaterial({ map: dioneTexture, shininess: 0});
 
-		var dione = new THREE.Mesh(new THREE.SphereGeometry(0.000376, sphereSegmentPrecision, sphereRingPrecision), dioneMaterial);
+	var dione = new THREE.Mesh(new THREE.SphereGeometry(0.000376, sphereSegmentPrecision, sphereRingPrecision), dioneMaterial);
 
-		dione.position.x = bodyPositions.Dione[0];
-		dione.position.y = bodyPositions.Dione[1];
-		dione.position.z = bodyPositions.Dione[2];
+	dione.position.x = bodyPositions.Dione[0];
+	dione.position.y = bodyPositions.Dione[1];
+	dione.position.z = bodyPositions.Dione[2];
 
-		scene.add(dione);
+	scene.add(dione);
 
-		bodies.push([dione, null, "Dione", 0.000376, "majorsat", "udder2"]);
+	bodies.push([dione, null, "Dione", 0.000376, "majorsat", "udder2"]);
 }
 
 function addIapetus() {
-		THREE.ImageUtils.crossOrigin = '';
-		var iapetusTexture = loader.load('images/iapetusTexture.jpg',THREE.SphericalRefractionMapping);
-		var iapetusMaterial = new THREE.MeshPhongMaterial({ map: iapetusTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var iapetusTexture = loader.load('images/iapetusTexture.jpg',THREE.SphericalRefractionMapping);
+	var iapetusMaterial = new THREE.MeshPhongMaterial({ map: iapetusTexture, shininess: 0});
 
-		var iapetus = new THREE.Mesh(new THREE.SphereGeometry(0.000491, sphereSegmentPrecision, sphereRingPrecision), iapetusMaterial);
+	var iapetus = new THREE.Mesh(new THREE.SphereGeometry(0.000491, sphereSegmentPrecision, sphereRingPrecision), iapetusMaterial);
 
-		iapetus.position.x = bodyPositions.Iapetus[0];
-		iapetus.position.y = bodyPositions.Iapetus[1];
-		iapetus.position.z = bodyPositions.Iapetus[2];
+	iapetus.position.x = bodyPositions.Iapetus[0];
+	iapetus.position.y = bodyPositions.Iapetus[1];
+	iapetus.position.z = bodyPositions.Iapetus[2];
 
-		scene.add(iapetus);
+	scene.add(iapetus);
 
-		bodies.push([iapetus, null, "Iapetus", 0.000491, "majorsat", "udder2"]);
+	bodies.push([iapetus, null, "Iapetus", 0.000491, "majorsat", "udder2"]);
 }
 
 function addTethys() {
-		THREE.ImageUtils.crossOrigin = '';
-		var tethysTexture = loader.load('images/tethysTexture.jpg',THREE.SphericalRefractionMapping);
-		var tethysMaterial = new THREE.MeshPhongMaterial({ map: tethysTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var tethysTexture = loader.load('images/tethysTexture.jpg',THREE.SphericalRefractionMapping);
+	var tethysMaterial = new THREE.MeshPhongMaterial({ map: tethysTexture, shininess: 0});
 
-		var tethys = new THREE.Mesh(new THREE.SphereGeometry(0.0003585, sphereSegmentPrecision, sphereRingPrecision), tethysMaterial);
+	var tethys = new THREE.Mesh(new THREE.SphereGeometry(0.0003585, sphereSegmentPrecision, sphereRingPrecision), tethysMaterial);
 
-		tethys.position.x = bodyPositions.Tethys[0];
-		tethys.position.y = bodyPositions.Tethys[1];
-		tethys.position.z = bodyPositions.Tethys[2];
+	tethys.position.x = bodyPositions.Tethys[0];
+	tethys.position.y = bodyPositions.Tethys[1];
+	tethys.position.z = bodyPositions.Tethys[2];
 
-		scene.add(tethys);
+	scene.add(tethys);
 
-		bodies.push([tethys, null, "Tethys", 0.0003585, "majorsat", "udder2"]);
+	bodies.push([tethys, null, "Tethys", 0.0003585, "majorsat", "udder2"]);
 }
 
 function addCeres() {
-		THREE.ImageUtils.crossOrigin = '';
-		var ceresTexture = loader.load('images/ceresTexture.jpg',THREE.SphericalRefractionMapping);
-		var ceresMaterial = new THREE.MeshPhongMaterial({ map: ceresTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var ceresTexture = loader.load('images/ceresTexture.jpg',THREE.SphericalRefractionMapping);
+	var ceresMaterial = new THREE.MeshPhongMaterial({ map: ceresTexture, shininess: 0});
 
-		var ceres = new THREE.Mesh(new THREE.SphereGeometry(0.0003183, sphereSegmentPrecision, sphereRingPrecision), ceresMaterial);
+	var ceres = new THREE.Mesh(new THREE.SphereGeometry(0.0003183, sphereSegmentPrecision, sphereRingPrecision), ceresMaterial);
 
-		ceres.position.x = bodyPositions.Ceres[0];
-		ceres.position.y = bodyPositions.Ceres[1];
-		ceres.position.z = bodyPositions.Ceres[2];
+	ceres.position.x = bodyPositions.Ceres[0];
+	ceres.position.y = bodyPositions.Ceres[1];
+	ceres.position.z = bodyPositions.Ceres[2];
 
-		scene.add(ceres);
+	scene.add(ceres);
 
-		bodies.push([ceres, null, "Ceres", 0.0003183, "dwarf", "udder2"]);
+	bodies.push([ceres, null, "Ceres", 0.0003183, "dwarf", "udder2"]);
 }
 
 function addPluto() {
-		THREE.ImageUtils.crossOrigin = '';
-		var plutoTexture = loader.load('images/plutoTexture.jpg',THREE.SphericalRefractionMapping);
-		var plutoMaterial = new THREE.MeshPhongMaterial({ map: plutoTexture, shininess: 0});
+	THREE.ImageUtils.crossOrigin = '';
+	var plutoTexture = loader.load('images/plutoTexture.jpg',THREE.SphericalRefractionMapping);
+	var plutoMaterial = new THREE.MeshPhongMaterial({ map: plutoTexture, shininess: 0});
 
-		var pluto = new THREE.Mesh(new THREE.SphereGeometry(0.0007921, sphereSegmentPrecision, sphereRingPrecision), plutoMaterial);
+	var pluto = new THREE.Mesh(new THREE.SphereGeometry(0.0007921, sphereSegmentPrecision, sphereRingPrecision), plutoMaterial);
 
-		pluto.position.x = bodyPositions.Pluto[0];
-		pluto.position.y = bodyPositions.Pluto[1];
-		pluto.position.z = bodyPositions.Pluto[2];
+	pluto.position.x = bodyPositions.Pluto[0];
+	pluto.position.y = bodyPositions.Pluto[1];
+	pluto.position.z = bodyPositions.Pluto[2];
 
-		scene.add(pluto);
+	scene.add(pluto);
 
-		bodies.push([pluto, null, "Pluto", 0.0007921, "dwarf", "udder2"]);
+	bodies.push([pluto, null, "Pluto", 0.0007921, "dwarf", "udder2"]);
 }
