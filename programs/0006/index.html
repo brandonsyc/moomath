@@ -18,12 +18,10 @@
 		vec3 vNormal = normalize( normalMatrix * normal );
 		vec3 vNormel = normalize( normalMatrix * viewVector );
 		intensity = pow( c - dot(vNormal, vNormel), p );
-
 		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
 	}
 </script>
 
-<!-- fragment shader a.k.a. pixel shader -->
 <script id="fragmentShader" type="x-shader/x-vertex">
 	uniform vec3 glowColor;
 	varying float intensity;
@@ -34,36 +32,29 @@
 	}
 </script>
 
-<script id="sun" type="x-shader/x-vertex">
-/**
- * Multiply each vertex by the
- * model-view matrix and the
- * projection matrix (both provided
- * by Three.js) to get a final
- * vertex position
- */
-	void main() {
-		gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-	}
-</script>
-
-<script id="sun" type="x-shader/x-vertex">
-/**
- * Set the colour to a lovely pink.
- * Note that the color is a 4D Float
- * Vector, R,G,B and A and each part
- * runs from 0.0 to 1.0
- */
-	void main() {
-		gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0); // RGBA()
-	}
-</script>
-
 <body>
 	<div class="controls">
-		<p>Test P</p>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
+		<div class="wrapper">
+			<label for="bslide">Planetary Size</label>
+			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar1"></div>
+				<p id="bar1-contents">50&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(1, 1.2)" onMouseUp="lift()">&raquo;</button>
+			<label for="bslide">Moon Size</label>
+			<button class="bslide" onMouseDown="press(2, -1)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar2"></div>
+				<p id="bar2-contents">25&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(2, 1)" onMouseUp="lift()">&raquo;</button>
+		</div>
+		<label for="goto">Find Object:</label>
+		<input type="text" id="goto">
+		<button class="go" onClick="doGoTo()">Go!</button>
 		<div class="wrapper">
 			<p>Test Radio</p>
 			<input type="radio" id="r1" name="testr" checked>
@@ -73,48 +64,35 @@
 			<input type="radio" id="r3" name="testr">
 			<label for="r3">Test Check</label>
 		</div>
-		<p>Test Input</p>
-		<input type="text">
-		<div class="wrapper">
-			<label for="bslide">Planetary Size</label>
-			<button class="bslide" onMouseDown="press(1, -1.5)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar1"></div>
-				<p id="bar1-contents">50&times;</p>
-			</div>
-			<button class="bslide right" onMouseDown="press(1, 1.5)" onMouseUp="lift()">&raquo;</button>
-		</div>
-		<div class="wrapper">
-			<label for="bslide">Moon Size</label>
-			<button class="bslide" onMouseDown="press(2, -1.5)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar2"></div>
-				<p id="bar1-contents">50&times;</p>
-			</div>
-			<button class="bslide right" onMouseDown="press(2, 1.5)" onMouseUp="lift()">&raquo;</button>
-		</div>
 	</div>
 	<div id="webgl-container"></div>
 	<script>
 		var name = "";
 		var diff = "";
+		var downTimeout = null;
 		function press(a, b) {
 			name = a;
 			diff = b;
-			down();
+			down(noTimeout = true);
+			downTimeout = setTimeout(down, 250);
 		}
 		function lift() {
 			name = "";
 			diff = "";
+			if (downTimeout) clearTimeout(downTimeout);
 		}
-		function down() {
+		function down(noTimeout = false) {
 			if (name !== "")
 			{
 				var bar = document.getElementById("bar" + name);
 				if (bar.style.width === "") {
-					bar.style.width = "50%";
+					bar.style.width = "49%";
 				}
-				bar.style.width = parseFloat(bar.style.width) + diff + "%";
+				if (noTimeout) {
+					bar.style.width = Math.min(Math.max(parseFloat(bar.style.width) + 1 * Math.sign(diff),0),100) + "%";
+				} else {
+					bar.style.width = Math.min(Math.max(parseFloat(bar.style.width) + diff,0),100) + "%";
+				}
 				if (parseFloat(bar.style.width) < 0) {
 					bar.style.width = "0%";
 				}
@@ -126,7 +104,7 @@
 				} else if (name == "2") {
 					updateMoonSize();
 				}
-				setTimeout("down()", 1000/60);
+				if (!noTimeout) setTimeout("down()", 1000/60);
 			}
 		}
 	</script>
