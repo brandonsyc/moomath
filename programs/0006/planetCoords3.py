@@ -5,7 +5,7 @@ os.system('cls' if os.name == 'nt' else 'clear')
 
 print("Logging into horizons.jpl.nasa.gov:6775...")
 try:
-    horizons = telnetlib.Telnet("jpl.nasa.gov",6775)
+    horizons = telnetlib.Telnet("horizons.jpl.nasa.gov",6775)
 except:
     print("An unknown error occurred while connecting.")
     sys.exit(-1)
