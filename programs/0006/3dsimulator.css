@@ -2,6 +2,7 @@ body
 {
   position: relative;
   font-size: 0;
+  background-color: #000;
 }
 #controls input
 {
@@ -9,12 +10,10 @@ body
   top: 25px;
   position: absolute;
 }
-
 * {
 margin: 0;
 padding: 0;
 }
-
 .controls {
   background-color: rgba(0, 136, 187, 0.5);
   box-shadow: 0px 0px 10px rgba(0, 136, 187, 0.5);
@@ -28,12 +27,10 @@ padding: 0;
   white-space: nowrap;
   width: 100%;
 }
-
 p, label {
-  line-height: normal;
+  line-height: 20px;
   text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 }
-
 p, label, input, button {
   color: rgba(255, 255, 255, 0.5);
   display: inline-block;
@@ -41,7 +38,6 @@ p, label, input, button {
   margin-top: -50px;
   vertical-align: middle;
 }
-
 .wrapper {
   border-left: 2px solid rgba(0, 136, 187, 0.5);
   border-right: 2px solid rgba(0, 136, 187, 0.5);
@@ -51,65 +47,54 @@ p, label, input, button {
   padding: 0 10px;
   margin: 25px 10px 0 10px;
 }
-
 input[type=checkbox], input[type=radio] {
   width: 0;
   visibility: hidden;
 }
-
 input {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 100px;
   width: 100px;
 }
-
 label {
   background-color: rgba(255, 255, 255, 0);
   border-radius: 0px;
 	transition: 0.5s;
 }
-
 input:checked+label {
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 100px;
 }
-
 button {
   background-color: rgba(255, 255, 255, 0.5);
   box-shadow: none;
   height: 40px;
   line-height: 0px;
 }
-
 button:not(.go) {
   border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
   width: 40px;
 }
-
 .go {
   border-radius: 100px;
   margin-left: 15px;
   margin-right: 5px;
 }
-
 .right:not(.go) {
   border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
   border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
 }
-
 button:hover {
   background-color: rgba(238, 238, 238, 0.5);
 }
-
 button:active {
   box-shadow: inset 0px 0px 10px rgba(31, 31, 31, 0.5);
   transition: 0.5s;
 }
-
 .slider {
   background-color: rgba(255, 255, 255, 0.5);
   display: inline-block;
@@ -118,13 +103,11 @@ button:active {
   margin-top: -50px;
   vertical-align: middle;
 }
-
 .bar {
   background-color: rgba(0, 136, 187, 0.5);
   height: 40px;
   width: 50%;
 }
-
 .slider p {
   margin-top: -140px;
 }
