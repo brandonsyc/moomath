@@ -56,6 +56,15 @@ input {
   border: none;
   border-radius: 100px;
   width: 100px;
+  transition: 0.2s;
+}
+input:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px 2px #08b;
+}
+button:focus {
+  outline: none;
+  box-shadow: 0px 0px 2px 2px #08b;
 }
 label {
   background-color: rgba(255, 255, 255, 0);
@@ -63,7 +72,7 @@ label {
 	transition: 0.5s;
 }
 input:checked+label {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 100px;
 }
 button {
@@ -110,4 +119,7 @@ button:active {
 }
 .slider p {
   margin-top: -140px;
+}
+a {
+  font-size: 0px;
 }
