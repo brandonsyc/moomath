@@ -3,19 +3,25 @@ import telnetlib,sys,time,datetime
 import os
 os.system('cls' if os.name == 'nt' else 'clear')
 
-print "Logging into horizons.jpl.nasa.gov:6775..."
+print("Logging into horizons.jpl.nasa.gov:6775...")
 try:
     horizons = telnetlib.Telnet("horizons.jpl.nasa.gov",6775)
 except:
-    print "An unknown error occurred while connecting."
+    print("An unknown error occurred while connecting.")
     sys.exit(-1)
+    
+def write(text):
+    horizons.write(bytes(text, encoding="ascii"))
 
-print "Provide updates? (Y if yes, N if no)"
-updates = raw_input("> ")
+def read_until(text):
+    return horizons.read_until(bytes(text,encoding="ascii"))
+
+print("Provide updates? (Y if yes, N if no)")
+updates = input("> ")
 
 updates = (updates.upper() == "Y")
 
-horizons.read_until('Horizons> ')
+read_until('Horizons> ')
 
 objs = ["Mercury","Venus","Earth","Moon","Mars","Jupiter", "Saturn", "Uranus", "Neptune", "Ganymede",
         "Callisto","Io","Europa","Pluto","Titan","Titania","Ceres","Triton","Iapetus","Tethys","Dione"]
@@ -26,46 +32,46 @@ isfirstrun = True
 
 currenttime = time.strftime("%Y-%B-%d %H:%M")
 if updates:
-    print "\nCurrent Ephemeris Time: " + currenttime + ".\n"
+    print("\nCurrent Ephemeris Time: " + currenttime + ".\n")
 
 command = "var bodyPositions = {\n"
 
 for i,obj in enumerate(objs):
     if updates:
-        print "Collecting data for " + obj + "..."
+        print("Collecting data for " + obj + "...")
     
-    horizons.write(str(objids[i])+'\n')
+    write(str(objids[i])+'\n')
     
-    horizons.read_until('<cr>: ')
-    horizons.write('E\n')
+    read_until('<cr>: ')
+    write('E\n')
     
-    horizons.read_until(' : ')
-    horizons.write('v\n')
+    read_until(' : ')
+    write('v\n')
     
-    horizons.read_until(' : ')
-    horizons.write('@sun\n' if isfirstrun else 'y\n')
+    read_until(' : ')
+    write('@sun\n' if isfirstrun else 'y\n')
     
-    horizons.read_until(' : ')
-    horizons.write('eclip\n')
+    read_until(' : ')
+    write('eclip\n')
     
-    horizons.read_until(' : ')
-    horizons.write(currenttime + '\n')
+    read_until(' : ')
+    write(currenttime + '\n')
     
-    horizons.read_until(' : ')
-    horizons.write('\n')
+    read_until(' : ')
+    write('\n')
     
-    horizons.read_until(' : ')
-    horizons.write('14d\n')
+    read_until(' : ')
+    write('14d\n')
     
-    horizons.read_until(' : ')
-    horizons.write('y\n')
+    read_until(' : ')
+    write('y\n')
     
-    horizons.read_until('$$SOE')
-    contents = horizons.read_until('$$EOE')
+    read_until('$$SOE')
+    contents = read_until('$$EOE')
     
-    horizons.read_until('[R]edisplay, ? : ')
-    horizons.write('N\n')
-    horizons.read_until('Horizons> ')
+    read_until('[R]edisplay, ? : ')
+    write('N\n')
+    read_until('Horizons> ')
     
     coords = [(k+" " if k != '' else '') for k in (contents.split('\n')[2]
                                                            .replace('Y',"")
@@ -82,8 +88,8 @@ for i,obj in enumerate(objs):
     newcoords[1],newcoords[2] = newcoords[2],newcoords[1]
 
     if updates:
-        print "Collected data for " + obj + ". (%s%% done)\n" \
-              % (round(100 * i/float(len(objs)),3))
+        print("Collected data for " + obj + ". (%s%% done)\n" \
+              % (round(100 * i/float(len(objs)),3)))
 
     command = '\t' + command + obj + ":[" + ','.join(newcoords) + '],\n'
     
@@ -93,10 +99,9 @@ horizons.close()
 
 command = 'v' + command[:-2] + "};"
 
-print "Completed query of " + str(len(objs)) + " bodies! Paste the following into the JS:\n\n"
+print("Completed query of " + str(len(objs)) + " bodies! Paste the following into the JS:\n\n")
 
-print command
+print(command)
 
-print "\n"
+print("\n")
 sys.exit(0)
-
