@@ -95,7 +95,7 @@ for i,obj in enumerate(objs):
     
     isfirstrun = False
 
-close()
+horizons.close()
 
 command = 'v' + command[:-2] + "};"
 
