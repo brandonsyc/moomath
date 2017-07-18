@@ -77,7 +77,7 @@ for i,obj in enumerate(objs):
     
     for coord in coords:
         if (coord != ''):
-            newcoords.append(str(float(coord.replace(' ','').replace('\r','')) * 100))
+            newcoords.append(str(float(coord.replace(' ','').replace('\r','')) * 100 * 1.496e9))
 
     newcoords[1],newcoords[2] = newcoords[2],newcoords[1]
 
