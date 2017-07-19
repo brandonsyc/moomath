@@ -1,15 +1,19 @@
 if (getParameterByName("embed") !== null) {
+  var divs = document.getElementsByTagName("div");
+  var box = document.getElementsByClassName("box")[0];
+  box.insertBefore(document.createElement("BR"), box.childNodes[0]);
+  var credit = document.createElement("P");
+  credit.style.color = "#bbb";
+  credit.innerHTML = 'From Moomath; view original <a href="' + window.location.href.split("?")[0] + '" target="_blank">here</a>';
+  box.insertBefore(credit, box.childNodes[0]);
   var load = document.createElement("DIV");
   load.style.width = "100%";
   load.style.height = "100%";
   load.style.backgroundColor = "#08b";
   load.style.zIndex = "1";
   load.style.position = "relative";
-  load.style.opacity = "1";
   load.style.transition = "opacity 1s 1s, z-index 0s 2s";
   document.body.appendChild(load);
-  var divs = document.getElementsByTagName("div");
-  var box = document.getElementsByClassName("box")[0];
   for (var i = 0; i < divs.length; i++) {
     if (divs[i] !== load) {
       divs[i].style.transition = "0s";
@@ -18,16 +22,12 @@ if (getParameterByName("embed") !== null) {
         divs[i].style.height = "0px";
         divs[i].style.position = "fixed";
         divs[i].style.top = "0px";
-        divs[i].style.left = "0px";
       }
       else {
         divs[i].style.visibility = "visible";
       }
     }
   }
-  box.style.position = "fixed";
-  box.style.top = "0px";
-  box.style.left = "0px";
   var start = document.createElement("BUTTON");
   start.innerHTML = "Start!";
   start.style.position = "fixed";
@@ -38,13 +38,10 @@ if (getParameterByName("embed") !== null) {
   start.onclick = function () {
     load.style.opacity = "0";
     load.style.zIndex = "-1";
-    start.style.color = "#08b";
-    start.style.backgroundColor = "#08b";
-    start.style.boxShadow = "0px 0px 0px #08b";
+    start.style.opacity = "0";
   }
   load.appendChild(start);
 }
-//load.style.opacity = "0";
 
 function getParameterByName(name, url) {
     if (!url) {
