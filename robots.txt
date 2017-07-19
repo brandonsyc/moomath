@@ -1,2 +1,2 @@
 User-Agent: *
-Disallow: /team.jpg
+Disallow: images/team.jpg
