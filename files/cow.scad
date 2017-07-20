@@ -1,3 +1,4 @@
+//body
 difference() {
 	resize(newsize=[110,105,100]) sphere(r=10);
 	translate([-55,-55,-110]) cube(110);
@@ -7,19 +8,24 @@ difference() {
 	translate([-55,-55,110]) cube(110);
 }
 
+//feet
 translate([-25,25,-50]) huv();
 translate([-25,-25,-50]) huv();
 translate([25,25,-50]) huv();
 translate([25,-25,-50]) huv();
 
+//cool stuff
 translate([0,0,-35]) uder();
 translate([75,0,20]) rotate([0,-35,0]) sat();
 
+//head
 difference() {
 	translate([50,0,50]) resize(newsize=[80,85,75]) sphere(r=10);
 	translate([80,20,60]) rotate([-25,70,0]) ii();
 	translate([80,-20,60]) rotate([25,70,0]) ii();
 }
+
+translate([75,10,60]) rotate([-25,70,0]) pipul();
 
 module huv() {
 	hull() {
@@ -62,5 +68,8 @@ module ii() {
 }
 
 module pipul() {
-		translate([5,0,5]) resize(newsize=[10,10,5]) cylinder(r=10,h=10);
+	hull() {
+		resize(newsize=[10,10,5]) cylinder(r=10,h=10);
+		translate([0,0,5]) resize(newsize=[10,10,5]) sphere(r=10);
+	}
 }
