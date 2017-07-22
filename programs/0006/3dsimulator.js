@@ -28,7 +28,7 @@ var minDwarfPlanetSize = 23;
 var minVisibleMajorSatelliteSize = 25;
 
 // Distance at which major satellites are displayed, in km
-var majorSatelliteDisplayDistance = 10000000;
+var majorSatelliteDisplayDistance = 1000000000;
 
 // Size at which planets are not displayed
 
@@ -123,9 +123,6 @@ var alignGridColor = "#777777";
 
 // Sun emissiveIntensity
 var sunEmissive = 0.9;
-
-// Current Julian date
-
 
 function init() {
 	// Initialization sequence
@@ -328,9 +325,9 @@ function update() {
 		}
 		} else {
 		var cameraDistance = Math.hypot(
-			bodies[i].object.position.x-camera.position.x,
-			bodies[i].object.position.y-camera.position.y,
-			bodies[i].object.position.z-camera.position.z);
+			bodies[i].object.children[0].position.x-camera.position.x,
+			bodies[i].object.children[0].position.y-camera.position.y,
+			bodies[i].object.children[0].position.z-camera.position.z);
 		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
 		var bodyPixelSize = bodies[i].radius / height * window.innerHeight;
 
@@ -354,13 +351,15 @@ function update() {
 					if (bodyPixelSize < minVisibleMajorSatelliteSize * planetScaleFactor + 1) {
 						scaleFactor = (minVisibleMajorSatelliteSize * planetScaleFactor + 1) / bodyPixelSize;
 					}
-					console.log(3,bodies[i].name);
 				}
 			}
 		}
-		bodies[i].object.scale.x = scaleFactor;
-		bodies[i].object.scale.y = scaleFactor;
-		bodies[i].object.scale.z = scaleFactor;
+
+		for (child = 0; child < bodies[i].object.children.length; child++) {
+		bodies[i].object.children[child].scale.x = scaleFactor;
+		bodies[i].object.children[child].scale.y = scaleFactor;
+		bodies[i].object.children[child].scale.z = scaleFactor;
+		}
 
 		if (bodyPixelSize * scaleFactor < 0.01) {
 			bodies[i].object.visible = false;
@@ -411,7 +410,6 @@ function update() {
 	}
 
 	if (finished) {
-		console.log(3);
 		for (j = 0; j < 200; j++) {
 			updateBodyPositions(1);
 		}
@@ -464,11 +462,9 @@ function doGoTo() {
 	var bodyName = document.getElementById("goto").value.replace(/ /g,'').toLowerCase();
 	for (i = 0; i < bodies.length; i++) {
 		if (bodies[i].name.toLowerCase() === bodyName) {
-			var x = bodies[i].object.position.x;
-			var y = bodies[i].object.position.y;
-			var z = bodies[i].object.position.z;
+			var position = getBodyPosition(i);
 			focusBody = bodies[i].object;
-			shiftCameraFocus(x,y,z);
+			shiftCameraFocus(position.x,position.y,position.z);
 
 			var bodySize = bodies[i].radius;
 			setTimeout(function() {controls.smoothDollyIntoBody(bodySize)},1020);
@@ -579,22 +575,30 @@ function addBody(body) {
 		if (body.name === "Saturn") {
 			var bodyGroup = new THREE.Group();
 
-	bodyGroup.add(bodyMesh);
+			bodyGroup.add(bodyMesh);
 
-	var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * body.radius, 2 * body.radius, 64, 5, 0, Math.PI * 2),
-	 new THREE.MeshBasicMaterial({ map: loader.load('images/saturnRings.png'),
-	  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
+			var rings = new THREE.Mesh(new THREE.XRingGeometry(1.2 * body.radius, 2 * body.radius, 64, 5, 0, Math.PI * 2),
+			 new THREE.MeshBasicMaterial({ map: loader.load('images/saturnRings.png'),
+			  side: THREE.DoubleSide, transparent: true, opacity: 0.6 }))
 
-	rings.position.x = bodyMesh.position.x;
-	rings.position.y = bodyMesh.position.y;
-	rings.position.z = bodyMesh.position.z;
+			rings.position.x = bodyMesh.position.x;
+			rings.position.y = bodyMesh.position.y;
+			rings.position.z = bodyMesh.position.z;
 
-	bodyGroup.add(rings);
+			bodyGroup.add(rings);
 	
-	bodyMesh = bodyGroup;
+			bodyMesh = bodyGroup;
 		}
 
-		bodyMesh.name = bodies.length;
+		if (bodyMesh.children.length > 0) {
+			for (child = 0; child < bodyMesh.children.length; child++) {
+				bodyMesh.children[child].name = bodies.length;
+			}
+		} else {
+			bodyMesh.name = bodies.length;
+		}
+
+		body.velocity = new THREE.Vector3(bodyPositions[body.name][3],bodyPositions[body.name][4],bodyPositions[body.name][5]);
 		
 		scene.add(bodyMesh);
 
@@ -603,12 +607,60 @@ function addBody(body) {
 	}
 }
 
+function Vector3toArray(v) {
+	return [v.x,v.y,v.z];
+}
+
 function getBody(name) {
 	for (i = 0; i < bodies.length; i++) {
 		if (bodies[i].name === name) {
 			return i;
 		}
 	}
+}
+
+function getBodyPosition(bodyIndex,asVector = true) {
+	var positionVector = null;
+	if (bodies[bodyIndex].object.children.length > 0) {
+		positionVector = bodies[bodyIndex].object.children[0].position;
+	} else {
+		positionVector = bodies[bodyIndex].object.position;
+	}
+	if (asVector) {
+		return positionVector;
+	} else {
+		return Vector3toArray(positionVector);
+	}
+}
+
+function getBodyVelocity(bodyIndex,asVector = false) {
+	if (asVector) {
+		return bodies[bodyIndex].velocity;
+	} else {
+		return Vector3toArray(bodies[bodyIndex].velocity);
+	}
+}
+
+function setBodyPositionVector(bodyIndex,v) {
+	if (bodies[bodyIndex].object.children.length > 0) {
+		for (child = 0; child < bodies[bodyIndex].object.children.length; child++) {
+			bodies[bodyIndex].object.children[child].position = v;
+		}
+	} else {
+		bodies[bodyIndex].object.position = v;
+	}
+}
+
+function setBodyPosition(bodyIndex,x,y,z) {
+	setBodyPositionVector(bodyIndex, new THREE.Vector3(x,y,z));
+}
+
+function setBodyVelocityVector(bodyIndex,v) {
+	bodies[bodyIndex].velocity = v;
+}
+
+function setBodyVelocity(bodyIndex,x,y,z) {
+	setBodyVelocityVector(bodyIndex, new THREE.Vector3(x,y,z));
 }
 
 var days = 0;
@@ -624,25 +676,12 @@ function updateBodyPositions(percentDay) {
 }
 
 function updateBodyPosition(bodyIndex,percentDay) {
-	var body = bodies[bodyIndex];
-	var bodyPos;
-	if (body.object.children.length > 0) {
-		bodyPos = body.object.children[0].position;
-	} else {
-		bodyPos = body.object.position;
-	}
-	bodyPos.x += percentDay * bodyPositions[body.name][3];
-	bodyPos.y += percentDay * bodyPositions[body.name][4];
-	bodyPos.z += percentDay * bodyPositions[body.name][5];
-	if (body.object.children.length > 0) {
-		//console.log(bodyPos,body.name);
-		for (child = 0; child < body.object.children.length; child++) {
-			//console.log(body.object.children[child]);
-			bodies[bodyIndex].object.children[child].position = bodyPos;
-		}
-	} else {
-		bodies[bodyIndex].object.position = bodyPos;
-	}
+	var bodyPos = getBodyPosition(bodyIndex);
+	var bodyVelocity = getBodyVelocity(bodyIndex,asVector = true);
+	bodyPos.x += percentDay * bodyVelocity.x;
+	bodyPos.y += percentDay * bodyVelocity.y;
+	bodyPos.z += percentDay * bodyVelocity.z;
+	setBodyPositionVector(bodyIndex,bodyPos);
 
 	var distance = Math.hypot(0 - bodyPos.x, 0 - bodyPos.y, 0 - bodyPos.z);
 	var magnitude = G * percentDay * bodies[sunIndex].mass / (distance * distance);
@@ -650,7 +689,5 @@ function updateBodyPosition(bodyIndex,percentDay) {
 	var ay = magnitude * (0 - bodyPos.y) / distance;
 	var az = magnitude * (0 - bodyPos.z) / distance;
 
-	bodyPositions[body.name][3] += ax;
-	bodyPositions[body.name][4] += ay;
-	bodyPositions[body.name][5] += az;
+	setBodyVelocityVector(bodyIndex,bodyVelocity.add(new THREE.Vector3(ax,ay,az)));
 }
