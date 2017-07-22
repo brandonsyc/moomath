@@ -27,8 +27,8 @@ var minDwarfPlanetSize = 23;
 // Minimum major satellite size
 var minVisibleMajorSatelliteSize = 25;
 
-// Distance at which major satellites are displayed, in 1/100 AU
-var majorSatelliteDisplayDistance = 1000000000;
+// Distance at which major satellites are displayed, in km
+var majorSatelliteDisplayDistance = 10000000;
 
 // Size at which planets are not displayed
 
@@ -42,21 +42,28 @@ var planetScaleFactor = 0.5;
 var focusBody = null;
 
 // Convert 1/100 AU to kilometers
-var AUtokm = 1.496e6;
+var AUtokm = 1495979;
 
 // The positions of the bodies
 var bodyPositions = {
 Sun:[0,0,0],
 Mercury:[-39.0194060099,2.38758068596,-14.5885671894,
-1.30415112897 * AUtokm,-0.2804456443263 * AUtokm,-1.9679060038 * AUtokm],
-Venus:[72.5136170661,-4.16432596262,1.47040747204],
-Earth:[37.7892192997,0.00387667752922,-94.3616270401],
+1.950982319655470E+06,-4.195407123831102E+05,-2.943945479134672E+06],
+Venus:[72.5136170661,-4.16432596262,1.47040747204,
+-6.298847370641737E+05,7.678956514270093E+04,2.948259795761990E+06],
+Earth:[37.7892192997,0.00387667752922,-94.3616270401,
+2.226354412350204E+06,-5.983088949780608E+01,1.206663978454226E+06],
 Moon:[38.0439865727,-0.00668693660424,-94.4023730406],
-Mars:[-77.0553248556,4.90073104281,143.621148364],
-Jupiter:[-492.428344472,11.9884295423,-233.522256309],
-Saturn:[-85.3633985402,20.8155818981,-1002.10904643],
-Uranus:[1802.14184064,-20.1825994952,848.656425163],
-Neptune:[2852.41589213,-46.9753950288,-911.188165466],
+Mars:[-77.0553248556,4.90073104281,143.621148364,
+-1.710505752068603E+06,2.295682355965634E+04,-9.077287580848663E+05],
+Jupiter:[-492.428344472,11.9884295423,-233.522256309,
+4.794401330121221E+05,-6.725196264870857E+03,-9.631893391464788E+05],
+Saturn:[-85.3633985402,20.8155818981,-1002.10904643,
+7.867668434171481E+05,-3.012431185505279E+04,-7.121032976933623E+04],
+Uranus:[1802.14184064,-20.1825994952,848.656425163,
+-2.550826031589947E+05,5.154059140588280E+03,5.036392633185812E+05],
+Neptune:[2852.41589213,-46.9753950288,-911.188165466,
+1.400816996303278E+05,-1.256006738225768E+04,4.493277023613825E+05],
 Ganymede:[-492.735008671,11.9599525915,-234.168031998],
 Callisto:[-491.285603673,11.9876009973,-234.029948286],
 Io:[-492.35950765,11.9796949816,-233.795046294],
@@ -116,6 +123,9 @@ var alignGridColor = "#777777";
 
 // Sun emissiveIntensity
 var sunEmissive = 0.9;
+
+// Current Julian date
+
 
 function init() {
 	// Initialization sequence
@@ -267,6 +277,8 @@ function onDocumentDblClick(event) {
 var lastUpdate = 0;
 var finished = false;
 
+var gah = 0;
+
 function update() {
 	// Update the animation frame
 
@@ -397,11 +409,16 @@ function update() {
 		finished = true;
 		console.log("Finished setup #2");
 	}
+
+	if (finished) {
+		console.log(3);
+		for (j = 0; j < 200; j++) {
+			updateBodyPositions(1);
+		}
+	}
 	lastUpdate = new Date().getTime();
 	rendererStats.update(renderer);
   	requestAnimationFrame(update);
-
-	updateMercury();
 }
 
 window.addEventListener('resize', function() {
@@ -594,31 +611,46 @@ function getBody(name) {
 	}
 }
 
-function updateMercury() {
-	mercuryIndex = getBody("Mercury");
+var days = 0;
+var G = 4.47e-10;
+var sunIndex;
+
+function updateBodyPositions(percentDay) {
 	sunIndex = getBody("Sun");
+	for (i = 0; i < 8; i++) {
+		updateBodyPosition(i,percentDay);
+	}
+	days += 1;
+}
 
-	mercuryPos = bodies[mercuryIndex].object.position;
+function updateBodyPosition(bodyIndex,percentDay) {
+	var body = bodies[bodyIndex];
+	var bodyPos;
+	if (body.object.children.length > 0) {
+		bodyPos = body.object.children[0].position;
+	} else {
+		bodyPos = body.object.position;
+	}
+	bodyPos.x += percentDay * bodyPositions[body.name][3];
+	bodyPos.y += percentDay * bodyPositions[body.name][4];
+	bodyPos.z += percentDay * bodyPositions[body.name][5];
+	if (body.object.children.length > 0) {
+		//console.log(bodyPos,body.name);
+		for (child = 0; child < body.object.children.length; child++) {
+			//console.log(body.object.children[child]);
+			bodies[bodyIndex].object.children[child].position = bodyPos;
+		}
+	} else {
+		bodies[bodyIndex].object.position = bodyPos;
+	}
 
-	var distance = Math.hypot(0 - mercuryPos.x, 0 - mercuryPos.y, 0 - mercuryPos.z);
-	var magnitude = 3.9405e-10 * bodies[sunIndex].mass / (distance * distance);
-	var ax = magnitude * (0 - mercuryPos.x) / distance;
-	var ay = magnitude * (0 - mercuryPos.y) / distance;
-	var az = magnitude * (0 - mercuryPos.z) / distance;
-	bodyPositions['Mercury'][3] += ax;
-	bodyPositions['Mercury'][4] += ay;
-	bodyPositions['Mercury'][5] += az;
+	var distance = Math.hypot(0 - bodyPos.x, 0 - bodyPos.y, 0 - bodyPos.z);
+	var magnitude = G * percentDay * bodies[sunIndex].mass / (distance * distance);
+	var ax = magnitude * (0 - bodyPos.x) / distance;
+	var ay = magnitude * (0 - bodyPos.y) / distance;
+	var az = magnitude * (0 - bodyPos.z) / distance;
 
-	mercuryPos.x += bodyPositions['Mercury'][3];
-	mercuryPos.y += bodyPositions['Mercury'][4];
-	mercuryPos.z += bodyPositions['Mercury'][5];
-	/**var G = 8.9405e-12;
-	var distance = Math.hypot(mercuryPos.x,mercuryPos.y,mercuryPos.z);
-	var magnitude = G * (bodies[sunIndex].mass) / (distance * distance * distance);
-	bodyPositions['Mercury'][3] -= magnitude * mercuryPos.x;
-	bodyPositions['Mercury'][4] -= magnitude * mercuryPos.y;
-	bodyPositions['Mercury'][5] -= magnitude * mercuryPos.z;**/
-	console.log(bodyPositions['Mercury']);
-	console.log(mercuryPos,distance,magnitude);
-	bodies[mercuryIndex].object.position = mercuryPos;
+	bodyPositions[body.name][3] += ax;
+	bodyPositions[body.name][4] += ay;
+	bodyPositions[body.name][5] += az;
 }
