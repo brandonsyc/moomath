@@ -41,7 +41,26 @@ if (getParameterByName("embed") !== null) {
     start.style.opacity = "0";
   }
   load.appendChild(start);
+
+  var parameters = getUrlVars();
+  for (var i = 1; i < parameters; i++) {
+
+  }
 }
+
+function getUrlVars()
+{
+  var vars = [], hash;
+  var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+  for(var i = 0; i < hashes.length; i++)
+  {
+      hash = hashes[i].split('=');
+      vars.push(hash[0]);
+      vars[hash[0]] = hash[1];
+  }
+  return vars;
+}
+
 
 function getParameterByName(name, url) {
     if (!url) {
