@@ -112,6 +112,23 @@ button:active {
   margin-top: -50px;
   vertical-align: middle;
 }
+.thing {
+  height: 50px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.thing .slider {
+  width: 50%;
+  margin-top: 0px;
+}
+.thing button {
+  margin-top: 0px;
+}
+.thing p {
+  margin-bottom: -100px;
+}
 .bar {
   background-color: rgba(0, 136, 187, 0.5);
   height: 40px;
