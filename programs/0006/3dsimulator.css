@@ -1,35 +1,31 @@
 body
 {
-  position: relative;
-  font-size: 0;
   background-color: #000;
+  font-size: 0;
+  position: relative;
 }
 #controls input
 {
   left: 25px;
-  top: 25px;
   position: absolute;
+  top: 25px;
 }
 * {
-margin: 0;
-padding: 0;
+  margin: 0;
+  padding: 0;
 }
 .controls {
   background-color: rgba(0, 136, 187, 0.5);
   box-shadow: 0px 0px 10px rgba(0, 136, 187, 0.5);
   height: 100px;
-  position: fixed;
-  padding: 0 10px;
-  text-align: center;
   line-height: 100px;
   overflow-x: auto;
   overflow-y: hidden;
+  padding: 0 10px;
+  position: fixed;
+  text-align: center;
   white-space: nowrap;
   width: 100%;
-}
-.controls p, label, .thing p {
-  line-height: 20px;
-  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
 }
 .controls p, label, input, button, .thing p {
   color: rgba(255, 255, 255, 0.5);
@@ -38,33 +34,33 @@ padding: 0;
   margin-top: -50px;
   vertical-align: middle;
 }
+.controls p, label, .thing p {
+  line-height: 20px;
+  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+}
 .wrapper {
   border-left: 2px solid rgba(0, 136, 187, 0.5);
-  border-right: 2px solid rgba(0, 136, 187, 0.5);
   border-radius: 20px;
-  height: 50px;
+  border-right: 2px solid rgba(0, 136, 187, 0.5);
   display: inline-block;
-  padding: 0 10px;
+  height: 50px;
   margin: 25px 10px 0 10px;
+  padding: 0 10px;
 }
 input[type=checkbox], input[type=radio] {
-  width: 0;
   visibility: hidden;
+  width: 0;
 }
 input {
   background-color: rgba(255, 255, 255, 0.5);
   border: none;
   border-radius: 100px;
-  width: 100px;
   transition: 0.2s;
+  width: 100px;
 }
-input:focus {
-  outline: none;
+input:focus, button:focus {
   box-shadow: 0px 0px 2px 2px #08b;
-}
-button:focus {
   outline: none;
-  box-shadow: 0px 0px 2px 2px #08b;
 }
 label {
   background-color: rgba(255, 255, 255, 0);
@@ -82,8 +78,8 @@ button {
   line-height: 0px;
 }
 button:not(.go) {
-  border-top-left-radius: 100px;
   border-bottom-left-radius: 100px;
+  border-top-left-radius: 100px;
   width: 40px;
 }
 .go {
@@ -92,10 +88,10 @@ button:not(.go) {
   margin-right: 5px;
 }
 .right:not(.go) {
-  border-top-left-radius: 0px;
   border-bottom-left-radius: 0px;
-  border-top-right-radius: 100px;
   border-bottom-right-radius: 100px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 100px;
 }
 button:hover {
   background-color: rgba(238, 238, 238, 0.5);
@@ -108,20 +104,20 @@ button:active {
   background-color: rgba(255, 255, 255, 0.5);
   display: inline-block;
   height: 40px;
-  width: 100px;
   margin-top: -50px;
   vertical-align: middle;
+  width: 100px;
 }
 .thing {
+  bottom: 0;
   height: 50px;
   position: fixed;
-  bottom: 0;
-  width: 100%;
   text-align: center;
+  width: 100%;
 }
 .thing .slider {
-  width: 50%;
   margin-top: 0px;
+  width: 50%;
 }
 .thing button {
   margin-top: 0px;
@@ -131,11 +127,12 @@ button:active {
 }
 .side {
   background-color: rgba(255, 255, 255, 0.5);
-  width: 250px;
+  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
   position: fixed;
-  right: 0;
   top: 50%;
   transform: translate(0, -50%);
+  right: 0;
+  width: 250px;
 }
 .side p {
   word-wrap: break-word;
