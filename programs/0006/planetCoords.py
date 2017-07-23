@@ -25,6 +25,7 @@ objids = [199, 299, 399, 301, 499, 599, 699, 799, 899, 503,
 isfirstrun = True
 
 currenttime = time.strftime("%Y-%B-%d %H:%M")
+endtime = time.strftime("%Y-%B-%d %H:%M", time.gmtime(time.time() + 24 * 60 * 60 * 7))
 if updates:
     print "\nCurrent Ephemeris Time: " + currenttime + ".\n"
 
@@ -33,40 +34,43 @@ command = "var bodyPositions = {\n"
 for i,obj in enumerate(objs):
     if updates:
         print "Collecting data for " + obj + "..."
-    
+
     horizons.write(str(objids[i])+'\n')
-    
+
     horizons.read_until('<cr>: ')
     horizons.write('E\n')
-    
+
     horizons.read_until(' : ')
     horizons.write('v\n')
-    
+
     horizons.read_until(' : ')
     horizons.write('@sun\n' if isfirstrun else 'y\n')
-    
+
     horizons.read_until(' : ')
     horizons.write('eclip\n')
-    
+
     horizons.read_until(' : ')
     horizons.write(currenttime + '\n')
-    
+
     horizons.read_until(' : ')
-    horizons.write('\n')
-    
+    horizons.write(endtime + '\n')
+
     horizons.read_until(' : ')
-    horizons.write('14d\n')
-    
+    horizons.write('1d\n')
+
     horizons.read_until(' : ')
     horizons.write('y\n')
-    
+
     horizons.read_until('$$SOE')
     contents = horizons.read_until('$$EOE')
-    
+
+    print contents
+    print 0/0
+
     horizons.read_until('[R]edisplay, ? : ')
     horizons.write('N\n')
     horizons.read_until('Horizons> ')
-    
+
     coords = [(k+" " if k != '' else '') for k in (contents.split('\n')[2]
                                                            .replace('Y',"")
                                                            .replace('X',"")
@@ -74,7 +78,7 @@ for i,obj in enumerate(objs):
                                                            .replace('=',""))
                       .split(' ')]
     newcoords = []
-    
+
     for coord in coords:
         if (coord != ''):
             newcoords.append(str(float(coord.replace(' ','').replace('\r','')) * 100 * 1.496e9))
@@ -86,7 +90,7 @@ for i,obj in enumerate(objs):
               % (round(100 * i/float(len(objs)),3))
 
     command = '\t' + command + obj + ":[" + ','.join(newcoords) + '],\n'
-    
+
     isfirstrun = False
 
 horizons.close()
@@ -99,4 +103,3 @@ print command
 
 print "\n"
 sys.exit(0)
-
