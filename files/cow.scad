@@ -94,3 +94,7 @@ module ir() {
 		translate([-55,-55,-110]) cube(110);
 	}
 }
+
+module tal() {
+
+}
