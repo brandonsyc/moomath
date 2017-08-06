@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!doctype html>
 <html>
 <head>
@@ -139,3 +140,154 @@
 <script src="rendererstats.js"></script>
 <script src="3dsimulator.js"></script>
 </html>
+=======
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>3D Solar System</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="3dsimulator.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script id="vertexShader" type="x-shader/x-vertex">
+	uniform vec3 viewVector;
+	uniform float c;
+	uniform float p;
+	varying float intensity;
+	void main()
+	{
+		vec3 vNormal = normalize( normalMatrix * normal );
+		vec3 vNormel = normalize( normalMatrix * viewVector );
+		intensity = pow( c - dot(vNormal, vNormel), p );
+		gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+	}
+</script>
+
+<script id="fragmentShader" type="x-shader/x-vertex">
+	uniform vec3 glowColor;
+	varying float intensity;
+	void main()
+	{
+		vec3 glow = glowColor * intensity;
+		gl_FragColor = vec4( glow, 1.0 );
+	}
+</script>
+
+<body>
+	<div class="controls">
+		<a href="info/" target="_blank">
+			<button class="go">Info</button>
+		</a>
+		<input type="checkbox" id="testc" onclick="updateShowGrid()">
+		<label for="testc">Enable Grid</label>
+		<div class="wrapper">
+			<label for="bslide">Planetary Size</label>
+			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar1"></div>
+				<p id="bar1-contents">25&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(1, 1.2)" onMouseUp="lift()">&raquo;</button>
+			<label for="bslide">Moon Size</label>
+			<button class="bslide" onMouseDown="press(2, -1)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar2"></div>
+				<p id="bar2-contents">25&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(2, 1)" onMouseUp="lift()">&raquo;</button>
+			<label for="bslide">Sun Size</label>
+			<button class="bslide" onMouseDown="press(4, -1)" onMouseUp="lift()">&laquo;</button>
+			<div class="slider">
+				<div class="bar" id="bar4"></div>
+				<p id="bar4-contents">50&times;</p>
+			</div>
+			<button class="bslide right" onMouseDown="press(4, 1)" onMouseUp="lift()">&raquo;</button>
+		</div>
+		<label for="goto">Find Object:</label>
+		<input type="text" id="goto">
+		<button class="go" onClick="doGoTo()">Go!</button>
+		<div class="wrapper">
+			<p>Test Radio</p>
+			<input type="radio" id="r1" name="testr" checked>
+			<label for="r1">Test Check</label>
+			<input type="radio" id="r2" name="testr">
+			<label for="r2">Test Check</label>
+			<input type="radio" id="r3" name="testr">
+			<label for="r3">Test Check</label>
+		</div>
+	</div>
+	<div class="side">
+		<h3>Mercury</h3>
+		<p>Asdlf jasdf jlkasdjfl kasjld fjalsdjflas jdflk sadjflja sdlk. Mercury is a small planet near the sun. It's hot. And cold. Wow.</p>
+	</div>
+
+	<div class="thing">
+		<button class="bslide" onMouseDown="press(3, -0.5)" onMouseUp="lift()">&laquo;</button>
+		<div class="slider">
+			<div class="bar" id="bar3"></div>
+			<p id="bar3-contents">9.92133 days / sec</p>
+		</div>
+		<button class="bslide right" onMouseDown="press(3, 0.5)" onMouseUp="lift()">&raquo;</button>
+	</div>
+	<div id="webgl-container">
+	<canvas id='text-canvas' width="640" height="320" style='position: absolute; top: 0px; left: 0px; zIndex:1; pointer-events:none;'></canvas>
+	</div>
+	<script>
+		var name = "";
+		var diff = "";
+		var downTimeout = null;
+		function press(a, b) {
+			name = a;
+			diff = b;
+			down(noTimeout = true);
+			downTimeout = setTimeout(down, 250);
+		}
+		function lift() {
+			name = "";
+			diff = "";
+			if (downTimeout) clearTimeout(downTimeout);
+		}
+		function down(noTimeout = false) {
+			if (name !== "")
+			{
+				var bar = document.getElementById("bar" + name);
+				if (bar.style.width === "") {
+					bar.style.width = "49%";
+				}
+				if (noTimeout) {
+					bar.style.width = Math.min(Math.max(parseFloat(bar.style.width) + 1 * Math.sign(diff),0),100) + "%";
+				} else {
+					bar.style.width = Math.min(Math.max(parseFloat(bar.style.width) + diff,0),100) + "%";
+				}
+				if (parseFloat(bar.style.width) < 0) {
+					bar.style.width = "0%";
+				}
+				if (parseFloat(bar.style.width) > 100) {
+					bar.style.width = "100%";
+				}
+				if (name == "1") {
+					updatePlanetarySize();
+				} else if (name == "2") {
+					updateMoonSize();
+				} else if (name == "3") {
+					updateTimeWarp();
+				} else if (name == "4") {
+					updateSunSize();
+				}
+				if (!noTimeout) setTimeout("down()", 1000/60);
+			}
+		}
+	</script>
+</body>
+
+<script src="three.js"></script>
+<script src="planetOrbitData.js"></script>
+<script src="xRingGeometry.js"></script>
+<script src="orbitControls.js"></script>
+<script src="rendererstats.js"></script>
+<script src="textsprite.js"></script>
+<script src="3dsimulator.js"></script>
+</html>
+>>>>>>> 982f253b1fb308c12323ba289f7eb5dd557dd897
