@@ -92,7 +92,6 @@ li ul li {
 }
 li ul li:hover {
 	background-color: #eee;
-}
 	margin: 10px;
 }
 th,
@@ -229,10 +228,10 @@ a.icon {
 	max-width: 300px;
 	width: 100%;
 	text-align: center;
-	margin: 0 auto;
+	margin: auto;
 }
 .source-link p {
-	color: #888;
+	color: #bbb;
 }
 /* Elements */
 .content {
