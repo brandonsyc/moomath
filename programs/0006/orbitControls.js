@@ -65,7 +65,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 
 	// Set to false to disable panning
 	this.enablePan = true;
-	this.keyPanSpeed = 7.0;	// pixels moved per arrow key push
+	this.keyPanSpeed = 5.0;    // pixels moved per arrow key push
 
 	// Set to true to automatically rotate around the target
 	// If auto-rotate is enabled, you must call controls.update() in your animation loop
@@ -76,7 +76,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.enableKeys = true;
 
 	// The four arrow keys
-	this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40 };
+	this.keys = { LEFT: 65, UP: 87, RIGHT: 68, BOTTOM: 83};
 
 	// Mouse buttons
 	this.mouseButtons = { ORBIT: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, PAN: THREE.MOUSE.RIGHT };
@@ -85,6 +85,9 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.target0 = this.target.clone();
 	this.position0 = this.object.position.clone();
 	this.zoom0 = this.object.zoom;
+
+	// previous "target"
+	this.prevTarget = new THREE.Vector3(0,0,0);
 
 	//
 	// public methods
@@ -249,7 +252,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 		dollyOut(dollyScale);
 	}
 
-	this.smoothDollyIntoBody = function(bodySize,time=1000) {
+	this.smoothDollyIntoBody = function(bodyIndex,time=1000) {
 		if (time < 20) {
 				this.zooming = false;
 				return;
@@ -257,29 +260,32 @@ THREE.OrbitControls = function ( object, domElement ) {
 		if (time == 1000) {			// Call from 3dsimulator.js
 			this.zooming = true;
 		}
-
+		
+		this.shiftTarget(getBodyPosition(bodyIndex));
 		var vFOV = scope.object.fov * Math.PI / 180;
 		var cameraDistance = Math.hypot(
 			this.target.x-scope.object.position.x,
 			this.target.y-scope.object.position.y,
 			this.target.z-scope.object.position.z);
 		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
-		var apparentBodySize = 2 * bodySize / height;
+		var apparentBodySize = 2 * bodies[bodyIndex].radius / height;
 
 		if (apparentBodySize > 0.6) {
+				console.log(4);
+				this.zooming = false;
 				return;
 		}
 
 		var frames = Math.ceil(time/60.0);
-		var totalDollyAmount = 2 / apparentBodySize;
+		var totalDollyAmount = window.innerHeight / apparentBodySize;
 
 		dollyIn(Math.pow(totalDollyAmount, 1/60.0));
 
 		var that = this;
-		setTimeout(function() {that.smoothDollyIntoBody(bodySize, time - 1000/60)}, 1000/60);
+		setTimeout(function() {that.smoothDollyIntoBody(bodyIndex, time - 1000/60)}, 1000/60);
 	}
 
-	this.smoothPanIntoBody = function(x,y,z,time=1000) {
+	this.smoothPanIntoBody = function(bodyIndex,time=1000) {
 		if (time < 20) {
 			this.moving = false;
 			return;
@@ -292,18 +298,29 @@ THREE.OrbitControls = function ( object, domElement ) {
 		}
 
 		var secs = 1-time/1000.0;
-		var intermediatex = this.target.x + (x - this.target.x) * secs;
-		var intermediatey = this.target.y + (y - this.target.y) * secs;
-		var intermediatez = this.target.z + (z - this.target.z) * secs;
+		var bodyPos = getBodyPosition(bodyIndex);
 
-		this.target.x = intermediatex;
-		this.target.y = intermediatey;
-		this.target.z = intermediatez;
+		var intermediatex = this.target.x + (bodyPos.x - this.target.x) * secs;
+		var intermediatey = this.target.y + (bodyPos.y - this.target.y) * secs;
+		var intermediatez = this.target.z + (bodyPos.z - this.target.z) * secs;
+		
+		if (Math.abs(bodyPos.x - intermediatex) < 1e3 &&
+			Math.abs(bodyPos.y - intermediatey) < 1e3 &&
+			Math.abs(bodyPos.z - intermediatez) < 1e3) {
+			this.moving = false;
+			return;
+		}
+		
+		this.shiftTarget(new THREE.Vector3(intermediatex,intermediatey,intermediatez));
 
 		this.update();
 
 		var that = this;
-		setTimeout(function() {that.smoothPanIntoBody(x,y,z,time-1000/60)}, 1000/60);
+		setTimeout(function() {that.smoothPanIntoBody(bodyIndex,time-1000/60)}, 1000/60);
+	}
+
+	this.shiftTarget = function(v) {
+		this.target = v;
 	}
 
 	//
