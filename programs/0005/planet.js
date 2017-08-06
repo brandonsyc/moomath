@@ -12,6 +12,7 @@ var down;
 
 function bulb() {
 	"use strict";
+	var j;
 	count++;
 	if (count === 10) {
 		count = 0;
@@ -22,6 +23,7 @@ function bulb() {
 	ctx.fillStyle = "#333";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
 	var remove = [];
+	var collisions = [];
 	for (var i = 0; i < bodies.length; i++) {
 		if (!remove.includes(i)) {
 			var body = bodies[i];
@@ -31,8 +33,8 @@ function bulb() {
 			ctx.fill();
 			body[0] += body[2];
 			body[1] += body[3];
-			for (var j = 0; j < bodies.length; j++) {
-				if (i !== j && !remove.includes(j)) {
+			for (j = 0; j < bodies.length; j++) {
+				if (i !== j) {
 					var other = bodies[j];
 					var distance = Math.hypot(other[0] - body[0], other[1] - body[1]);
 					var magnitude = 0.0008887 * other[4] / (distance * distance);
@@ -40,19 +42,24 @@ function bulb() {
 					var ay = magnitude * (other[1] - body[1]) / distance;
 					body[2] += ax;
 					body[3] += ay;
-					if (body[7] + other[7] > distance) {
-						bodies[i] = [getBarycenter([body, other])[0],
-									 getBarycenter([body, other])[1],
-								 	 (body[2] * body[4] + other[2] * other[4]) / (body[4] + other[4]),
-								 	 (body[3] * body[4] + other[3] * other[4]) / (body[4] + other[4]),
-								 	 body[4] + other[4],
-								 	 Math.min(body[5], other[5]),
-								 	 body[6],
-								 	 Math.max(0.00426349651 * Math.pow(Math.abs(body[4] + other[4]), 1 / 3) * Math.pow(Math.abs(Math.min(body[5], other[5])), -2 / 3), 2)];
-						trails[i] = [];
-						remove.push(j);
-							console.log(bodies);
-								console.log(trails);
+					if (0.00426349651 * Math.pow(Math.abs(body[4]), 1 / 3) * Math.pow(Math.abs(body[5]), -2 / 3) +
+						0.00426349651 * Math.pow(Math.abs(other[4]), 1 / 3) * Math.pow(Math.abs(other[5]), -2 / 3) > distance) {
+						var found = false;
+						for (var k = 0; k < collisions.length; k++) {
+							if (collisions[k].indexOf(i) > -1 && collisions[k].indexOf(j) < 0) {
+								collisions[k].push(j);
+								found = true;
+								break;
+							}
+							else if (collisions[k].indexOf(i) > 0 && collisions[k].indexOf(j) > -1) {
+								collisions[k].push(i);
+								found = true;
+								break;
+							}
+						}
+						if (!found) {
+							collisions.push([i, j]);
+						}
 					}
 				}
 			}
@@ -70,9 +77,41 @@ function bulb() {
 			}
 		}
 	}
-	for (var i = remove.length - 1; i > -1; i--) {
+	
+	for (i = 0; i < collisions.length; i++) {
+		var objects = [];
+		var vx = 0;
+		var vy = 0;
+		var den = 0;
+		var min = bodies[collisions[i][0]][5];
+		for (j = 0; j < collisions[i].length; j++) {
+			var object = bodies[collisions[i][j]];
+			objects.push(bodies[collisions[i][j]]);
+			vx += object[2] * object[4];
+			vy += object[3] * object[4];
+			den += object[4];
+			min = Math.min(min, object[5]);
+			if (j > 0) {
+				remove.push(collisions[i][j]);
+			}
+		}
+		bodies[collisions[i][0]] = [getBarycenter(objects)[0],
+				  getBarycenter(objects)[1],
+				  vx / den,
+				  vy / den,
+				  den,
+				  min,
+				  colors[3],
+				  Math.max(0.00426349651 * Math.pow(Math.abs(den), 1 / 3) * Math.pow(Math.abs(min), -2 / 3), 2)];
+	}
+	
+	remove.sort(function(a, b) {
+		return a - b;
+	});
+	
+	for (i = remove.length - 1; i > -1; i--) {
 		bodies.splice(remove[i], 1);
-			trails.splice(remove[i], 1);
+		trails.splice(remove[i], 1);
 	}
 	if (document.getElementById("body").checked) {
 		if (!down) {
