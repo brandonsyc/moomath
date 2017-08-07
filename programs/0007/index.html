@@ -19,15 +19,18 @@
 	renderer.setSize(window.innerWidth, window.innerHeight);
 	document.body.appendChild(renderer.domElement);
 	
+	var bodies = [];
+	
 	var all = new THREE.Group();
 	for (var i = -1; i < 2; i++) {
 		for (var j = -1; j < 2; j++) {
 			for (var k = -1; k < 2; k++) {
 				var geometry = new THREE.BoxGeometry(0.9375, 0.9375, 0.9375);
-				var material = new THREE.MeshLambertMaterial({color: 0x009b48});
+				var material = new THREE.MeshPhongMaterial({color: 0xff5800, metal: true});
 				var cube = new THREE.Mesh(geometry, material);
 				all.add(cube);
 				cube.position.set(i, j, k);
+				bodies.push(cube);
 			}
 		}
 	}
@@ -36,7 +39,7 @@
 		var data = [3, 0.25, 0, i % 2 * 3.25 - 1.625];
 		var geometry = new THREE.BoxGeometry(data[parseInt(i % 4 / 2)], data[parseInt(i / 4)], data[parseInt((5 - i) / 4)]);
 		console.log(parseInt(1/2));
-		var material = new THREE.MeshLambertMaterial({color: 0xffffff});
+		var material = new THREE.MeshPhongMaterial({color: 0xffffff});
 		var cube = new THREE.Mesh(geometry, material);
 		all.add(cube);
 		cube.material.transparent = true;
@@ -44,15 +47,31 @@
 		cube.position.set(data[parseInt(i % 4 / 2) + 2], data[parseInt(i / 4) + 2], data[parseInt((5 - i) / 4) + 2]);
 	}
 	
-	var geometry = new THREE.BoxGeometry(2.625, 2.625, 2.625);
-	var material = new THREE.MeshLambertMaterial({color: 0x000000});
+	var geometry = new THREE.BoxGeometry(2.875, 2.875, 2.875);
+	var material = new THREE.MeshPhongMaterial({color: 0x333333});
 	var cube = new THREE.Mesh(geometry, material);
 	all.add(cube);
 	scene.add(all);
 
 	camera.position.z = 10;
-
-	var light = new THREE.HemisphereLight(0xffffff, 0x333333, 1);
+	
+	var light = new THREE.SpotLight(0xffffff, 0.5);
+	light.position.set(0, 100, 0);
+	scene.add(light);
+	var light = new THREE.SpotLight(0xffffff, 0.5);
+	light.position.set(0, -100, 0);
+	scene.add(light);
+	var light = new THREE.SpotLight(0xffffff, 0.25);
+	light.position.set(100, 0, 0);
+	scene.add(light);
+	var light = new THREE.SpotLight( 0xffffff, 0.25);
+	light.position.set(-100, 0, 0);
+	scene.add(light);
+	var light = new THREE.SpotLight(0xffffff, 0.75);
+	light.position.set(0, 0, 100);
+	scene.add(light);
+	var light = new THREE.SpotLight( 0xffffff, 0.75);
+	light.position.set(0, 0, -100);
 	scene.add(light);
 	scene.background = new THREE.Color( 0xffffff );
 	
