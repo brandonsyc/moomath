@@ -140,9 +140,16 @@
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0005</loc>
-    <lastmod>2017-06-30</lastmod>
+    <lastmod>2017-07-17</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0005/images/thumb.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nichodon.github.io/programs/0006</loc>
+    <lastmod>2017-07-17</lastmod>
+    <image:image>
+      <image:loc>https://nichodon.github.io/programs/0006/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>

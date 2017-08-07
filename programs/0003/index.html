@@ -104,17 +104,17 @@
 				<label for="swingValue">Eighth Swing</label>
 				<input type="range" value="50" id="swingValue" onInput="updateSwing()" min="50" max="75" disabled>
 		</div>
+    <hr>
+    <br>
+    <button id="togglePlayback" onClick="togglePlayback()">Play</button>
+    <br>
+    <br>
+    <div class="">
+      <canvas class="shadow" id="beater" width=1500 height=350></canvas>
+    </div>
 </div>
 
-<hr>
-<br>
-<button id="togglePlayback" onClick="togglePlayback()">Play</button>
-<br>
-<br>
-
-<div class="">
-<canvas class="shadow" id="beater" width=1500 height=350></canvas>
-    </div>
+<!--<iframe src="../0002/index.html?embed=2" width="100%" height="550px" style="border: none;"></iframe>-->
 
 
 <div class="separate"></div>
@@ -129,6 +129,7 @@
 
 <script src="../../frame.js"></script>
 <script src="metronome.min.js"></script>
+<script src="../../querystring.js"></script>
 
 </body>
 </html>
