@@ -214,9 +214,8 @@ function onDocumentClick(event) {
 	if (intersects.length > 0) {
 		lastClickedEntity = intersects[0];
 
-		try {scene.getObjectByName(bodies[focusBody].name + 'Orbit').material.color = new THREE.Color(0,0,1)}catch(e){;}
 		focusBody = intersects[0].object.name;
-		try {scene.getObjectByName(bodies[focusBody].name + 'Orbit').material.color = new THREE.Color(0,1,1)}catch(e){;}
+		drawOrbits();
 		if (trackBody) {
 		shiftCameraFocus(focusBody);
 		} else {
@@ -687,14 +686,21 @@ function updateCameraTracking() {
 
 var lastDrawnOrbits = 0;
 
+var normalOrbitMaterial = new THREE.LineBasicMaterial({
+	color: orbitColor,
+	opacity: orbitOpacity,
+	transparent: true
+});
+
+var highlightedOrbitMaterial = new THREE.LineBasicMaterial({
+	color: 0x00ffff,
+	opacity: orbitOpacity,
+	transparent: true
+})
+
 function drawOrbits() {
 	lastDrawnOrbits = days;
 	for (i = 0; i < bodies.length; i++) {
-		var linematerial = new THREE.LineBasicMaterial({
-			color: orbitColor,
-			opacity: orbitOpacity,
-			transparent: true
-		});
 		try {
 			var previousOrbit = scene.getObjectByName(bodies[i].name + "Orbit");
 			scene.remove(previousOrbit);
@@ -702,15 +708,17 @@ function drawOrbits() {
 		} catch (e) {
 			;
 		}
+		if ((showPlanetOrbits && bodies[i].type === "planet") || (showDwarfOrbits && bodies[i].type === "dwarf") || i == focusBody) {
 		var geometry = new THREE.Geometry();
 		var period = getOrbitalPeriod(i);
 		for (j = 0; j < 200; j++) {
 			geometry.vertices.push(calculateBodyPosition(bodies[i].name,days + period * j / 200));
 		}
 		geometry.vertices.push(calculateBodyPosition(bodies[i].name,days));
-		var line = new THREE.Line(geometry, linematerial);
+		var line = new THREE.Line(geometry, (i == focusBody ? highlightedOrbitMaterial : normalOrbitMaterial));
 		line.name = bodies[i].name + "Orbit";
 		scene.add(line);
+	}
 	}
 }
 
@@ -726,7 +734,7 @@ function clearOverlay() {
 
 function updateSprites() {
 	clearOverlay();
-	textContext.font = "12px Cambria";
+	textContext.font = "12px Trebuchet";
 	textContext.textAlign = "left";
 	var sunPosition = getBodyPosition(getBody('Sun'));
 	for (i = 0; i < bodies.length; i++) {
@@ -734,11 +742,11 @@ function updateSprites() {
 		if (frustum.containsPoint(bodyPosition)) {
 			var dist = bodyPosition.distanceTo(sunPosition);
 			if (dist < currentSunSize) {
-				var opacity = Math.max((dist - 2.5 * (currentSunSize - dist)) / currentSunSize,0);
+				var opacity = Math.min(Math.max((dist - 2.5 * (currentSunSize - dist)) / currentSunSize,0),labelOpacity.val);
 				if (opacity == 0) continue;
 				textContext.fillStyle = labelColor + String(opacity) + ')';
 			} else {
-				textContext.fillStyle = labelColor + '0.95)';
+				textContext.fillStyle = labelColor + String(labelOpacity.val) + ')';
 			}
 			var pos = get2DPosition(i);
 			textContext.fillText(bodies[i].name, pos[0], pos[1]);
@@ -781,9 +789,17 @@ function updateTimeWarp() {
 	timeWarp = modifiedWarp;
 }
 
-var showDwarfOrbits = true;
-var showPlanetOrbits = true;
+var showDwarfOrbits = false;
+var showPlanetOrbits = false;
+var showLabels = true;
+var labelOpacity = {val:1};
 
-/**function updateOrbitColors() {
-
-}**/
+function smoothInterpolate(x,k,time=500) {
+	console.log(x.val);
+	if (time < 20) {
+		x.val = k;
+		return;
+	}
+	x.val = x.val + (k-x.val) / (time * 60) * 1000;
+	setTimeout(function(){smoothInterpolate(x,k,time-1000.0/60.0)},1000.0/60.0)
+}
