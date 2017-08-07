@@ -1,167 +1,189 @@
 body
 {
-  background-color: #000;
-  font-size: 0;
-  position: relative;
+	background-color: #000;
+	font-size: 0;
+	position: relative;
 }
 #controls input
 {
-  left: 25px;
-  position: absolute;
-  top: 25px;
+	left: 25px;
+	position: absolute;
+	top: 25px;
 }
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
-.controls {
-  background-color: rgba(0, 136, 187, 0.5);
-  box-shadow: 0px 0px 10px rgba(0, 136, 187, 0.5);
-  height: 100px;
-  line-height: 100px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0 10px;
-  position: fixed;
-  text-align: center;
-  white-space: nowrap;
-  width: 100%;
+.controls, .second {
+	background-color: rgba(0, 136, 187, 0.5);
+	box-shadow: 0px 0px 10px rgba(0, 136, 187, 0.5);
+	height: 100px;
+	line-height: 100px;
+	overflow-x: auto;
+	overflow-y: hidden;
+	padding: 0 10px;
+	position: fixed;
+	text-align: center;
+	white-space: nowrap;
+	width: 100%;
 }
-.controls p, label, input, button, .thing p {
-  color: rgba(255, 255, 255, 0.5);
-  display: inline-block;
-  height: 20px;
-  margin-top: -50px;
-  vertical-align: middle;
+.controls p, label, input, button, .thing p, .second li {
+	color: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+	height: 20px;
+	margin-top: -50px;
+	vertical-align: middle;
 }
-.controls p, label, .thing p {
-  line-height: 20px;
-  text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+.controls p, label, .thing p, .second li {
+	line-height: 20px;
+	text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+}
+.second {
+	height: 50px;
+	line-height: 50px;
+	top: 100px;
+	text-align: left;
+}
+.second ul, .second li {
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	padding: 0px;
+	margin: 0px;
+}
+.second li {
+	background-color: rgba(0, 136, 187, 0.5);
+	border-radius: 100px;
+	line-height: normal;
+	margin: 5px;
+	padding: 5px 10px;
+}
+.second li:hover {
+	background-color: rgba(238, 238, 238, 0.5);
 }
 .wrapper {
-  border-left: 2px solid rgba(0, 136, 187, 0.5);
-  border-radius: 20px;
-  border-right: 2px solid rgba(0, 136, 187, 0.5);
-  display: inline-block;
-  height: 50px;
-  margin: 25px 10px 0 10px;
-  padding: 0 10px;
+	border-left: 2px solid rgba(0, 136, 187, 0.5);
+	border-radius: 20px;
+	border-right: 2px solid rgba(0, 136, 187, 0.5);
+	display: inline-block;
+	height: 50px;
+	margin: 25px 10px 0 10px;
+	padding: 0 10px;
 }
 input[type=checkbox], input[type=radio] {
-  visibility: hidden;
-  width: 0;
+	visibility: hidden;
+	width: 0;
 }
 input {
-  background-color: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 100px;
-  transition: 0.2s;
-  width: 100px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border: none;
+	border-radius: 100px;
+	transition: 0.2s;
+	width: 100px;
 }
 input:focus, button:focus {
-  box-shadow: 0px 0px 2px 2px #08b;
-  outline: none;
+	box-shadow: 0px 0px 2px 2px #08b;
+	outline: none;
 }
 label {
-  background-color: rgba(255, 255, 255, 0);
-  border-radius: 0px;
+	background-color: rgba(255, 255, 255, 0);
+	border-radius: 0px;
 	transition: 0.5s;
 }
 input:checked+label {
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 100px;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 100px;
 }
 button {
-  background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: none;
-  height: 40px;
-  line-height: 0px;
+	background-color: rgba(255, 255, 255, 0.5);
+	box-shadow: none;
+	height: 40px;
+	line-height: 0px;
 }
 button:not(.go) {
-  border-bottom-left-radius: 100px;
-  border-top-left-radius: 100px;
-  width: 40px;
+	border-bottom-left-radius: 100px;
+	border-top-left-radius: 100px;
+	width: 40px;
 }
 .go {
-  border-radius: 100px;
-  margin-left: 15px;
-  margin-right: 5px;
+	border-radius: 100px;
+	margin-left: 15px;
+	margin-right: 5px;
 }
 .right:not(.go) {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 100px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 100px;
+	border-bottom-left-radius: 0px;
+	border-bottom-right-radius: 100px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 100px;
 }
 button:hover {
-  background-color: rgba(238, 238, 238, 0.5);
+	background-color: rgba(238, 238, 238, 0.5);
 }
 button:active {
-  box-shadow: inset 0px 0px 10px rgba(31, 31, 31, 0.5);
-  transition: 0.5s;
+	box-shadow: inset 0px 0px 10px rgba(31, 31, 31, 0.5);
+	transition: 0.5s;
 }
 .slider {
-  background-color: rgba(255, 255, 255, 0.5);
-  display: inline-block;
-  height: 40px;
-  margin-top: -50px;
-  vertical-align: middle;
-  width: 100px;
+	background-color: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+	height: 40px;
+	margin-top: -50px;
+	vertical-align: middle;
+	width: 100px;
 }
 .thing {
-  bottom: 0;
-  height: 50px;
-  position: fixed;
-  text-align: center;
-  width: 100%;
+	bottom: 0;
+	height: 50px;
+	position: fixed;
+	text-align: center;
+	width: 100%;
 }
 .thing .slider {
-  margin-top: 0px;
-  width: 50%;
+	margin-top: 0px;
+	width: 50%;
 }
 .thing button {
-  margin-top: 0px;
+	margin-top: 0px;
 }
 .thing p:not(time-label) {
-  margin-bottom: -100px;
+	margin-bottom: -100px;
 }
 .slider {
-  background-color: rgba(255, 255, 255, 0.5);
-  display: inline-block;
-  height: 40px;
-  margin-top: -50px;
-  vertical-align: middle;
-  width: 100px;
+	background-color: rgba(255, 255, 255, 0.5);
+	display: inline-block;
+	height: 40px;
+	margin-top: -50px;
+	vertical-align: middle;
+	width: 100px;
 }
 .time-label {
 
 }
 .side {
-  background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
-  position: fixed;
-  top: 50%;
-  transform: translate(0, -50%);
-  right: 0;
-  width: 250px;
+	background-color: rgba(255, 255, 255, 0.5);
+	box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5);
+	position: fixed;
+	top: 50%;
+	transform: translate(0, -50%);
+	right: 0;
+	width: 250px;
 }
 .side p {
-  word-wrap: break-word;
+	word-wrap: break-word;
 }
 .bar {
-  background-color: rgba(0, 136, 187, 0.5);
-  height: 40px;
-  width: 50%;
+	background-color: rgba(0, 136, 187, 0.5);
+	height: 40px;
+	width: 50%;
 }
 .slider p {
-  margin-top: -140px;
+	margin-top: -140px;
 }
 a {
-  font-size: 0px;
+	font-size: 0px;
 }
 .canvas {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  pointer-events: none;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	pointer-events: none;
 }
