@@ -67,17 +67,10 @@ function addBodies() {
 	addBody(new constructBody(name="Uranus",radius="25362", type="planet",shininess=0.34,axialtilt=97.77,rotationperiod=0.71833));
 	addBody(new constructBody(name="Neptune",radius="24622", type="planet",shininess=0.34,axialtilt=28.32,rotationperiod=0.6713));
 	addBody(new constructBody(name="Sun",radius="696342", type="star",shininess=0.03,axialtilt=0,rotationperiod=1e9));
-	/**addBody(new constructBody(name="Ganymede",radius="2634.1", type="majorsat",shininess=0.03));
-	addBody(new constructBody(name="Titan",radius="2576", type="majorsat",shininess=0.03));
-	addBody(new constructBody(name="Callisto",radius="2410.3",type="majorsat",shininess=0.03));
-	addBody(new constructBody(name="Io",radius="1821.6",type="majorsat"));
-	addBody(new constructBody(name="Moon",radius="1737.1",type="majorsat"));
-	addBody(new constructBody(name="Europa",radius="1560.8",type="majorsat"));
-	addBody(new constructBody(name="Triton",radius="1353.4",type="majorsat"));
-	addBody(new constructBody(name="Titania",radius="788.4",type="majorsat"));
-	addBody(new constructBody(name="Iapetus",radius="734.5",type="majorsat"));
-	addBody(new constructBody(name="Tethys",radius="531.1",type="majorsat"));**/
-	addBody(new constructBody(name="Pluto",radius="1186",type="dwarf",shininess=0.34,axialtilt=0,rotationperiod=32));
+	addBody(new constructBody(name="1 Ceres",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	addBody(new constructBody(name="2 Pallas",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	addBody(new constructBody(name="3 Juno",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	addBody(new constructBody(name="4 Vesta",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
 }
 
 // Whether to display the grid
@@ -221,12 +214,15 @@ function onDocumentClick(event) {
 	if (intersects.length > 0) {
 		lastClickedEntity = intersects[0];
 
+		try {scene.getObjectByName(bodies[focusBody].name + 'Orbit').material.color = new THREE.Color(0,0,1)}catch(e){;}
 		focusBody = intersects[0].object.name;
+		try {scene.getObjectByName(bodies[focusBody].name + 'Orbit').material.color = new THREE.Color(0,1,1)}catch(e){;}
 		if (trackBody) {
 		shiftCameraFocus(focusBody);
 		} else {
 		shiftCameraFocusToVector(getBodyPosition(focusBody));
 		}
+
 	} else {
 		if (!controls.moving) {
 			lastClickedEntity = null;
@@ -411,8 +407,12 @@ function doGoTo() {
 			shiftCameraFocus(i);
 			var udder = i;
 			setTimeout(function() {controls.smoothDollyIntoBody(udder)},1020);
+			return;
 		}
 	}
+	addBody(new constructBody(name=document.getElementById("goto").value,radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	shiftCameraFocus(bodies.length-1);
+	drawOrbits();
 }
 
 window.onload = function() {
@@ -428,13 +428,15 @@ function constructBody(name = null,
  type = null,
  shininess = null,
  axialtilt = null,
- rotationperiod = null) {
+ rotationperiod = null,
+ imageLocation = null) {
 	this.name = name;
 	this.radius = radius;
 	this.type = type;
 	this.shininess = shininess;
 	this.axialtilt = axialtilt;
 	this.rotationperiod = rotationperiod;
+	this.imageLocation = imageLocation;
 }
 
 function addBody(body) {
@@ -443,7 +445,7 @@ function addBody(body) {
 		var bodyTexture,bodyMaterial;
 
 		if (body.imageLocation) {
-			bodyTexture = loader.load(body.imageLocation,THREE.SphericalRefractionMapping);
+			bodyTexture = loader.load(imageLocation,THREE.SphericalRefractionMapping);
 		} else {
 			bodyTexture = loader.load('images/' + body.name.toLowerCase() + 'Texture.jpg',THREE.SphericalRefractionMapping);
 		}
@@ -687,12 +689,19 @@ var lastDrawnOrbits = 0;
 
 function drawOrbits() {
 	lastDrawnOrbits = days;
-	var linematerial = new THREE.LineBasicMaterial({
-		color: orbitColor,
-		opacity: orbitOpacity,
-		transparent: true
-	});
 	for (i = 0; i < bodies.length; i++) {
+		var linematerial = new THREE.LineBasicMaterial({
+			color: orbitColor,
+			opacity: orbitOpacity,
+			transparent: true
+		});
+		try {
+			var previousOrbit = scene.getObjectByName(bodies[i].name + "Orbit");
+			scene.remove(previousOrbit);
+			previousOrbit.dispose();
+		} catch (e) {
+			;
+		}
 		var geometry = new THREE.Geometry();
 		var period = getOrbitalPeriod(i);
 		for (j = 0; j < 200; j++) {
@@ -771,3 +780,10 @@ function updateTimeWarp() {
 	}
 	timeWarp = modifiedWarp;
 }
+
+var showDwarfOrbits = true;
+var showPlanetOrbits = true;
+
+/**function updateOrbitColors() {
+
+}**/

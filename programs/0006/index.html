@@ -39,6 +39,10 @@
 		</a>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
+		<input type="checkbox" id="testd" onclick="showPlanetOrbits = this.checked;drawOrbits()">
+		<label for="testd">Planet Orbits</label>
+		<input type="checkbox" id="teste" onclick="showDwarfOrbits = this.checked;drawOrbits()">
+		<label for="teste">Dwarf Orbits</label>
 		<div class="wrapper">
 			<label for="bslide">Planetary Size</label>
 			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>
