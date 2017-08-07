@@ -1080,8 +1080,14 @@ function getOrbitalPeriod(bodyIndex) {
 
 var planetNames = ['Mercury','Venus','Earth','Mars','Jupiter','Saturn'];
 var requests = [];
-
+var knownBodyNames = planetNames.slice();
 var loadedBodyDatas = 0;
+
+for (var body in minorOrbitData) {
+  if (minorOrbitData.hasOwnProperty(body)) {
+    knownBodyNames.push(body);
+  }
+}
 
 for (i = 0; i < planetNames.length; i++) {
 requests[i] = new XMLHttpRequest();

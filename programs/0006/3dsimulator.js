@@ -794,6 +794,9 @@ var showPlanetOrbits = false;
 var showLabels = true;
 var labelOpacity = {val:1};
 
+var currentQuery = '';
+var queries = 0;
+
 function smoothInterpolate(x,k,time=500) {
 	console.log(x.val);
 	if (time < 20) {
@@ -803,3 +806,34 @@ function smoothInterpolate(x,k,time=500) {
 	x.val = x.val + (k-x.val) / (time * 60) * 1000;
 	setTimeout(function(){smoothInterpolate(x,k,time-1000.0/60.0)},1000.0/60.0)
 }
+
+function _asyncSearchBodies(query,index,handler) {
+	for (i = index; i < Math.min(index + 100,knownBodyNames.length); i++) {
+		if (knownBodyNames[i].toLowerCase().includes(query)) {
+			if (handler(query,i)) return;
+		}
+	}
+	if (index + 100 > knownBodyNames.length) {
+		handler(query,-1);
+		return;
+	}
+	setTimeout(function() {_asyncSearchBodies(query,index+100,handler)});
+}
+
+function asyncSearch(query,handler) {
+	console.log(3);
+	_asyncSearchBodies(query.toLowerCase(),0,handler);
+}
+
+function clearSearchList() {
+	document.getElementById('search-results').innerHTML = '';
+}
+
+asyncSearch('un',function(query,i) {
+if (query != currentQuery) {
+
+	return false;
+} else {
+
+}
+});
