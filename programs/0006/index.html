@@ -39,12 +39,15 @@
 		</a>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
-		<input type="checkbox" id="testd" onclick="showPlanetOrbits = this.checked;drawOrbits()">
+		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,nullFunc,'opacity')">
 		<label for="testd">Planet Orbits</label>
-		<input type="checkbox" id="teste" onclick="showDwarfOrbits = this.checked;drawOrbits()">
+		<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,nullFunc,'opacity')">
 		<label for="teste">Dwarf Orbits</label>
 		<input type="checkbox" id="testf" onclick="smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
 		<label for="testf" id="labels">Labels</label>
+		<label for="goto">Find Object:</label>
+		<input type="text" id="goto" oninput="searchBody(this.value)">
+		<button class="go" onClick="doGoTo()">Go!</button>
 		<div class="wrapper">
 			<label for="bslide">Planetary Size</label>
 			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>
@@ -68,9 +71,6 @@
 			</div>
 			<button class="bslide right" onMouseDown="press(4, 1)" onMouseUp="lift()">&raquo;</button>
 		</div>
-		<label for="goto">Find Object:</label>
-		<input type="text" id="goto">
-		<button class="go" onClick="doGoTo()">Go!</button>
 		<div class="wrapper">
 			<p>Test Radio</p>
 			<input type="radio" id="r1" name="testr" checked>
@@ -83,8 +83,6 @@
 	</div>
 	<div class="second">
 		<ul id="search-results">
-			<li>2435824 Thing</li>
-			<li>Test li</li>
 		</ul>
 	</div>
 	<div class="side">

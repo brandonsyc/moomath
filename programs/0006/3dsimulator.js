@@ -7,8 +7,11 @@ var loader = new THREE.TextureLoader();
 // Styles
 
 var orbitColor = 0x0000ff;
-var orbitOpacity = 0.7;
+var planetOrbitOpacity = 0;
+var dwarfOrbitOpacity = 0;
 var labelColor = "rgba(255,121,244,";
+
+var maxOrbitOpacity = 0.7;
 
 var bodies = [];
 
@@ -25,7 +28,7 @@ var minStarSize = 50;
 var minMajorPlanetSize = 23;
 
 // Minimum dwarf planet
-var minDwarfPlanetSize = 23;
+var minDwarfPlanetSize = 12;
 
 // Minimum major satellite size
 var minVisibleMajorSatelliteSize = 25;
@@ -397,10 +400,40 @@ function updateShowGrid() {
 	displayGridHelper = document.getElementById("testc").checked;
 }
 
-function doGoTo() {
-	var bodyName = document.getElementById("goto").value.replace(/ /g,'').toLowerCase();
+function addBodyFromName(bodyName) {
+	if (getBody(bodyName) == -1) {
+		addBody(new constructBody(name=bodyName,radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+		drawOrbits();
+	}
+	setTimeout(function(){shiftCameraFocus(getBody(bodyName));},250);
+}
+
+function deleteBodyFromName(bodyName) {
+	var bodyIndex = getBody(bodyName);
+
+	var objct = bodies[bodyIndex].object;
+	console.log(objct);
+	scene.remove(objct);
+
+	bodies.splice(bodyIndex,1);
+
+	for (i = bodyIndex; i < bodies.length; i++) {
+		console.log(bodyIndex,bodies[bodyIndex]);
+		bodies[bodyIndex].object.name = i;
+	}
+}
+
+function doGoTo(override = null) {
+	var bodyName = null;
+	if (override) {
+		bodyName = override;
+	} else {
+	  bodyName = document.getElementById("goto").value.replace(/ /g,'').toLowerCase();
+	}
+	var loweredBodyName = bodyName.replace(/ /g,'').toLowerCase();
+
 	for (i = 0; i < bodies.length; i++) {
-		if (bodies[i].name.toLowerCase() === bodyName) {
+		if (bodies[i].name.replace(/ /g,'').toLowerCase() === loweredBodyName) {
 			if (focusBody == i) return;
 			focusBody = i;
 			shiftCameraFocus(i);
@@ -409,7 +442,7 @@ function doGoTo() {
 			return;
 		}
 	}
-	addBody(new constructBody(name=document.getElementById("goto").value,radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	addBody(new constructBody(name=bodyName,radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
 	shiftCameraFocus(bodies.length-1);
 	drawOrbits();
 }
@@ -529,6 +562,7 @@ function getBody(name) {
 			return i;
 		}
 	}
+	return -1;
 }
 
 function getBodyPosition(bodyIndex,asVector = true) {
@@ -686,21 +720,34 @@ function updateCameraTracking() {
 
 var lastDrawnOrbits = 0;
 
-var normalOrbitMaterial = new THREE.LineBasicMaterial({
+var planetOrbitMaterial = new THREE.LineBasicMaterial({
 	color: orbitColor,
-	opacity: orbitOpacity,
+	opacity: planetOrbitOpacity,
 	transparent: true
 });
 
+var dwarfOrbitMaterial = new THREE.LineBasicMaterial({
+	color: orbitColor,
+	opacity: dwarfOrbitOpacity,
+	transparent: true
+})
+
 var highlightedOrbitMaterial = new THREE.LineBasicMaterial({
 	color: 0x00ffff,
-	opacity: orbitOpacity,
+	opacity: 0.7,
+	transparent: true
+})
+
+var invisibleOrbitMaterial = new THREE.LineBasicMaterial({
+	color: 0x000000,
+	opacity: 1,
 	transparent: true
 })
 
 function drawOrbits() {
 	lastDrawnOrbits = days;
 	for (i = 0; i < bodies.length; i++) {
+
 		try {
 			var previousOrbit = scene.getObjectByName(bodies[i].name + "Orbit");
 			scene.remove(previousOrbit);
@@ -708,14 +755,29 @@ function drawOrbits() {
 		} catch (e) {
 			;
 		}
-		if ((showPlanetOrbits && bodies[i].type === "planet") || (showDwarfOrbits && bodies[i].type === "dwarf") || i == focusBody) {
+
+		var bodyType = bodies[i].type;
+
+		if ((bodyType === "planet") || (bodyType === "dwarf") || i == focusBody) {
 		var geometry = new THREE.Geometry();
 		var period = getOrbitalPeriod(i);
+		var material = null;
+
+		if (i == focusBody) {
+			material = highlightedOrbitMaterial;
+		} else if (bodyType === "planet") {
+			material = planetOrbitMaterial;
+		} else if (bodyType === "dwarf") {
+			material = dwarfOrbitMaterial;
+		} else {
+			material = planetOrbitMaterial;
+		}
+
 		for (j = 0; j < 200; j++) {
 			geometry.vertices.push(calculateBodyPosition(bodies[i].name,days + period * j / 200));
 		}
 		geometry.vertices.push(calculateBodyPosition(bodies[i].name,days));
-		var line = new THREE.Line(geometry, (i == focusBody ? highlightedOrbitMaterial : normalOrbitMaterial));
+		var line = new THREE.Line(geometry, material);
 		line.name = bodies[i].name + "Orbit";
 		scene.add(line);
 	}
@@ -789,27 +851,28 @@ function updateTimeWarp() {
 	timeWarp = modifiedWarp;
 }
 
-var showDwarfOrbits = false;
-var showPlanetOrbits = false;
 var showLabels = true;
+
 var labelOpacity = {val:1};
 
-var currentQuery = '';
 var queries = 0;
 
-function smoothInterpolate(x,k,time=500) {
-	console.log(x.val);
+var nullFunc = function(){};
+
+function smoothInterpolate(x,k,time=500,cnstFunc=function(){},propt='val') {
 	if (time < 20) {
-		x.val = k;
+		x[propt] = k;
 		return;
 	}
-	x.val = x.val + (k-x.val) / (time * 60) * 1000;
-	setTimeout(function(){smoothInterpolate(x,k,time-1000.0/60.0)},1000.0/60.0)
+	x[propt] = x[propt] + (k-x[propt]) / (time * 60) * 1000;
+	cnstFunc();
+
+	setTimeout(function(){smoothInterpolate(x,k,time-1000.0/60.0,cnstFunc,propt)},1000.0/60.0);
 }
 
 function _asyncSearchBodies(query,index,handler) {
 	for (i = index; i < Math.min(index + 100,knownBodyNames.length); i++) {
-		if (knownBodyNames[i].toLowerCase().includes(query)) {
+		if (knownBodyNames[i].toLowerCase().replace(/ /g,'').includes(query)) {
 			if (handler(query,i)) return;
 		}
 	}
@@ -821,19 +884,38 @@ function _asyncSearchBodies(query,index,handler) {
 }
 
 function asyncSearch(query,handler) {
-	console.log(3);
 	_asyncSearchBodies(query.toLowerCase(),0,handler);
 }
 
 function clearSearchList() {
+	queries = 0;
 	document.getElementById('search-results').innerHTML = '';
 }
 
-asyncSearch('un',function(query,i) {
-if (query != currentQuery) {
-
-	return false;
-} else {
-
+function appendToSearchList(name) {
+	queries += 1;
+	document.getElementById('search-results').innerHTML += "<li onclick=" + "'addBodyFromName(\"" + name + "\")'" + ">" + name + "</li>";
 }
-});
+
+function interpolateColors(c1,c2,v) {
+	return new THREE.Color(c1.r + (c2.r - c1.r) * v,c1.g + (c2.g - c1.g) * v,c1.b + (c2.b - c1.b) * v);
+}
+
+document.getElementById('').addEventListener("keydown", function(e) {
+    if (e.keyCode === 38 || e.keyCode === 40) return false;
+}, false);
+
+function searchBody(bodyName) {
+	currentQuery = bodyName.replace(/ /g,'').toLowerCase();
+	clearSearchList();
+	asyncSearch(currentQuery.slice(),function(query,i) {
+		if (i == -1) {return false;}
+	if (query !== currentQuery) {
+		clearSearchList();
+		return true;
+	} else {
+	  appendToSearchList(knownBodyNames[i]);
+		return (queries >= 20);
+	}
+	});
+}
