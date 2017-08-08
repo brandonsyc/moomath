@@ -77,7 +77,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 	this.enableKeys = true;
 
 	// The four arrow keys
-	this.keys = { LEFT: 65, UP: 87, RIGHT: 68, BOTTOM: 83};
+	this.keys = { LEFT: 37, UP: 38, RIGHT: 39, BOTTOM: 40};
 
 	// Mouse buttons
 	this.mouseButtons = { ORBIT: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, PAN: THREE.MOUSE.RIGHT };
@@ -261,7 +261,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 		if (time == 1000) {			// Call from 3dsimulator.js
 			this.zooming = true;
 		}
-		
+
 		this.shiftTarget(getBodyPosition(bodyIndex));
 		var vFOV = scope.object.fov * Math.PI / 180;
 		var cameraDistance = Math.hypot(
@@ -304,14 +304,14 @@ THREE.OrbitControls = function ( object, domElement ) {
 		var intermediatex = this.target.x + (bodyPos.x - this.target.x) * secs;
 		var intermediatey = this.target.y + (bodyPos.y - this.target.y) * secs;
 		var intermediatez = this.target.z + (bodyPos.z - this.target.z) * secs;
-		
+
 		if (Math.abs(bodyPos.x - intermediatex) < 1e3 &&
 			Math.abs(bodyPos.y - intermediatey) < 1e3 &&
 			Math.abs(bodyPos.z - intermediatez) < 1e3) {
 			this.moving = false;
 			return;
 		}
-		
+
 		this.shiftTarget(new THREE.Vector3(intermediatex,intermediatey,intermediatez));
 
 		this.update();
