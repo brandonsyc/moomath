@@ -73,16 +73,16 @@ function show() {
 	"use strict";
 	var navbar = document.getElementsByClassName("topnav")[0];
 	var sticky = document.getElementById("sticky");
-  if (navbar.className === "topnav") {
-  	navbar.className += " responsive";
-  }
-  else {
-  	navbar.className = "topnav";
-  }
-	if (sticky.className === "topnav") {
-	  sticky.className += " responsive";
+	if (navbar.className === "topnav") {
+		navbar.className += " responsive";
 	}
 	else {
-	  sticky.className = "topnav";
+		navbar.className = "topnav";
+	}
+	if (sticky.className === "topnav") {
+		sticky.className += " responsive";
+	}
+	else {
+		sticky.className = "topnav";
 	}
 }
