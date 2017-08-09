@@ -39,15 +39,14 @@
 		</a>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
-		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,nullFunc,'opacity')">
+		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
 		<label for="testd">Planet Orbits</label>
-		<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,nullFunc,'opacity')">
+		<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
 		<label for="teste">Dwarf Orbits</label>
 		<input type="checkbox" id="testf" onclick="smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
 		<label for="testf" id="labels">Labels</label>
 		<label for="goto">Find Object:</label>
 		<input type="text" id="goto" oninput="searchBody(this.value)">
-		<button class="go" onClick="doGoTo()">Go!</button>
 		<div class="wrapper">
 			<label for="bslide">Planetary Size</label>
 			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>

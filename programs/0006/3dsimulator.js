@@ -18,8 +18,8 @@ var bodies = [];
 // Types: star = sun, planet = one of 8 planets, dwarf = one of the dwarf planets, majorsat = round moon, minorsat = irregular moon
 
 // Precision of spheres
-var sphereSegmentPrecision = 24;
-var sphereRingPrecision = 24;
+var sphereSegmentPrecision = 16;
+var sphereRingPrecision = 16;
 
 // Minimum star size
 var minStarSize = 50;
@@ -403,11 +403,11 @@ function update() {
 	// Update the controls (OrbitControls)
 	controls.update();
 
-	// Update the sprites (text canvas)
-	updateSprites();
-
 	// Render the scene
   renderer.render(scene, camera);
+
+	// Update the sprites (text canvas)
+	updateSprites();
 
 	if (!finished && new Date().getTime() - lastUpdate < 1000/30.0) {
 		// Checkpoint for first frame above 30 fps
@@ -500,7 +500,7 @@ function updateShowGrid() {
 	displayGridHelper = document.getElementById("testc").checked;
 }
 
-function addBodyFromName(bodyName) {
+function addBodyFromName(bodyName,autoFollow = true) {
 	// Add body from body name
 
 	// Check if body is already in the scene, if not, add it
@@ -516,11 +516,13 @@ function addBodyFromName(bodyName) {
 	}
 
 	// Moves the camera to the body, sets the focus body, and redraws orbits
-	setTimeout(function() {
-		var focusBody = getBody(bodyName);
-		shiftCameraFocus(focusBody);
-		drawOrbits();
-	}, 250);
+	if (autoFollow) {
+		setTimeout(function() {
+			focusBody = getBody(bodyName);
+			shiftCameraFocus(focusBody);
+			drawOrbits();
+		}, 250);
+	}
 }
 
 function deleteBodyFromName(bodyName) {
@@ -730,9 +732,9 @@ function Vector3toArray(v) {
 
 function getBody(name) {
 	// Get body index corresponding with the given name (space and case-sensitive, -1 if none found)
-	for (i = 0; i < bodies.length; i++) {
-		if (bodies[i].name === name) {
-			return i;
+	for (j = 0; j < bodies.length; j++) {
+		if (bodies[j].name === name) {
+			return j;
 		}
 	}
 	return -1;
@@ -1147,8 +1149,8 @@ function searchBody(bodyName) {
 				// If something is found, append it to the <ul>
 	  		appendToSearchList(knownBodyNames[i]);
 
-				// Stop the search if more than 20 things have been found
-				return (queries >= 20);
+				// Stop the search if more than maxQueries things have been found
+				return (queries >= maxQueries);
 			}
 		});
 }
@@ -1159,10 +1161,22 @@ function clearSearchList() {
 	document.getElementById('search-results').innerHTML = '';
 }
 
+var maxQueries = 100;
+
 function appendToSearchList(name) {
 	// Append to the search list <ul> and increment queries
 	queries += 1;
-	document.getElementById('search-results').innerHTML += "<li onclick=" + "'addBodyFromName(\"" + name + "\")'" + ">" + name + "</li>";
+	if (getBody(name) === -1) {
+		document.getElementById('search-results').innerHTML +=
+		"<li style=\"background-color: green\" onclick="
+		+ "'addBodyFromName(\"" + name
+		+ "\");this.style.backgroundColor = \"rgba(0, 136, 187, 0.5)\"'"
+		+ ">" + name + "</li>";
+	} else {
+		var bodyID = String(getBody(name));
+		document.getElementById('search-results').innerHTML +=
+		"<li onclick=" + "'shiftCameraFocus(" + bodyID + ");focusBody=" + bodyID + ";drawOrbits()'" + ">" + name + "</li>";
+	}
 }
 
 function interpolateColors(c1,c2,v) {
@@ -1187,3 +1201,5 @@ function smoothInterpolate(x,k,time=500,cnstFunc=function(){},propt='val') {
 		smoothInterpolate(x, k, time - 1000.0/60.0, cnstFunc, propt)
 	}, 1000.0/60.0);
 }
+
+updateBodyPositions();
