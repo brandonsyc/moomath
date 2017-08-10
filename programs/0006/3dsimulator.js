@@ -1157,6 +1157,7 @@ function searchBody(bodyName) {
 
 function clearSearchList() {
 	// Clear the search list <ul> and reset queries
+	console.log(3);
 	queries = 0;
 	document.getElementById('search-results').innerHTML = '';
 }
