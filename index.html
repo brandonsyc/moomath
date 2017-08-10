@@ -11,7 +11,7 @@
 
 <div id="top"></div>
 
-<div class="full"><div class="gif"><h1>MOOMATH</h1></div></div>
+<div class="full"><div class="gif"><h1>MOOMATH</h1><p>Source: 3D Planet Simulator</p></div></div>
 
 <div class="content">
 	<h1>Welcome to Moomath!</h1>
@@ -122,12 +122,14 @@
 	
 	var gif = document.getElementsByClassName("gif")[0];
 	gif.childNodes[0].style.transform = "translate(0%, 50%)";
+	gif.childNodes[1].style.transform = "translate(0%, -10%)";
 	
 	window.onscroll = function() {
 		sticky.style.display = "inline";
 		var rate = document.body.scrollTop * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
-		gif.childNodes[0].style.transform = "translate(0%, " + (50.0 - rate) + "%)";
+		gif.childNodes[0].style.transform = "translate(0%, " + (50 - rate) + "%)";
+		gif.childNodes[1].style.transform = "translate(0%, " + (-10 - rate) + "%)";
 		if (document.body.scrollTop > gif.offsetHeight) {
 			sticky.style.backgroundColor = "#fff";
 		}

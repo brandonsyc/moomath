@@ -220,6 +220,11 @@ a.icon {
 	letter-spacing: 5px;
 	height: 100%;
 }
+.gif p {
+	color: #fff;
+	height: 100%;
+	font-style: italic;
+}
 .parallax {
 	align-items: center;
 	background-attachment: fixed;
