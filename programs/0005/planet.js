@@ -12,27 +12,36 @@ var down;
 
 function bulb() {
 	"use strict";
+	
 	var j;
+	
 	count++;
 	if (count === 10) {
 		count = 0;
 	}
+	
 	var fps = 1000 / (new Date() - last);
 	last = new Date();
 	document.getElementById("fps").innerHTML = Math.round(fps);
+	
 	ctx.fillStyle = "#333";
 	ctx.fillRect(0, 0, canvas.width, canvas.height);
+	
 	var remove = [];
 	var collisions = [];
+	
 	for (var i = 0; i < bodies.length; i++) {
 		if (!remove.includes(i)) {
 			var body = bodies[i];
+			
 			ctx.fillStyle = body[6];
 			ctx.beginPath();
 			ctx.arc(body[0], body[1], body[7], 0, 2 * Math.PI);
 			ctx.fill();
+			
 			body[0] += body[2];
 			body[1] += body[3];
+			
 			for (j = 0; j < bodies.length; j++) {
 				if (i !== j) {
 					var other = bodies[j];
@@ -42,8 +51,10 @@ function bulb() {
 					var ay = magnitude * (other[1] - body[1]) / distance;
 					body[2] += ax;
 					body[3] += ay;
+					
 					if (0.00426349651 * Math.pow(Math.abs(body[4]), 1 / 3) * Math.pow(Math.abs(body[5]), -2 / 3) +
-						0.00426349651 * Math.pow(Math.abs(other[4]), 1 / 3) * Math.pow(Math.abs(other[5]), -2 / 3) > distance) {
+						0.00426349651 * Math.pow(Math.abs(other[4]), 1 / 3) * Math.pow(Math.abs(other[5]), -2 / 3) +
+						body[2] + body[3] + other[2] + other[3] > distance || distance < 1) {
 						var found = false;
 						for (var k = 0; k < collisions.length; k++) {
 							if (collisions[k].indexOf(i) > -1 && collisions[k].indexOf(j) < 0) {
@@ -82,27 +93,34 @@ function bulb() {
 		var objects = [];
 		var vx = 0;
 		var vy = 0;
-		var den = 0;
-		var min = bodies[collisions[i][0]][5];
+		var mass = 0;
+		var density = 0;
 		for (j = 0; j < collisions[i].length; j++) {
 			var object = bodies[collisions[i][j]];
-			objects.push(bodies[collisions[i][j]]);
+			objects.push(object);
 			vx += object[2] * object[4];
 			vy += object[3] * object[4];
-			den += object[4];
-			min = Math.min(min, object[5]);
+			mass += object[4];
+			density += object[5] * object[4];
 			if (j > 0) {
 				remove.push(collisions[i][j]);
 			}
 		}
+		if (mass === 0) {
+			density = 0;
+		} 
+		else {
+			density /= mass;
+		}
 		bodies[collisions[i][0]] = [getBarycenter(objects)[0],
 				  getBarycenter(objects)[1],
-				  vx / den,
-				  vy / den,
-				  den,
-				  min,
+				  vx / mass,
+				  vy / mass,
+				  mass,
+				  density,
 				  colors[3],
-				  Math.max(0.00426349651 * Math.pow(Math.abs(den), 1 / 3) * Math.pow(Math.abs(min), -2 / 3), 2)];
+				  Math.max(0.00426349651 * Math.pow(Math.abs(mass), 1 / 3) * Math.pow(Math.abs(density), -2 / 3), 2)];
+		trails[collisions[i][0]] = [];
 	}
 	
 	remove.sort(function(a, b) {
@@ -177,8 +195,8 @@ function clicked() {
 					 press.y,
 					 (mouse.x - press.x) / 40,
 					 (mouse.y - press.y) / 40,
-					 parseInt(document.getElementById("mass").value),
-					 document.getElementById("density").value,
+					 parseFloat(document.getElementById("mass").value),
+					 parseFloat(document.getElementById("density").value),
 					 color,
 					 Math.max(0.00426349651 * Math.pow(Math.abs(document.getElementById("mass").value), 1 / 3) * Math.pow(Math.abs(document.getElementById("density").value), -2 / 3), 2)]);
 		trails.push([]);

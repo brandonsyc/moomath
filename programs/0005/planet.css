@@ -15,7 +15,6 @@ input:checked+label {
 }
 label {
 	border-bottom: 0px solid #08b;
-	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	transition: 0.2s;
 }
 .box p {
@@ -53,6 +52,16 @@ label {
 }
 #yellow+label div {
 	background-color: #fd0;
+}
+.preset button {
+	background-color: rgba(0, 0, 0, 0);
+	border-radius: 100px;
+	box-shadow: none;
+	color: #333;
+	transition: 0.2s;
+}
+.preset button:hover {
+	box-shadow: inset 0px 0px 5px #333;
 }
 @media only screen and (max-width: 768px) {
 	canvas {

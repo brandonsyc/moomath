@@ -5,7 +5,6 @@ html {
 	height: 100%;
 }
 body {
-	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	height: 100%;
 	margin: 0;
 }
@@ -20,6 +19,7 @@ input,
 button,
 li {
 	color: #333;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	letter-spacing: 1px;
 	margin: 0px;
 	overflow-x: auto;
@@ -49,6 +49,7 @@ li {
 }
 a {
 	color: #08b;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	font-size: 15px;
 	letter-spacing: 1px;
 	text-decoration: none;
@@ -202,6 +203,28 @@ a.icon {
 	text-shadow: 2px 2px 10px #08b;
 }
 /* Front page */
+.full {
+    height: 100%; 
+	overflow: hidden;
+}
+.gif {
+    background-image: url("programs/0006/images/thumb.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%; 
+}
+.gif h1 {
+	color: #fff;
+	font-size: 50px;
+	letter-spacing: 5px;
+	height: 100%;
+}
+.gif p {
+	color: #fff;
+	height: 100%;
+	font-style: italic;
+}
 .parallax {
 	align-items: center;
 	background-attachment: fixed;
