@@ -10,7 +10,11 @@ var planetOrbitData = {};
 // Format: semi-major axis, orbital eccentricity, inclination, longitude of the ascending node, mean anomaly, mean motion, argument of perihelion]
 var minorOrbitData = {
 'Uranus': new Float32Array([19.2294159294,.0444055667,.0134837914,1.2913577306,2.49504943941,2.040055e-4,1.68497029757]),
-'Neptune': new Float32Array([30.1036348652,.0112152295,.0308571501,2.30023750462,4.67338138035,1.041512e-4,4.63646042335])
+'Neptune': new Float32Array([30.1036348652,.0112152295,.0308571501,2.30023750462,4.67338138035,1.041512e-4,4.63646042335]),
+'1 Ceres':new Float32Array([2.76649601664,0.0783756291076,0.184714489335,1.40489157056,0.107802909408,0.00373840516161,1.2901973684]),
+'2 Pallas':new Float32Array([2.7723224774,0.22964356726,0.608179877273,3.02287170389,6.16031900868,0.00372662610842,5.41515718837]),
+'3 Juno':new Float32Array([2.66803490264,0.258443457289,0.226324149941,2.97007294298,4.19347856891,0.00394724589311,4.32896964323]),
+'4 Vesta':new Float32Array([2.36153493655,0.0900224466622,0.124510662631,1.81429485315,5.95198876037,0.00474012592426,2.61077986991])
 };
 
 // Length of each epoch for planetOrbitData (between groups of 7 data points)
@@ -103,6 +107,11 @@ var requests = []; // XMLHTTPRequests (asynchronous)
 var loadedBodyDatas = 0;
 var knownBodyNames = planetNames.slice(); // List of body names
 
+var nonAsteroidNames = planetNames.slice();
+
+nonAsteroidNames.push('Uranus');
+nonAsteroidNames.push('Neptune');
+
 for (var body in minorOrbitData) {
   if (minorOrbitData.hasOwnProperty(body)) {
     knownBodyNames.push(body);
@@ -124,13 +133,15 @@ for (i = 0; i < planetNames.length; i++) {
     if (arrayBuffer) {
       planetOrbitData[planetNames[self.srcElement.udder]] = new Float32Array(arrayBuffer);
       loadedBodyDatas += 1;
+
+      drawOrbits();
     }
   };
 
   requests[i].send(null);
 }
 
-var asteroidRequest = new XMLHttpRequest();
+/**var asteroidRequest = new XMLHttpRequest();
 asteroidRequest.open("GET", "data/astJ2000.bin", true);
 asteroidRequest.responseType = "arraybuffer";
 
@@ -165,4 +176,4 @@ asteroidRequest.onload = function (self,oEvent) {
   }
 };
 
-asteroidRequest.send(null);
+asteroidRequest.send(null);**/

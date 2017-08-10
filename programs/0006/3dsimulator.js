@@ -338,8 +338,8 @@ function update() {
 		// 3D distance to Sun
 		var dist = sunPosition.distanceTo(getBodyPosition(i));
 
-		if (dist < currentSunSize) {
-			var opacity = (dist - 3 * (currentSunSize - dist)) / currentSunSize;
+		if (dist < 1.7 * currentSunSize) {
+			var opacity = (dist - 3 * (1.7 * currentSunSize - dist)) / currentSunSize / 1.7;
 
 			if (opacity <= 0) {
 				bodies[i].object.visible = false;
@@ -940,13 +940,15 @@ function updateCameraTracking() {
 var planetOrbitMaterial = new THREE.LineBasicMaterial({
 	color: orbitColor,
 	opacity: planetOrbitOpacity,
-	transparent: true
+	transparent: true,
+	visible: false
 });
 
 var dwarfOrbitMaterial = new THREE.LineBasicMaterial({
 	color: orbitColor,
 	opacity: dwarfOrbitOpacity,
-	transparent: true
+	transparent: true,
+	visible: false
 })
 
 var highlightedOrbitMaterial = new THREE.LineBasicMaterial({
@@ -957,8 +959,7 @@ var highlightedOrbitMaterial = new THREE.LineBasicMaterial({
 
 var invisibleOrbitMaterial = new THREE.LineBasicMaterial({
 	color: 0x000000,
-	opacity: 1,
-	transparent: true
+	visible: false
 })
 
 function drawOrbits() {
@@ -1128,55 +1129,83 @@ function asyncSearch(query,handler) {
 	_asyncSearchBodies(query.toLowerCase(),0,handler);
 }
 
+var searchRequest = null;
+
 function searchBody(bodyName) {
-	// Search for a body, given bodyName
-
-	// Remove spaces, make lower case
-	currentQuery = bodyName.replace(/ /g,'').toLowerCase();
-
-	// Clear the existing list
 	clearSearchList();
 
-	// Call the search function
-	asyncSearch(currentQuery.slice(),
-		function(query,i) {
-			// Entry handler
-			if (i == -1) return false;
-			if (query !== currentQuery) {
-				clearSearchList();
-				return true;
-			} else {
-				// If something is found, append it to the <ul>
-	  		appendToSearchList(knownBodyNames[i]);
+	try {
+		searchRequest.abort();
+	} catch (e) {;}
 
-				// Stop the search if more than maxQueries things have been found
-				return (queries >= maxQueries);
+	var modifiedQuery = bodyName.replace(/ /g,'').toLowerCase();
+
+	for (i = 0; i < nonAsteroidNames.length; i++) {
+		if (nonAsteroidNames[i].replace(/ /g,'').toLowerCase().indexOf(modifiedQuery) != -1) {
+			appendToSearchList(nonAsteroidNames[i]);
+		}
+	}
+
+	searchRequest = new XMLHttpRequest();
+  searchRequest.open("GET", "http://67.180.22.42/searchAsteroids.php?"
+	+ modifiedQuery, true);
+
+  searchRequest.onload = function(self,oEvent) {
+    // Process returned request
+		var splitResponse = searchRequest.response.split(';');
+		var splitBody,data;
+
+		for (i = 0; i < splitResponse.length - 1; i++) {
+			splitBody = splitResponse[i].split(',');
+			data = [];
+			for (k = 1; k < 8; k++) {
+				data.push(parseFloat(splitBody[k]));
 			}
-		});
+			appendToSearchList(splitBody[0],'addToMinorOrbitData(this.innerHTML,[' + String(data) + ']);');
+		}
+  };
+
+  searchRequest.send(null);
 }
 
 function clearSearchList() {
 	// Clear the search list <ul> and reset queries
-	console.log(3);
 	queries = 0;
 	document.getElementById('search-results').innerHTML = '';
 }
 
 var maxQueries = 100;
 
-function appendToSearchList(name) {
+function addToMinorOrbitData(name,args) {
+	minorOrbitData[name] = new Float32Array(args);
+}
+
+function appendToSearchList(name,extraFunc = null) {
 	// Append to the search list <ul> and increment queries
 	queries += 1;
 	if (getBody(name) === -1) {
-		document.getElementById('search-results').innerHTML +=
-		"<li style=\"background-color: green\" onclick="
-		+ "'addBodyFromName(\"" + name
-		+ "\");this.style.backgroundColor = \"rgba(0, 136, 187, 0.5)\"'"
-		+ ">" + name + "</li>";
+		if (!extraFunc) {
+			document.getElementById('search-results').innerHTML +=
+			"<li style=\"background-color: green\" onclick="
+			+ "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor = \'rgba(0, 136, 187, 0.5)\''>"
+			+ name + "</li>";
+		} else {
+			document.getElementById('search-results').innerHTML +=
+			"<li style=\"background-color: green\" onclick="
+			+ extraFunc + "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor = \'rgba(0, 136, 187, 0.5)\';'>"
+			+ name + "</li>";
+		}
 	} else {
 		var bodyID = String(getBody(name));
-		document.getElementById('search-results').innerHTML +=
-		"<li onclick=" + "'shiftCameraFocus(" + bodyID + ");focusBody=" + bodyID + ";drawOrbits()'" + ">" + name + "</li>";
+		if (!extraFunc) {
+			document.getElementById('search-results').innerHTML +=
+			"<li onclick='shiftCameraFocus(" + bodyID + ");focusBody="
+			+ bodyID + ";drawOrbits()'>" + name + "</li>";
+		} else {
+			document.getElementById('search-results').innerHTML +=
+			"<li onclick='shiftCameraFocus(" + bodyID + ");focusBody="
+			+ bodyID + ";drawOrbits();'>" + name + "</li>";
+		}
 	}
 }
 
