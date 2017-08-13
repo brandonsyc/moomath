@@ -5,6 +5,8 @@
 // Format: [semi-major axis, orbital eccentricity, inclination, longitude of the ascending node, mean anomaly, mean motion, argument of perihelion, semi-major axis, ...]
 var planetOrbitData = {};
 
+var moonNames = ["Moon"];
+
 // Data for more minor objects (and Uranus and Neptune) as Float32Array's
 
 // Format: semi-major axis, orbital eccentricity, inclination, longitude of the ascending node, mean anomaly, mean motion, argument of perihelion]
@@ -17,6 +19,10 @@ var minorOrbitData = {
 '4 Vesta':new Float32Array([2.36153493655,0.0900224466622,0.124510662631,1.81429485315,5.95198876037,0.00474012592426,2.61077986991])
 };
 
+var moonOrbitData = {
+  'Moon': {orbit: new Float32Array([0.009,.0444055667,.0134837914,1.2913577306,2.49504943941,2.040055,1.68497029757]),parent: 'Earth'}
+};
+
 // Length of each epoch for planetOrbitData (between groups of 7 data points)
 var epochLength = 660;
 
@@ -26,15 +32,17 @@ function calculateBodyPosition(name,t,forceEpoch = null) {
   // Calculate position of "name" at Julian Date t
 
   // Find corresponding data
+
+  if (moonOrbitData[name] !== undefined) {
+    return calculateMoonPosition(name,t,forceEpoch);
+  }
+
   var thisData = planetOrbitData[name];
   if (thisData === undefined) {
     thisData = minorOrbitData[name];
-    if (thisData === undefined) {
-    	return zeroVector;
-    }
-    var adjT = t + 1930633.5 + 2451545;
-    epoch *= 7;
+    if (thisData === undefined) return zeroVector;
 
+    var adjT = t + 1930633.5 + 2451545;
     var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
     return calculateBodyPositionFromOrbit(thisData[0],thisData[1],thisData[2],thisData[3],anomaly,thisData[6]);
@@ -45,9 +53,8 @@ function calculateBodyPosition(name,t,forceEpoch = null) {
 
   if (forceEpoch != null) {
 	   epoch = forceEpoch;
-	   console.log(epoch);
   } else {
-	   epoch = Math.max(0,Math.round((t + 1930633.5) / (epochLength)));
+	   epoch = Math.max(0,Math.round((t + 1930633.5) / epochLength));
   }
 
   var adjT = t + 1930633.5 - epoch * epochLength;
@@ -63,6 +70,18 @@ function calculateBodyPosition(name,t,forceEpoch = null) {
 
   // Calculate body position
   return calculateBodyPositionFromOrbit(axis,ecc,incl,ascn,anomaly,peri);
+}
+
+function calculateMoonPosition(name,t,forceEpoch = null) {
+  var thisData = moonOrbitData[name].orbit;
+
+  var adjT = t + 1930633.5 + 2451545;
+
+  var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
+
+  return calculateBodyPositionFromOrbit(thisData[0],
+    thisData[1],thisData[2],thisData[3],anomaly,thisData[6]).add(
+      calculateBodyPosition(moonOrbitData[name].parent,t,forceEpoch));
 }
 
 function calculateBodyPositionFromOrbit(a,e,i,W,M,w) {
@@ -97,9 +116,11 @@ function getOrbitalPeriod(bodyIndex) {
 		return 1 / (planetOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
 	} else if (minorOrbitData[bodies[bodyIndex].name]) {
 		return 1 / (minorOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
+	} else if (moonOrbitData[bodies[bodyIndex].name]) {
+		return 1 / (moonOrbitData[bodies[bodyIndex].name].orbit[5] / (2 * Math.PI));
 	} else {
-		return 1;
-	}
+    return 1;
+  }
 }
 
 var planetNames = ['Mercury','Venus','Earth','Mars','Jupiter','Saturn'];

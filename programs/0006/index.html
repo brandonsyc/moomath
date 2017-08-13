@@ -39,10 +39,14 @@
 		</a>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
+		<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)">
+		<label for="testp">Lock on Body</label>
 		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
 		<label for="testd">Planet Orbits</label>
 		<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
 		<label for="teste">Dwarf Orbits</label>
+		<input type="checkbox" id="testl" onclick="smoothInterpolate(majorSatOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {majorSatOrbitMaterial.visible = majorSatOrbitMaterial.opacity > 0.08},'opacity')">
+		<label for="testl">Moon Orbits</label>
 		<input type="checkbox" id="testf" onclick="smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
 		<label for="testf" id="labels">Labels</label>
 		<label for="goto">Find Object:</label>
