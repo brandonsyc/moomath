@@ -9,6 +9,7 @@ var loader = new THREE.TextureLoader();
 var orbitColor = 0x0000ff;
 var planetOrbitOpacity = 0;
 var dwarfOrbitOpacity = 0;
+var majorSatOrbitOpacity = 0;
 var labelColor = "rgba(255,121,244,";
 
 var maxOrbitOpacity = 0.7;
@@ -34,7 +35,7 @@ var minDwarfPlanetSize = 12;
 var minVisibleMajorSatelliteSize = 25;
 
 // Distance at which major satellites are displayed, in km
-var majorSatelliteDisplayDistance = 1e7;
+var majorSatelliteDisplayDistance = 1e9;
 
 // Show planets to scale or not (true: show true scale, false: show mins)
 var trueScale = false;
@@ -43,7 +44,7 @@ var trueScale = false;
 var planetScaleFactor = 0.5;
 
 // Body which the camera is pointing at
-var focusBody = null;
+var focusBody = 8;
 
 // Convert 1/100 AU to kilometers
 var AUtokm = 1495979;
@@ -75,6 +76,7 @@ function addBodies() {
 	addBody(new constructBody(name="2 Pallas",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
 	addBody(new constructBody(name="3 Juno",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
 	addBody(new constructBody(name="4 Vesta",radius="200",type="dwarf",shininess=0.03,axialtilt=0,rotationperiod=1e9,imageLocation="images/ceresTexture.jpg"));
+	addBody(new constructBody(name="Moon",radius="1000",type="majorsat",shininess=0.03,axialtilt=0,rotationperiod=31,imageLocation="images/moonTexture.jpg"))
 }
 
 // Whether to display the grid
@@ -210,7 +212,16 @@ function getObjects() {
 
 function shiftCameraFocus(bodyIndex) {
 	// Shifts camera focus to bodies[bodyIndex] smoothly (linear interpolation)
+	if (bodyIndex == focusBody) {
+		return;
+	}
+	if (lockBody) {
+		isLockBodyCameraTransition = true;
+	}
 	controls.smoothPanIntoBody(bodyIndex);
+	if (lockBody) {
+		setTimeout(function(){isLockBodyCameraTransition = false}, 520);
+	}
 	camera.fov = 45;
 	camera.updateProjectionMatrix();
 }
@@ -240,16 +251,16 @@ function onDocumentClick(event) {
 		// If an intersecting body in found...
 		lastClickedEntity = intersects[0];
 
+		if (trackBody) {
+			// If camera mode is tracking, shift the camera to the focused body
+			shiftCameraFocus(intersects[0].object.name);
+		} else {
+			shiftCameraFocusToVector(getBodyPosition(intersects[0].object.name));
+		}
+
 		// Note that (Object3D).object.name gives the index of the object in bodies.
 		focusBody = intersects[0].object.name;
 		drawOrbits();
-
-		if (trackBody) {
-			// If camera mode is tracking, shift the camera to the focused body
-			shiftCameraFocus(focusBody);
-		} else {
-			shiftCameraFocusToVector(getBodyPosition(focusBody));
-		}
 	} else {
 		if (!controls.moving) {
 			// If the camera is moving, don't update lastClickedEntity
@@ -276,7 +287,11 @@ function onDocumentDblClick(event) {
 		var bodySize = bodies[lastClickedEntity.object.name].radius;**/
 
 		// Zoom into body
-		controls.smoothDollyIntoBody(lastClickedEntity.object.name);
+		if (lockBody) {
+			lockBodySmoothDollyIntoBody(lastClickedEntity.object.name);
+		} else {
+			controls.smoothDollyIntoBody(lastClickedEntity.object.name);
+		}
 
 		focusBody = lastClickedEntity.object.name;
 	}
@@ -301,6 +316,7 @@ function update() {
 
 	// Update camera movements, recalculate frustum
 	updateCameraTracking();
+	controls.update();
 	updateFrustum();
 
 	// Index, position, size of sun
@@ -400,14 +416,13 @@ function update() {
 		} catch(e) {;}
 	}
 
-	// Update the controls (OrbitControls)
-	controls.update();
-
 	// Render the scene
   renderer.render(scene, camera);
+	//controls.update();
 
 	// Update the sprites (text canvas)
 	updateSprites();
+	updateMoonOrbitObjects();
 
 	if (!finished && new Date().getTime() - lastUpdate < 1000/30.0) {
 		// Checkpoint for first frame above 30 fps
@@ -465,16 +480,15 @@ function updateMoonSize() {
 
 	var bar = document.getElementById("bar2").style.width;
 
-	minVisibleMajorSatelliteSize = parseFloat(bar.substr(0,bar.length-1)) / 2;
-	if (minVisibleMajorSatelliteSize > 50) {
-		minVisibleMajorSatelliteSize = 50;
+	minVisibleMajorSatelliteSize = parseFloat(bar.substr(0,bar.length-1)) / 3;
+	if (minVisibleMajorSatelliteSize > 33) {
+		minVisibleMajorSatelliteSize = 33;
 	}
 
 	if (minVisibleMajorSatelliteSize == 0) {
 		document.getElementById('bar2-contents').innerHTML = "Real Size";
 	} else {
-		document.getElementById('bar2-contents').innerHTML =
-			minVisibleMajorSatelliteSize + '&times;';
+		document.getElementById('bar2-contents').innerHTML = String(Math.round(minVisibleMajorSatelliteSize * 100) / 100) + "&times;"
 	}
 }
 
@@ -500,19 +514,47 @@ function updateShowGrid() {
 	displayGridHelper = document.getElementById("testc").checked;
 }
 
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addBodyFromName(bodyName,autoFollow = true) {
 	// Add body from body name
 
 	// Check if body is already in the scene, if not, add it
 	if (getBody(bodyName) == -1) {
-		// TODO: change default settings
-		addBody(new constructBody(name=bodyName,
-			radius="200",
-			type="dwarf",
-			shininess=0.03,
-			axialtilt=0,
-			rotationperiod=1e9,
-			imageLocation="images/ceresTexture.jpg"));
+		if (minorOrbitData[bodyName]) {
+			addBody(new constructBody(name=bodyName,
+				radius="200",
+				type="dwarf",
+				shininess=0.03,
+				axialtilt=0,
+				rotationperiod=1e9,
+				imageLocation="images/ceresTexture.jpg"));
+		} else if (moonOrbitData[bodyName]) {
+			if (contains(texturedMoons,bodyName)) {
+				addBody(new constructBody(name=bodyName,
+					radius="200",
+					type="majorsat",
+					shininess=0.03,
+					axialtilt=0,
+					rotationperiod=1e9,
+					imageLocation="images/" + bodyName.toLowerCase() + "Texture.jpg"));
+			} else {
+				addBody(new constructBody(name=bodyName,
+					radius="200",
+					type="majorsat",
+					shininess=0.03,
+					axialtilt=0,
+					rotationperiod=1e9,
+					imageLocation="images/ceresTexture.jpg"));
+			}
+		}
 	}
 
 	// Moves the camera to the body, sets the focus body, and redraws orbits
@@ -530,7 +572,6 @@ function deleteBodyFromName(bodyName) {
 	var bodyIndex = getBody(bodyName);
 
 	var objct = bodies[bodyIndex].object;
-	console.log(objct);
 	scene.remove(objct);
 
 	bodies.splice(bodyIndex,1);
@@ -588,6 +629,7 @@ window.onload = function() {
 	// First call to requestAnimationFrame
 
 	console.log("Finished setup.");
+	enableLockBody();
 	requestAnimationFrame(update);
 	updateTimeWarp();
 }
@@ -908,6 +950,129 @@ var lastFocusBody = null;
 // Shift of target relative to Sun since last frame
 var targetShift = new THREE.Vector3();
 
+var lockBodyOffsetTheta = {val: Math.PI / 2};
+var lockBodyOffsetPhi = {val: Math.PI / 2};
+var lockBodyOffsetR = 88602;
+
+var lockBodyOffsetX = 50000;
+var lockBodyOffsetY = 50000;
+var lockBodyOffsetZ = 50000;
+
+var isLockBodyMouseDown = false;
+var lockBodyMouseDownX = 0;
+var lockBodyMouseDownY = 0;
+
+var lockBodyStartTheta = lockBodyOffsetTheta.val;
+var lockBodyStartPhi = lockBodyOffsetPhi.val;
+
+var lockBodyLastMovementTime = null;
+var isLockBodyCameraTransition = false;
+
+function lockBodyZoom(factor) {
+	lockBodyOffsetR *= factor;
+	updateCartesianOffsets();
+}
+
+function lockBodySmoothDollyIntoBody() {
+	// Implement this!
+	return;
+}
+
+function updateCartesianOffsets() {
+	lockBodyOffsetX = lockBodyOffsetR * Math.cos(lockBodyOffsetTheta.val) * Math.sin(lockBodyOffsetPhi.val);
+	lockBodyOffsetZ = lockBodyOffsetR * Math.sin(lockBodyOffsetTheta.val) * Math.sin(lockBodyOffsetPhi.val);
+	lockBodyOffsetY = lockBodyOffsetR * Math.cos(lockBodyOffsetPhi.val);
+}
+
+function setSphericalOffsetsFromCartesian(x,y,z) {
+	lockBodyOffsetR = Math.hypot(x,y,z);
+	if (lockBodyOffsetR == 0) {
+		lockBodyOffsetR = 50000;
+	}
+	lockBodyOffsetPhi.val = Math.acos(y / lockBodyOffsetR);
+	var cosTheta = x / (lockBodyOffsetR * Math.sin(lockBodyOffsetPhi.val));
+	var sinTheta = z / (lockBodyOffsetR * Math.sin(lockBodyOffsetPhi.val));
+
+	if (Math.abs(cosTheta) < 0.0001) {
+		if (sinTheta > 0) {
+			lockBodyOffsetTheta.val = Math.PI/4;
+		} else {
+			lockBodyOffsetTheta.val = -Math.PI/4;
+		}
+		return;
+	}
+
+	lockBodyOffsetTheta.val = Math.atan(sinTheta / cosTheta);
+}
+
+function setSphericalFromCameraPosition() {
+	setSphericalOffsetsFromCartesian(camera.position.x - controls.target.x,
+		camera.position.y - controls.target.y,
+		camera.position.z - controls.target.z);
+}
+
+function lockBodyOnWheel(event) {
+	event.preventDefault();
+
+	if ((1 + event.deltaY / 100) * lockBodyOffsetR < 1.2 * bodies[focusBody].radius) {
+		return;
+	}
+
+	lockBodyZoom(1 + event.deltaY / 250);
+}
+
+function lockBodyOnMouseDown(event) {
+	event.preventDefault();
+
+	var rect = renderer.domElement.getBoundingClientRect();
+  lockBodyMouseDownX = event.clientX - rect.left;
+  lockBodyMouseDownY = event.clientY - rect.top;
+
+	isLockBodyMouseDown = true;
+
+	lockBodyStartTheta = lockBodyOffsetTheta.val;
+	lockBodyStartPhi = lockBodyOffsetPhi.val;
+
+	lockBodyLastMovementTime = null;
+}
+
+function lockBodyOnMouseMove(event) {
+	if (!isLockBodyMouseDown) return;
+
+	event.preventDefault();
+
+	var rect = renderer.domElement.getBoundingClientRect();
+  var thisX = event.clientX - rect.left;
+  var thisY = event.clientY - rect.top;
+
+	var newPhi = lockBodyStartPhi + 0.01 * (thisY - lockBodyMouseDownY);
+
+	if (newPhi <= 0.001 || newPhi > Math.PI-0.001) {
+		return;
+	}
+
+	smoothInterpolate(lockBodyOffsetTheta,lockBodyStartTheta + 0.01 * (thisX - lockBodyMouseDownX),time=100);
+	smoothInterpolate(lockBodyOffsetPhi,lockBodyStartPhi + 0.01 * (thisY - lockBodyMouseDownY),time=100,updateCartesianOffsets);
+}
+
+function lockBodyOnMouseUp(event) {
+	isLockBodyMouseDown = false;
+}
+
+function setupLockBodyListeners() {
+	renderer.domElement.addEventListener('wheel', lockBodyOnWheel, true);
+	renderer.domElement.addEventListener('mousedown', lockBodyOnMouseDown, true);
+	renderer.domElement.addEventListener('mousemove', lockBodyOnMouseMove, true);
+	renderer.domElement.addEventListener('mouseup', lockBodyOnMouseUp, true);
+}
+
+function destroyLockBodyListeners() {
+	renderer.domElement.removeEventListener('wheel', lockBodyOnWheel, true);
+	renderer.domElement.removeEventListener('mousedown', lockBodyOnMouseDown, true);
+	renderer.domElement.removeEventListener('mousemove', lockBodyOnMouseMove, true);
+	renderer.domElement.removeEventListener('mouseup', lockBodyOnMouseUp, true);
+}
+
 function updateCameraTracking() {
 	// Update tracking of the camera
 	// TODO: fix lockBody tracking
@@ -917,16 +1082,25 @@ function updateCameraTracking() {
 
 		if (!controls.zooming && !controls.moving && focusBody == lastFocusBody) {
 			if (focusBodyPosition != null) {
-				if (lockBody) {
+				if (lockBody && !isLockBodyCameraTransition) {
 					// Shift camera by change in position since last frame
-					camera.position.set(camera.position.x + focusBodyPosition.x - lastFocusBodyPosition.x,
-						camera.position.y + focusBodyPosition.y - lastFocusBodyPosition.y,
-						camera.position.z + focusBodyPosition.z - lastFocusBodyPosition.z);
+					camera.position.set(focusBodyPosition.x + lockBodyOffsetX,
+						focusBodyPosition.y + lockBodyOffsetY,
+						focusBodyPosition.z + lockBodyOffsetZ);
+					instantShiftCameraFocus(focusBody);
+					controls.enabled = false;
 				} else if (trackBody) {
 					// Shift camera focus to target body
 					instantShiftCameraFocus(focusBody);
+					controls.enabled = true;
 				}
 			}
+		}
+
+		if (isLockBodyCameraTransition && lockBody) {
+			camera.position.set(controls.target.x + lockBodyOffsetX,
+				controls.target.y + lockBodyOffsetY,
+				controls.target.z + lockBodyOffsetZ);
 		}
 
 		// Update previous focusBodyPosition
@@ -951,6 +1125,13 @@ var dwarfOrbitMaterial = new THREE.LineBasicMaterial({
 	visible: false
 })
 
+var majorSatOrbitMaterial = new THREE.LineBasicMaterial({
+	color: orbitColor,
+	opacity: majorSatOrbitOpacity,
+	transparent: true,
+	visible: false
+})
+
 var highlightedOrbitMaterial = new THREE.LineBasicMaterial({
 	color: 0x00ffff,
 	opacity: 0.7,
@@ -961,6 +1142,13 @@ var invisibleOrbitMaterial = new THREE.LineBasicMaterial({
 	color: 0x000000,
 	visible: false
 })
+
+function updateMoonOrbitObjects() {
+	for (i = 0; i < moonNames.length; i++) {
+		copyVector3(scene.getObjectByName(moonNames[i] + 'Orbit').position,
+			calculateBodyPosition('Earth',days));
+	}
+}
 
 function drawOrbits() {
 	// Draws the orbits
@@ -978,7 +1166,7 @@ function drawOrbits() {
 		// Get type of body
 		var bodyType = bodies[i].type;
 
-		if ((bodyType === "planet") || (bodyType === "dwarf") || i == focusBody) {
+		if ((bodyType === "planet") || (bodyType === "dwarf") || (bodyType === "majorsat") || i == focusBody) {
 			// If an orbit should be drawn...
 
 			var geometry = new THREE.Geometry();
@@ -992,15 +1180,33 @@ function drawOrbits() {
 				material = planetOrbitMaterial;
 			} else if (bodyType === "dwarf") {
 				material = dwarfOrbitMaterial;
+			} else if (bodyType === "majorsat") {
+				material = majorSatOrbitMaterial;
 			} else {
 				material = planetOrbitMaterial;
 			}
 
 			// Calculate vertices of orbit (precision = 200 points / revolution)
-			for (j = 0; j < 200; j++) {
-				geometry.vertices.push(calculateBodyPosition(bodies[i].name,days + period * j / 200));
+			if (bodyType === "majorsat") {
+				var parent = moonOrbitData[bodies[i].name].parent;
+				for (j = 0; j < 1000; j++) {
+					geometry.vertices.push(calculateBodyPosition(
+						parent,days + period * j / 1000).add(
+							calculateBodyPosition(bodies[i].name,
+								days + period * j / 1000).multiplyScalar(-1)));
+				}
+				geometry.vertices.push(calculateBodyPosition(
+					parent,days + period).add(
+						calculateBodyPosition(bodies[i].name,
+							days + period).multiplyScalar(-1)));
+			} else {
+				for (j = 0; j < 1000; j++) {
+					geometry.vertices.push(calculateBodyPosition(
+						bodies[i].name,
+						days + period * j / 1000));
+				}
+				geometry.vertices.push(calculateBodyPosition(bodies[i].name,days));
 			}
-			geometry.vertices.push(calculateBodyPosition(bodies[i].name,days));
 
 			var line = new THREE.Line(geometry, material);
 			line.name = bodies[i].name + "Orbit";
@@ -1009,11 +1215,21 @@ function drawOrbits() {
 	}
 }
 
+function copyVector3(copyTo,from) {
+	copyTo.x = from.x;
+	copyTo.y = from.y;
+	copyTo.z = from.z;
+}
+
 function get2DPosition(bodyIndex) {
 	// Get 2D position of bodies[bodyIndex] on screen
 
-	var p = getBodyPosition(bodyIndex).clone();
-  var vector = p.project(camera);
+  var vector = getBodyPosition(bodyIndex).clone().project(camera);
+  return [(vector.x + 1) / 2 * textCanvas.width, -(vector.y - 1) / 2 * textCanvas.height];
+}
+
+function get2DPositionFromVector(v) {
+  var vector = v.clone().project(camera);
   return [(vector.x + 1) / 2 * textCanvas.width, -(vector.y - 1) / 2 * textCanvas.height];
 }
 
@@ -1026,6 +1242,7 @@ function updateSprites() {
 	// Update text labels on textCanvas
 
 	clearOverlay();
+	updateAxesDrawing();
 
 	// Stylling
 	textContext.font = "12px Trebuchet";
@@ -1055,6 +1272,100 @@ function updateSprites() {
 
 			textContext.fillText(bodies[i].name, pos[0], pos[1]);
 		}
+	}
+}
+
+function translateVector2(v,x,y) {
+	return [v[0] + x,v[1] + y];
+}
+
+function scaleVector2(v,factor) {
+	return [v[0] * factor, v[1] * factor];
+}
+
+var xAxisDisplace = new THREE.Vector3(10000,0,0);
+var yAxisDisplace = new THREE.Vector3(0,10000,0);
+var zAxisDisplace = new THREE.Vector3(0,0,10000);
+
+var axesSize = 100;
+
+var axisSegments = [
+	[xAxisDisplace,new THREE.Vector3(9500,300,0)],
+	[xAxisDisplace,new THREE.Vector3(9500,-300,0)],
+	[yAxisDisplace,new THREE.Vector3(-300,9500,0)],
+	[yAxisDisplace,new THREE.Vector3(300,9500,0)],
+	[zAxisDisplace,new THREE.Vector3(0,-300,9500)],
+	[zAxisDisplace,new THREE.Vector3(0,300,9500)]
+]
+
+function updateAxesDrawing() {
+	var origin = get2DPosition(focusBody).slice();
+	var originPosition = getBodyPosition(focusBody);
+	var tempPosition = originPosition.clone();
+
+	var xAxisEnd = get2DPositionFromVector(tempPosition.add(xAxisDisplace));
+	tempPosition.copy(originPosition);
+	var yAxisEnd = get2DPositionFromVector(tempPosition.add(zAxisDisplace));
+	tempPosition.copy(originPosition);
+	var zAxisEnd = get2DPositionFromVector(tempPosition.add(yAxisDisplace));
+	tempPosition.copy(originPosition);
+
+	var maxDrawableX = window.innerWidth - 20;
+	var maxDrawableY = window.innerHeight - 20;
+
+	var scaleFactor = axesSize / Math.max(Math.max(origin[0],xAxisEnd[0],yAxisEnd[0],zAxisEnd[0]) -
+		Math.min(origin[0],xAxisEnd[0],yAxisEnd[0],zAxisEnd[0]),
+		Math.max(origin[1],xAxisEnd[1],yAxisEnd[1],zAxisEnd[1]) -
+		Math.min(origin[1],xAxisEnd[1],yAxisEnd[1],zAxisEnd[1]));
+
+	origin = scaleVector2(origin,scaleFactor);
+	xAxisEnd = scaleVector2(xAxisEnd,scaleFactor);
+	yAxisEnd = scaleVector2(yAxisEnd,scaleFactor);
+	zAxisEnd = scaleVector2(zAxisEnd,scaleFactor);
+
+	var maxXDrawingDisplace = maxDrawableX - Math.max(origin[0],xAxisEnd[0],yAxisEnd[0],zAxisEnd[0]);
+	var maxYDrawingDisplace = maxDrawableY - Math.max(origin[1],xAxisEnd[1],yAxisEnd[1],zAxisEnd[1]);
+
+	var xDrawingDisplace = Math.min(maxXDrawingDisplace,maxDrawableX - origin[0] - axesSize * 1.1);
+	var yDrawingDisplace = Math.min(maxYDrawingDisplace,maxDrawableY - origin[1] - axesSize * 0.7);
+
+	origin = translateVector2(origin,xDrawingDisplace,yDrawingDisplace);
+	xAxisEnd = translateVector2(xAxisEnd,xDrawingDisplace,yDrawingDisplace);
+	yAxisEnd = translateVector2(yAxisEnd,xDrawingDisplace,yDrawingDisplace);
+	zAxisEnd = translateVector2(zAxisEnd,xDrawingDisplace,yDrawingDisplace);
+
+	textContext.strokeStyle="#FF0000";
+
+	textContext.beginPath();
+	textContext.moveTo(origin[0],origin[1]);
+	textContext.lineTo(xAxisEnd[0],xAxisEnd[1]);
+	textContext.stroke();
+
+	textContext.beginPath();
+	textContext.moveTo(origin[0],origin[1]);
+	textContext.lineTo(yAxisEnd[0],yAxisEnd[1]);
+	textContext.stroke();
+
+	textContext.beginPath();
+	textContext.moveTo(origin[0],origin[1]);
+	textContext.lineTo(zAxisEnd[0],zAxisEnd[1]);
+	textContext.stroke();
+
+	for (seg = 0; seg < axisSegments.length; seg++) {
+		var axisSegment = axisSegments[seg];
+
+		var start = get2DPositionFromVector(tempPosition.add(axisSegment[0]));
+		tempPosition.copy(originPosition);
+		var end = get2DPositionFromVector(tempPosition.add(axisSegment[1]));
+		tempPosition.copy(originPosition);
+
+		start = translateVector2(scaleVector2(start,scaleFactor),xDrawingDisplace,yDrawingDisplace);
+		end = translateVector2(scaleVector2(end,scaleFactor),xDrawingDisplace,yDrawingDisplace);
+
+		textContext.beginPath();
+		textContext.moveTo(start[0],start[1]);
+		textContext.lineTo(end[0],end[1]);
+		textContext.stroke();
 	}
 }
 
@@ -1102,33 +1413,6 @@ var queries = 0;
 // Function that does nothing
 var nullFunc = function() {};
 
-function _asyncSearchBodies(query,index,handler) {
-	// Asynchronous loop for the search
-
-	for (i = index; i < Math.min(index + 100,knownBodyNames.length); i++) {
-		// Look through items between index and index+100
-		if (knownBodyNames[i].toLowerCase().replace(/ /g,'').includes(query)) {
-			// If matching body is found, handle it
-			if (handler(query,i)) return;
-		}
-	}
-
-	if (index + 100 > knownBodyNames.length) {
-		// If the search is complete, pass -1 to handler
-		handler(query,-1);
-		return;
-	}
-
-	setTimeout(function() {
-		_asyncSearchBodies(query,index+100,handler)
-	});
-}
-
-function asyncSearch(query,handler) {
-	// FUnction call to _asyncSearchBodies
-	_asyncSearchBodies(query.toLowerCase(),0,handler);
-}
-
 var searchRequest = null;
 
 function searchBody(bodyName) {
@@ -1147,7 +1431,7 @@ function searchBody(bodyName) {
 	}
 
 	searchRequest = new XMLHttpRequest();
-  searchRequest.open("GET", "http://67.180.22.42/searchAsteroids.php?"
+  searchRequest.open("GET", "http://moomath.com/programs/0006/server/searchAsteroids.php?"
 	+ modifiedQuery, true);
 
   searchRequest.onload = function(self,oEvent) {
@@ -1187,12 +1471,12 @@ function appendToSearchList(name,extraFunc = null) {
 		if (!extraFunc) {
 			document.getElementById('search-results').innerHTML +=
 			"<li style=\"background-color: green\" onclick="
-			+ "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor = \'rgba(0, 136, 187, 0.5)\''>"
+			+ "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor=\'rgba(0,136,187,0.5)\'>"
 			+ name + "</li>";
 		} else {
 			document.getElementById('search-results').innerHTML +=
 			"<li style=\"background-color: green\" onclick="
-			+ extraFunc + "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor = \'rgba(0, 136, 187, 0.5)\';'>"
+			+ extraFunc + "addBodyFromName(this.innerHTML);drawOrbits();this.style.backgroundColor=\'rgba(0,136,187,0.5)\';>"
 			+ name + "</li>";
 		}
 	} else {
@@ -1230,6 +1514,29 @@ function smoothInterpolate(x,k,time=500,cnstFunc=function(){},propt='val') {
 	setTimeout(function() {
 		smoothInterpolate(x, k, time - 1000.0/60.0, cnstFunc, propt)
 	}, 1000.0/60.0);
+}
+
+function updateLockBody(lock) {
+	if (lock) {
+		enableLockBody();
+	} else {
+		disableLockBody();
+	}
+}
+
+function enableLockBody() {
+	setSphericalFromCameraPosition();
+	updateCartesianOffsets();
+	setupLockBodyListeners();
+	lockBody = true;
+}
+
+function disableLockBody() {
+	lockBody = false;
+	destroyLockBodyListeners();
+
+	isLockBodyCameraTransition = false;
+	isLockBodyMouseDown = false;
 }
 
 updateBodyPositions();
