@@ -39,7 +39,7 @@
 		</a>
 		<input type="checkbox" id="testc" onclick="updateShowGrid()">
 		<label for="testc">Enable Grid</label>
-		<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)">
+		<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)" checked>
 		<label for="testp">Lock on Body</label>
 		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
 		<label for="testd">Planet Orbits</label>

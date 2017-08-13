@@ -480,16 +480,15 @@ function updateMoonSize() {
 
 	var bar = document.getElementById("bar2").style.width;
 
-	minVisibleMajorSatelliteSize = parseFloat(bar.substr(0,bar.length-1)) / 2;
-	if (minVisibleMajorSatelliteSize > 50) {
-		minVisibleMajorSatelliteSize = 50;
+	minVisibleMajorSatelliteSize = parseFloat(bar.substr(0,bar.length-1)) / 3;
+	if (minVisibleMajorSatelliteSize > 33) {
+		minVisibleMajorSatelliteSize = 33;
 	}
 
 	if (minVisibleMajorSatelliteSize == 0) {
 		document.getElementById('bar2-contents').innerHTML = "Real Size";
 	} else {
-		document.getElementById('bar2-contents').innerHTML =
-			minVisibleMajorSatelliteSize + '&times;';
+		document.getElementById('bar2-contents').innerHTML = String(Math.round(minVisibleMajorSatelliteSize * 100) / 100) + "&times;"
 	}
 }
 
@@ -515,19 +514,47 @@ function updateShowGrid() {
 	displayGridHelper = document.getElementById("testc").checked;
 }
 
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i++) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
 function addBodyFromName(bodyName,autoFollow = true) {
 	// Add body from body name
 
 	// Check if body is already in the scene, if not, add it
 	if (getBody(bodyName) == -1) {
-		// TODO: change default settings
-		addBody(new constructBody(name=bodyName,
-			radius="200",
-			type="dwarf",
-			shininess=0.03,
-			axialtilt=0,
-			rotationperiod=1e9,
-			imageLocation="images/ceresTexture.jpg"));
+		if (minorOrbitData[bodyName]) {
+			addBody(new constructBody(name=bodyName,
+				radius="200",
+				type="dwarf",
+				shininess=0.03,
+				axialtilt=0,
+				rotationperiod=1e9,
+				imageLocation="images/ceresTexture.jpg"));
+		} else if (moonOrbitData[bodyName]) {
+			if (contains(texturedMoons,bodyName)) {
+				addBody(new constructBody(name=bodyName,
+					radius="200",
+					type="majorsat",
+					shininess=0.03,
+					axialtilt=0,
+					rotationperiod=1e9,
+					imageLocation="images/" + bodyName.toLowerCase() + "Texture.jpg"));
+			} else {
+				addBody(new constructBody(name=bodyName,
+					radius="200",
+					type="majorsat",
+					shininess=0.03,
+					axialtilt=0,
+					rotationperiod=1e9,
+					imageLocation="images/ceresTexture.jpg"));
+			}
+		}
 	}
 
 	// Moves the camera to the body, sets the focus body, and redraws orbits
@@ -602,6 +629,7 @@ window.onload = function() {
 	// First call to requestAnimationFrame
 
 	console.log("Finished setup.");
+	enableLockBody();
 	requestAnimationFrame(update);
 	updateTimeWarp();
 }
@@ -1184,31 +1212,6 @@ function drawOrbits() {
 			line.name = bodies[i].name + "Orbit";
 			scene.add(line);
 		}
-
-		/**
-		if (bodyType === "majorsat") {
-			var geometry = new THREE.Geometry();
-			var period = getOrbitalPeriod(i);
-			var material = planetOrbitMaterial;
-
-			var parent = moonOrbitData[bodies[i].name].parent;
-
-			for (j = 0; j < 1000; j++) {
-				var date = days + period * j / 1000;
-				geometry.vertices.push(calculateBodyPosition(parent,date).add(
-					calculateBodyPosition(bodies[i].name,date)
-					.multiplyScalar(-1)));
-			}
-			geometry.vertices.push(calculateBodyPosition(parent,days).add(
-				calculateBodyPosition(bodies[i].name,days)
-				.multiplyScalar(-1)));
-
-			var line = new THREE.Line(geometry, material);
-			line.name = bodies[i].name + "Orbit";
-			scene.add(line);
-
-			moonOrbitObjects.push({object: line, parent: parent});
-		} **/
 	}
 }
 
@@ -1221,8 +1224,7 @@ function copyVector3(copyTo,from) {
 function get2DPosition(bodyIndex) {
 	// Get 2D position of bodies[bodyIndex] on screen
 
-	var p = getBodyPosition(bodyIndex).clone();
-  var vector = p.project(camera);
+  var vector = getBodyPosition(bodyIndex).clone().project(camera);
   return [(vector.x + 1) / 2 * textCanvas.width, -(vector.y - 1) / 2 * textCanvas.height];
 }
 
@@ -1299,9 +1301,14 @@ var axisSegments = [
 function updateAxesDrawing() {
 	var origin = get2DPosition(focusBody).slice();
 	var originPosition = getBodyPosition(focusBody);
-	var xAxisEnd = get2DPositionFromVector(originPosition.clone().add(xAxisDisplace));
-	var yAxisEnd = get2DPositionFromVector(originPosition.clone().add(zAxisDisplace));
-	var zAxisEnd = get2DPositionFromVector(originPosition.clone().add(yAxisDisplace));
+	var tempPosition = originPosition.clone();
+
+	var xAxisEnd = get2DPositionFromVector(tempPosition.add(xAxisDisplace));
+	tempPosition.copy(originPosition);
+	var yAxisEnd = get2DPositionFromVector(tempPosition.add(zAxisDisplace));
+	tempPosition.copy(originPosition);
+	var zAxisEnd = get2DPositionFromVector(tempPosition.add(yAxisDisplace));
+	tempPosition.copy(originPosition);
 
 	var maxDrawableX = window.innerWidth - 20;
 	var maxDrawableY = window.innerHeight - 20;
@@ -1346,8 +1353,11 @@ function updateAxesDrawing() {
 
 	for (seg = 0; seg < axisSegments.length; seg++) {
 		var axisSegment = axisSegments[seg];
-		var start = get2DPositionFromVector(originPosition.clone().add(axisSegment[0]));
-		var end = get2DPositionFromVector(originPosition.clone().add(axisSegment[1]));
+
+		var start = get2DPositionFromVector(tempPosition.add(axisSegment[0]));
+		tempPosition.copy(originPosition);
+		var end = get2DPositionFromVector(tempPosition.add(axisSegment[1]));
+		tempPosition.copy(originPosition);
 
 		start = translateVector2(scaleVector2(start,scaleFactor),xDrawingDisplace,yDrawingDisplace);
 		end = translateVector2(scaleVector2(end,scaleFactor),xDrawingDisplace,yDrawingDisplace);
@@ -1421,7 +1431,7 @@ function searchBody(bodyName) {
 	}
 
 	searchRequest = new XMLHttpRequest();
-  searchRequest.open("GET", "moomath.com/searchAsteroids.php?"
+  searchRequest.open("GET", "http://moomath.com/programs/0006/server/searchAsteroids.php?"
 	+ modifiedQuery, true);
 
   searchRequest.onload = function(self,oEvent) {
