@@ -5,22 +5,22 @@ body {
 	overflow: hidden;
 }
 #c {
+	border-left: 1px solid #ddd;
     position: absolute;
     height: 100%;
 	left: 300px;
     width: calc(100% - 300px);
 }
 #user {
-	height: 100%;
 	list-style: none;
 	position: absolute;
 	width: 260px;
 }
 #user li {
-	box-shadow: 0px 0px 1px 0px #bbb;
+	border-bottom: 1px solid #ddd;
 	color: #bbb;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	margin-left: -40px;
+	margin: -1px 0 0 -40px;
 	width: 300px;
 }
 .active {
@@ -49,7 +49,7 @@ input {
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 	font-size: 15px;
 	padding: 10px;
-	margin: 1px 0;
+	margin-top: 1px;
 	width: 225px;
 }
 input:focus {
@@ -62,9 +62,8 @@ input:disabled {
 	overflow-x: none;
 	overflow-y: auto;
 	width: 320px;
-	height: 100%;
+	height: calc(100% - 100px);
 	position: absolute;
-	z-index: 1;
 }
 #controls::-webkit-scrollbar-track {
 	opacity: 0;
@@ -75,4 +74,12 @@ input:disabled {
 #controls::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	background-color: rgba(0, 0, 0, 0.25);
+}
+#render {
+	height: 100px;
+	position: absolute;
+	border-top: 1px solid #ddd;
+	width: 300px;
+	bottom: 0;
+	vertical-align: middle;
 }

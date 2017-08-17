@@ -4,17 +4,19 @@
 <meta charset="utf-8">
 <title>Untitled Document</title>
 <link rel="stylesheet" type="text/css" href="graph.css">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 </head>
 
 <body>
 
 <div id="controls">
 	<ul id="user" onClick="">
-		<li onClick="addEquation()"><input placeholder="New Equation" disabled></li>
+		<li><input placeholder="New Equation" disabled></li>
 	</ul>
 
 	<ul id="xes"></ul>
 </div>
+<p id="render"></p>
 
 <canvas id="c"></canvas>
 <script src="graph.js"></script>

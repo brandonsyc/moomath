@@ -3,6 +3,16 @@ var ctx = canvas.getContext("2d");
 
 var user = document.getElementById("user");
 var xes = document.getElementById("xes");
+var render = document.getElementById("render");
+
+user.children[0].onclick = function() {
+	"use strict";
+	addEquation();
+};
+
+MathJax.Hub.Config({
+	messageStyle: "none"
+});
 
 function run() {
 	"use strict";
@@ -30,6 +40,9 @@ function addEquation() {
 	var children = user.children;
 	user.insertBefore(li1, children[children.length - 1]);
 	input.focus();
+	input.oninput = function() {
+		parse(input);
+	};
 	
 	var button1 = document.createElement("BUTTON");
 	button1.innerHTML = "&#9881;";
@@ -50,4 +63,13 @@ function removeEquation(x) {
 	var index = array.indexOf(x);
 	user.removeChild(user.children[index]);
 	xes.removeChild(xes.children[index]);
+}
+
+function parse(x) {
+	"use strict";
+	render.style.color = "rgba(0, 0, 0, 0)";
+	render.innerHTML = "$$" + x.value + "$$";
+	MathJax.Hub.Queue(["Typeset", MathJax.Hub, render], function() {
+		render.style.color = "#333";
+	});
 }
