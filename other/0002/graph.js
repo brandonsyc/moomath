@@ -31,9 +31,23 @@ function addEquation() {
 	user.insertBefore(li1, children[children.length - 1]);
 	input.focus();
 	
-	var button = document.createElement("BUTTON");
-	button.innerHTML = "&#128473;";
+	var button1 = document.createElement("BUTTON");
+	button1.innerHTML = "&#9881;";
+	var button2 = document.createElement("BUTTON");
+	button2.innerHTML = "&#128473;";
 	var li2 = document.createElement("LI");
-	li2.appendChild(button);
+	li2.appendChild(button1);
+	li2.appendChild(button2);
 	xes.appendChild(li2);
+	button2.onclick = function() {
+		removeEquation(li2);
+	};
+}
+
+function removeEquation(x) {
+	"use strict";
+	var array = Array.prototype.slice.call(xes.children);
+	var index = array.indexOf(x);
+	user.removeChild(user.children[index]);
+	xes.removeChild(xes.children[index]);
 }

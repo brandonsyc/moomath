@@ -10,41 +10,25 @@ body {
 	left: 300px;
     width: calc(100% - 300px);
 }
-ol {
-	box-shadow: 0px 0px 5px #333;
+#user {
 	height: 100%;
 	list-style: none;
-	overflow-x: none;
-	overflow-y: auto;
 	position: absolute;
 	width: 260px;
-	z-index: 1;
 }
-ol li {
+#user li {
 	box-shadow: 0px 0px 1px 0px #bbb;
 	color: #bbb;
-	counter-increment: item;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 	margin-left: -40px;
 	width: 300px;
 }
-ol li:before {
-	background-color: #bbb;
-	border-radius: 5px;
-	color: #fff;
-	content: counter(item);
-	padding: 0 10px;
-	margin-left: 10px;
-}
 .active {
 	color: #333;
 }
-.active:before {
-	background-color: #096;
-}
-ul {
+#xes {
 	position: absolute;
-	left: 230px;
+	left: 200px;
 	list-style: none;
 }
 button {
@@ -57,17 +41,38 @@ button {
 button:hover {
 	color: #333;
 }
+button:focus {
+	outline: none;
+}
 input {
 	border: none;
 	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
 	font-size: 15px;
 	padding: 10px;
 	margin: 1px 0;
-	width: 200px;
+	width: 225px;
 }
 input:focus {
 	outline: none;
 }
 input:disabled {
 	background-color: rgba(0, 0, 0, 0);
+}
+#controls {
+	overflow-x: none;
+	overflow-y: auto;
+	width: 320px;
+	height: 100%;
+	position: absolute;
+	z-index: 1;
+}
+#controls::-webkit-scrollbar-track {
+	opacity: 0;
+}
+#controls::-webkit-scrollbar {
+	opacity: 0;
+}
+#controls::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.25);
 }
