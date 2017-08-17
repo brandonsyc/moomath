@@ -37,56 +37,25 @@
 		<a href="info/" target="_blank">
 			<button class="go">Info</button>
 		</a>
-		<input type="checkbox" id="testc" onclick="updateShowGrid()">
-		<label for="testc">Enable Grid</label>
 		<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)" checked>
 		<label for="testp">Lock on Body</label>
-		<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
-		<label for="testd">Planet Orbits</label>
-		<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
-		<label for="teste">Dwarf Orbits</label>
-		<input type="checkbox" id="testl" onclick="smoothInterpolate(majorSatOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {majorSatOrbitMaterial.visible = majorSatOrbitMaterial.opacity > 0.08},'opacity')">
-		<label for="testl">Moon Orbits</label>
-		<input type="checkbox" id="testf" onclick="smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
-		<label for="testf" id="labels">Labels</label>
 		<label for="goto">Find Object:</label>
 		<input type="text" id="goto" oninput="searchBody(this.value)">
 		<div class="wrapper">
-			<label for="bslide">Planetary Size</label>
-			<button class="bslide" onMouseDown="press(1, -1.2)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar1"></div>
-				<p id="bar1-contents">25&times;</p>
-			</div>
-			<button class="bslide right" onMouseDown="press(1, 1.2)" onMouseUp="lift()">&raquo;</button>
-			<label for="bslide">Moon Size</label>
-			<button class="bslide" onMouseDown="press(2, -1)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar2"></div>
-				<p id="bar2-contents">25&times;</p>
-			</div>
-			<button class="bslide right" onMouseDown="press(2, 1)" onMouseUp="lift()">&raquo;</button>
-			<label for="bslide">Sun Size</label>
-			<button class="bslide" onMouseDown="press(4, -1)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar4"></div>
-				<p id="bar4-contents">50&times;</p>
-			</div>
-			<button class="bslide right" onMouseDown="press(4, 1)" onMouseUp="lift()">&raquo;</button>
-		</div>
-		<div class="wrapper">
-			<p>Test Radio</p>
-			<input type="radio" id="r1" name="testr" checked>
-			<label for="r1">Test Check</label>
-			<input type="radio" id="r2" name="testr">
-			<label for="r2">Test Check</label>
-			<input type="radio" id="r3" name="testr">
-			<label for="r3">Test Check</label>
+			<p>Settings</p>
+			<input type="radio" id="r1" name="testr" onclick="setSecondaryToVisual()">
+			<label for="r1">Visuals</label>
+			<input type="radio" id="r2" name="testr" onclick="setSecondaryToAudio()">
+			<label for="r2">Audio</label>
+			<input type="radio" id="r3" name="testr" onclick="setSecondaryToObjects()">>
+			<label for="r3">Objects</label>
 		</div>
 	</div>
 	<div class="second">
 		<ul id="search-results">
 		</ul>
+		<div id="other">
+	</div>
 	</div>
 	<div class="side">
 		<h3>Mercury</h3>
@@ -150,6 +119,10 @@
 			}
 		}
 	</script>
+	<audio loop id="music">
+  	<source src="sounds/mus.mp3" type="audio/mpeg">
+  	Your browser does not support the audio element.
+	</audio>
 </body>
 
 <script src="three.js"></script>
