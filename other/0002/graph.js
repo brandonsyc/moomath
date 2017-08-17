@@ -10,10 +10,6 @@ user.children[0].onclick = function() {
 	addEquation();
 };
 
-MathJax.Hub.Config({
-	messageStyle: "none"
-});
-
 function run() {
 	"use strict";
 	ctx.fillStyle = "#fff";
