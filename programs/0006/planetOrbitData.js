@@ -691,7 +691,7 @@ function calculateBodyPositionFromOrbit(a, e, i, W, M, w) {
   var y = r * (Math.sin(W) * Math.cos(w + v) + Math.cos(W) * Math.sin(w + v) * Math.cos(i));
   var z = r * (Math.sin(i) * Math.sin(w + v));
 
-  return new THREE.Vector3(x, z, y).multiplyScalar(149597870.7);
+  return new THREE.Vector3(y, z, x).multiplyScalar(149597870.7);
 }
 
 function getOrbitalPeriod(bodyIndex) {
