@@ -265,8 +265,11 @@ function onDocumentClick(event) {
     }
 
     // Note that (Object3D).object.name gives the index of the object in bodies.
-    focusBody = intersects[0].object.name;
-    drawOrbits();
+		if (focusBody != intersects[0].object.name) {
+			focusBody = intersects[0].object.name;
+	    drawOrbits();
+			boop1.play();
+		}
   } else {
     if (!controls.moving) {
       // If the camera is moving, don't update lastClickedEntity
@@ -957,7 +960,7 @@ function updateBodyRotation(bodyIndex) {
     // If a rotation period has been defined...
 
     // Two tilts, one is rotation about the axis and one is the tilt of the axis relative to the ecliptic
-    var ytilt = (days / (bodies[bodyIndex].rotationperiod) * 2 * Math.PI) % (2 * Math.PI);
+    var ytilt = -(days / (bodies[bodyIndex].rotationperiod) * 2 * Math.PI) % (2 * Math.PI);
     var xtilt = bodies[bodyIndex].axialtilt * Math.PI / 180;
 
     if (bodies[bodyIndex].object.children.length > 0) {
@@ -1555,6 +1558,7 @@ var searchRequest = null;
 
 function searchBody(bodyName) {
   clearSearchList();
+	setSecondaryToBlank();
 	secondaryBarMode = 1;
 
   try {
@@ -1696,6 +1700,8 @@ var secondaryBar = document.getElementById('other');
 
 var secondaryBarMode = 0;
 
+var boop1 = new Audio('sounds/boop.mp3');
+
 // 0: blank, 1: search, 2: visuals, 3: audio, 4: objects
 
 function startMusic() {
@@ -1707,19 +1713,23 @@ function setMusicVolume(volume) {
 }
 
 function setSecondaryToVisual() {
+	clearSearchList();
 	secondaryBar.innerHTML = visualSettingsHTML;
 	secondaryBarMode = 2;
 }
 
 function setSecondaryToAudio() {
+	clearSearchList();
 	setSecondaryToBlank();
 }
 
 function setSecondaryToObjects() {
+	clearSearchList();
 	setSecondaryToBlank();
 }
 
 function setSecondaryToBlank() {
+	clearSearchList();
 	secondaryBar.innerHTML = '';
 	secondaryBarMode = 0;
 }
@@ -1763,6 +1773,10 @@ var visualSettingsHTML = `label for="testc">Enable Grid</label>
 
 setSphericalFromCameraPosition();
 updateBodyPositions();
+
+function julianToCalendar(julian) {
+
+}
 
 /**
 1. More versatile tracking

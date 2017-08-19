@@ -626,7 +626,7 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
     thisData = minorOrbitData[name];
     if (thisData === undefined) return zeroVector;
 
-    var adjT = t + 1930633.5 + 2451545;
+    var adjT = t - 2451545;
     var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
     return calculateBodyPositionFromOrbit(thisData[0], thisData[1], thisData[2], thisData[3], anomaly, thisData[6]);
@@ -659,7 +659,7 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
 function calculateMoonPosition(name, t, forceEpoch = null) {
   var thisData = moonOrbitData[name].orbit;
 
-  var adjT = t + 1930633.5 + 2451545;
+  var adjT = t - 2451545;
 
   var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
