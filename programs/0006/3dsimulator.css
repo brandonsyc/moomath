@@ -181,6 +181,11 @@ button:active {
 .thing p:not(time-label) {
 	margin-bottom: -100px;
 }
+.above {
+	position: absolute;
+	margin-bottom: 100px;
+	transform: translate(-50%, 0);
+}
 .time-label {
 
 }
