@@ -11,7 +11,12 @@
 
 <div id="top"></div>
 
-<div class="full"><div class="gif"><h1>MOOMATH</h1><p>Source: 3D Planet Simulator</p></div></div>
+<div class="full">
+	<div class="gif">
+		<h1>MOOMATH</h1>
+		<p>Source: <a href="programs/0006/">3D Planet Simulator</a><br>Scroll down for more</p>
+	</div>
+</div>
 
 <div class="content">
 	<h1>Welcome to Moomath!</h1>
@@ -111,25 +116,32 @@
 
 <script>
 	var topnav = document.getElementsByClassName("topnav")[0];
-	document.getElementById("top").removeChild(topnav);
+	topnav.style.display = "none";
 	
 	var header = document.getElementsByClassName("header")[0];
-	document.getElementById("top").removeChild(header);
+	header.style.display = "none";
 	
 	var sticky = document.getElementById("sticky");
 	sticky.style.display = "inline";
 	sticky.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
 	
 	var gif = document.getElementsByClassName("gif")[0];
-	gif.childNodes[0].style.transform = "translate(0%, 50%)";
-	gif.childNodes[1].style.transform = "translate(0%, -10%)";
+	gif.childNodes[1].style.transform = "translate(0%, 50%)";
+	gif.childNodes[3].style.transform = "translate(0%, -10%)";
+	gif.childNodes[3].style.transition = "0.2s";
 	
 	window.onscroll = function() {
 		sticky.style.display = "inline";
 		var rate = document.body.scrollTop * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
-		gif.childNodes[0].style.transform = "translate(0%, " + (50 - rate) + "%)";
-		gif.childNodes[1].style.transform = "translate(0%, " + (-10 - rate) + "%)";
+		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
+		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
+		if (document.body.scrollTop === 0) {
+			gif.childNodes[3].style.opacity = 1;
+		}
+		else {
+			gif.childNodes[3].style.opacity = 0;
+		}
 		if (document.body.scrollTop > gif.offsetHeight) {
 			sticky.style.backgroundColor = "#fff";
 		}

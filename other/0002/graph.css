@@ -1,0 +1,85 @@
+* {
+	margin: 0;
+}
+body {
+	overflow: hidden;
+}
+#c {
+	border-left: 1px solid #ddd;
+    position: absolute;
+    height: 100%;
+	left: 300px;
+    width: calc(100% - 300px);
+}
+#user {
+	list-style: none;
+	position: absolute;
+	width: 260px;
+}
+#user li {
+	border-bottom: 1px solid #ddd;
+	color: #bbb;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+	margin: -1px 0 0 -40px;
+	width: 300px;
+}
+.active {
+	color: #333;
+}
+#xes {
+	position: absolute;
+	left: 200px;
+	list-style: none;
+}
+button {
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+	color: #bbb;
+	height: 39px;
+	transition: 0.2s;
+}
+button:hover {
+	color: #333;
+}
+button:focus {
+	outline: none;
+}
+input {
+	border: none;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+	font-size: 15px;
+	padding: 10px;
+	margin-top: 1px;
+	width: 225px;
+}
+input:focus {
+	outline: none;
+}
+input:disabled {
+	background-color: rgba(0, 0, 0, 0);
+}
+#controls {
+	overflow-x: none;
+	overflow-y: auto;
+	width: 320px;
+	height: calc(100% - 100px);
+	position: absolute;
+}
+#controls::-webkit-scrollbar-track {
+	opacity: 0;
+}
+#controls::-webkit-scrollbar {
+	opacity: 0;
+}
+#controls::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+#render {
+	height: 100px;
+	position: absolute;
+	border-top: 1px solid #ddd;
+	width: 300px;
+	bottom: 0;
+	vertical-align: middle;
+}
