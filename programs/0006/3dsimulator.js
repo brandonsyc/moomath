@@ -77,10 +77,10 @@ function addBodies() {
   addBody(new constructBody(name = "3 Juno", radius = "200", type = "dwarf", shininess = 0.03, axialtilt = 0, rotationperiod = 1e9, imageLocation = "images/ceresTexture.jpg"));
   addBody(new constructBody(name = "4 Vesta", radius = "200", type = "dwarf", shininess = 0.03, axialtilt = 0, rotationperiod = 1e9, imageLocation = "images/ceresTexture.jpg"));
   addBody(new constructBody(name = "Moon", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/moonTexture.jpg"));
-	addBody(new constructBody(name = "Ganymede", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/ganymedeTexture.jpg"));
-	addBody(new constructBody(name = "Io", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/ioTexture.jpg"));
-	addBody(new constructBody(name = "Callisto", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/callistoTexture.jpg"))
-	addBody(new constructBody(name = "Europa", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/europaTexture.jpg"))
+  addBody(new constructBody(name = "Ganymede", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/ganymedeTexture.jpg"));
+  addBody(new constructBody(name = "Io", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/ioTexture.jpg"));
+  addBody(new constructBody(name = "Callisto", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/callistoTexture.jpg"))
+  addBody(new constructBody(name = "Europa", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/europaTexture.jpg"))
 }
 
 // Whether to display the grid
@@ -220,10 +220,10 @@ function shiftCameraFocus(bodyIndex) {
     return;
   }
   if (lockBody && !isLockBodyCameraTransition) {
-		disableLockBody();
+    disableLockBody();
     isLockBodyCameraTransition = true;
     setTimeout(function() {
-			isLockBodyCameraTransition = false;
+      isLockBodyCameraTransition = false;
       enableLockBody();
     }, 750);
   }
@@ -265,11 +265,11 @@ function onDocumentClick(event) {
     }
 
     // Note that (Object3D).object.name gives the index of the object in bodies.
-		if (focusBody != intersects[0].object.name) {
-			focusBody = intersects[0].object.name;
-	    drawOrbits();
-			boop1.play();
-		}
+    if (focusBody != intersects[0].object.name) {
+      focusBody = intersects[0].object.name;
+      drawOrbits();
+      boop1.play();
+    }
   } else {
     if (!controls.moving) {
       // If the camera is moving, don't update lastClickedEntity
@@ -330,7 +330,7 @@ function update() {
 
   // Index, position, size of sun
   var sunIndex = getBody('Sun');
-	var saturnIndex = getBody('Saturn');
+  var saturnIndex = getBody('Saturn');
   var sunPosition = getBodyPosition(sunIndex);
   currentSunSize = bodies[sunIndex].object.children[0].scale.x * bodies[sunIndex].radius;
 
@@ -366,7 +366,7 @@ function update() {
       var parentPosition = getBodyPosition(parent);
       var currentParentSize = getScale(parent) * bodies[parent].radius;
 
-			// TODO: Math.max(getScale(parent),25)
+      // TODO: Math.max(getScale(parent),25)
 
       var dist = parentPosition.distanceTo(getBodyPosition(i));
 
@@ -389,7 +389,7 @@ function update() {
     // 3D distance to Sun
     var dist = sunPosition.distanceTo(getBodyPosition(i));
 
-		var fFactor = (i == saturnIndex) ? 4 : 2;
+    var fFactor = (i == saturnIndex) ? 4 : 2;
 
     if (dist < fFactor * currentSunSize) {
       var opacity = (dist - 3 * (fFactor * currentSunSize - dist)) / currentSunSize / fFactor;
@@ -499,22 +499,22 @@ window.addEventListener('resize', function() {
 });
 
 function addSkyBox() {
-	// TODO: Find images!
+  // TODO: Find images!
 
-	var imagePrefix = "images/stars-";
-	var directions  = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
-	var imageSuffix = ".png";
-	var skyGeometry = new THREE.CubeGeometry( 5000, 5000, 5000 );
+  var imagePrefix = "images/stars-";
+  var directions = ["xpos", "xneg", "ypos", "yneg", "zpos", "zneg"];
+  var imageSuffix = ".png";
+  var skyGeometry = new THREE.CubeGeometry(5000, 5000, 5000);
 
-	var materialArray = [];
-	for (var i = 0; i < 6; i++)
-		materialArray.push( new THREE.MeshBasicMaterial({
-			map: THREE.ImageUtils.loadTexture( imagePrefix + directions[i] + imageSuffix ),
-			side: THREE.BackSide
-		}));
-	var skyMaterial = new THREE.MeshFaceMaterial( materialArray );
-	var skyBox = new THREE.Mesh( skyGeometry, skyMaterial );
-	scene.add( skyBox );
+  var materialArray = [];
+  for (var i = 0; i < 6; i++)
+    materialArray.push(new THREE.MeshBasicMaterial({
+      map: THREE.ImageUtils.loadTexture(imagePrefix + directions[i] + imageSuffix),
+      side: THREE.BackSide
+    }));
+  var skyMaterial = new THREE.MeshFaceMaterial(materialArray);
+  var skyBox = new THREE.Mesh(skyGeometry, skyMaterial);
+  scene.add(skyBox);
 }
 
 function updatePlanetarySize() {
@@ -706,6 +706,8 @@ window.onload = function() {
   enableLockBody();
   requestAnimationFrame(update);
   updateTimeWarp();
+  startMusic();
+  setMusicVolume(0.5);
 }
 
 init();
@@ -765,9 +767,9 @@ function addBody(body) {
       }
     }
 
-		if (body.type === "majorsat") {
-			moonNames.push(body.name);
-		}
+    if (body.type === "majorsat") {
+      moonNames.push(body.name);
+    }
 
     // Mesh of the body (currently only spheres)
     var bodyMesh = new THREE.Mesh(new THREE.SphereGeometry(body.radius,
@@ -1115,14 +1117,14 @@ function setSphericalFromCameraPosition() {
 }
 
 function setSphericalFromCartesianOffsets() {
-	setSphericalOffsetsFromCartesian(lockBodyOffsetX,lockBodyOffsetY,lockBodyOffsetZ);
+  setSphericalOffsetsFromCartesian(lockBodyOffsetX, lockBodyOffsetY, lockBodyOffsetZ);
 }
 
 function setCameraPositionFromOffsets() {
-	var focusBodyPosition = getBodyPosition(focusBody);
-	camera.position.set(focusBodyPosition.x + lockBodyOffsetX,
-		focusBodyPosition.y + lockBodyOffsetY,
-		focusBodyPosition.z + lockBodyOffsetZ);
+  var focusBodyPosition = getBodyPosition(focusBody);
+  camera.position.set(focusBodyPosition.x + lockBodyOffsetX,
+    focusBodyPosition.y + lockBodyOffsetY,
+    focusBodyPosition.z + lockBodyOffsetZ);
 }
 
 function lockBodyOnWheel(event) {
@@ -1558,8 +1560,8 @@ var searchRequest = null;
 
 function searchBody(bodyName) {
   clearSearchList();
-	setSecondaryToBlank();
-	secondaryBarMode = 1;
+  setSecondaryToBlank();
+  secondaryBarMode = 1;
 
   try {
     searchRequest.abort();
@@ -1580,20 +1582,20 @@ function searchBody(bodyName) {
 
   searchRequest.onload = function(self, oEvent) {
     // Process returned request
-		console.log(secondaryBarMode);
-		if (secondaryBarMode == 1) {
-	    var splitResponse = searchRequest.response.split(';');
-	    var splitBody, data;
+    console.log(secondaryBarMode);
+    if (secondaryBarMode == 1) {
+      var splitResponse = searchRequest.response.split(';');
+      var splitBody, data;
 
-	    for (i = 0; i < splitResponse.length - 1; i++) {
-	      splitBody = splitResponse[i].split(',');
-	      data = [];
-	      for (k = 1; k < 8; k++) {
-	        data.push(parseFloat(splitBody[k]));
-	      }
-	      appendToSearchList(splitBody[0], 'addToMinorOrbitData(this.innerHTML,[' + String(data) + ']);');
-	    }
-		}
+      for (i = 0; i < splitResponse.length - 1; i++) {
+        splitBody = splitResponse[i].split(',');
+        data = [];
+        for (k = 1; k < 8; k++) {
+          data.push(parseFloat(splitBody[k]));
+        }
+        appendToSearchList(splitBody[0], 'addToMinorOrbitData(this.innerHTML,[' + String(data) + ']);');
+      }
+    }
   };
 
   searchRequest.send(null);
@@ -1672,8 +1674,8 @@ function updateLockBody(lock) {
 }
 
 function enableLockBody() {
-	updateCartesianOffsets();
-	setCameraPositionFromOffsets();
+  updateCartesianOffsets();
+  setCameraPositionFromOffsets();
   setupLockBodyListeners();
   lockBody = true;
 }
@@ -1686,13 +1688,13 @@ function disableLockBody() {
 }
 
 function updateLockBodyFromZoom() {
-	if (!isLockBodyCameraTransition) {
-		if (camera.position.distanceTo(getBodyPosition(focusBody)) < 1e9) {
-			enableLockBody();
-		} else {
-			disableLockBody();
-		}
-	}
+  if (!isLockBodyCameraTransition) {
+    if (camera.position.distanceTo(getBodyPosition(focusBody)) < 1e9) {
+      enableLockBody();
+    } else {
+      disableLockBody();
+    }
+  }
 }
 
 var musicElement = document.getElementById("music");
@@ -1705,37 +1707,44 @@ var boop1 = new Audio('sounds/boop.mp3');
 // 0: blank, 1: search, 2: visuals, 3: audio, 4: objects
 
 function startMusic() {
-	musicElement.play();
+  musicElement.play();
 }
 
 function setMusicVolume(volume) {
-	musicElement.volume = volume;
+  musicElement.volume = volume;
+}
+
+function updateMusicVolume() {
+  var bar = document.getElementById("bar5").style.width;
+  var volume = parseFloat(bar.substr(0, bar.length - 1)) / 100;
+  setMusicVolume(volume);
+  document.getElementById("bar5-contents").innerHTML = (volume == 0 ? 'Off' : parseInt(volume * 100) + '%');
 }
 
 function setSecondaryToVisual() {
-	clearSearchList();
-	secondaryBar.innerHTML = visualSettingsHTML;
-	secondaryBarMode = 2;
+  clearSearchList();
+  secondaryBar.innerHTML = visualSettingsHTML;
+  secondaryBarMode = 2;
 }
 
 function setSecondaryToAudio() {
-	clearSearchList();
-	setSecondaryToBlank();
+  clearSearchList();
+  secondaryBar.innerHTML = audioSettingsHTML;
+  secondaryBarMode = 3;
 }
 
 function setSecondaryToObjects() {
-	clearSearchList();
-	setSecondaryToBlank();
+  clearSearchList();
+  setSecondaryToBlank();
 }
 
 function setSecondaryToBlank() {
-	clearSearchList();
-	secondaryBar.innerHTML = '';
-	secondaryBarMode = 0;
+  clearSearchList();
+  secondaryBar.innerHTML = '';
+  secondaryBarMode = 0;
 }
 
-var visualSettingsHTML = `label for="testc">Enable Grid</label>
-<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
+var visualSettingsHTML = `<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
 <label for="testd">Planet Orbits</label>
 <input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
 <label for="teste">Dwarf Orbits</label>
@@ -1771,11 +1780,31 @@ var visualSettingsHTML = `label for="testc">Enable Grid</label>
 	</div>
 </div>`
 
+var audioSettingsHTML = `
+<div class="wrapper2">
+	<div class="wrapper2inner">
+		<label for="bslide">Music Volume</label>
+		<button class="bslide" onMouseDown="press(5, -1)" onMouseUp="lift()">&laquo;</button>
+		<div class="sslider">
+			<div class="bar" id="bar5"></div>
+			<p id="bar5-contents">50%</p>
+		</div>
+		<button class="bslide right" onMouseDown="press(5, 1)" onMouseUp="lift()">&raquo;</button>
+		<label for="bslide">Beep Volume</label>
+		<button class="bslide" onMouseDown="press(6, -1)" onMouseUp="lift()">&laquo;</button>
+		<div class="sslider">
+			<div class="bar" id="bar6"></div>
+			<p id="bar6-contents">50&times;</p>
+		</div>
+		<button class="bslide right" onMouseDown="press(6, 1)" onMouseUp="lift()">&raquo;</button>
+	</div>
+</div>`
+
 setSphericalFromCameraPosition();
 updateBodyPositions();
 
 function julianToCalendar(julian) {
-
+  return new Date(days * 8.64e+7 - 210895012800000);
 }
 
 /**
