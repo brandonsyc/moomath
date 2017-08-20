@@ -22,7 +22,7 @@ var minorOrbitData = {
 
 var moonOrbitData = {
   'Moon': {
-    orbit: new Float32Array([0.0025526735307, 0.063147216946, 0.0914600198451, 2.16347621838, 2.55993156586, 0.232571354654, 5.39171775629]),
+    orbit: new Float32Array([0.0025526735307, 0.063147216946, 0.0914600198451, 2.16347621838, 2.55993156586, 0.229964582, 5.39171775629]),
     parent: 'Earth'
   },
   'Phobos': {
@@ -626,7 +626,7 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
     thisData = minorOrbitData[name];
     if (thisData === undefined) return zeroVector;
 
-    var adjT = t + 1930633.5 + 2451545;
+    var adjT = t - 2451545;
     var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
     return calculateBodyPositionFromOrbit(thisData[0], thisData[1], thisData[2], thisData[3], anomaly, thisData[6]);
@@ -659,10 +659,17 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
 function calculateMoonPosition(name, t, forceEpoch = null) {
   var thisData = moonOrbitData[name].orbit;
 
-  var adjT = t + 1930633.5 + 2451545;
+  var adjT = t - 2451545;
 
   var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
+  if (thisData[7]) {
+    var ascn = (thisData[3] + adjT * thisData[8]) % (2 * Math.PI);
+    var peri = (thisData[6] + adjT * thisData[7]) % (2 * Math.PI);
+    return calculateBodyPositionFromOrbit(thisData[0],
+      thisData[1], thisData[2], ascn, anomaly, peri).add(
+      calculateBodyPosition(moonOrbitData[name].parent, t, forceEpoch));
+  }
   return calculateBodyPositionFromOrbit(thisData[0],
     thisData[1], thisData[2], thisData[3], anomaly, thisData[6]).add(
     calculateBodyPosition(moonOrbitData[name].parent, t, forceEpoch));
@@ -691,7 +698,7 @@ function calculateBodyPositionFromOrbit(a, e, i, W, M, w) {
   var y = r * (Math.sin(W) * Math.cos(w + v) + Math.cos(W) * Math.sin(w + v) * Math.cos(i));
   var z = r * (Math.sin(i) * Math.sin(w + v));
 
-  return new THREE.Vector3(x, z, y).multiplyScalar(149597870.7);
+  return new THREE.Vector3(y, z, x).multiplyScalar(149597870.7);
 }
 
 function getOrbitalPeriod(bodyIndex) {
