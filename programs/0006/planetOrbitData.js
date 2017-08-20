@@ -641,6 +641,23 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
     epoch = Math.max(0, Math.round((t + 1930633.5) / epochLength));
   }
 
+  if (epoch >= 11066) {
+    epoch = 11065;
+    var adjT = t + 1930633.5 - epoch * epochLength;
+    epoch *= 7;
+
+    // Get data from array
+    var axis = thisData[epoch];
+    var ecc = thisData[epoch + 1];
+    var incl = thisData[epoch + 2];
+    var ascn = thisData[epoch + 3];
+    var anomaly = (thisData[epoch + 4] + adjT * thisData[epoch + 5]) % (2 * Math.PI);
+    var peri = thisData[epoch + 6];
+
+    // Calculate body position
+    return calculateBodyPositionFromOrbit(axis, ecc, incl, ascn, anomaly, peri);
+  }
+
   var adjT = t + 1930633.5 - epoch * epochLength;
   epoch *= 7;
 

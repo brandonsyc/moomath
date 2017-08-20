@@ -195,6 +195,8 @@ button:active {
 }
 .side p {
 	word-wrap: break-word;
+	text-align: left;
+	line-height: 1.2;
 }
 .bar {
 	background-color: rgba(0, 136, 187, 0.5);

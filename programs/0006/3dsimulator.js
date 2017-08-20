@@ -460,8 +460,8 @@ function update() {
   //controls.update();
 
   // Update the sprites (text canvas)
-  updateSprites();
   updateMoonOrbitObjects();
+  updateSidebar();
 
   if (!finished && new Date().getTime() - lastUpdate < 1000 / 30.0) {
     // Checkpoint for first frame above 30 fps
@@ -470,6 +470,7 @@ function update() {
   }
 
   // Update positions of bodies
+	updateSprites();
   if (finished) updateBodyPositions();
 
   // Setup for next call to update()
@@ -553,7 +554,7 @@ function updateMoonSize() {
   if (minVisibleMajorSatelliteSize == 0) {
     document.getElementById('bar2-contents').innerHTML = "Real Size";
   } else {
-    document.getElementById('bar2-contents').innerHTML = String(Math.round(minVisibleMajorSatelliteSize * 100) / 100) + "&times;"
+    document.getElementById('bar2-contents').innerHTML = parseInt(minVisibleMajorSatelliteSize) + "&times;"
   }
 }
 
@@ -705,9 +706,11 @@ window.onload = function() {
   console.log("Finished setup.");
   enableLockBody();
   requestAnimationFrame(update);
-  updateTimeWarp();
+  setTimeWarp(0);
   startMusic();
   setMusicVolume(0.5);
+  setBeepVolume(0.5);
+  updateSidebar();
 }
 
 init();
@@ -962,7 +965,7 @@ function updateBodyRotation(bodyIndex) {
     // If a rotation period has been defined...
 
     // Two tilts, one is rotation about the axis and one is the tilt of the axis relative to the ecliptic
-    var ytilt = -(days / (bodies[bodyIndex].rotationperiod) * 2 * Math.PI) % (2 * Math.PI);
+    var ytilt = (days / (bodies[bodyIndex].rotationperiod) * 2 * Math.PI) % (2 * Math.PI);
     var xtilt = bodies[bodyIndex].axialtilt * Math.PI / 180;
 
     if (bodies[bodyIndex].object.children.length > 0) {
@@ -1424,19 +1427,19 @@ function scaleVector2(v, factor) {
   return [v[0] * factor, v[1] * factor];
 }
 
-var xAxisDisplace = new THREE.Vector3(10000, 0, 0);
-var yAxisDisplace = new THREE.Vector3(0, 10000, 0);
-var zAxisDisplace = new THREE.Vector3(0, 0, 10000);
+var xAxisDisplace = new THREE.Vector3(1000, 0, 0);
+var yAxisDisplace = new THREE.Vector3(0, 1000, 0);
+var zAxisDisplace = new THREE.Vector3(0, 0, 1000);
 
 var axesSize = 100;
 
 var axisSegments = [
-  [xAxisDisplace, new THREE.Vector3(9500, 300, 0)],
-  [xAxisDisplace, new THREE.Vector3(9500, -300, 0)],
-  [yAxisDisplace, new THREE.Vector3(-300, 9500, 0)],
-  [yAxisDisplace, new THREE.Vector3(300, 9500, 0)],
-  [zAxisDisplace, new THREE.Vector3(0, -300, 9500)],
-  [zAxisDisplace, new THREE.Vector3(0, 300, 9500)]
+  [xAxisDisplace, new THREE.Vector3(950, 30, 0)],
+  [xAxisDisplace, new THREE.Vector3(950, -30, 0)],
+  [yAxisDisplace, new THREE.Vector3(-30, 950, 0)],
+  [yAxisDisplace, new THREE.Vector3(30, 950, 0)],
+  [zAxisDisplace, new THREE.Vector3(0, -30, 950)],
+  [zAxisDisplace, new THREE.Vector3(0, 30, 950)]
 ]
 
 function updateAxesDrawing() {
@@ -1511,7 +1514,12 @@ function updateAxesDrawing() {
 }
 
 // Exponent of time warp calculation
-var timeWarpFactor = 2.354367640272;
+var timeWarpFactor = 5.7;
+
+function setTimeWarp(warp) {
+	document.getElementById("bar3").style.width = warp;
+	updateTimeWarp();
+}
 
 function updateTimeWarp() {
   // Update the time warp from user input
@@ -1534,8 +1542,31 @@ function updateTimeWarp() {
       modifiedWarp = 1 / 86400.0;
       document.getElementById('bar3-contents').innerHTML = "Real Time";
     } else {
-      modifiedWarp = 0.0195553106517 * Math.pow(unmodifiedWarp, timeWarpFactor) + 0.1;
-      document.getElementById('bar3-contents').innerHTML = String(modifiedWarp).substr(0, 7) + ' days / sec';
+      modifiedWarp = (Math.pow(unmodifiedWarp, timeWarpFactor)) / 86400;
+
+			if (modifiedWarp < 1) {
+      	document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 86400) + '&times Real Time';
+			} else if (modifiedWarp < 1.1) {
+				document.getElementById('bar3-contents').innerHTML = '1 day / sec';
+			} else if (modifiedWarp < 29.53) {
+				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10) / 10 + ' days / sec';
+			} else if (modifiedWarp < 30.53) {
+				document.getElementById('bar3-contents').innerHTML = '1 month / sec';
+			} else if (modifiedWarp < 365.2425) {
+				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 29.53) / 10 + ' months / sec';
+			} else if (modifiedWarp < 365.3425) {
+				document.getElementById('bar3-contents').innerHTML = '1 year / sec';
+			} else if (modifiedWarp < 36524.25) {
+				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365.2425) / 10 + ' years / sec';
+			} else if (modifiedWarp < 37524.25) {
+				document.getElementById('bar3-contents').innerHTML = '1 century / sec';
+			} else if (modifiedWarp < 365242.5) {
+				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 36524.25) / 10 + ' centuries / sec';
+			} else if (modifiedWarp < 375242.5) {
+				document.getElementById('bar3-contents').innerHTML = '1 millennium / sec';
+			} else {
+				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365242.5) / 10 + ' millennia / sec';
+			}
     }
   }
 
@@ -1668,8 +1699,10 @@ function smoothInterpolate(x, k, time = 500, cnstFunc = function() {}, propt = '
 function updateLockBody(lock) {
   if (lock) {
     enableLockBody();
+    boop1.play();
   } else {
     disableLockBody();
+    boop2.play();
   }
 }
 
@@ -1703,6 +1736,7 @@ var secondaryBar = document.getElementById('other');
 var secondaryBarMode = 0;
 
 var boop1 = new Audio('sounds/boop.mp3');
+var boop2 = new Audio('sounds/boop2.mp3');
 
 // 0: blank, 1: search, 2: visuals, 3: audio, 4: objects
 
@@ -1714,6 +1748,11 @@ function setMusicVolume(volume) {
   musicElement.volume = volume;
 }
 
+function setBeepVolume(volume) {
+  boop1.volume = volume;
+  boop2.volume = volume;
+}
+
 function updateMusicVolume() {
   var bar = document.getElementById("bar5").style.width;
   var volume = parseFloat(bar.substr(0, bar.length - 1)) / 100;
@@ -1721,38 +1760,85 @@ function updateMusicVolume() {
   document.getElementById("bar5-contents").innerHTML = (volume == 0 ? 'Off' : parseInt(volume * 100) + '%');
 }
 
+function updateBeepVolume() {
+  var bar = document.getElementById("bar6").style.width;
+  var volume = parseFloat(bar.substr(0, bar.length - 1)) / 100;
+  setBeepVolume(volume);
+  document.getElementById("bar6-contents").innerHTML = (volume == 0 ? 'Off' : parseInt(volume * 100) + '%');
+}
+
+function copySecondaryBar() {
+  if (secondaryBarMode == 2) {
+    visualSettingsHTML = secondaryBar.innerHTML;
+  } else if (secondaryBarMode == 3) {
+    audioSettingsHTML = secondaryBar.innerHTML;
+  }
+}
+
 function setSecondaryToVisual() {
   clearSearchList();
+  copySecondaryBar();
+  boop1.play();
   secondaryBar.innerHTML = visualSettingsHTML;
   secondaryBarMode = 2;
 }
 
 function setSecondaryToAudio() {
   clearSearchList();
+  copySecondaryBar();
+  boop1.play();
   secondaryBar.innerHTML = audioSettingsHTML;
   secondaryBarMode = 3;
 }
 
-function setSecondaryToObjects() {
-  clearSearchList();
-  setSecondaryToBlank();
-}
-
 function setSecondaryToBlank() {
   clearSearchList();
+  copySecondaryBar();
   secondaryBar.innerHTML = '';
   secondaryBarMode = 0;
 }
 
-var visualSettingsHTML = `<input type="checkbox" id="testd" onclick="smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
+function setSecondaryToObjects() {
+  clearSearchList();
+  copySecondaryBar();
+  secondaryBarMode = 4;
+  setSecondaryToBlank();
+}
+
+function playBoop(a) {
+  if (a) {
+    boop1.play();
+  } else {
+    boop2.play();
+  }
+}
+
+var lastSideBarFocusBody = 0;
+var sidebar = document.getElementsByClassName("side")[0];
+var sidebarDrawn = false;
+
+function updateSidebar() {
+  if (focusBody != lastSideBarFocusBody || !sidebarDrawn) {
+    sidebarDrawn = true;
+    lastSideBarFocusBody = focusBody;
+    var bodyInformation = info[bodies[focusBody].name];
+    if (bodyInformation) {
+      sidebar.innerHTML = info[bodies[focusBody].name];
+    } else {
+      sidebar.innerHTML = '<h3>' + bodies[focusBody].name + '</h3>';
+    }
+  }
+}
+
+var visualSettingsHTML = `<input type="checkbox" id="testd" onclick="playBoop(this.checked);smoothInterpolate(planetOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {planetOrbitMaterial.visible = planetOrbitMaterial.opacity > 0.08},'opacity')">
 <label for="testd">Planet Orbits</label>
-<input type="checkbox" id="teste" onclick="smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
+<input type="checkbox" id="teste" onclick="playBoop(this.checked);smoothInterpolate(dwarfOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {dwarfOrbitMaterial.visible = dwarfOrbitMaterial.opacity > 0.08},'opacity')">
 <label for="teste">Dwarf Orbits</label>
-<input type="checkbox" id="testl" onclick="smoothInterpolate(majorSatOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {majorSatOrbitMaterial.visible = majorSatOrbitMaterial.opacity > 0.08},'opacity')">
+<input type="checkbox" id="testl" onclick="playBoop(this.checked);smoothInterpolate(majorSatOrbitMaterial,(this.checked ? maxOrbitOpacity : 0),250,function() {majorSatOrbitMaterial.visible = majorSatOrbitMaterial.opacity > 0.08},'opacity')">
 <label for="testl">Moon Orbits</label>
-<input type="checkbox" id="testf" onclick="smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
+<input type="checkbox" id="testf" onclick="playBoop(this.checked);smoothInterpolate(labelOpacity,(this.checked ? 1 : 0),250)" checked>
 <label for="testf" id="labels">Labels</label>
-<input type="checkbox" id="testc" onclick="updateShowGrid()">
+<input type="checkbox" id="testc" onclick="playBoop(this.checked);updateShowGrid()">
 <label for="testc">Enable Grid</label>
 <div class="wrapper2">
 	<div class="wrapper2inner">
@@ -1794,7 +1880,7 @@ var audioSettingsHTML = `
 		<button class="bslide" onMouseDown="press(6, -1)" onMouseUp="lift()">&laquo;</button>
 		<div class="sslider">
 			<div class="bar" id="bar6"></div>
-			<p id="bar6-contents">50&times;</p>
+			<p id="bar6-contents">50%</p>
 		</div>
 		<button class="bslide right" onMouseDown="press(6, 1)" onMouseUp="lift()">&raquo;</button>
 	</div>
@@ -1805,6 +1891,258 @@ updateBodyPositions();
 
 function julianToCalendar(julian) {
   return new Date(days * 8.64e+7 - 210895012800000);
+}
+
+var info = {
+  'Sun': `<h3>Sun</h3>
+	<p>The Sun is our home star, providing the Earth with the necessary energy for \
+	life to exist. It is a G2V type star, and is approximately halfway through its \
+	12 billion year lifetime.
+	The Sun contains 99.86% of the mass of the Solar System, and is about 696000 \
+	km across. Deep in its core, hydrogen fusion is taking place, slowly eating up \
+	mass and converting it into energy. It is the closest star to Earth for 4.6 light \
+	years, or about 27 trillion miles.</p>`,
+  'Mercury': `<h3>Mercury</h3>
+	<p>Mercury is the closest planet to the Sun, orbiting at an average distance \
+	of 36 million miles (0.387 AU). It is also the smallest planet, with a mean \
+	radius of 1516 miles.
+	Though visible to the naked eye, it never wanders more than 28&deg; away from \
+	the Sun in the sky (maximum elongation), which makes it quite difficult for \
+	one to see, even at sunrise and sunset. The fact that Mercury was known since \
+	at least 3000 BC is a testament to how carefully ancient peoples watched the skies.</p>`,
+  'Venus': `<h3>Venus</h3>
+	<p>Venus is the second closest planet to the Sun, orbiting at an average distance \
+	of 67.2 million miles (0.723 AU). It is also the slowest rotating planet, with a \
+	rotational period of 243 Earth days; longer than its year!
+	Venus is the brightest object in the night sky besides the Sun and Moon with an \
+	apparent magnitude of -4.6, so look out for it at dawn or twilight. Through a \
+	telescope, Venus's disk can be resolved, which reveals a yellowish, featureless \
+	sphere. Galileo's observations of the phases of Venus through a telescope was an \
+	important piece of evidence for the heliocentric model of the Solar System.</p>`,
+  'Earth': `<h3>Earth</h3>
+	<p>Earth is the third closest planet to the Sun, orbiting at an average distance of
+	92 million miles (1 AU). It is the only planet in the Solar System - and, indeed, our \
+	Universe - which we know to harbor life.
+	Humans have currently never been more than about 400000 km (248550 mi) from Earth's \
+	surface; this record was achieved by the Apollo 13 crew while orbiting the Moon. Human \
+	spacecraft have gone much further than that; Voyager 1 is about 11 billion miles from \
+	Earth. Our radio waves, what extraterrestial civilizations similar to ours would \
+	need to detect us, have been going out to around 100 light years (580 trillion miles).`,
+  'Mars': `<h3>Mars</h3>
+	<p>Mars is the fourth closest planet to the Sun, orbiting at an average distance of \
+	228 million miles. It is the last terrestrial planet and the one most explored by \
+	space probes.
+	Mars hosts the tallest mountain in the Solar System, Olympus Mons, which is around \
+	22 km (13.6 mi) tall. Being geologically active, its surface is very similar in texture \
+	to Earth's, including basins, plains, hills, and other features. Without a thick protective \
+	atmosphere, however, Mars is covered in small and large asteroid impacts, as well as being \
+	hazardous to Earthling life.</p>`,
+  'Jupiter': `<h3>Jupiter</h3>
+	<p>Jupiter is the fifth planet from the Sun, orbiting at an average distance of \
+	484 million miles (5.207 AU) from the Sun. It is the most massive planet in the \
+	Solar System, with a mass 2.5 times that of all the other planets combined.
+	Jupiter has a large, red-colored storm in its atmosphere known as the Great Red \
+	Spot. It is approximately the same size as Earth, and has been going on for at least \
+	400 years. Recent observations with the HST have revealed that its size has been steadily \
+	decreasing. Storms like these are caused by Jupiter's rotation inducing different speeds \
+	in different bands around the planet.</p>`,
+  'Saturn': `<h3>Saturn</h3>
+	<p>Saturn is the sixth planet from the Sun, orbiting at an average distance of \
+	888 million miles (9.553 AU) from the Sun. It is the second most massive planet \
+	in the Solar System and has the most extensive ring system known.
+	Saturn's rings are still a rather puzzling thing for astrophysicists. Containing \
+	particles ranging from &mu;m to km in size, the rings have an interesting structure \
+	determined by perturbations from Saturn's moons. In 2014, The spacecraft Cassini \
+	took a picture of what may be the formation of a new moon from the rings.</p>`,
+  'Uranus': `<h3>Uranus</h3>
+	<p>Uranus is the seventh planet from the Sun, orbiting at an average distance of \
+	1.784 billion miles (19.192 AU) from the Sun. It is the most tilted planet in the \
+	Solar System relative to the plane of its orbit, tilted by about 98&deg; to its orbit.
+	Uranus's tilt was likely caused by an enormous impact early in its history. Since \
+	the tilt is close to 90 degrees, one pole can face the Sun for a very long period of \
+	time. It is a relatively featureless planet, and is at the limit of naked eye \
+	visibility in good quality skies.
+	</p>`,
+  'Neptune': `<h3>Neptune</h3>
+	<p>Neptune is the eighth and furthest planet from the Sun, orbiting at an average \
+	distance of 2.799 billion miles (30.11 AU) from the Sun. It is the only planet not \
+	visible to the naked eye, and was found by prediction rather than observation.
+	Changes in the orbit of Uranus were noticed by French astronomer Alexis Bouvard, \
+	who predicted an unseen planet lay beyond the last then-known planet of the Solar \
+	System. Calculations of the planet's position and an optical search ensued, and \
+	Neptune was found.</p>`,
+  'Moon': `<h3>Moon</h3>
+	<p>The moon is Earth's only known permanent natural satellite, and is tidally locked \
+	to the Earth so that only one side can be seen from the surface of Earth. It was \
+	used by many civilizations as the basis for their calendars. On August 21, 2017, the \
+	Moon eclipsed the Sun in an event known as a total solar eclipse. Coincidentally, the \
+	Moon and Sun are approximately the same angular diameter in the sky from Earth's surface, \
+	so solar eclipses can happen, but are rare. The Moon is drifting away from Earth at about \
+	3.8 cm per year; some 400 million years in the future, solar eclipses will no longer be possible.</p>`,
+  'Io': `<h3>Io</h3>
+	<p>Io is the innermost of Jupiter's Galilean moons, the four moons easily visible \
+	from Earth with the aid of a telescope. Due to frictional heating from tidal stretching \
+	by Jupiter, Io is very hot and geologically active, sporting numerous volcanoes and \
+	an unusual surface. Being one of the three innermost Galilean moons, Io is in a orbital \
+	resonance with fellow moons Europa and Ganymede, where Ganymede completes one revolution \
+	every time Europa completes two revolutions and Io completes four.</p>`,
+  'Europa': `<h3>Europa</h3>
+	<p>Europa is the second innermost of Jupiter's Galilean moons, the four moons easily \
+	visible from Earth with the aid of a telescope. Europa has a surface covered by cracks \
+	and scratch-like marks, evidence for tectonic movements. Scientists hypothesize the \
+	existence of a subsurface ocean on Europa, which may harbor the essential ingredients \
+	for life. Being one of the three innermost Galilean moons, Europa is in a orbital \
+	resonance with fellow moons Io and Ganymede, where Ganymede completes one revolution \
+	every time Europa completes two revolutions and Io completes four.</p>`,
+  'Ganymede': `<h3>Ganymede</h3>
+	<p>Ganymede is the third innermost of Jupiter's Galilean moons, the four moons easily \
+	visible from Earth with the aid of a telescope. Ganymede is the largest moon in the \
+	Solar System. It is also the only moon known to have a magnetic field, likely created \
+	by convection within a liquid iron core.
+	Being one of the three innermost Galilean moons, Ganymede is in a orbital \
+	resonance with fellow moons Io and Europa, where Ganymede completes one revolution \
+	every time Europa completes two revolutions and Io completes four.</p>`,
+  'Callisto': `<h3>Callisto</h3>
+	<p>Callisto is the outermost of Jupiter's Galilean moons, the four moons easily \
+	visible from Earth with the aid of a telescope. Callisto has a unique surface pockmarked \
+	with craters, as it has never been geologically active. It is tidally locked to Jupiter, \
+	so that one side of Callisto always faces Jupiter. Its size is comparable to Mercury, \
+	but its density is about a third of Mercury's density, so its mass is significantly less.</p>`,
+  'Titan': `<h3>Titan</h3>
+	<p>Titan is the largest of Saturn's moons and the largest moon in the Solar System \
+	with an appreciable atmosphere. It has a methane cycle rather like the water cycle \
+	on Earth, just at a much lower temperature. Titan's atmosphere prevented any real \
+	study of its surface until the 2004 Cassini-Huygens mission, which revealed a surface \
+	with lakes of liquid methane and a relatively smooth surface.</p>`,
+  'Phobos': `<h3>Phobos</h3>
+	<p>Phobos is the largest and innermost moon of Mars, but is rather small by moon \
+	standards. From the surface of Mars it can transit the Sun, with an angular diameter \
+	about a third of that of the Sun. Like the other Martian moon Deimos, Phobos is \
+	thought to be an asteroid captured by Mars's gravity.</p>`,
+  'Deimos': `<h3>Deimos</h3>
+	<p>Deimos is the smallest and outermost known moon of Mars. Like the other Martian \
+	moon Phobos, Deimos is thought to be an asteroid captured by Mars's gravity. It has \
+	little inclination relative to Mars's equator, however, which suggests some process \
+	that adjusts small moon orbits to be closer to the equator, likely gravitational \
+	gradients from the bulging of Mars due to rotation.</p>`,
+  '1 Ceres': `<h3>Ceres (1 Ceres)</h3>
+	<p>Ceres (designated name 1 Ceres) is the largest known object in the asteroid belt. \
+	It is classified as a dwarf planet. It is the only object in the asteroid belt to \
+	be rounded by its own gravity. The <i>Dawn</i> spacecraft visited Ceres in March 2015, \
+	performing various surveys of the dwarf planet's surface.</p>`,
+  '2 Pallas': `<h3>Pallas (2 Pallas)</h3>
+	<p>Pallas (designated name 2 Pallas) is the third most massive asteroid. With an \
+	unusually high orbital inclination for such a large object (34.8&deg;), Pallas is difficult to \
+	access by spacecraft, as its orbit takes it significantly out of the approximate plane \
+	of the Solar System, which spacecraft can access more easily. As such, no official \
+	plans have been made to explore the asteroid.</p>`,
+  '3 Juno': `<h3>Juno (3 Juno)</h3>
+	<p>Juno (designated name 3 Juno) is the eleventh largest asteroid. Though Juno is \
+	small compared to Ceres, it was discovered early on because of a high albedo (reflectivity).</p>`,
+  '4 Vesta': `<h3>Vesta (4 Vesta)</h3>
+	<p>Vesta (designated name 4 Vesta) is the second largest and second most massive \
+	object in the asteroid belt. It is the brightest asteroid in Earth's sky, reaching \
+	an apparent magnitude of 5.1, which is within naked eye visibility. Fragments of \
+	Vesta's surface often fall to the Earth, a valuable source of information on Vesta's \
+	composition. It was visited by the <i>Dawn</i> spacecraft in July 2011.</p>`,
+  '5 Astraea': `<h3>Astraea (5 Astraea)</h3>
+	<p>Astraea (designated name 5 Astraea) is a member of the asteroid belt. For 38 years, \
+	since the discovery of 4 Vesta, it was thought that only 4 asteroids existed in \
+	the Solar System. The discovery of Astraea and the subsequent discoveries of many more \
+	main-belt asteroids led scientists to demote the four known asteroids (Ceres, Pallas, \
+	Juno, and Vesta) from their status as planets.</p>`,
+  '134340 Pluto': `<h3>Pluto (134340 Pluto)</h3>
+	<p>Pluto (designated name 134340 Pluto) was discovered in 1930 by American astronomer \
+	Clyde Tombaugh. It was the first Kuiper belt object (KBO) to be discovered, and is \
+	in a 2:3 orbital resonance with Neptune. Pluto is sometimes considered a binary system, \
+	as the barycenter of it and its largest moon, Charon, lies above the surface of Pluto, \
+	meaning they both orbit a point outside of themselves. In 2006, the IAU demoted Pluto's \
+	status from planet to dwarf planet. It was visited in 2015 by the space probe New Horizons.</p>`,
+  '136199 Eris': `<h3>Eris (136199 Eris)</h3>
+	<p>Eris (designated name 136199 Eris) was discovered in 2005. It is the most massive
+	known Kuiper belt object (KBO). With an orbital period of 558 years, it is currently \
+	one of the most distant known objects in the Solar System. Eris has one moon, Dysnomia.</p>`,
+  '136108 Haumea': `<h3>Haumea (136108 Haumea)</h3>
+	<p>Haumea (designated name 136108 Haumea) was discovered in 2004. It is one of the \
+	fastest rotating dwarf planets known, likely due to a collision which formed the \
+	object itself. It has two known moons, Hi'iaka and Namaka.</p>`,
+  '136472 Makemake': `<h3>Makemake (136472 Makemake)</h3>
+	<p>Makemake (designated name 136472 Makemake) is one of the largest Kuiper belt \
+	objects (KBOs). Discovered in 2005, the dwarf planet has an orbital period of 309 \
+	years. Its distance means it has a surface temperature around 30 K, so it is likely \
+	covered in methane ices. It has one known moon, S/2015 (136472) 1.`,
+	'50000 Quaoar' : `<h3>Quaoar (50000 Quaoar)</h3>
+	<p>Quaoar (designated name 50000 Quaoar) is a Kuiper belt object (KBO) about half the \
+	size of Pluto. It has an orbital period of about 284.5 years at an average distance of \
+	43.3 AU (4.025 billion miles) from the Sun. Quaoar has one moon, Weywot.</p>`,
+	'90377 Sedna' : `<h3>Sedna (90377 Sedna)</h3>
+	<p>Sedna (designated name 90377 Sedna) is a very distant object with the \
+	largest known orbit for any minor planet. It was discovered in 2003 near perihelion \
+	(closest approach to the Sun), where it was around 89.6 AU (8.329 billion miles) from \
+	Earth, but its aphelion (furthest distance from Sun) is about 932 AU from the Sun. \
+	This makes one orbit take around 11400 years. Sedna has no known moons.`,
+	'90482 Orcus' : `<h3>Orcus (90482 Orcus)</h3>
+	<p>Orcus (designated name 90482 Orcus) is a large trans-Neptunian object. It is in \
+	a 2:3 resonance with Neptune, just like Pluto, and orbits so that it and Pluto reach \
+	aphelion and perihelion, respectively, at the same time. As such, it is sometimes called \
+	the anti-Pluto. It has one known moon, Vanth.</p>`,
+	'20000 Varuna' : `<h3>Varuna (20000 Varuna)</h3>
+	<p>Varuna (designated name 20000 Varuna) is a large Kuiper belt object (KBO). It spins \
+	rapidly, with an estimated rotational period of 6.34 hours. As such, it is likely elongated \
+	into an ellipsoid. Varuna has no known moons.</p>`,
+	'28798 Ixion' : `<h3>Ixion (28798 Ixion)</h3>
+	<p>Ixion (designated name 28798 Ixion) is a large trans-Neptunian object. Like Pluto, \
+	it is in a 2:3 resonance with Neptune. Ixion has no known moons.</p>`,
+	'19521 Chaos' : `<h3>Chaos (19521 Chaos)</h3>
+	<p>Chaos (designated name 19521 Chaos) is a Kuiper belt object (KBO). It has an orbital \
+	period of around 309 years.</p>`,
+	'99942 Apophis' : `<h3>99942 Apophis</h3>
+	<p>99942 Apophis is a near-Earth asteroid, about 370 meters in diameter, which caused \
+	a period of concern in December 2006 that it would impact the Earth on April 13, 2029, \
+	which could cause catastrophic local damage. Models put the chance of impact on this \
+	at a maximum of around 1 in 42. Further observations and modeling, however, revised this \
+	probability down. It is now known that Apophis will pass at least 19400 miles from the \
+	Earth on April 13, which is still well within the orbits of some satellites and about a \
+	tenth the distance to the Moon. It will be visible to the naked eye during the close pass, \
+	with an apparent magnitude of around 3.4.</p>`,
+	'84522 2002 TC302' : `<h3>2002 TC302</h3>
+	<p>2002 TC302 (84522 2002 TC302) is a trans-Neptunian object in a 2:5 orbital resonance \
+	with Neptune. It has an estimated diameter of about 550 kilometers and orbits the Sun \
+	every 411 years. It has no known moons.`,
+	'4179 Toutatis' : `<h3>Toutatis (4179 Toutatis)</h3>
+	<p>Toutatis (designated name 4179 Toutatis) is an asteroid with a chaotic orbit \
+	from a 3:1 resonance with Jupiter and an approximate 1:4 resonance with Earth. \
+	It crosses Mars's orbit, so it is a Mars-crosser asteroid. It was visited by the \
+	Chinese probe <i>Chang'e 2</i> in 2010.</p>`,
+	'433 Eros' : `<h3>Eros (433 Eros)</h3>
+	<p>Eros (designated name 433 Eros) is the second largest near-Earth object known, \
+	with a mean diameter of 16.8 km. It was the first near-Earth asteroid visited by a space probe, \
+	the American probe <i>NEAR Shoemaker</i>, which stands for <b>N</b>ear <b>E</b>arth \
+	<b>A</b>steroid <b>R</b>endezvous.</p>`,
+	'253 Mathilde' : `<h3>Mathilde (253 Mathilde)</h3>
+	<p>Mathilde (designated name 253 Mathilde) is a main-belt asteroid with a mean diameter \
+	of 50 kilometers. It was visited by <i>NEAR Shoemaker</i> in June 1997.</p>`,
+	'21 Lutetia' : `<h3>Lutetia (21 Lutetia)</h3>
+	<p>Lutetia (designated name 21 Lutetia) is a large asteroid in the asteroid belt. It \
+	has a highly unusual spectrum than that expected of metal-rich asteroids. It was \
+	visited by the spacecraft <i>Rosetta</i> in July 2010.</p>`,
+	'16 Psyche' : `<h3>Psyche (16 Psyche)</h3>
+	<p>Psyche (designated name 16 Psyche) is a large asteroid in the asteroid belt. Its \
+	composition is very metal-rich, and is suspected to be the iron core of a protoplanet, \
+	whose outer layers were stripped off by some unknown process. It will be the target \
+	of the 2022 Psyche orbiter mission to study its unusual properties.`,
+	'15 Eunomia' : `<h3>Eunomia (15 Eunomia)</h3>
+	<p>Eunomia (designated name 15 Eunomia) is a large asteroid in the inner asteroid belt, \
+	and is the namesake of the Eunomian family. At opposition, it is one of the brightest \
+	asteroids with an apparent magnitude of 8.5, easily viewable with a 3 inch telescope \
+	or a quality set of binoculars.</p>`,
+	'10 Hygiea' : `<h3>Hygiea (10 Hygiea)</h3>
+	<p>Hygiea (designated name 10 Hygiea) is the fourth-largest asteroid in the asteroid \
+	belt. It has a mean diameter of about 400 kilometers and has a very dark spectral type. \
+	Hygiea's properties are not well known for such a large object.</p>`,
+	'243 Ida' : `<h3>Ida (243 Ida)</h3>
+	<p>Ida (designated name 243 Ida) is a main-belt asteroid. It was visited by the \
+	Galileo spacecraft in late August, 1993. It has one known moon, Dactyl.</p>`
 }
 
 /**
