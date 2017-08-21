@@ -216,6 +216,7 @@ function getObjects() {
 
 function shiftCameraFocus(bodyIndex) {
   // Shifts camera focus to bodies[bodyIndex] smoothly (linear interpolation)
+	if (lockBody && lockBodyOffsetR < bodies[bodyIndex].radius * 1.2) return true;
   if (bodyIndex == focusBody) {
     return;
   }
@@ -255,14 +256,15 @@ function onDocumentClick(event) {
 
   if (intersects.length > 0) {
     // If an intersecting body in found...
-    lastClickedEntity = intersects[0];
 
     if (trackBody) {
       // If camera mode is tracking, shift the camera to the focused body
-      shiftCameraFocus(intersects[0].object.name);
+      if (shiftCameraFocus(intersects[0].object.name)) return;
     } else {
-      shiftCameraFocusToVector(getBodyPosition(intersects[0].object.name));
+      if (shiftCameraFocusToVector(getBodyPosition(intersects[0].object.name))) return;
     }
+
+		lastClickedEntity = intersects[0];
 
     // Note that (Object3D).object.name gives the index of the object in bodies.
     if (focusBody != intersects[0].object.name) {
@@ -303,6 +305,7 @@ function onDocumentDblClick(event) {
     }
 
     focusBody = lastClickedEntity.object.name;
+		lastClickedEntity = null;
   }
 }
 
@@ -471,6 +474,7 @@ function update() {
 
   // Update positions of bodies
 	updateSprites();
+	updateTimeDisplay();
   if (finished) updateBodyPositions();
 
   // Setup for next call to update()
@@ -603,9 +607,18 @@ function addBodyFromName(bodyName, autoFollow = true) {
         rotationperiod = 1e9,
         imageLocation = "images/ceresTexture.jpg"));
     } else if (moonOrbitData[bodyName]) {
-      if (contains(texturedMoons, bodyName)) {
+			if (moonOrbitData[bodyName].load) {
+				addBodyFromModel(new constructBody(name = bodyName,
+          radius = "0.1",
+          type = "artificial",
+          shininess = 0.03,
+          axialtilt = 0,
+          rotationperiod = 1e9,
+          imageLocation = null));
+					return;
+			} else if (contains(texturedMoons, bodyName)) {
         addBody(new constructBody(name = bodyName,
-          radius = "200",
+          radius = "0.1",
           type = "majorsat",
           shininess = 0.03,
           axialtilt = 0,
@@ -613,14 +626,14 @@ function addBodyFromName(bodyName, autoFollow = true) {
           imageLocation = "images/" + bodyName.toLowerCase() + "Texture.jpg"));
       } else {
         addBody(new constructBody(name = bodyName,
-          radius = "200",
+          radius = "0.1",
           type = "majorsat",
           shininess = 0.03,
           axialtilt = 0,
           rotationperiod = 1e9,
           imageLocation = "images/ceresTexture.jpg"));
       }
-      moonNames.push(bodyName);
+			drawOrbits();
     }
   }
 
@@ -633,6 +646,7 @@ function addBodyFromName(bodyName, autoFollow = true) {
         isLockBodyCameraTransition = true;
       }
       shiftCameraFocus(focusBody);
+			console.log(focusBody);
       setTimeout(function() {
         enableLockBody();
         isLockBodyCameraTransition = false;
@@ -706,7 +720,8 @@ window.onload = function() {
   console.log("Finished setup.");
   enableLockBody();
   requestAnimationFrame(update);
-  setTimeWarp(0);
+	days = unixToCalendar(new Date().getTime());
+  setTimeWarp("1%");
   startMusic();
   setMusicVolume(0.5);
   setBeepVolume(0.5);
@@ -721,7 +736,8 @@ function constructBody(name = null,
   shininess = null,
   axialtilt = null,
   rotationperiod = null,
-  imageLocation = null) {
+  imageLocation = null,
+	object = null) {
   // Constructor for a body
   this.name = name;
   this.radius = radius;
@@ -730,6 +746,7 @@ function constructBody(name = null,
   this.axialtilt = axialtilt;
   this.rotationperiod = rotationperiod;
   this.imageLocation = imageLocation;
+	this.object = object;
 }
 
 function addBody(body) {
@@ -770,7 +787,7 @@ function addBody(body) {
       }
     }
 
-    if (body.type === "majorsat") {
+    if (body.type === "majorsat" || body.type === "artificial") {
       moonNames.push(body.name);
     }
 
@@ -868,7 +885,18 @@ function addBody(body) {
     // Configure the object in bodies
     body.object = bodyMesh;
     bodies.push(body);
-  }
+  } else {
+		body.object.name = bodies.length;
+
+		try {
+			body.object.children[0].name = bodies.length;
+		} catch (e) {;}
+
+		bodies.push(body);
+		if (body.type === "majorsat" || body.type === "artificial") {
+      moonNames.push(body.name);
+    }
+	}
 }
 
 function Vector3toArray(v) {
@@ -934,7 +962,9 @@ function setOpacity(bodyIndex, opacity) {
 
   if (bodies[bodyIndex].object.children.length > 0) {
     for (child = 0; child < bodies[bodyIndex].object.children.length; child++) {
-      bodies[bodyIndex].object.children[child].material.opacity = opacity;
+			try {
+      	bodies[bodyIndex].object.children[child].material.opacity = opacity;
+			} catch (e) {;}
     }
   } else {
     bodies[bodyIndex].object.material.opacity = opacity;
@@ -1282,7 +1312,7 @@ function drawOrbits() {
     // Get type of body
     var bodyType = bodies[i].type;
 
-    if ((bodyType === "planet") || (bodyType === "dwarf") || (bodyType === "majorsat") || i == focusBody) {
+    if ((bodyType === "planet") || (bodyType === "dwarf") || (bodyType === "majorsat") || (bodyType === "artificial") || i == focusBody) {
       // If an orbit should be drawn...
 
       var geometry = new THREE.Geometry();
@@ -1296,14 +1326,14 @@ function drawOrbits() {
         material = planetOrbitMaterial;
       } else if (bodyType === "dwarf") {
         material = dwarfOrbitMaterial;
-      } else if (bodyType === "majorsat") {
+      } else if (bodyType === "majorsat" || bodyType === "artificial") {
         material = majorSatOrbitMaterial;
       } else {
         material = planetOrbitMaterial;
       }
 
       // Calculate vertices of orbit (precision = 200 points / revolution)
-      if (bodyType === "majorsat") {
+      if (bodyType === "majorsat" || bodyType == "artificial") {
         var thisData = moonOrbitData[bodies[i].name].orbit;
         var parent = moonOrbitData[bodies[i].name].parent;
         var period = getOrbitalPeriod(i);
@@ -1427,19 +1457,19 @@ function scaleVector2(v, factor) {
   return [v[0] * factor, v[1] * factor];
 }
 
-var xAxisDisplace = new THREE.Vector3(1000, 0, 0);
-var yAxisDisplace = new THREE.Vector3(0, 1000, 0);
-var zAxisDisplace = new THREE.Vector3(0, 0, 1000);
+var xAxisDisplace = new THREE.Vector3(1, 0, 0);
+var yAxisDisplace = new THREE.Vector3(0, 1, 0);
+var zAxisDisplace = new THREE.Vector3(0, 0, 1);
 
 var axesSize = 100;
 
 var axisSegments = [
-  [xAxisDisplace, new THREE.Vector3(950, 30, 0)],
-  [xAxisDisplace, new THREE.Vector3(950, -30, 0)],
-  [yAxisDisplace, new THREE.Vector3(-30, 950, 0)],
-  [yAxisDisplace, new THREE.Vector3(30, 950, 0)],
-  [zAxisDisplace, new THREE.Vector3(0, -30, 950)],
-  [zAxisDisplace, new THREE.Vector3(0, 30, 950)]
+  [xAxisDisplace, new THREE.Vector3(0.95, 0.03, 0)],
+  [xAxisDisplace, new THREE.Vector3(0.95, -0.03, 0)],
+  [yAxisDisplace, new THREE.Vector3(-0.03, 0.95, 0)],
+  [yAxisDisplace, new THREE.Vector3(0.03, 0.95, 0)],
+  [zAxisDisplace, new THREE.Vector3(0, -0.03, 0.95)],
+  [zAxisDisplace, new THREE.Vector3(0, 0.03, 0.95)]
 ]
 
 function updateAxesDrawing() {
@@ -1889,9 +1919,44 @@ var audioSettingsHTML = `
 setSphericalFromCameraPosition();
 updateBodyPositions();
 
+var julianToUnixEpoch = 210895012800000;
+var msPerDay = 8.64e+7;
+
 function julianToCalendar(julian) {
-  return new Date(days * 8.64e+7 - 210895012800000);
+  return new Date((julian - 2440587.5) * 86400000);
 }
+
+function unixToCalendar(unix) {
+	return (unix / 86400000) + 2440587.5;
+}
+
+var timeDisplay = document.getElementById('time-disp');
+var timeDisplayMode = 0; // 0 is normal date, 1 is Julian date
+
+function updateTimeDisplay() {
+	if (timeDisplayMode == 0) {
+		timeDisplay.innerHTML = julianToCalendar(days);
+	} else if (timeDisplayMode == 1) {
+		timeDisplay.innerHTML = 'JD ' + parseInt(days * 1000) / 1000;
+	}
+}
+
+function addBodyFromModel(body) {
+	fbxloader.load('data/models/' + body.name.toLowerCase() + '.fbx',
+	function (object) {
+		body.object = object;
+		console.log(body);
+		addBody(body);
+		drawOrbits();
+	}, function (item,loaded,total) {
+		console.log(item,loaded,total);
+	}, function (xhr) {
+		console.log(xhr);
+	});
+}
+
+var fbxmanager = new THREE.LoadingManager();
+var fbxloader = new THREE.FBXLoader(fbxmanager);
 
 var info = {
   'Sun': `<h3>Sun</h3>

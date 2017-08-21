@@ -185,9 +185,7 @@ button:active {
 	position: absolute;
 	margin-bottom: 100px;
 	transform: translate(-50%, 0);
-}
-.time-label {
-
+	font-family: monospace;
 }
 .side {
 	background-color: rgba(255, 255, 255, 0.5);

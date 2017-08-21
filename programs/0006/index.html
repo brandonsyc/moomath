@@ -63,7 +63,7 @@
 	</div>
 
 	<div class="thing">
-		<p class="above">Text above</p><br>
+		<p class="above" id="time-disp">Text above</p><br>
 		<button class="bslide" onMouseDown="press(3, -0.5)" onMouseUp="lift()">&laquo;</button>
 		<div class="slider">
 			<div class="bar" id="bar3"></div>
@@ -75,6 +75,7 @@
 	<canvas id='text-canvas' width="640" height="320" style='position: absolute; top: 0px; left: 0px; zIndex:1; pointer-events:none;'></canvas>
 	</div>
 	<script>
+		playUpBoop = 0;
 		function press(a, b) {
 			name = a;
 			diff = b;
@@ -135,6 +136,6 @@
 <script src="xRingGeometry.js"></script>
 <script src="orbitControls.js"></script>
 <script src="rendererstats.js"></script>
-<script src="textsprite.js"></script>
+<script src="fbxloader.js"></script>
 <script src="3dsimulator.js"></script>
 </html>
