@@ -1405,7 +1405,7 @@ function updateSprites() {
     var bodyPosition = getBodyPosition(i);
     if (frustum.containsPoint(bodyPosition)) {
       // Frustum check is used so that bodies behind the camera do not make text labels
-      if (bodies[i].type === "majorsat") {
+      if (bodies[i].type === "majorsat" || bodies[i].type === "artificial") {
         var parent = getBody(moonOrbitData[bodies[i].name].parent);
         var parentPosition = getBodyPosition(parent);
         var currentParentSize = getScale(parent) * bodies[parent].radius;
@@ -1944,6 +1944,7 @@ function updateTimeDisplay() {
 function addBodyFromModel(body) {
 	fbxloader.load('data/models/' + body.name.toLowerCase() + '.fbx',
 	function (object) {
+    scene.add(object);
 		body.object = object;
 		console.log(body);
 		addBody(body);
