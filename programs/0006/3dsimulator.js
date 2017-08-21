@@ -81,6 +81,8 @@ function addBodies() {
   addBody(new constructBody(name = "Io", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/ioTexture.jpg"));
   addBody(new constructBody(name = "Callisto", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/callistoTexture.jpg"))
   addBody(new constructBody(name = "Europa", radius = "1000", type = "majorsat", shininess = 0.03, axialtilt = 0, rotationperiod = 31, imageLocation = "images/europaTexture.jpg"))
+  addBodyFromName('ISS');
+  addBodyFromName('Hubble');
 }
 
 // Whether to display the grid
@@ -216,7 +218,7 @@ function getObjects() {
 
 function shiftCameraFocus(bodyIndex) {
   // Shifts camera focus to bodies[bodyIndex] smoothly (linear interpolation)
-	if (lockBody && lockBodyOffsetR < bodies[bodyIndex].radius * 1.2) return true;
+  if (lockBody && lockBodyOffsetR < bodies[bodyIndex].radius * 1.2) return true;
   if (bodyIndex == focusBody) {
     return;
   }
@@ -264,7 +266,7 @@ function onDocumentClick(event) {
       if (shiftCameraFocusToVector(getBodyPosition(intersects[0].object.name))) return;
     }
 
-		lastClickedEntity = intersects[0];
+    lastClickedEntity = intersects[0];
 
     // Note that (Object3D).object.name gives the index of the object in bodies.
     if (focusBody != intersects[0].object.name) {
@@ -305,7 +307,7 @@ function onDocumentDblClick(event) {
     }
 
     focusBody = lastClickedEntity.object.name;
-		lastClickedEntity = null;
+    lastClickedEntity = null;
   }
 }
 
@@ -473,8 +475,8 @@ function update() {
   }
 
   // Update positions of bodies
-	updateSprites();
-	updateTimeDisplay();
+  updateSprites();
+  updateTimeDisplay();
   if (finished) updateBodyPositions();
 
   // Setup for next call to update()
@@ -607,16 +609,16 @@ function addBodyFromName(bodyName, autoFollow = true) {
         rotationperiod = 1e9,
         imageLocation = "images/ceresTexture.jpg"));
     } else if (moonOrbitData[bodyName]) {
-			if (moonOrbitData[bodyName].load) {
-				addBodyFromModel(new constructBody(name = bodyName,
+      if (moonOrbitData[bodyName].load) {
+        addBodyFromModel(new constructBody(name = bodyName,
           radius = "0.1",
           type = "artificial",
           shininess = 0.03,
           axialtilt = 0,
           rotationperiod = 1e9,
           imageLocation = null));
-					return;
-			} else if (contains(texturedMoons, bodyName)) {
+        return;
+      } else if (contains(texturedMoons, bodyName)) {
         addBody(new constructBody(name = bodyName,
           radius = "0.1",
           type = "majorsat",
@@ -633,7 +635,7 @@ function addBodyFromName(bodyName, autoFollow = true) {
           rotationperiod = 1e9,
           imageLocation = "images/ceresTexture.jpg"));
       }
-			drawOrbits();
+      drawOrbits();
     }
   }
 
@@ -646,7 +648,7 @@ function addBodyFromName(bodyName, autoFollow = true) {
         isLockBodyCameraTransition = true;
       }
       shiftCameraFocus(focusBody);
-			console.log(focusBody);
+      console.log(focusBody);
       setTimeout(function() {
         enableLockBody();
         isLockBodyCameraTransition = false;
@@ -720,7 +722,7 @@ window.onload = function() {
   console.log("Finished setup.");
   enableLockBody();
   requestAnimationFrame(update);
-	days = unixToCalendar(new Date().getTime());
+  days = unixToCalendar(new Date().getTime());
   setTimeWarp("1%");
   startMusic();
   setMusicVolume(0.5);
@@ -737,7 +739,7 @@ function constructBody(name = null,
   axialtilt = null,
   rotationperiod = null,
   imageLocation = null,
-	object = null) {
+  object = null) {
   // Constructor for a body
   this.name = name;
   this.radius = radius;
@@ -746,7 +748,7 @@ function constructBody(name = null,
   this.axialtilt = axialtilt;
   this.rotationperiod = rotationperiod;
   this.imageLocation = imageLocation;
-	this.object = object;
+  this.object = object;
 }
 
 function addBody(body) {
@@ -886,17 +888,18 @@ function addBody(body) {
     body.object = bodyMesh;
     bodies.push(body);
   } else {
-		body.object.name = bodies.length;
+    body.object.name = bodies.length;
 
-		try {
-			body.object.children[0].name = bodies.length;
-		} catch (e) {;}
+    try {
+      body.object.children[0].name = bodies.length;
+    } catch (e) {;
+    }
 
-		bodies.push(body);
-		if (body.type === "majorsat" || body.type === "artificial") {
+    bodies.push(body);
+    if (body.type === "majorsat" || body.type === "artificial") {
       moonNames.push(body.name);
     }
-	}
+  }
 }
 
 function Vector3toArray(v) {
@@ -962,9 +965,10 @@ function setOpacity(bodyIndex, opacity) {
 
   if (bodies[bodyIndex].object.children.length > 0) {
     for (child = 0; child < bodies[bodyIndex].object.children.length; child++) {
-			try {
-      	bodies[bodyIndex].object.children[child].material.opacity = opacity;
-			} catch (e) {;}
+      try {
+        bodies[bodyIndex].object.children[child].material.opacity = opacity;
+      } catch (e) {;
+      }
     }
   } else {
     bodies[bodyIndex].object.material.opacity = opacity;
@@ -1547,8 +1551,8 @@ function updateAxesDrawing() {
 var timeWarpFactor = 5.7;
 
 function setTimeWarp(warp) {
-	document.getElementById("bar3").style.width = warp;
-	updateTimeWarp();
+  document.getElementById("bar3").style.width = warp;
+  updateTimeWarp();
 }
 
 function updateTimeWarp() {
@@ -1574,29 +1578,29 @@ function updateTimeWarp() {
     } else {
       modifiedWarp = (Math.pow(unmodifiedWarp, timeWarpFactor)) / 86400;
 
-			if (modifiedWarp < 1) {
-      	document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 86400) + '&times Real Time';
-			} else if (modifiedWarp < 1.1) {
-				document.getElementById('bar3-contents').innerHTML = '1 day / sec';
-			} else if (modifiedWarp < 29.53) {
-				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10) / 10 + ' days / sec';
-			} else if (modifiedWarp < 30.53) {
-				document.getElementById('bar3-contents').innerHTML = '1 month / sec';
-			} else if (modifiedWarp < 365.2425) {
-				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 29.53) / 10 + ' months / sec';
-			} else if (modifiedWarp < 365.3425) {
-				document.getElementById('bar3-contents').innerHTML = '1 year / sec';
-			} else if (modifiedWarp < 36524.25) {
-				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365.2425) / 10 + ' years / sec';
-			} else if (modifiedWarp < 37524.25) {
-				document.getElementById('bar3-contents').innerHTML = '1 century / sec';
-			} else if (modifiedWarp < 365242.5) {
-				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 36524.25) / 10 + ' centuries / sec';
-			} else if (modifiedWarp < 375242.5) {
-				document.getElementById('bar3-contents').innerHTML = '1 millennium / sec';
-			} else {
-				document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365242.5) / 10 + ' millennia / sec';
-			}
+      if (modifiedWarp < 1) {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 86400) + '&times Real Time';
+      } else if (modifiedWarp < 1.1) {
+        document.getElementById('bar3-contents').innerHTML = '1 day / sec';
+      } else if (modifiedWarp < 29.53) {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10) / 10 + ' days / sec';
+      } else if (modifiedWarp < 30.53) {
+        document.getElementById('bar3-contents').innerHTML = '1 month / sec';
+      } else if (modifiedWarp < 365.2425) {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 29.53) / 10 + ' months / sec';
+      } else if (modifiedWarp < 365.3425) {
+        document.getElementById('bar3-contents').innerHTML = '1 year / sec';
+      } else if (modifiedWarp < 36524.25) {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365.2425) / 10 + ' years / sec';
+      } else if (modifiedWarp < 37524.25) {
+        document.getElementById('bar3-contents').innerHTML = '1 century / sec';
+      } else if (modifiedWarp < 365242.5) {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 36524.25) / 10 + ' centuries / sec';
+      } else if (modifiedWarp < 375242.5) {
+        document.getElementById('bar3-contents').innerHTML = '1 millennium / sec';
+      } else {
+        document.getElementById('bar3-contents').innerHTML = parseInt(modifiedWarp * 10 / 365242.5) / 10 + ' millennia / sec';
+      }
     }
   }
 
@@ -1927,33 +1931,35 @@ function julianToCalendar(julian) {
 }
 
 function unixToCalendar(unix) {
-	return (unix / 86400000) + 2440587.5;
+  return (unix / 86400000) + 2440587.5;
 }
 
 var timeDisplay = document.getElementById('time-disp');
 var timeDisplayMode = 0; // 0 is normal date, 1 is Julian date
 
 function updateTimeDisplay() {
-	if (timeDisplayMode == 0) {
-		timeDisplay.innerHTML = julianToCalendar(days);
-	} else if (timeDisplayMode == 1) {
-		timeDisplay.innerHTML = 'JD ' + parseInt(days * 1000) / 1000;
-	}
+  if (timeDisplayMode == 0) {
+    timeDisplay.innerHTML = julianToCalendar(days);
+  } else if (timeDisplayMode == 1) {
+    timeDisplay.innerHTML = 'JD ' + parseInt(days * 1000) / 1000;
+  }
 }
 
 function addBodyFromModel(body) {
-	fbxloader.load('data/models/' + body.name.toLowerCase() + '.fbx',
-	function (object) {
-    scene.add(object);
-		body.object = object;
-		console.log(body);
-		addBody(body);
-		drawOrbits();
-	}, function (item,loaded,total) {
-		console.log(item,loaded,total);
-	}, function (xhr) {
-		console.log(xhr);
-	});
+  fbxloader.load('data/models/' + body.name.toLowerCase() + '.fbx',
+    function(object) {
+      scene.add(object);
+      body.object = object;
+      console.log(body);
+      addBody(body);
+      drawOrbits();
+    },
+    function(item, loaded, total) {
+      console.log(item, loaded, total);
+    },
+    function(xhr) {
+      console.log(xhr);
+    });
 }
 
 var fbxmanager = new THREE.LoadingManager();
@@ -2137,32 +2143,32 @@ var info = {
 	objects (KBOs). Discovered in 2005, the dwarf planet has an orbital period of 309 \
 	years. Its distance means it has a surface temperature around 30 K, so it is likely \
 	covered in methane ices. It has one known moon, S/2015 (136472) 1.`,
-	'50000 Quaoar' : `<h3>Quaoar (50000 Quaoar)</h3>
+  '50000 Quaoar': `<h3>Quaoar (50000 Quaoar)</h3>
 	<p>Quaoar (designated name 50000 Quaoar) is a Kuiper belt object (KBO) about half the \
 	size of Pluto. It has an orbital period of about 284.5 years at an average distance of \
 	43.3 AU (4.025 billion miles) from the Sun. Quaoar has one moon, Weywot.</p>`,
-	'90377 Sedna' : `<h3>Sedna (90377 Sedna)</h3>
+  '90377 Sedna': `<h3>Sedna (90377 Sedna)</h3>
 	<p>Sedna (designated name 90377 Sedna) is a very distant object with the \
 	largest known orbit for any minor planet. It was discovered in 2003 near perihelion \
 	(closest approach to the Sun), where it was around 89.6 AU (8.329 billion miles) from \
 	Earth, but its aphelion (furthest distance from Sun) is about 932 AU from the Sun. \
 	This makes one orbit take around 11400 years. Sedna has no known moons.`,
-	'90482 Orcus' : `<h3>Orcus (90482 Orcus)</h3>
+  '90482 Orcus': `<h3>Orcus (90482 Orcus)</h3>
 	<p>Orcus (designated name 90482 Orcus) is a large trans-Neptunian object. It is in \
 	a 2:3 resonance with Neptune, just like Pluto, and orbits so that it and Pluto reach \
 	aphelion and perihelion, respectively, at the same time. As such, it is sometimes called \
 	the anti-Pluto. It has one known moon, Vanth.</p>`,
-	'20000 Varuna' : `<h3>Varuna (20000 Varuna)</h3>
+  '20000 Varuna': `<h3>Varuna (20000 Varuna)</h3>
 	<p>Varuna (designated name 20000 Varuna) is a large Kuiper belt object (KBO). It spins \
 	rapidly, with an estimated rotational period of 6.34 hours. As such, it is likely elongated \
 	into an ellipsoid. Varuna has no known moons.</p>`,
-	'28798 Ixion' : `<h3>Ixion (28798 Ixion)</h3>
+  '28798 Ixion': `<h3>Ixion (28798 Ixion)</h3>
 	<p>Ixion (designated name 28798 Ixion) is a large trans-Neptunian object. Like Pluto, \
 	it is in a 2:3 resonance with Neptune. Ixion has no known moons.</p>`,
-	'19521 Chaos' : `<h3>Chaos (19521 Chaos)</h3>
+  '19521 Chaos': `<h3>Chaos (19521 Chaos)</h3>
 	<p>Chaos (designated name 19521 Chaos) is a Kuiper belt object (KBO). It has an orbital \
 	period of around 309 years.</p>`,
-	'99942 Apophis' : `<h3>99942 Apophis</h3>
+  '99942 Apophis': `<h3>99942 Apophis</h3>
 	<p>99942 Apophis is a near-Earth asteroid, about 370 meters in diameter, which caused \
 	a period of concern in December 2006 that it would impact the Earth on April 13, 2029, \
 	which could cause catastrophic local damage. Models put the chance of impact on this \
@@ -2171,42 +2177,42 @@ var info = {
 	Earth on April 13, which is still well within the orbits of some satellites and about a \
 	tenth the distance to the Moon. It will be visible to the naked eye during the close pass, \
 	with an apparent magnitude of around 3.4.</p>`,
-	'84522 2002 TC302' : `<h3>2002 TC302</h3>
+  '84522 2002 TC302': `<h3>2002 TC302</h3>
 	<p>2002 TC302 (84522 2002 TC302) is a trans-Neptunian object in a 2:5 orbital resonance \
 	with Neptune. It has an estimated diameter of about 550 kilometers and orbits the Sun \
 	every 411 years. It has no known moons.`,
-	'4179 Toutatis' : `<h3>Toutatis (4179 Toutatis)</h3>
+  '4179 Toutatis': `<h3>Toutatis (4179 Toutatis)</h3>
 	<p>Toutatis (designated name 4179 Toutatis) is an asteroid with a chaotic orbit \
 	from a 3:1 resonance with Jupiter and an approximate 1:4 resonance with Earth. \
 	It crosses Mars's orbit, so it is a Mars-crosser asteroid. It was visited by the \
 	Chinese probe <i>Chang'e 2</i> in 2010.</p>`,
-	'433 Eros' : `<h3>Eros (433 Eros)</h3>
+  '433 Eros': `<h3>Eros (433 Eros)</h3>
 	<p>Eros (designated name 433 Eros) is the second largest near-Earth object known, \
 	with a mean diameter of 16.8 km. It was the first near-Earth asteroid visited by a space probe, \
 	the American probe <i>NEAR Shoemaker</i>, which stands for <b>N</b>ear <b>E</b>arth \
 	<b>A</b>steroid <b>R</b>endezvous.</p>`,
-	'253 Mathilde' : `<h3>Mathilde (253 Mathilde)</h3>
+  '253 Mathilde': `<h3>Mathilde (253 Mathilde)</h3>
 	<p>Mathilde (designated name 253 Mathilde) is a main-belt asteroid with a mean diameter \
 	of 50 kilometers. It was visited by <i>NEAR Shoemaker</i> in June 1997.</p>`,
-	'21 Lutetia' : `<h3>Lutetia (21 Lutetia)</h3>
+  '21 Lutetia': `<h3>Lutetia (21 Lutetia)</h3>
 	<p>Lutetia (designated name 21 Lutetia) is a large asteroid in the asteroid belt. It \
 	has a highly unusual spectrum than that expected of metal-rich asteroids. It was \
 	visited by the spacecraft <i>Rosetta</i> in July 2010.</p>`,
-	'16 Psyche' : `<h3>Psyche (16 Psyche)</h3>
+  '16 Psyche': `<h3>Psyche (16 Psyche)</h3>
 	<p>Psyche (designated name 16 Psyche) is a large asteroid in the asteroid belt. Its \
 	composition is very metal-rich, and is suspected to be the iron core of a protoplanet, \
 	whose outer layers were stripped off by some unknown process. It will be the target \
 	of the 2022 Psyche orbiter mission to study its unusual properties.`,
-	'15 Eunomia' : `<h3>Eunomia (15 Eunomia)</h3>
+  '15 Eunomia': `<h3>Eunomia (15 Eunomia)</h3>
 	<p>Eunomia (designated name 15 Eunomia) is a large asteroid in the inner asteroid belt, \
 	and is the namesake of the Eunomian family. At opposition, it is one of the brightest \
 	asteroids with an apparent magnitude of 8.5, easily viewable with a 3 inch telescope \
 	or a quality set of binoculars.</p>`,
-	'10 Hygiea' : `<h3>Hygiea (10 Hygiea)</h3>
+  '10 Hygiea': `<h3>Hygiea (10 Hygiea)</h3>
 	<p>Hygiea (designated name 10 Hygiea) is the fourth-largest asteroid in the asteroid \
 	belt. It has a mean diameter of about 400 kilometers and has a very dark spectral type. \
 	Hygiea's properties are not well known for such a large object.</p>`,
-	'243 Ida' : `<h3>Ida (243 Ida)</h3>
+  '243 Ida': `<h3>Ida (243 Ida)</h3>
 	<p>Ida (designated name 243 Ida) is a main-belt asteroid. It was visited by the \
 	Galileo spacecraft in late August, 1993. It has one known moon, Dactyl.</p>`
 }

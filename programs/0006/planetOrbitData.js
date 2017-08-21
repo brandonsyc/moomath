@@ -609,6 +609,11 @@ var moonOrbitData = {
     orbit: new Float32Array([4.51690895394e-05, 0.00114068857706, 0.928016868425, 4.48675738134, 4.75334547714, 98.2047521178, 1.38063839059]),
     parent: 'Earth',
     load: 'data/models/iss.fbx'
+  },
+  'Hubble': { // Note this orbit is incorrect and only used for testing
+    orbit: new Float32Array([4.51690895394e-05, 0.00114068857706, 1.928016868425, 4.48675738134, 4.75334547714, 98.2047521178, 1.38063839059]),
+    parent: 'Earth',
+    load: 'data/models/hubble.fbx'
   }
 };
 
