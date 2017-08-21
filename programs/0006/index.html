@@ -63,11 +63,11 @@
 	</div>
 
 	<div class="thing">
-		<p class="above">Text above</p><br>
+		<p class="above" id="time-disp">Text above</p><br>
 		<button class="bslide" onMouseDown="press(3, -0.5)" onMouseUp="lift()">&laquo;</button>
 		<div class="slider">
 			<div class="bar" id="bar3"></div>
-			<p id="bar3-contents">9.92133 days / sec</p>
+			<p id="bar3-contents">Frozen</p>
 		</div>
 		<button class="bslide right" onMouseDown="press(3, 0.5)" onMouseUp="lift()">&raquo;</button>
 	</div>
@@ -75,9 +75,7 @@
 	<canvas id='text-canvas' width="640" height="320" style='position: absolute; top: 0px; left: 0px; zIndex:1; pointer-events:none;'></canvas>
 	</div>
 	<script>
-		var name = "";
-		var diff = "";
-		var downTimeout = null;
+		playUpBoop = 0;
 		function press(a, b) {
 			name = a;
 			diff = b;
@@ -88,6 +86,8 @@
 			name = "";
 			diff = "";
 			if (downTimeout) clearTimeout(downTimeout);
+			if (playUpBoop > 3) audio.boop2.play();
+			playUpBoop = 0;
 		}
 		function down(noTimeout = false) {
 			if (name !== "")
@@ -117,8 +117,11 @@
 					updateSunSize();
 				} else if (name == "5") {
 					updateMusicVolume();
+				} else if (name == "6") {
+					updateBeepVolume();
 				}
-				if (!noTimeout) setTimeout("down()", 1000/60);
+				if (noTimeout) audio.boop1.play();
+				if (!noTimeout) setTimeout("down();playUpBoop += 1", 1000/60);
 			}
 		}
 	</script>
@@ -133,6 +136,6 @@
 <script src="xRingGeometry.js"></script>
 <script src="orbitControls.js"></script>
 <script src="rendererstats.js"></script>
-<script src="textsprite.js"></script>
+<script src="fbxloader.js"></script>
 <script src="3dsimulator.js"></script>
 </html>

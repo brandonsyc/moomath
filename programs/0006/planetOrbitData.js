@@ -5,7 +5,7 @@
 // Format: [semi-major axis, orbital eccentricity, inclination, longitude of the ascending node, mean anomaly, mean motion, argument of perihelion, semi-major axis, ...]
 var planetOrbitData = {};
 
-var moonNames = ["Moon"];
+var moonNames = [];
 
 // Data for more minor objects (and Uranus and Neptune) as Float32Array's
 
@@ -22,7 +22,7 @@ var minorOrbitData = {
 
 var moonOrbitData = {
   'Moon': {
-    orbit: new Float32Array([0.0025526735307, 0.063147216946, 0.0914600198451, 2.16347621838, 2.55993156586, 0.229964582, 5.39171775629]),
+    orbit: new Float32Array([0.0025526735307, 0.063147216946, 0.0914600198451, 2.16347621838, 2.55993156586, 0.229964582, 5.39171775629, -0.00287046, 0.00092549]),
     parent: 'Earth'
   },
   'Phobos': {
@@ -604,6 +604,16 @@ var moonOrbitData = {
   'Neso': {
     orbit: new Float32Array([0.34498930662, 0.620917091847, 2.47541215511, 0.592948012853, 3.94186240188, 0.000609241662221, 1.16594326913]),
     parent: 'Neptune'
+  },
+  'ISS': {
+    orbit: new Float32Array([4.51690895394e-05, 0.00114068857706, 0.928016868425, 4.48675738134, 4.75334547714, 98.2047521178, 1.38063839059]),
+    parent: 'Earth',
+    load: 'data/models/iss.fbx'
+  },
+  'Hubble': { // Note this orbit is incorrect and only used for testing
+    orbit: new Float32Array([4.51690895394e-05, 0.00114068857706, 1.928016868425, 4.48675738134, 4.75334547714, 98.2047521178, 1.38063839059]),
+    parent: 'Earth',
+    load: 'data/models/hubble.fbx'
   }
 };
 
@@ -641,6 +651,23 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
     epoch = Math.max(0, Math.round((t + 1930633.5) / epochLength));
   }
 
+  if (epoch >= 11066) {
+    epoch = 11065;
+    var adjT = t + 1930633.5 - epoch * epochLength;
+    epoch *= 7;
+
+    // Get data from array
+    var axis = thisData[epoch];
+    var ecc = thisData[epoch + 1];
+    var incl = thisData[epoch + 2];
+    var ascn = thisData[epoch + 3];
+    var anomaly = (thisData[epoch + 4] + adjT * thisData[epoch + 5]) % (2 * Math.PI);
+    var peri = thisData[epoch + 6];
+
+    // Calculate body position
+    return calculateBodyPositionFromOrbit(axis, ecc, incl, ascn, anomaly, peri);
+  }
+
   var adjT = t + 1930633.5 - epoch * epochLength;
   epoch *= 7;
 
@@ -664,6 +691,7 @@ function calculateMoonPosition(name, t, forceEpoch = null) {
   var anomaly = (thisData[4] + adjT * thisData[5]) % (2 * Math.PI);
 
   if (thisData[7]) {
+
     var ascn = (thisData[3] + adjT * thisData[8]) % (2 * Math.PI);
     var peri = (thisData[6] + adjT * thisData[7]) % (2 * Math.PI);
     return calculateBodyPositionFromOrbit(thisData[0],
@@ -698,17 +726,17 @@ function calculateBodyPositionFromOrbit(a, e, i, W, M, w) {
   var y = r * (Math.sin(W) * Math.cos(w + v) + Math.cos(W) * Math.sin(w + v) * Math.cos(i));
   var z = r * (Math.sin(i) * Math.sin(w + v));
 
-  return new THREE.Vector3(y, z, x).multiplyScalar(149597870.7);
+  return new THREE.Vector3(-x, z, y).multiplyScalar(149597870.7);
 }
 
 function getOrbitalPeriod(bodyIndex) {
   // Finds the period of a body's orbit
-  if (planetOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (planetOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
-  } else if (minorOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (minorOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
-  } else if (moonOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (moonOrbitData[bodies[bodyIndex].name].orbit[5] / (2 * Math.PI));
+  if (planetOrbitData[objs[bodyIndex].name]) {
+    return 1 / (planetOrbitData[objs[bodyIndex].name][5] / (2 * Math.PI));
+  } else if (minorOrbitData[objs[bodyIndex].name]) {
+    return 1 / (minorOrbitData[objs[bodyIndex].name][5] / (2 * Math.PI));
+  } else if (moonOrbitData[objs[bodyIndex].name]) {
+    return 1 / (moonOrbitData[objs[bodyIndex].name].orbit[5] / (2 * Math.PI));
   } else {
     return 1;
   }
