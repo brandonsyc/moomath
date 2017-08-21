@@ -86,7 +86,7 @@
 			name = "";
 			diff = "";
 			if (downTimeout) clearTimeout(downTimeout);
-			if (playUpBoop > 3) boop2.play();
+			if (playUpBoop > 3) audio.boop2.play();
 			playUpBoop = 0;
 		}
 		function down(noTimeout = false) {
@@ -120,7 +120,7 @@
 				} else if (name == "6") {
 					updateBeepVolume();
 				}
-				if (noTimeout) boop1.play();
+				if (noTimeout) audio.boop1.play();
 				if (!noTimeout) setTimeout("down();playUpBoop += 1", 1000/60);
 			}
 		}

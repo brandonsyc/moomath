@@ -731,12 +731,12 @@ function calculateBodyPositionFromOrbit(a, e, i, W, M, w) {
 
 function getOrbitalPeriod(bodyIndex) {
   // Finds the period of a body's orbit
-  if (planetOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (planetOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
-  } else if (minorOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (minorOrbitData[bodies[bodyIndex].name][5] / (2 * Math.PI));
-  } else if (moonOrbitData[bodies[bodyIndex].name]) {
-    return 1 / (moonOrbitData[bodies[bodyIndex].name].orbit[5] / (2 * Math.PI));
+  if (planetOrbitData[objs[bodyIndex].name]) {
+    return 1 / (planetOrbitData[objs[bodyIndex].name][5] / (2 * Math.PI));
+  } else if (minorOrbitData[objs[bodyIndex].name]) {
+    return 1 / (minorOrbitData[objs[bodyIndex].name][5] / (2 * Math.PI));
+  } else if (moonOrbitData[objs[bodyIndex].name]) {
+    return 1 / (moonOrbitData[objs[bodyIndex].name].orbit[5] / (2 * Math.PI));
   } else {
     return 1;
   }

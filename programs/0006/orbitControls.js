@@ -269,7 +269,7 @@ THREE.OrbitControls = function ( object, domElement ) {
 			this.target.y-scope.object.position.y,
 			this.target.z-scope.object.position.z);
 		var height = 2 * Math.tan(vFOV / 2) * cameraDistance;
-		var apparentBodySize = 2 * bodies[bodyIndex].radius / height;
+		var apparentBodySize = 2 * objs[bodyIndex].radius / height;
 
 		if (apparentBodySize > 0.6) {
 				console.log(4);
