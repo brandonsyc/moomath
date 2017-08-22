@@ -166,6 +166,7 @@ var secondaryBarMode = 0;
 var timeDisplayMode = 0; // 0 is normal date, 1 is Julian date
 
 var starZoomMode = false;
+var starZoomSunSize = 0;
 
 init();
 
@@ -307,7 +308,7 @@ function getObjects() {
 
 function shiftCameraFocus(bodyIndex) {
   // Shifts camera focus to objs[bodyIndex] smoothly (linear interpolation)
-	if (lockBody && ctrlS.lockBOR < objs[bodyIndex].radius * 1.2) return true;
+	if (lockBody && ctrlS.lockBOR < objs[bodyIndex].radius * 1.8) return true;
   if (bodyIndex == focusBody) {
     return;
   }
@@ -407,7 +408,7 @@ function update() {
   var sunIndex = getBody('Sun');
   var saturnIndex = getBody('Saturn');
   var sunPosition = getBodyPosition(sunIndex);
-  currentSunSize = objs[sunIndex].object.children[0].scale.x * objs[sunIndex].radius;
+  currentSunSize = (starZoomMode ? starZoomSunSize : objs[sunIndex].object.children[0].scale.x) * objs[sunIndex].radius;
 
   for (i = 0; i < objs.length; i++) {
     // For every body...
@@ -421,7 +422,11 @@ function update() {
 
     // Calculate scaleFactor to make the object the correct size (scale up if it is too small)
     if (!styles.trueScale) {
-      scaleFactor = getScaleFactor(bodyPixelSize, objs[i].type, cameraDistance);
+      if (starZoomMode && i == sunIndex) {
+        scaleFactor = starZoomSunSize;
+      } else {
+        scaleFactor = getScaleFactor(bodyPixelSize, objs[i].type, cameraDistance);
+      }
     }
 
     scaleObject(i, scaleFactor);
@@ -1419,16 +1424,21 @@ function updateSprites() {
   elems.textCtx.font = "12px Trebuchet";
   elems.textCtx.textAlign = "left";
 
-  var sunPosition = getBodyPosition(getBody('Sun'));
+  var sunIndex = getBody('Sun');
+  var sunPosition = getBodyPosition(sunIndex);
   var newStarZoom = true;
+  var cameraDistance = getCameraDistance(sunIndex);
+
+  var height = 2 * Math.tan(camera.fov * Math.PI / 360) * cameraDistance;
+  var bodyPixelSize = objs[sunIndex].radius / height * window.innerHeight;
+
+  var virtualSunSize = objs[sunIndex].radius * getScaleFactor(bodyPixelSize, 'star', cameraDistance);
 
   for (i = 0; i < objs.length; i++) {
     var bodyPosition = getBodyPosition(i);
     if (frustum.containsPoint(bodyPosition)) {
       // Frustum check is used so that objs behind the camera do not make text labels
       if (objs[i].type === "majorsat" || objs[i].type === "artificial") {
-        newStarZoom = false;
-        
         var parent = getBody(moonOrbitData[objs[i].name].parent);
         var parentPosition = getBodyPosition(parent);
         var currentParentSize = getScale(parent) * objs[parent].radius;
@@ -1453,17 +1463,15 @@ function updateSprites() {
         var dist = bodyPosition.distanceTo(sunPosition);
 
         // Calculate opacity based on distance to Sun
-        if (dist < currentSunSize) {
+        if (dist < virtualSunSize) {
           var opacity = Math.min(
-            Math.max((dist - 2.5 * (currentSunSize - dist)) / currentSunSize, 0),
+            Math.max((dist - 2.5 * (virtualSunSize - dist)) / virtualSunSize, 0),
             styles.labelOpacity.val);
           if (opacity == 0) continue;
-          newStarZoom = false;
 
           elems.textCtx.fillStyle = styles.labelColor + String(opacity) + ')';
         } else {
           elems.textCtx.fillStyle = styles.labelColor + String(styles.labelOpacity.val) + ')';
-          newStarZoom = false;
         }
 
         var pos = get2DPosition(i);
@@ -1471,6 +1479,7 @@ function updateSprites() {
         elems.textCtx.fillText(objs[i].name, pos[0], pos[1]);
       }
     }
+    if (objs[i].type != 'star') newStarZoom = false;
   }
   if (starZoomMode != newStarZoom) {
     starZoomMode = newStarZoom;
@@ -1479,8 +1488,9 @@ function updateSprites() {
 }
 
 function updateStarZoomMode() {
-  console.log('YAY');
-
+  if (starZoomMode) {
+    starZoomSunSize = objs[getBody('Sun')].object.children[0].scale.x;
+  }
 }
 
 function translateVector2(v, x, y) {

@@ -627,8 +627,6 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
 
   // Find corresponding data
 
-  if (starZoomMode) return zeroVector;
-
   if (moonOrbitData[name] !== undefined) {
     return calculateMoonPosition(name, t, forceEpoch);
   }
