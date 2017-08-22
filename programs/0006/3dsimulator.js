@@ -165,6 +165,8 @@ var secondaryBarMode = 0;
 
 var timeDisplayMode = 0; // 0 is normal date, 1 is Julian date
 
+var starZoomMode = false;
+
 init();
 
 function addObjs() {
@@ -1418,6 +1420,7 @@ function updateSprites() {
   elems.textCtx.textAlign = "left";
 
   var sunPosition = getBodyPosition(getBody('Sun'));
+  var newStarZoom = true;
 
   for (i = 0; i < objs.length; i++) {
     var bodyPosition = getBodyPosition(i);
@@ -1453,10 +1456,12 @@ function updateSprites() {
             Math.max((dist - 2.5 * (currentSunSize - dist)) / currentSunSize, 0),
             styles.labelOpacity.val);
           if (opacity == 0) continue;
+          newStarZoom = false;
 
           elems.textCtx.fillStyle = styles.labelColor + String(opacity) + ')';
         } else {
           elems.textCtx.fillStyle = styles.labelColor + String(styles.labelOpacity.val) + ')';
+          newStarZoom = false;
         }
 
         var pos = get2DPosition(i);
@@ -1465,6 +1470,15 @@ function updateSprites() {
       }
     }
   }
+  if (starZoomMode != newStarZoom) {
+    starZoomMode = newStarZoom;
+    updateStarZoomMode();
+  }
+}
+
+function updateStarZoomMode() {
+  console.log('YAY');
+  
 }
 
 function translateVector2(v, x, y) {
@@ -1771,6 +1785,14 @@ function setMusicVolume(volume) {
 function setBeepVolume(volume) {
   audio.boop1.volume = volume;
   audio.boop2.volume = volume;
+}
+
+function playBoop(a) {
+  if (a) {
+    audio.boop1.play();
+    return;
+  }
+  audio.boop2.play();
 }
 
 function updateMusicVolume() {
