@@ -1427,6 +1427,8 @@ function updateSprites() {
     if (frustum.containsPoint(bodyPosition)) {
       // Frustum check is used so that objs behind the camera do not make text labels
       if (objs[i].type === "majorsat" || objs[i].type === "artificial") {
+        newStarZoom = false;
+        
         var parent = getBody(moonOrbitData[objs[i].name].parent);
         var parentPosition = getBodyPosition(parent);
         var currentParentSize = getScale(parent) * objs[parent].radius;
@@ -1478,7 +1480,7 @@ function updateSprites() {
 
 function updateStarZoomMode() {
   console.log('YAY');
-  
+
 }
 
 function translateVector2(v, x, y) {
