@@ -6,7 +6,7 @@ module body() {
     translate([0,0,25]) cylinder(14,21,21,$fn=15);
     intersection() {
         translate([0,0,39]) cylinder(10,21,21,$fn=15);
-        translate([-20,-40,0]) linear_extrude(60) square([80,40]);
+        translate([-20,-40,0]) cube([80,40,60]);
     }
     //top ring
     translate([0,0,110]) cylinder(10,17.5,17.5,$fn=70);
@@ -16,19 +16,19 @@ module flaps() {
     //connectors
     translate([-50,0,45]) rotate([0,90,0]) cylinder(100,1.5,1.5,$fn=20);
     //main flaps
-    translate([29,0.5,10]) rotate([90,0,0]) linear_extrude(1) square([23,32]);
-    translate([29,0.5,48]) rotate([90,0,0]) linear_extrude(1) square([23,32]);
-    translate([-29-23,0.5,10]) rotate([90,0,0]) linear_extrude(1) square([23,32]);
-    translate([-29-23,0.5,48]) rotate([90,0,0]) linear_extrude(1) square([23,32]);
+    translate([29,0.5,10]) rotate([90,0,0]) cube([23,32,1]);
+    translate([29,0.5,48]) rotate([90,0,0]) cube([23,32,1]);
+    translate([-29-23,0.5,10]) rotate([90,0,0]) cube([23,32,1]);
+    translate([-29-23,0.5,48]) rotate([90,0,0]) cube([23,32,1]);
     //tiny connectors
-    translate([-29-19,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([-29-16,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([-29-8,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([-29-5,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([28+19,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([28+16,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([28+8,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
-    translate([28+5,0.25,40]) rotate([90,0,0]) linear_extrude(0.5) square([1,10]);
+    translate([-29-19,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([-29-16,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([-29-8,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([-29-5,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([28+19,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([28+16,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([28+8,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
+    translate([28+5,0.25,40]) rotate([90,0,0]) cube([1,10,0.5]);
 }
 
 module cones() {
