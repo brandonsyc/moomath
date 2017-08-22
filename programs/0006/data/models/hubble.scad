@@ -49,7 +49,9 @@ module lid() {
     //main lid
     translate([-50 * 0.3,22,150]) rotate([-100,0,0]) scale(0.3) linear_extrude(2) union() {
         square([100,100]);
-        translate([50,0,0]) circle(50);
+        translate([25,-25,0]) square([50,125]);
+        translate([25,0,0]) circle(25);
+        translate([75,0,0]) circle(25);
     }
     //connectors
     translate([-50 * 0.3,22,150]) rotate([-100,0,0]) scale(0.3) linear_extrude(1) union() {
