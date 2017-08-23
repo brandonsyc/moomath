@@ -778,9 +778,9 @@ for (i = 0; i < planetNames.length; i++) {
 
   requests[i].onload = function(self, oEvent) {
     // Process returned request
-    var arrayBuffer = requests[self.srcElement.udder].response;
+    var arrayBuffer = requests[self.target.udder || self.srcElement.udder].response;
     if (arrayBuffer) {
-      planetOrbitData[planetNames[self.srcElement.udder]] = new Float32Array(arrayBuffer);
+      planetOrbitData[planetNames[self.target.udder || self.srcElement.udder]] = new Float32Array(arrayBuffer);
       loadedBodyDatas += 1;
 
       drawOrbits();
