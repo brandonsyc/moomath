@@ -76,7 +76,8 @@ var elems = {
   textCanv: null,
   textCtx: null,
   secondaryBar: document.getElementById('other'),
-  timeDisplay: document.getElementById('time-disp')
+  timeDisplay: document.getElementById('time-disp'),
+  controls: document.getElementsByClassName('controls')[0]
 }
 
 // Materials for orbits
@@ -809,6 +810,9 @@ window.onload = function() {
   setBeepVolume(0.5);
   updateSidebar();
   requestAnimationFrame(update);
+
+  elems.controls.addEventListener('click',function(e) {e.stopPropagation();});
+  elems.secondaryBar.addEventListener('click',function(e) {e.stopPropagation();});
 }
 
 function constructBody(name = null,
@@ -1484,12 +1488,6 @@ function updateSprites() {
   if (starZoomMode != newStarZoom) {
     starZoomMode = newStarZoom;
     updateStarZoomMode();
-  }
-}
-
-function updateStarZoomMode() {
-  if (starZoomMode) {
-    starZoomSunSize = objs[getBody('Sun')].object.children[0].scale.x;
   }
 }
 
