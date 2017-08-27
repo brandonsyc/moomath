@@ -1,7 +1,9 @@
 // Try changing these!
 
 var dotSize = 1;
-var dotDensity = 25;
+var dotDensity = 20;
+
+var threshold = 1e-7;
 
 var rootFunc = function(x,y) {
 	return x*x + y*y - 0.5;
@@ -55,6 +57,8 @@ function clearCanvas() {
 }
 
 function iteratePoints() {
+	var start = new Date().getTime();
+
 	var pointX = 0;
   var pointY = 0;
 
@@ -81,7 +85,7 @@ function iteratePoints() {
 			pointsY[i] = udderFactor * ((Math.random() * (ymax - ymin)) + ymin);
 			continue;
 		}
-		if (Math.abs(pointValue) < 1e-5) continue;
+		if (Math.abs(pointValue) < threshold) continue;
 
     axisMax = 0;
 
@@ -134,11 +138,15 @@ function iteratePoints() {
     //console.log(pointX,pointY,pointValue,pX,nX,pY,nY);
     //console.log(pointX,pointY,pointValue,axisID);
   }
+
+	var end = new Date().getTime();
+	console.log("iteratePoints() took " + (end - start) + " ms.");
 }
 
 var udderFactor = 1.5;
 
 function regeneratePoints() {
+	var start = new Date().getTime();
 	autoRegenerate = false;
 
 	pointIndex = 0;
@@ -152,16 +160,23 @@ function regeneratePoints() {
 
 	  pointIndex += 1;
 	}
+	var end = new Date().getTime();
+	console.log("regeneratePoints() took " + (end - start) + " ms.");
 }
 
 function drawPoints() {
+	var start = new Date().getTime();
 	if (autoRegenerate) {
 		regeneratePoints();
 	}
 	clearCanvas();
 	for (i = 0; i < pointIndex; i++) {
-		drawPoint(pointsX[i],pointsY[i]);
+		if (Math.abs(rootFunc(pointsX[i],pointsY[i])) < threshold) {
+			drawPoint(pointsX[i],pointsY[i]);
+		}
 	}
+	var end = new Date().getTime();
+	console.log("drawPoints() took " + (end - start) + " ms.");
 }
 
 var caretReplace = function(_s) {

@@ -11,7 +11,7 @@ var fbxloader = new THREE.FBXLoader(fbxmanager);
 // Styles
 
 var styles = {
-  orbitColor: 0x0000ff,
+  orbitColor: 0x0088bb,
   planetOrbitOpacity: 0,
   dwarfOrbitOpacity: 0,
   majorSatOrbitOpacity: 0,
@@ -105,7 +105,7 @@ var materials = {
   }),
 
   highlighted: new THREE.LineBasicMaterial({
-    color: 0x00ffff,
+    color: 0x009966,
     opacity: 0.7,
     transparent: true
   }),
@@ -169,6 +169,9 @@ var timeDisplayMode = 0; // 0 is normal date, 1 is Julian date
 var starZoomMode = false;
 var starZoomSunSize = 0;
 
+var unitMultiplier = 149597870.7;
+var auKM = 149597870.7;
+
 init();
 
 function addObjs() {
@@ -194,6 +197,8 @@ function addObjs() {
 
   addBodyFromName('ISS');
   addBodyFromName('Hubble');
+
+  // addBody(new constructBody(name = "Sirius", radius = "696342", type = "star", shininess = 0.03, axialtilt = 0, rotationperiod = 1e9));
 }
 
 function init() {
@@ -1110,8 +1115,10 @@ function getObjectPos(obj) {
   }
 }
 
-function scaleObject(bodyIndex, scaleFactor) {
+function scaleObject(bodyIndex, nScaleFactor) {
   // Scale object by scaleFactor
+
+  var scaleFactor = nScaleFactor;
 
   if (objs[bodyIndex].object.children.length > 0) {
     for (child = 0; child < objs[bodyIndex].object.children.length; child++) {
@@ -1489,6 +1496,27 @@ function updateSprites() {
     starZoomMode = newStarZoom;
     updateStarZoomMode();
   }
+}
+
+var starZoomReduct = 8990;
+
+function updateStarZoomMode() {
+  if (starZoomMode) {
+    unitMultiplier /= starZoomReduct;
+    ctrlS.lockBOR /= starZoomReduct;
+    starZoomSunSize = objs[getBody('Sun')].object.children[0].scale.x / starZoomReduct;
+    drawOrbits();
+  } else {
+    unitMultiplier *= starZoomReduct;
+    ctrlS.lockBOR *= starZoomReduct;
+    drawOrbits();
+  }
+  /**if (starZoomMode) {
+    starZoomSunSize = objs[getBody('Sun')].object.children[0].scale.x; //* auKM / unitMultiplier;
+    drawOrbits();
+  } else {
+    drawOrbits();
+  }**/
 }
 
 function translateVector2(v, x, y) {
