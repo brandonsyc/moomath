@@ -627,6 +627,10 @@ function calculateBodyPosition(name, t, forceEpoch = null) {
 
   // Find corresponding data
 
+  if (name === 'Sirius') {
+    return new THREE.Vector3(5e17,5e14,4e12);
+  }
+
   if (moonOrbitData[name] !== undefined) {
     return calculateMoonPosition(name, t, forceEpoch);
   }
@@ -726,7 +730,7 @@ function calculateBodyPositionFromOrbit(a, e, i, W, M, w) {
   var y = r * (Math.sin(W) * Math.cos(w + v) + Math.cos(W) * Math.sin(w + v) * Math.cos(i));
   var z = r * (Math.sin(i) * Math.sin(w + v));
 
-  return new THREE.Vector3(-x, z, y).multiplyScalar(149597870.7);
+  return new THREE.Vector3(-x, z, y).multiplyScalar(unitMultiplier);
 }
 
 function getOrbitalPeriod(bodyIndex) {
