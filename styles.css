@@ -26,6 +26,10 @@ li {
 	padding: 10px;
 	text-align: center;
 }
+ol li {
+	overflow-x: visible;
+	text-align: left;
+}
 h1 {
 	font-size: 30px;
 	line-height: 40px;
@@ -70,28 +74,28 @@ ul {
 	padding: 0;
 	width: 90%;
 }
-li {
+ul li {
 	border: 1px solid #bbb;
 	margin: -1px 0 0 0;
 	padding: 10px;
 	text-align: left;
 	transition: 0.2s;
 }
-li:hover {
+ul li:hover {
 	background-color: #ddd;
 }
 li a {
 	color: #333;
 }
-li ul {
+ul li ul {
 	background-color: #fff;
 	margin: 10px;
 }
-li ul li {
+ul li ul li {
 	font-size: 10px;
 	text-align: right;
 }
-li ul li:hover {
+ul li ul li:hover {
 	background-color: #eee;
 	margin: 10px;
 }
