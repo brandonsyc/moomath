@@ -23,17 +23,17 @@
 	<p>This widget is a basic polyrhythm player.<br>Enter in the polyrhythm you wish to play and the bpm of the playback.</p><br>
 	<hr>
 	<p>Polyrhythm</p>
-	<input title="meter1" id="meter1" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="32" value="5" class="embed">
+	<input id="meter1" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="32" value="5" class="embed" title="meter1">
 	<p>:</p>
-	<input title="meter2" id="meter2" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="32" value="3" class="embed">
+	<input id="meter2" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="32" value="3" class="embed" title="meter2">
     <p>Volume</p>
-    <input id="volume" type="range" min="0" max="100" value="80" onInput="updateVolume()" class="embed">
+    <input id="volume" type="range" min="0" max="100" value="80" onInput="updateVolume()" class="embed" title="volume">
     <br><br>
 	<p id="bpmdisplay">BPM of Slower Rhythm</p>
-    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120"/>
-    <input name="showFlyline" type="checkbox" id="showFlyline" checked="checked" onInput="updateShowFlyline()"/>
+    <input id="bpminput" type="number" step="5" onchange="updateBPM()" value="120" class="embed" title="bpminput">
+    <input name="showFlyline" type="checkbox" id="showFlyline" checked="checked" onInput="updateShowFlyline()" class="embed" title="showFlyline">
     <p>Show Metronome Line</p>
-    <input name="playAccents" type="checkbox" id="playAccents" checked="checked" onInput="updateAccents()"/>
+    <input name="playAccents" type="checkbox" id="playAccents" checked="checked" onInput="updateAccents()" class="embed" title="playAccents">
     <p>Play Accents</p>
     <br><br>
 	<button onclick="togglePlayback()" id="toggle">Play</button>
