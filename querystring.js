@@ -15,7 +15,7 @@ if (getParameterByName("embed") !== null) {
 	var parameters = getUrlVars();
 	for (var i = start; i < parameters.length; i++) {
 		var element = document.getElementById(parameters[i]);
-		if (element !== null) {
+		if (element !== null && element.classList.contains("embed")) {
 			element.value = getParameterByName(parameters[i]);
 		}
 	}
@@ -25,10 +25,10 @@ function getUrlVars()
 {
 	"use strict";
 	var vars = [], hash;
-	var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+	var hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
 	for(var i = 0; i < hashes.length; i++)
 	{
-		hash = hashes[i].split('=');
+		hash = hashes[i].split("=");
 		vars.push(hash[0]);
 		vars[hash[0]] = hash[1];
 	}
@@ -48,7 +48,7 @@ function getParameterByName(name, url) {
 		return null;
 	}
 	if (!results[2]) {
-		return '';
+		return "";
 	}
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
