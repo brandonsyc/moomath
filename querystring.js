@@ -16,7 +16,13 @@ if (getParameterByName("embed") !== null) {
 	for (var i = start; i < parameters.length; i++) {
 		var element = document.getElementById(parameters[i]);
 		if (element !== null && element.classList.contains("embed")) {
-			element.value = getParameterByName(parameters[i]);
+			var code = getParameterByName(parameters[i]);
+			if (code === "checked" || code === "unchecked") {
+				element.checked = code === "checked";
+			}
+			else {
+				element.value = getParameterByName(parameters[i]);
+			}
 		}
 	}
 }
