@@ -46,70 +46,84 @@
     </p>
 
     <hr>
+    
     <div class="signature-label">
         <p>Time Signature</p>
     </div>
-		<div class="signature" id="signature">
+    
+	<div class="signature" id="signature">
         <input type="text" min="1" max="50" value="4" id="numerator" onInput="updateSignature()" class="embed" title="numerator">
         <hr>
-        <input type="text" min="1" max="50" value="4" id="denominator" onInput="updateSignature()"/>
+        <input type="text" min="1" max="50" value="4" id="denominator" onInput="updateSignature()" class="embed" title="denominator">
     </div>
-		<br>
-		<br>
+    
+	<br><br>
+   
     <div class="signature-label">
         <p>Click Volume</p>
     </div>
+    
     <div class="signature-label">
-        <input id="volume" min="0" max="200" value="80" type="range" onInput="updateVolume()"/>
+        <input id="volume" min="0" max="200" value="80" type="range" onInput="updateVolume()" class="embed" title="volume">
     </div>
+    
     <div class="bpm-label">
         <p>BPM</p>
     </div>
+    
     <div class="bpm-label">
-        <input id="bpm" min="5" max="800" value="120" type="number" onInput="updateBPM()"/>
+        <input id="bpm" min="5" max="800" value="120" type="number" onInput="updateBPM()" class="embed" title="bpm">
     </div>
+    
     <br>
+    
     <div class="beat-length-label">
-				<p>Beat Length</p>
-        <input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength(4)" name="select">
-				<label for="wholeNoteLength">Whole</label>
-        <input type="radio" value="note-length" id="halfNoteLength" onClick="updateBeatLength(2)" name="select">
-				<label for="halfNoteLength">Half</label>
-        <input type="radio" value="note-length" id="dottedQuarterNoteLength" onClick="updateBeatLength(1.5)" name="select">
-				<label for="dottedQuarterNoteLength">Dotted Quarter</label>
-        <input type="radio" value="note-length" id="quarterNoteLength" onClick="updateBeatLength(1)" name="select" checked="checked">
-				<label for="quarterNoteLength">Quarter</label>
-        <input type="radio" value="note-length" id="eighthNoteLength" onClick="updateBeatLength(0.5)" name="select">
-				<label for="eighthNoteLength">Eighth</label>
-				<input type="radio" value="note-length" id="sixteenthNoteLength" onClick="updateBeatLength(0.25)" name="select">
-				<label for="sixteenthNoteLength">Sixteenth</label>
+		<p>Beat Length</p>
+		<input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength(4)" name="select">
+		<label for="wholeNoteLength">Whole</label>
+		<input type="radio" value="note-length" id="halfNoteLength" onClick="updateBeatLength(2)" name="select">
+		<label for="halfNoteLength">Half</label>
+		<input type="radio" value="note-length" id="dottedQuarterNoteLength" onClick="updateBeatLength(1.5)" name="select">
+		<label for="dottedQuarterNoteLength">Dotted Quarter</label>
+		<input type="radio" value="note-length" id="quarterNoteLength" onClick="updateBeatLength(1)" name="select" checked="checked">
+		<label for="quarterNoteLength">Quarter</label>
+		<input type="radio" value="note-length" id="eighthNoteLength" onClick="updateBeatLength(0.5)" name="select">
+		<label for="eighthNoteLength">Eighth</label>
+		<input type="radio" value="note-length" id="sixteenthNoteLength" onClick="updateBeatLength(0.25)" name="select">
+		<label for="sixteenthNoteLength">Sixteenth</label>
     </div>
+    
     <br>
-		<div class="beat-length-label">
-				<p>Note Subdivisions</p>
-        <input type="radio" value="subdivision-length" id="noSubdivisions" onClick="updateSubdivisions(0)" name="subdivision" checked="checked">
-				<label for="noSubdivisions">None</label>
-        <input type="radio" value="subdivision-length" id="eighthSubdivisions" onClick="updateSubdivisions(1)" name="subdivision">
-				<label for="eighthSubdivisions">Eighth</label>
-        <input type="radio" value="subdivision-length" id="tripletSubdivisions" onClick="updateSubdivisions(2)" name="subdivision">
-				<label for="tripletSubdivisions">Triplet</label>
-        <input type="radio" value="subdivision-length" id="sixteenthSubdivisions" onClick="updateSubdivisions(3)" name="subdivision">
-				<label for="sixteenthSubdivisions">Sixteenth</label>
+    
+	<div class="beat-length-label">
+		<p>Note Subdivisions</p>
+		<input type="radio" value="subdivision-length" id="noSubdivisions" onClick="updateSubdivisions(0)" name="subdivision" checked="checked">
+		<label for="noSubdivisions">None</label>
+		<input type="radio" value="subdivision-length" id="eighthSubdivisions" onClick="updateSubdivisions(1)" name="subdivision">
+		<label for="eighthSubdivisions">Eighth</label>
+		<input type="radio" value="subdivision-length" id="tripletSubdivisions" onClick="updateSubdivisions(2)" name="subdivision">
+		<label for="tripletSubdivisions">Triplet</label>
+		<input type="radio" value="subdivision-length" id="sixteenthSubdivisions" onClick="updateSubdivisions(3)" name="subdivision">
+		<label for="sixteenthSubdivisions">Sixteenth</label>
     </div>
-		<br>
-		<div class="beat-length-label">
-				<p>Playback</p>
-				<label for="playNonAccentedBeats">Play Non-accented Beats</label>
-				<input type="checkbox" value="play-non-accented-beats" id="playNonAccentedBeats" onChange="updatePlayNA()" checked>
-				<label for="swingValue">Eighth Swing</label>
-				<input type="range" value="50" id="swingValue" onInput="updateSwing()" min="50" max="75" disabled>
-		</div>
-    <hr>
-    <br>
+    
+	<br>
+		
+	<div class="beat-length-label">
+		<p>Playback</p>
+		<label for="playNonAccentedBeats">Play Non-accented Beats</label>
+		<input type="checkbox" value="play-non-accented-beats" id="playNonAccentedBeats" onChange="updatePlayNA()" checked>
+		<label for="swingValue">Eighth Swing</label>
+		<input type="range" value="50" id="swingValue" onInput="updateSwing()" min="50" max="75" disabled>
+	</div>
+   
+    <hr><br>
+    
     <button id="togglePlayback" onClick="togglePlayback()">Play</button>
-    <br>
-    <br>
-    <div class="">
+    
+    <br><br>
+    
+    <div>
       <canvas class="shadow" id="beater" width=1500 height=350></canvas>
     </div>
 </div>
