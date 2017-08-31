@@ -19,7 +19,7 @@
 
 	<div class="article">
 	<p>
-		If you would like to embed a program into our website, use this syntax:
+		If you would like to embed a program from our website, use this syntax (this feature uses <a href="https://en.wikipedia.org/wiki/Query_string" target="_blank">query strings</a>):
 	</p>
 
 	<div class="code">
@@ -29,7 +29,8 @@
 	</div>
 
 	<p>
-		The [id] is a four-digit number (i.e. 0010). Note that you should set the width and height for the iframe. Ids of widgets can be found by hovering over them.
+		The [id] is a four-digit number (i.e. 0010). Note that you should set the width and height for the iframe. IDs of widgets can be found by hovering over them. Following the "?embed=true," there are additional settings you can change.<br>
+		<strong>Note</strong> that we are still developing this feature. More functionalities will be added soon!
 	</p>
 	
 	<p>
@@ -43,33 +44,33 @@
 			<tbody>
 				<tr>
 					<th>Tag Name</th>
-					<th>Main Value</th>
-					<th>Disabled</th>
 					<th>Description</th>
+					<th>Main Setting</th>
+					<th>Disabled?</th>
 				</tr>
 				<tr>
 					<td>input[type=number]</td>
+					<td>Numberic text</td>
 					<td>Number</td>
 					<td>&#10003;</td>
-					<td>Numberic text</td>
 				</tr>
 				<tr>
 					<td>input[type=range]</td>
+					<td>Slider</td>
 					<td>Number</td>
 					<td>&#10003;</td>
-					<td>Slider</td>
 				</tr>
 				<tr>
 					<td>input[type=checkbox]</td>
+					<td>Checkbox</td>
 					<td>"checked" or "unchecked"</td>
 					<td>&#10003;</td>
-					<td>Checkbox</td>
 				</tr>
 				<tr>
 					<td>input[type=text]</td>
+					<td>Text input</td>
 					<td>Text</td>
 					<td>&#10003;</td>
-					<td>Text input</td>
 				</tr>
 			</tbody>
 		</table>
@@ -80,10 +81,6 @@
 	</p>
 
 	<iframe src="https://nichodon.github.io/programs/0002/?embed=true" width="100%" height="600px" style="border: none;"></iframe>
-
-	<p>
-		Note: Please do not modify the source in any way.
-	</p>
 
 	<div class="separate"></div>
 	</div>
