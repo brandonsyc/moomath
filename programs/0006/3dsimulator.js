@@ -172,6 +172,9 @@ var starZoomSunSize = 0;
 var unitMultiplier = 149597870.7;
 var auKM = 149597870.7;
 
+var textureCount = 10;
+var loadedTextures = 0;
+
 init();
 
 function addObjs() {
@@ -584,6 +587,8 @@ window.addEventListener('resize', function() {
   camera.updateProjectionMatrix();
   elems.textCanv.width = WIDTH;
   elems.textCanv.height = HEIGHT;
+
+  updateLoadingOffset();
 });
 
 function addSkyBox() {
@@ -815,6 +820,8 @@ window.onload = function() {
   setBeepVolume(0.5);
   updateSidebar();
   requestAnimationFrame(update);
+
+  updateLoadingOffset();
 
   elems.controls.addEventListener('click',function(e) {e.stopPropagation();});
   elems.secondaryBar.addEventListener('click',function(e) {e.stopPropagation();});
@@ -2238,4 +2245,18 @@ var info = {
 	Galileo spacecraft in late August, 1993. It has one known moon, Dactyl.</p>`
 }
 
-// Hi
+var loadingOffsetHeight = 80;
+var loadingBar = document.getElementById('loading');
+var loadingProgress = 0;
+
+function updateLoadingOffset() {
+  return;
+  loadingBar.style.top = (window.innerHeight / 2 - loadingOffsetHeight / 2) + "px";
+  loadingBar.style.height = loadingOffsetHeight + "px";
+  updateLoadingProgress();
+}
+
+function updateLoadingProgress() {
+  return;
+  loadingBar.innerHTML = "<p>Loading...</p>\n<p>" + parseInt(loadingProgress * 1000) / 10 + "% done</p>";
+}
