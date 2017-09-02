@@ -2,13 +2,49 @@
 
 <html>
 <head>
-<title>Fourier</title>
+<title>Brainf--- Interpreter</title>
+
+<style>
+.bf-container {
+  width: 1000px;
+}
+.bf-container p {
+  font: Consolas;
+}
+</style>
 </head>
 
 <body>
-  <canvas id="oscilloscope" width="640" height="320"></canvas>
+  <canvas id="bfvisualizer" width="1000" height="100"
+  onmousedown="handleMouseDown()"
+  onmouseup="handleMouseUp()"
+  onmousemove="handleMouseMove()"
+  onmouseout="handleMouseUp()"></canvas>
+
+  <br>
+
+  <button id="copy-tape" onclick="copyTapeData()">Copy Tape to Clipboard</button>
+  <button id="jump-pointer" onclick="jumpPointer()">Jump to Pointer</button>
+  <input type="number" value=0 id="jump-index"></input>
+  <button id="jump" onclick="jumpIndex()">Jump to Index</button>
+
+  <br>
+  <div class="bf-container">
+    <pre contenteditable="true" id="bf-code">++++++++[>++++[>++>+++>+++>+<<<<-]>+>+>->>+[<]<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++.</pre>
+  </div>
+
+  <button id="start" onclick="runBF(bfcode.innerText); updateCanvas();">Execute</button>
+  <button id="debug" onclick="stopMode = 4; runBF(bfcode.innerText); updateCanvas();">Debug</button>
+  <button id="goto1" onclick="stopMode = 1; if (runBFRecall) {runBFRecall(); updateCanvas();}">Next Output</button>
+  <button id="goto2" onclick="stopMode = 2; if (runBFRecall) {runBFRecall(); updateCanvas();}">Go to Loop End</button>
+  <button id="goto3" onclick="stopMode = 3; if (runBFRecall) {runBFRecall(); updateCanvas();}">Next Pointer Move</button>
+  <button id="goto4" onclick="stopMode = 4; if (runBFRecall) {runBFRecall(); updateCanvas();}">Next Step</button>
+
+  <div class="bf-container">
+    <pre contenteditable="true" id="output"></pre>
+  </div>
+
 </body>
 
-<script src="fourier.js"></script>
-<script src="test.js"></script>
+<script src="bf.js"></script>
 </html>
