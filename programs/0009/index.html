@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Breakout Revamped</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="break.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+<h1>Breakout Revamped</h1>
+<p>2 September, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+
+<div class="article">
+
+<div id="container">
+	<canvas id="canvas" width="1000" height="500"></canvas>
+</div>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+<script src="../../querystring.js"></script>
+
+<script>
+	class Ball {
+		constructor(x, y, rot, mag) {
+			this.x = x;
+			this.y = y;
+			this.rot = rot;
+			this.mag = mag;
+		}
+		
+		move() {
+			this.x += this.mag * Math.cos(this.rot);
+			this.y += this.mag * Math.sin(this.rot);
+		}
+	}
+	
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	
+	var balls = [];
+	balls.push(new Ball(100, 100, 0.1, 1));
+	
+	function bulb() {
+		canvas.style.width = document.body.offsetWidth * 0.9375 + "px";
+		canvas.style.height = document.body.offsetWidth * 0.46875 + "px";
+		document.getElementById("container").style.height = document.body.offsetWidth * 0.46875 + "px";
+	
+		ctx.fillStyle = "#333";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		
+		for (var i = 0; i < balls.length; i++) {
+			var ball = balls[i];
+			ctx.fillStyle = "#bbb";
+			ctx.beginPath();
+			ctx.arc(ball.x, ball.y, 10, 0, Math.PI * 2);
+			ctx.fill();
+			ball.move();
+			console.log(ball.x);
+		}
+	}
+	
+	setInterval(function() {
+		bulb();
+	}, 1000 / 60);
+</script>
+
+</body>
+</html>
