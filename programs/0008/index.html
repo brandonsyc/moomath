@@ -83,10 +83,20 @@
 	<p>Any other characters besides these 9 are no-ops; they do nothing. As such, you can write comments anywhere, and with no special syntax, as long as they do not contain any of these 9 characters; those characters will be run. Note that operations put in markers will still be run.</p>
 	
 	<h1> Implementation-Specific Details </h1>
+	
+	<ul>
+		<li>EOF at operation , sets pointer value to 0.</li>
+		<li>Each integer is in the range 0 - 255, and can overflow or underflow without returning an error.</li>
+		<li>The tape loops back on itself, allowing the usage of indices to the "left" of index 0.</li>
+		<li>The implementation provides no optimization or infinite loop detection, but does try to find syntax errors.</li>
+	</ul>
+	
+	<!-- WHY DO YOU DO THIS TO ME, TIMOTHY?!
 	<p>&bullet;&nbsp;EOF at operation , sets pointer value to 0.</p>
 	<p>&bullet;&nbsp;Each integer is in the range 0 - 255, and can overflow or underflow without returning an error.</p>
 	<p>&bullet;&nbsp;The tape loops back on itself, allowing the usage of indices to the "left" of index 0.</p>
 	<p>&bullet;&nbsp;The implementation provides no optimization or infinite loop detection, but does try to find syntax errors.</p>
+	-->
 	
 	<h1><span class="censor">Brainf*ck</span> Snippets</h1>
 	<h4>Move left to next integer with value zero.</h4>
