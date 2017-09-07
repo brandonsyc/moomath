@@ -258,6 +258,8 @@
     codePos = 0;
     cycles = 0;
 
+    brackets = [];
+
     inputf = inputPre.innerText;
 
     updateCanvas();
@@ -339,7 +341,7 @@
 
   function input() {
     inputIndex++;
-    if (inputIndex - 1 >= inputf.length) {
+    if (inputIndex - 1 == inputf.length) {
       consolePrint('Reached end of input.');
       return String.fromCharCode(0);
     }
@@ -828,6 +830,12 @@
     censor(this.checked);
   });
 
+  document.getElementsByClassName('CodeMirror')[0].addEventListener('click', function() {
+    if (running) {
+      resetF();
+    }
+  });
+
   var marks = [];
 
   function clearMarks() {
@@ -875,3 +883,18 @@
   window.onbeforeunload = function() {
     return "Are you sure you want to navigate away?";
   }
+
+function BFtoJS(bf) {
+  var s = '';
+
+  for (i = 0; i < bf.length; i++) {
+    var c = bf[i];
+    if (c === '<' || c === '>' || c === '.' || c === ',' || c === '+' || c === '-' || c === '[' || c === ']') {
+      s += c;
+    }
+  }
+
+  bf = s;
+
+  return bf;
+}
