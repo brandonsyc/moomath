@@ -1,7 +1,27 @@
 board of trade unit,B.O.T.U.
 barrel of oil equivalent,bboe,barrels of oil equivalent,BOE
-british thermal unit,BTU
+british thermal unit,BTU,british thermal unit (IT),BTUIT,BTU-IT,british thermal units (IT)
 british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
 british thermal unit (59&deg;F),BTU&#8325;&#8329;&deg;F,BTU-59F,british thermal units (59&deg;F)
 british thermal unit (60&deg;F),BTU&#8326;&#8329;&deg;F,BTU-60F,british thermal units (60&deg;F)
-british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
+british thermal unit (63&deg;F),BTU&#8323;&#8329;&deg;F,BTU-63F,british thermal units (63&deg;F)
+british thermal unit (ISO),BTUISO,BTU-ISO,british thermal units (ISO)
+british thermal unit (mean),BTU&#8344;&#8336;&#8337;&#8345;,BTU-mean,british thermal units (mean)
+british thermal unit (thermochemical),BTU&#8348;&#8341;,BTU-th,british thermal units (thermochemical)
+large calorie,Cal,large calorie (thermochemical),Cal&#8348;&#8341;,Cal-th,large calories(thermochemical)
+small calorie,cal,small calorie (thermochemical),cal&#8348;&#8341;,cal-th,small calories(thermochemical)
+large calorie (15&deg;C),Cal&#8321;&#8325;,Cal-15,large calories (15&deg;C)
+small calorie (15&deg;C),Cal&#8321;&#8325;,Cal-15,small calories (15&deg;C)
+large calorie (international steam table),CalIT,Cal-IT,large calories (international steam table)
+small calorie (international steam table),calIT,cal-IT,small calories (international steam table)
+cubic centimetre-atmosphere,cc&sdot;atm,ccatm,cubic centimeter-atmosphere,cubic centimetre-atmosphere,cm&sup3;&sdot;atm,cm3atm,cubic centimeter-atmosphere
+celcius heat unit (international table),CHUIT,CHU-IT,celcius heat units (international table)
+cubic foot of atmosphere,cu ft atm,cufootatm,cuftatm,cubic feet of atmosphere
+cubic foot of natural gas,cuftnatualgas,cufootnaturalgas,cubic feet of natural gas
+cubic yard of atmosphere,cu yd atm,cuydatm,cubic yards of atmosphere
+hartee,&#119864;&#8341;,Eh
+erg,erg
+electronvolt,eV
+femtoelelectronvolt,feV
+foe,foe
+foot-pound,ft&sdot;lb,ftlb,foot-pound force
