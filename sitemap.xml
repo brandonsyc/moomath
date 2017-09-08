@@ -16,7 +16,7 @@
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0001</loc>
-    <lastmod>2017-06-16</lastmod>
+    <lastmod>2017-05-18</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/fractals/0001/images/complextalbe1.png</image:loc>
     </image:image>
@@ -62,7 +62,7 @@
   </url>
   <url>
     <loc>https://nichodon.github.io/fractals/0002</loc>
-    <lastmod>2017-06-09</lastmod>
+    <lastmod>2017-05-31</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/fractals/0002/images/cardioid.jpg</image:loc>
     </image:image>
@@ -106,48 +106,124 @@
   <url>
     <loc>https://nichodon.github.io/fractals/0003</loc>
     <lastmod>2017-07-06</lastmod>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro1.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro2a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro2b.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro2c.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro2d.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro3a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro3b.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro3c.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro4a.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro4b.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro4c.png</image:loc>
+	</image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro5.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/cesaro6.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0003/images/thumb.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://nichodon.github.io/fractals/0004</loc>
+    <lastmod>2017-07-08</lastmod>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy1.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy2.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy3.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy4.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy5.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy6.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy7.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy8.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/levy9.png</image:loc>
+    </image:image>
+    <image:image>
+      <image:loc>https://nichodon.github.io/fractals/0004/images/thumb.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs</loc>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0001</loc>
-    <lastmod>2017-07-11</lastmod>
+    <lastmod>2017-06-17</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0001/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0002</loc>
-    <lastmod>2017-06-23</lastmod>
+    <lastmod>2017-06-19</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0002/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0003</loc>
-    <lastmod>2017-07-04</lastmod>
+    <lastmod>2017-06-21</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0003/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0004</loc>
-    <lastmod>2017-06-29</lastmod>
+    <lastmod>2017-06-26</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0004/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0005</loc>
-    <lastmod>2017-07-17</lastmod>
+    <lastmod>2017-06-29</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0005/images/thumb.png</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://nichodon.github.io/programs/0006</loc>
-    <lastmod>2017-07-17</lastmod>
+    <lastmod>2017-07-12</lastmod>
     <image:image>
       <image:loc>https://nichodon.github.io/programs/0006/images/thumb.png</image:loc>
     </image:image>
