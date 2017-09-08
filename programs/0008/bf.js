@@ -47,7 +47,7 @@
     alpha: true
   });
 
-  statscontext.font = "24px Cambria";
+  statscontext.font = "24px Segoe UI";
   statscontext.textAlign = "left";
 
   var bufferLength = 30000;
@@ -122,7 +122,7 @@
     29: '(GS)',
     30: '(RS)',
     31: '(US)',
-    32: '(Space)',
+    32: '(space)',
     33: '!',
     34: '"',
     35: '#',
@@ -512,23 +512,23 @@
       var bufferI = mod(i, bufferLength);
 
       if (bufferI == mod(pointer, bufferLength)) {
-        bfcontext.font = "20px Segoe"
+        bfcontext.font = "20px Segoe UI"
         bfcontext.fillText('^', centerX, 3 * bfcanvas.height / 4);
       }
 
       bfcontext.fillStyle = "black";
 
       var number = String(parseInt(buffer[bufferI]));
-      bfcontext.font = 0.9 * spacing / Math.max(2, number.length) + 'px Cambria'
+      bfcontext.font = 0.9 * spacing / Math.max(2, number.length) + 'px Segoe UI'
 
       bfcontext.fillText(number, centerX, bfcanvas.height / 4);
 
       var character = charCodes[buffer[bufferI]];
-      bfcontext.font = 1.6 * spacing / Math.max(5, character.length) + 'px Cambria';
+      bfcontext.font = 1.6 * spacing / Math.max(5, character.length) + 'px Segoe UI';
       bfcontext.fillText(charCodes[buffer[bufferI]], centerX, bfcanvas.height / 2);
 
       var index = bufferI;
-      bfcontext.font = 1.4 * spacing / Math.max(4, String(index).length) + 'px Cambria';
+      bfcontext.font = 1.4 * spacing / Math.max(4, String(index).length) + 'px Segoe UI';
       bfcontext.fillText(index, centerX, 7 * bfcanvas.height / 8);
 
       bfcontext.rect(centerX - spacing / 2, 0, spacing, bfcanvas.height);
