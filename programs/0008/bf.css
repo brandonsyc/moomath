@@ -1,5 +1,5 @@
 *::-webkit-scrollbar {
-	opacity: 0;
+	width: 8px;
 }
 *::-webkit-scrollbar-thumb {
 	background-color: #08b;
@@ -19,13 +19,24 @@ li {
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 }
 h1,
-h4 {
+h4
+{
 	font-weight: 400;
 	text-align: center;
 }
 p,
-li{
+li,
+code,
+pre {
 	margin: 10px;
+}
+pre {
+	border: 0.5px solid #bbb;
+	padding: 10px;
+}
+a {
+	color: #08b;
+	text-decoration: none;
 }
 button {
 	background-color: rgba(0, 136, 187, 0.6);

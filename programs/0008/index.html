@@ -16,10 +16,10 @@
 
 	<button id="copy-tape">Copy Tape to Clipboard</button>
 	<button id="jump-pointer">Jump to Pointer</button>
-	<input type="number" value=0 id="jump-index"></input>
+	<input type="number" value="0" id="jump-index">
 	<button id="jump">Jump to Index</button>
 	<label>Tape Length</label>
-	<input id="tapelength" type="number" min="3" max="1000000" value=30000></input>
+	<input id="tapelength" type="number" min="3" max="1000000" value="30000">
 	<button id="non-code">Remove Non-code</button>
 
 	<br>
@@ -34,8 +34,8 @@
 	<button id="goto3">Next Pointer Move</button>
 	<button id="goto4">Next Step</button>
 	<button id="goto5">Next Marker</button>
-	<input type="text" id="marker"></input>
-	<input type="checkbox" id="censor-trigger" checked></input>
+	<input type="text" id="marker">
+	<input type="checkbox" id="censor-trigger" checked>
 	<label for="censor-trigger">Censor "<span class="censor">Brainf*ck</span>"</label>
 	
 	<br>
@@ -52,7 +52,7 @@
 
 	<p>Console</p>
 	<div class="bf-container">
-		<pre id="console"></pre>
+		<pre id="console"> </pre>
 	</div>
 
 	<br>
@@ -90,13 +90,6 @@
 		<li>The tape loops back on itself, allowing the usage of indices to the "left" of index 0.</li>
 		<li>The implementation provides no optimization or infinite loop detection, but does try to find syntax errors.</li>
 	</ul>
-	
-	<!-- WHY DO YOU DO THIS TO ME, TIMOTHY?!
-	<p>&bullet;&nbsp;EOF at operation , sets pointer value to 0.</p>
-	<p>&bullet;&nbsp;Each integer is in the range 0 - 255, and can overflow or underflow without returning an error.</p>
-	<p>&bullet;&nbsp;The tape loops back on itself, allowing the usage of indices to the "left" of index 0.</p>
-	<p>&bullet;&nbsp;The implementation provides no optimization or infinite loop detection, but does try to find syntax errors.</p>
-	-->
 	
 	<h1><span class="censor">Brainf*ck</span> Snippets</h1>
 	<h4>Move left to next integer with value zero.</h4>
