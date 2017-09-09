@@ -109,6 +109,11 @@
 				this.y = tetra.y + tetra.height / 2 + this.r;
 				this.rot = Math.PI * 2 - this.rot;
 			}
+			
+			tetra.n -= 1;
+			if (tetra.n === 0) {
+				tetras.splice(tetras.indexOf(tetra), 1);
+			}
 		}
 		
 		move() {
@@ -149,7 +154,7 @@
 	}
 	var tetras = [];
 	for (var i = 0; i < 16; i++) {
-		tetras.push(new Tetra(i * 50 + 50, 200, 40, 40, 50));
+		tetras.push(new Tetra(i * 50 + 50, 200, 40, 40, 5));
 	}
 	
 	function bulb() {
@@ -174,8 +179,10 @@
 			ctx.fillStyle = "#096";
 			ctx.fillRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
 			ctx.fillStyle = "#fff";
-			ctx.font = "10px Segoe UI";
-			ctx.strokeText(tetra.n, tetra.x, tetra.y);
+			ctx.font = "15px Segoe UI";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle"; 
+			ctx.fillText(tetra.n, tetra.x, tetra.y);
 		}
 	}
 	
