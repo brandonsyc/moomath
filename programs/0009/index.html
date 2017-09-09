@@ -120,14 +120,22 @@
 			
 			this.edge();
 			
+			var min = -1;
+			var cuat;
+			
 			for (var i = 0; i < tetras.length; i++) {
 				var tetra = tetras[i];
-				if (this.x < tetra.x + tetra.width / 2 + this.r && 
-					this.x > tetra.x - tetra.width / 2 - this.r &&
-					this.y < tetra.y + tetra.height / 2 + this.r && 
-					this.y > tetra.y - tetra.height / 2 - this.r) {
-					this.four(tetras[i]);
+				var dist = Math.sqrt(Math.pow(this.x - tetra.x, 2) + Math.pow(this.y - tetra.y, 2));
+				if (dist < min || min === -1) {
+					min = dist;
+					cuat = tetra;
 				}
+			}
+			if (this.x < cuat.x + cuat.width / 2 + this.r && 
+				this.x > cuat.x - cuat.width / 2 - this.r &&
+				this.y < cuat.y + cuat.height / 2 + this.r && 
+				this.y > cuat.y - cuat.height / 2 - this.r) {
+				this.four(cuat);
 			}
 		}
 	}
@@ -140,8 +148,8 @@
 		balls.push(new Ball(100, 100, i * Math.PI / 8 + 0.1, 10, 5));
 	}
 	var tetras = [];
-	for (var i = 0; i < 2; i++) {
-		tetras.push(new Tetra(i * 500 + 50, 200, 45, 45, 50));
+	for (var i = 0; i < 16; i++) {
+		tetras.push(new Tetra(i * 50 + 50, 200, 40, 40, 50));
 	}
 	
 	function bulb() {
@@ -165,6 +173,9 @@
 			var tetra = tetras[i];
 			ctx.fillStyle = "#096";
 			ctx.fillRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
+			ctx.fillStyle = "#fff";
+			ctx.font = "10px Segoe UI";
+			ctx.strokeText(tetra.n, tetra.x, tetra.y);
 		}
 	}
 	
