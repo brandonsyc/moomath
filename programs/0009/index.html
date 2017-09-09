@@ -32,17 +32,60 @@
 <script src="../../querystring.js"></script>
 
 <script>
+	class Tetra {
+		contructor(x, y, width, height, n) {
+			this.x = x;
+			this.y = y;
+			this.width = width;
+			this.height = height;
+			this.n = n;
+		}
+	}
+	
 	class Ball {
-		constructor(x, y, rot, mag) {
+		constructor(x, y, rot, mag, r) {
 			this.x = x;
 			this.y = y;
 			this.rot = rot;
 			this.mag = mag;
+			this.r = r;
+		}
+		
+		edge() {
+			var velx = this.mag * Math.cos(this.rot);
+			var vely = this.mag * Math.sin(this.rot);
+			var slope = vely / velx;
+			
+			if (this.x > 1000 - this.r) {
+				this.x = 1000 - this.r;
+				this.y -= slope * (1000 - this.r - this.x);
+				this.rot = Math.PI - this.rot;
+			}
+			if (this.x < this.r) {
+				this.x = this.r;
+				this.y -= slope * (this.r - this.x);
+				this.rot = Math.PI - this.rot;
+			}
+			if (this.y > 500 - this.r) {
+				this.y = 500 - this.r;
+				this.x -= slope * (500 - this.r - this.y);
+				this.rot = Math.PI * 2 - this.rot;
+			}
+			if (this.y < this.r) {
+				this.y = this.r;
+				this.x -= slope * (this.r - this.y);
+				this.rot = Math.PI * 2 - this.rot;
+			}
 		}
 		
 		move() {
-			this.x += this.mag * Math.cos(this.rot);
-			this.y += this.mag * Math.sin(this.rot);
+			var velx = this.mag * Math.cos(this.rot);
+			var vely = this.mag * Math.sin(this.rot);
+			
+			this.x += velx;
+			this.y += vely;
+			
+			this.edge();
 		}
 	}
 	
@@ -50,7 +93,14 @@
 	var ctx = canvas.getContext("2d");
 	
 	var balls = [];
-	balls.push(new Ball(100, 100, 0.1, 1));
+	for (var i = 0; i < 16; i++) {
+		balls.push(new Ball(100, 100, i * Math.PI / 8 + 1, 10, 5));
+	}
+	var tetras = [];
+	for (var i = 0; i < 16; i++) {
+		tetras.push(new Tetra(i * 50 + 50, 200, 45, 25, 50));
+	}
+		console.log(tetras[0].x);
 	
 	function bulb() {
 		canvas.style.width = document.body.offsetWidth * 0.9375 + "px";
@@ -62,12 +112,17 @@
 		
 		for (var i = 0; i < balls.length; i++) {
 			var ball = balls[i];
-			ctx.fillStyle = "#bbb";
+			ctx.fillStyle = "#eee";
 			ctx.beginPath();
-			ctx.arc(ball.x, ball.y, 10, 0, Math.PI * 2);
+			ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
 			ctx.fill();
 			ball.move();
-			console.log(ball.x);
+		}
+		
+		for (var i = 0; i < tetras.length; i++) {
+			var tetra = tetras[i];
+			ctx.fillStyle = "#096";
+			ctx.fillRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
 		}
 	}
 	
