@@ -79,6 +79,30 @@
 			}
 		}
 		
+		four(tetra) {
+			var velx = this.mag * Math.cos(this.rot);
+			var vely = this.mag * Math.sin(this.rot);
+			var slopex = vely / velx;
+			var slopey = velx / vely;
+			
+			if (tetra.x - this.x < this.r + tetra.width / 2 && this.x < tetra.x &&
+				this.y < tetra.y + tetra.height / 2 && this.y > tetra.y - tetra.height / 2) {
+				console.log(this.x);
+				this.y -= slopex * (tetra.x - tetra.width / 2 - this.r - this.x);
+				this.x = tetra.x - tetra.width / 2 - this.r;
+				console.log(this.x);
+				this.rot = Math.PI - this.rot;
+			}
+			if (this.x - tetra.x < this.r + tetra.width / 2 && this.x > tetra.x &&
+				this.y < tetra.y + tetra.height / 2 && this.y > tetra.y - tetra.height / 2) {
+				console.log(this.x);
+				this.y -= slopex * (tetra.x + tetra.width / 2 + this.r - this.x);
+				this.x = tetra.x + tetra.width / 2 + this.r;
+				console.log(this.x);
+				this.rot = Math.PI - this.rot;
+			}
+		}
+		
 		move() {
 			var velx = this.mag * Math.cos(this.rot);
 			var vely = this.mag * Math.sin(this.rot);
@@ -89,13 +113,7 @@
 			this.edge();
 			
 			for (var i = 0; i < tetras.length; i++) {
-				var tetra = tetras[i];
-				if (this.x - tetra.x < this.r + tetra.width && this.x > tetra.x &&
-					this.y < tetra.y + tetra.height && this.y > tetra.y - tetra.height) {
-					//this.x = tetra.x + this.r;
-					//this.y -= this.slope * (tetra.x + this.r - this.x);
-					//this.rot = Math.PI - this.rot;
-				}
+				this.four(tetras[i]);
 			}
 		}
 	}
@@ -104,12 +122,12 @@
 	var ctx = canvas.getContext("2d");
 	
 	var balls = [];
-	for (var i = 0; i < 16; i++) {
-		balls.push(new Ball(100, 100, i * Math.PI / 8 + 1, 5, 5));
+	for (var i = 0; i < 1; i++) {
+		balls.push(new Ball(100, 100, i * Math.PI / 8 + 0.025, 10, 5));
 	}
 	var tetras = [];
-	for (var i = 0; i < 16; i++) {
-		tetras.push(new Tetra(i * 50 + 50, 200, 45, 25, 50));
+	for (var i = 0; i < 2; i++) {
+		tetras.push(new Tetra(i * 500 + 50, 200, 45, 45, 50));
 	}
 	
 	function bulb() {
