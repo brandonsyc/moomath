@@ -33,7 +33,7 @@
 
 <script>
 	class Tetra {
-		contructor(x, y, width, height, n) {
+		constructor(x, y, width, height, n) {
 			this.x = x;
 			this.y = y;
 			this.width = width;
@@ -54,26 +54,27 @@
 		edge() {
 			var velx = this.mag * Math.cos(this.rot);
 			var vely = this.mag * Math.sin(this.rot);
-			var slope = vely / velx;
+			var slopex = vely / velx;
+			var slopey = velx / vely;
 			
 			if (this.x > 1000 - this.r) {
+				this.y -= slopex * (1000 - this.r - this.x);
 				this.x = 1000 - this.r;
-				this.y -= slope * (1000 - this.r - this.x);
 				this.rot = Math.PI - this.rot;
 			}
-			if (this.x < this.r) {
+			else if (this.x < this.r) {
+				this.y -= slopex * (this.r - this.x);
 				this.x = this.r;
-				this.y -= slope * (this.r - this.x);
 				this.rot = Math.PI - this.rot;
 			}
 			if (this.y > 500 - this.r) {
+				this.x -= slopey * (500 - this.r - this.y);
 				this.y = 500 - this.r;
-				this.x -= slope * (500 - this.r - this.y);
 				this.rot = Math.PI * 2 - this.rot;
 			}
-			if (this.y < this.r) {
+			else if (this.y < this.r) {
+				this.x -= slopey * (this.r - this.y);
 				this.y = this.r;
-				this.x -= slope * (this.r - this.y);
 				this.rot = Math.PI * 2 - this.rot;
 			}
 		}
@@ -86,6 +87,16 @@
 			this.y += vely;
 			
 			this.edge();
+			
+			for (var i = 0; i < tetras.length; i++) {
+				var tetra = tetras[i];
+				if (this.x - tetra.x < this.r + tetra.width && this.x > tetra.x &&
+					this.y < tetra.y + tetra.height && this.y > tetra.y - tetra.height) {
+					//this.x = tetra.x + this.r;
+					//this.y -= this.slope * (tetra.x + this.r - this.x);
+					//this.rot = Math.PI - this.rot;
+				}
+			}
 		}
 	}
 	
@@ -94,13 +105,12 @@
 	
 	var balls = [];
 	for (var i = 0; i < 16; i++) {
-		balls.push(new Ball(100, 100, i * Math.PI / 8 + 1, 10, 5));
+		balls.push(new Ball(100, 100, i * Math.PI / 8 + 1, 5, 5));
 	}
 	var tetras = [];
 	for (var i = 0; i < 16; i++) {
 		tetras.push(new Tetra(i * 50 + 50, 200, 45, 25, 50));
 	}
-		console.log(tetras[0].x);
 	
 	function bulb() {
 		canvas.style.width = document.body.offsetWidth * 0.9375 + "px";
