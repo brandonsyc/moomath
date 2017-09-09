@@ -136,7 +136,8 @@
 					cuat = tetra;
 				}
 			}
-			if (this.x < cuat.x + cuat.width / 2 + this.r && 
+			if (cuat !== undefined &&
+				this.x < cuat.x + cuat.width / 2 + this.r && 
 				this.x > cuat.x - cuat.width / 2 - this.r &&
 				this.y < cuat.y + cuat.height / 2 + this.r && 
 				this.y > cuat.y - cuat.height / 2 - this.r) {
