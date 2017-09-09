@@ -896,5 +896,10 @@ function BFtoJS(bf) {
 
   bf = s;
 
+  var commands = [];
+  for (i = 0; i < bf.length; i++) {
+
+  }
+
   return bf;
 }
