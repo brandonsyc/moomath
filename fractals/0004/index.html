@@ -21,80 +21,83 @@
 <div class="article">
 
 <div class="figure">
-    <figure>
-        <img src="images/levy1.png" alt="The Lévy C Curve">
-        <figcaption>Figure 1: The Lévy C Curve.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy1.png" alt="The Lévy C Curve">
+		<figcaption>Figure 1: The Lévy C Curve.</figcaption>
+	</figure>
 </div>
 
 <p>
-  The Lévy C curve, also known as the Lévy Dragon, is a very interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="nichodon.github.io/fractals/0003">previous article</a>.
+	The Lévy C curve, also known as the Lévy Dragon, is a very interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="https://nichodon.github.io/fractals/0003">previous article</a>.
 </p>
 
 <h2>Definition</h2>
 
 <p>
-  There are a variety of ways to define the C curve, some of which are more intuitive than others. One way to define it is in terms of a process known as a Lindenmayer system (L-system), which I will briefly present here. Start by defining three operations, F, +, and -, meaning move forward by one unit, turn clockwise by 45°, and turn counterclockwise by 45°. We can treat a sequence of these operations as a path on the coordinate plane. For example, the path F+F-F looks like so:
+	There are a variety of ways to define the C curve, some of which are more intuitive than others. One way to define it is in terms of a process known as a Lindenmayer system (L-system), which I will briefly present here. Start by defining three operations, F, +, and -, meaning move forward by one unit, turn clockwise by 45°, and turn counterclockwise by 45°. We can treat a sequence of these operations as a path on the coordinate plane. For example, the path F+F-F looks like so:
 </p>
 
-<canvas width=512 height=512 id="l1"></canvas>
+<canvas width="512" height="512" id="l1"></canvas>
+
 <div class="toolbar">
-  <input type="text" id="sequence1" onInput="calculateSystem(1)" value="F+F-F">
-  <button onclick="calculateSystem(1);playSystem(1)">Play</button>
+	<input type="text" id="sequence1" onInput="calculateSystem(1)" value="F+F-F">
+	<button onclick="calculateSystem(1);playSystem(1)">Play</button>
 </div>
 
 <br>
 
 <p>
-  To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. Then, we replace every F in the sequence with the sequence (+F--F+), giving us +(+F--F+)--(+F--F+)+, which is iteration 2. If we continually apply this process, we get the C curve. Here's what it looks like for iterations 1-7:
+	To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. Then, we replace every F in the sequence with the sequence (+F--F+), giving us +(+F--F+)--(+F--F+)+, which is iteration 2. If we continually apply this process, we get the C curve. Here's what it looks like for iterations 1-7:
 </p>
 
-<canvas width=512 height=512 id="l2"></canvas>
+<canvas width="512" height="512" id="l2"></canvas>
+
 <div class="toolbar">
-  <input type="text" id="sequence2" onInput="calculateSystem(2)" value="+F--F+" disabled>
-  <button onclick="updateSystem2Iters();playSystem(2)">Play</button>
+	<input type="text" id="sequence2" onInput="calculateSystem(2)" value="+F--F+" disabled>
+	<button onclick="updateSystem2Iters();playSystem(2)">Play</button>
 </div>
+
 <br>
 <div class="toolbar">
-  <label for="iter2">Iteration</label>
-  <input type="number" id="iter2" onInput="updateSystem2Iters()" value="1" min="1" max="7">
+	<label for="iter2">Iteration</label>
+	<input type="number" id="iter2" onInput="updateSystem2Iters()" value="1" min="1" max="7">
 </div>
 
 <p>
-  As we take the number of iterations to infinity, the resulting curve becomes the Lévy C curve. The problem is that this construction, in order to produce a complete fractal with finite size, must necessarily use infinitesimally small step sizes. Let's use a slightly more geometrical definition, one which fits our idea of the base-motif fractal from the <a href="nichodon.github.io/fractals/0003">previous article</a>.
+	As we take the number of iterations to infinity, the resulting curve becomes the Lévy C curve. The problem is that this construction, in order to produce a complete fractal with finite size, must necessarily use infinitesimally small step sizes. Let's use a slightly more geometrical definition, one which fits our idea of the base-motif fractal from the <a href="nichodon.github.io/fractals/0003">previous article</a>.
 </p>
 
 <p>
-  We begin with two "curves", a base curve and the motif. In the case of the C curve, they look like this:
+	We begin with two "curves", a base curve and the motif. In the case of the C curve, they look like this:
 </p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy2.png" alt="The Base and Motif">
-        <figcaption>Figure 2: The base curve and motif for the C curve.<figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy2.png" alt="The Base and Motif">
+		<figcaption>Figure 2: The base curve and motif for the C curve.</figcaption>
+	</figure>
 </div>
 
 <p>
-  In our definition, we will let the base curve be the directional vector between \((-0.5,0)\) and \((0.5,0)\), and the motif go from \((0,0)\) to \((0.5,0.5)\) to \((1,0)\). (Any geometrically similar figure will do, but these have relatively simple coordinates.) To generate the fractal, we rotate and translate the motif so that its endpoints coincide with the endpoints of the base curve, like so:
+	In our definition, we will let the base curve be the directional vector between \((-0.5,0)\) and \((0.5,0)\), and the motif go from \((0,0)\) to \((0.5,0.5)\) to \((1,0)\). (Any geometrically similar figure will do, but these have relatively simple coordinates.) To generate the fractal, we rotate and translate the motif so that its endpoints coincide with the endpoints of the base curve, like so:
 </p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy3.png" alt="Step 1">
-        <figcaption>Figure 3a: Step 1 of the construction.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy3.png" alt="Step 1">
+		<figcaption>Figure 3a: Step 1 of the construction.</figcaption>
+	</figure>
 </div>
 
 <p>
-  This gives us a curve with two segments. For every segment in the resulting curve, we rotate and translate the motif to coincide with the segment's endpoints, like so:
+	This gives us a curve with two segments. For every segment in the resulting curve, we rotate and translate the motif to coincide with the segment's endpoints, like so:
 </p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy4.png" alt="Step 2">
-        <figcaption>Figure 3b: Step 2 of the construction.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy4.png" alt="Step 2">
+		<figcaption>Figure 3b: Step 2 of the construction.</figcaption>
+	</figure>
 </div>
 
 <p>
@@ -102,127 +105,156 @@
 </p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy5.png" alt="The finished C curve">
-        <figcaption>Figure 3c: The finished fractal.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy5.png" alt="The finished C curve">
+		<figcaption>Figure 3c: The finished fractal.</figcaption>
+	</figure>
 </div>
 
-<p>This is our new definition of the Lévy C curve.</p>
+<p>
+	This is our new definition of the Lévy C curve.
+</p>
 
-<p>Let the width of the base curve be \(w\). The rest of the properties and dimensions of our curve can be described in terms of \(w\), since this is the only variable needed to describe any size C curve.</p>
+<p>
+	Let the width of the base curve be \(w\). The rest of the properties and dimensions of our curve can be described in terms of \(w\), since this is the only variable needed to describe any size C curve.
+</p>
 
 <h2>Properties</h2>
 
-<p>Let's first describe some properties of the shape of the fractal.</p>
+<p>
+	Let's first describe some properties of the shape of the fractal.
+</p>
 
-<p>The fractal can be subdivided into two copies of itself, each a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, like so:</p>
+<p>
+	The fractal can be subdivided into two copies of itself, each a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, like so:
+</p>
 
 <br>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy6.png" alt="A breakdown of the C curve">
-        <figcaption>Figure 4: Breaking down the C curve.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy6.png" alt="A breakdown of the C curve">
+		<figcaption>Figure 4: Breaking down the C curve.</figcaption>
+	</figure>
 </div>
 
-<p>Since there are 2 pieces of the fractal, each with a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, we can calculate the fractal dimension as $$-\frac{\log 2}{\log \frac{\sqrt{2}}{2}} = 2.$$</p>
+<p>
+	Since there are 2 pieces of the fractal, each with a factor of \(\frac{\sqrt{2}}{2}\) the size of the whole, we can calculate the fractal dimension as $$-\frac{\log 2}{\log \frac{\sqrt{2}}{2}} = 2.$$
+</p>
 
-<p>Thus, it is an example of a fractal with integer dimension, though it is not space-filling. Describing the outside boundary, however, is slightly more difficult. We can do it by breaking the fractal up into an infinite number of geometrically similar pieces:</p>
+<p>
+	Thus, it is an example of a fractal with integer dimension, though it is not space-filling. Describing the outside boundary, however, is slightly more difficult. We can do it by breaking the fractal up into an infinite number of geometrically similar pieces:
+</p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy7.png" alt="A breakdown of the C curve">
-        <figcaption>Figure 5: Another way to break down the C curve.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy7.png" alt="A breakdown of the C curve">
+		<figcaption>Figure 5: Another way to break down the C curve.</figcaption>
+	</figure>
 </div>
 
-<p>Every subsequent smaller shape is a factor of \(\frac{\sqrt{2}}{2}\) the size of the previous shape. Consider the largest one of these shapes.</p>
+<p>
+	Every subsequent smaller shape is a factor of \(\frac{\sqrt{2}}{2}\) the size of the previous shape. Consider the largest one of these shapes.
+</p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy8.png" alt="The largest shape">
-        <figcaption>Figure 6: The largest shape, with dimensions labeled.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy8.png" alt="The largest shape">
+		<figcaption>Figure 6: The largest shape, with dimensions labeled.</figcaption>
+	</figure>
 </div>
 
-<p>If we can describe the perimeter of this shape in terms of \(w\), then we can describe the entire fractal as well, since it is composed of an infinite number of these shapes.</p>
+<p>
+	If we can describe the perimeter of this shape in terms of \(w\), then we can describe the entire fractal as well, since it is composed of an infinite number of these shapes.
+</p>
 
-<p>The length of the top segment of the boundary is simply \(w\). We can find the remaining perimeter by taking advantage of the high degree of self similarity in this shape; in particular, we can treat the perimeter as an infinite sum of lengths, labeled in green, whose lengths are easy to determine.</p>
+<p>
+	The length of the top segment of the boundary is simply \(w\). We can find the remaining perimeter by taking advantage of the high degree of self similarity in this shape; in particular, we can treat the perimeter as an infinite sum of lengths, labeled in green, whose lengths are easy to determine.
+</p>
 
-<p>The total length of the green segments is \(\frac{w}{8} + \frac{w\sqrt{2}}{8} + \frac{3w}{16} = \frac{5w+2w\sqrt{2}}{16}\). The next analogous shape, labeled in purple, is half that, and the next is half of that, and so on. To get the length of half the bottom of the shape, as labeled in orange, we calculate: $$\sum _ {n=0}^{\infty} \left(\frac{1}{2}\right)^n \left(\frac{5w+2w\sqrt{2}}{16}\right) = \frac{5w+2w\sqrt{2}}{8}.$$</p>
+<p>
+	The total length of the green segments is \(\frac{w}{8} + \frac{w\sqrt{2}}{8} + \frac{3w}{16} = \frac{5w+2w\sqrt{2}}{16}\). The next analogous shape, labeled in purple, is half that, and the next is half of that, and so on. To get the length of half the bottom of the shape, as labeled in orange, we calculate: $$\sum _ {n=0}^{\infty} \left(\frac{1}{2}\right)^n \left(\frac{5w+2w\sqrt{2}}{16}\right) = \frac{5w+2w\sqrt{2}}{8}.$$
+</p>
 
-<p>Multiplying by 2 to get the perimeter of the entire bottom part of the shape and adding the length of the top segment, we get a perimeter of \(\frac{5w+2w\sqrt{2}}{4}+w=\frac{9w+2w\sqrt{2}}{4}\).</p>
+<p>
+	Multiplying by 2 to get the perimeter of the entire bottom part of the shape and adding the length of the top segment, we get a perimeter of \(\frac{5w+2w\sqrt{2}}{4}+w=\frac{9w+2w\sqrt{2}}{4}\).
+</p>
 
-<p>To get the perimeter of the entire fractal, we go through a similar process, summing up the perimeters of all these shapes like so: $$P = \underbrace{\frac{9w+2w\sqrt{2}}{4}} _ {\text{Largest Shape}} + 2\underbrace{\sum _ {n = 1} ^ {\infty} \left(\frac{\sqrt{2}}{2}\right)^n\frac{9w+2w\sqrt{2}}{4}} _ {\text{Half of Remaining Fractal}} = \left(\frac{9w+2w\sqrt{2}}{4}\right)(3+2\sqrt{2}) = \frac{35 w}{4} + 6w\sqrt{2}.$$</p>
+<p>
+	To get the perimeter of the entire fractal, we go through a similar process, summing up the perimeters of all these shapes like so: $$P = \underbrace{\frac{9w+2w\sqrt{2}}{4}} _ {\text{Largest Shape}} + 2\underbrace{\sum _ {n = 1} ^ {\infty} \left(\frac{\sqrt{2}}{2}\right)^n\frac{9w+2w\sqrt{2}}{4}} _ {\text{Half of Remaining Fractal}} = \left(\frac{9w+2w\sqrt{2}}{4}\right)(3+2\sqrt{2}) = \frac{35 w}{4} + 6w\sqrt{2}.$$
+</p>
 
-<p>In the case of \(w=1\), the C curve has perimeter \(\frac{35}{4} + 6\sqrt{2} \approx 17.2353\). That's quite a bit for such a small size! This is what a square with that perimeter would look like placed next to the C curve:</p>
+<p>
+	In the case of \(w=1\), the C curve has perimeter \(\frac{35}{4} + 6\sqrt{2} \approx 17.2353\). That's quite a bit for such a small size! This is what a square with that perimeter would look like placed next to the C curve:
+</p>
 
 <div class="figure">
-    <figure>
-        <img src="images/levy9.png" alt="The largest shape">
-        <figcaption>Figure 7: The C curve next to a square.</figcaption>
-    </figure>
+	<figure>
+		<img src="images/levy9.png" alt="The largest shape">
+		<figcaption>Figure 7: The C curve next to a square.</figcaption>
+	</figure>
 </div>
 
-<p>The length of the C curve itself, of course, is infinite. At any iteration \(i\), the length of the curve is simply \(\sqrt{2}^i = 2^{i/2}\), and \(\displaystyle\lim _ {i \to \infty} 2^{i/2} = \infty\).</p>
+<p>
+	The length of the C curve itself, of course, is infinite. At any iteration \(i\), the length of the curve is simply \(\sqrt{2}^i = 2^{i/2}\), and \(\displaystyle\lim _ {i \to \infty} 2^{i/2} = \infty\).
+</p>
 
 <h2>Facts at a Glance</h2>
 
 <table>
   <tr>
-      <th>Property</th>
-      <th>Value</th>
-      <th>Remarks</th>
+	  <th>Property</th>
+	  <th>Value</th>
+	  <th>Remarks</th>
   </tr>
   <tr>
-      <td>Area Enclosed</td>
-      <td>\(\frac{19}{36}w^2\)</td>
-      <td>Calculated with a similar method to calculating the outside perimeter.</td>
+	  <td>Area Enclosed</td>
+	  <td>\(\frac{19}{36}w^2\)</td>
+	  <td>Calculated with a similar method to calculating the outside perimeter.</td>
   </tr>
   <tr>
-      <td>Outside Perimeter</td>
-      <td>\(\frac{35 w}{4} + 6w\sqrt{2}\)</td>
-      <td></td>
+	  <td>Outside Perimeter</td>
+	  <td>\(\frac{35 w}{4} + 6w\sqrt{2}\)</td>
+	  <td></td>
   </tr>
   <tr>
-      <td>Hausdorff Dimension<br>(Fractal)</td>
-      <td>\(2\)</td>
-      <td>The C curve is an example of a fractal with integer dimension.</td>
+	  <td>Hausdorff Dimension<br>(Fractal)</td>
+	  <td>\(2\)</td>
+	  <td>The C curve is an example of a fractal with integer dimension.</td>
   </tr>
   <tr>
-      <td>Hausdorff Dimension<br>(Boundary)</td>
-      <td>\(1.934\)</td>
-      <td>Estimated; proven to lie in the interval \((1.734512,1.96252)\) in <a href="https://arxiv.org/abs/math/9907145">this lovely paper</a>. Here, boundary means the interface between the fractal its complement, which is much more convoluted (and has provably infinite perimeter).</td>
+	  <td>Hausdorff Dimension<br>(Boundary)</td>
+	  <td>\(1.934\)</td>
+	  <td>Estimated; proven to lie in the interval \((1.734512,1.96252)\) in <a href="https://arxiv.org/abs/math/9907145">this lovely paper</a>. Here, boundary means the interface between the fractal its complement, which is much more convoluted (and has provably infinite perimeter).</td>
   </tr>
   <tr>
-      <td>Box-Counting Dimension<br>(Boundary)</td>
-      <td>N/A</td>
-      <td>I am currently running an analysis of the fractal that will try to approximate the dimension of the boundary using box counting. Mathematically, this and the previous dimension should be equal.</td>
+	  <td>Box-Counting Dimension<br>(Boundary)</td>
+	  <td>N/A</td>
+	  <td>I am currently running an analysis of the fractal that will try to approximate the dimension of the boundary using box counting. Mathematically, this and the previous dimension should be equal.</td>
   </tr>
   <tr>
-      <td>Height</td>
-      <td>\(\frac{5w}{4}\)</td>
-      <td></td>
+	  <td>Height</td>
+	  <td>\(\frac{5w}{4}\)</td>
+	  <td></td>
   </tr>
   <tr>
-      <td>Width</td>
-      <td>\(2w\)</td>
-      <td></td>
+	  <td>Width</td>
+	  <td>\(2w\)</td>
+	  <td></td>
   </tr>
 
 </table>
 
 <!-- <p>A much more difficult task (and the last we have time here for) is describing the boundary between points inside the set and outside the set, depicted in red here:</p> -->
 
-
-
-<p>An extra bit: If you'd like good quality pictures of the C curve itself, you can find some <a href="https://drive.google.com/open?id=0BykNyHuFqpGXTW9PQ0pHNm8xWGs" target="_blank">here</a>. (Resolutions: 128x128, 256x256, 512x512, ... , 32768x32768.)
+<p>
+	An extra bit: If you'd like good quality pictures of the C curve itself, you can find some <a href="https://drive.google.com/open?id=0BykNyHuFqpGXTW9PQ0pHNm8xWGs" target="_blank">here</a>. (Resolutions: 128x128, 256x256, 512x512, ... , 32768x32768.)
+</p>
 
 <hr>
+
 <div class="toolbar">
-  <p>Take a tour of the Lévy C curve! Want to try some different bases and motifs? Try the customizable fractal generator <a href="https://nichodon.github.io/fractals/0003/#base-motif" target="_blank">here</a>.</p>
+	<p>Take a tour of the Lévy C curve! Want to try some different bases and motifs? Try the customizable fractal generator <a href="https://nichodon.github.io/fractals/0003/#base-motif" target="_blank">here</a>.</p>
 </div>
 
 <canvas id="base-motif" width="1024" height="512"></canvas>
@@ -230,47 +262,48 @@
 <div class="separate"></div>
 
 <div class="tbr">
-  <div class="fl">
-    <button type="button" onclick="resetBZoom()">Reset Zoom</button>
-  </div>
-  <div class="fl fr">
-    <button type="button" onclick="resetMZoom()">Reset Zoom</button>
-  </div>
+	<div class="fl">
+		<button type="button" onclick="resetBZoom()">Reset Zoom</button>
+	</div>
+	<div class="fl fr">
+		<button type="button" onclick="resetMZoom()">Reset Zoom</button>
+	</div>
 </div>
 
 <div class="separate"></div>
 
 <div class="toolbar">
-  <label for="iterations">Iterations</label>
-  <input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
-  <label for="color">Fractal Color </label>
-  <input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
-  <input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
-  <label for="drawGrid">Draw Grid</label>
-  <input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
-  <label for="drawAxes">Draw Axes</label>
+	<label for="iterations">Iterations</label>
+	<input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
+	<label for="color">Fractal Color </label>
+	<input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
+	<input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
+	<label for="drawGrid">Draw Grid</label>
+	<input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
+	<label for="drawAxes">Draw Axes</label>
 </div>
 
 <div class="separate"></div>
 
 <div class="cdf">
-  <button type="button" onclick="drawFractal()">Draw Fractal</button>
-  <button type="button" onclick="resetFZoom()">Reset Zoom</button>
-  <button type="button" onclick="stopDrawing()">Stop Drawing</button>
+	<button type="button" onclick="drawFractal()">Draw Fractal</button>
+	<button type="button" onclick="resetFZoom()">Reset Zoom</button>
+	<button type="button" onclick="stopDrawing()">Stop Drawing</button>
 </div>
 
 <div class="separate"></div>
 
 <div class="warning">
-  <p id="progress">hi</p>
+	<p id="progress">hi</p>
 </div>
 
 <div style="height: 1024px;">
-<canvas id="cesaro" width="1024" height="1024"></canvas>
+	<canvas id="cesaro" width="1024" height="1024"></canvas>
 </div>
 
 
 <div class="separate"></div>
+</div>
 </div>
 
 <div class="source-link">

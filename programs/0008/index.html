@@ -16,10 +16,10 @@
 
 	<button id="copy-tape">Copy Tape to Clipboard</button>
 	<button id="jump-pointer">Jump to Pointer</button>
-	<input type="number" value=0 id="jump-index"></input>
+	<input type="number" value="0" id="jump-index">
 	<button id="jump">Jump to Index</button>
 	<label>Tape Length</label>
-	<input id="tapelength" type="number" min="3" max="1000000" value=30000></input>
+	<input id="tapelength" type="number" min="3" max="1000000" value="30000">
 	<button id="non-code">Remove Non-code</button>
 
 	<br>
@@ -34,8 +34,8 @@
 	<button id="goto3">Next Pointer Move</button>
 	<button id="goto4">Next Step</button>
 	<button id="goto5">Next Marker</button>
-	<input type="text" id="marker"></input>
-	<input type="checkbox" id="censor-trigger" checked></input>
+	<input type="text" id="marker">
+	<input type="checkbox" id="censor-trigger" checked>
 	<label for="censor-trigger">Censor "<span class="censor">Brainf*ck</span>"</label>
 
 	<br>
@@ -52,7 +52,7 @@
 
 	<p>Console</p>
 	<div class="bf-container">
-		<pre id="console"></pre>
+		<pre id="console"> </pre>
 	</div>
 
 	<br>
@@ -95,14 +95,13 @@
 
   <p>Important Note: All of these snippets are generated for fast execution time, not shortness. As such, many of them are trivial, but are included here for convenience purposes.</p>
   <h3>Constant</h3>
-  <p>Sets the value under the pointer to the number (mod 255).</p>
+  <p>Sets the value under the pointer to the number.</p>
   <label for="constant-optimizing">Integer</label>
   <input id="constant-optimizing" type="number" value=25></input>
   <input id="constant-optimizing-zero" type="checkbox" checked></input>
   <label for="constant-optimizing-zero">Assume Start Value is 0</label>
-  <label for="constant-optimizing-right">Available Zero Blocks on Right</label>
-  <input id="constant-optimizing-right" type="number" value=0></input>
-  <pre id="constant-optimizing-output"></pre>
+	<button id="constant-optimizing-copy">Copy to Clipboard</button>
+  <pre id="constant-optimizing-output">+++++++++++++++++++++++++</pre>
 
 
 

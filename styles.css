@@ -71,6 +71,7 @@ ul {
 	background-color: #eee;
 	list-style: none;
 	margin: auto;
+	max-width: 960px;
 	padding: 0;
 	width: 90%;
 }
@@ -97,7 +98,6 @@ ul li ul li {
 }
 ul li ul li:hover {
 	background-color: #eee;
-	margin: 10px;
 }
 th,
 td {
