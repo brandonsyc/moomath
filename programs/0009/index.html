@@ -135,21 +135,25 @@
 				if (hit === 0) {
 					this.x = leftx;
 					this.rot = Math.PI - this.rot;
+					tetra.n--;
 					return true;
 				}
 				if (hit === 1) {
 					this.x = rightx;
 					this.rot = Math.PI - this.rot;
+					tetra.n--;
 					return true;
 				}
 				if (hit === 2) {
 					this.y = upx;
 					this.rot = Math.PI * 2 - this.rot;
+					tetra.n--;
 					return true;
 				}
 				if (hit === 3) {
 					this.y = downx;
 					this.rot = Math.PI * 2 - this.rot;
+					tetra.n--;
 					return true;
 				}
 			}
@@ -178,11 +182,11 @@
 		balls.push(new Ball(500, 475, -i * Math.PI / 16, 10, 5));
 	}
 	var tetras = [];
-	for (var i = 0; i < 20; i++) {
+	for (var i = 0; i < 1; i++) {
 		tetras.push(new Tetra(i * 50 + 25, 200, 45, 45, i * 30 / 2 + 1));
 	}
 		
-	var colors = ["#f03", "#f60", "#f90", "#fc0", "#9f0", "#06f"];
+	var colors = ["#f30", "#f60", "#f90", "#fc0", "#6f0", "#09f"];
 	colors.reverse();
 	
 	function bulb() {
@@ -205,9 +209,11 @@
 		for (var i = 0; i < tetras.length; i++) {
 			var tetra = tetras[i];
 			ctx.fillStyle = colors[Math.ceil(tetra.n / 50) - 1];
-			ctx.globalAlpha = 0.75;
+			ctx.globalAlpha = 0.25;
 			ctx.fillRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
 			ctx.globalAlpha = 1;
+			ctx.strokeStyle = colors[Math.ceil(tetra.n / 50) - 1];
+			ctx.strokeRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
 			ctx.fillStyle = "#000";
 			ctx.font = "15px Segoe UI";
 			ctx.textAlign = "center";
