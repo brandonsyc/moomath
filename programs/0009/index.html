@@ -133,25 +133,25 @@
 				}
 				
 				if (hit === 0) {
-					this.x = leftx;
+					this.x = leftx - this.r;
 					this.rot = Math.PI - this.rot;
 					tetra.n--;
 					return true;
 				}
 				if (hit === 1) {
-					this.x = rightx;
+					this.x = rightx + this.r;
 					this.rot = Math.PI - this.rot;
 					tetra.n--;
 					return true;
 				}
 				if (hit === 2) {
-					this.y = upx;
+					this.y = upx - this.r;
 					this.rot = Math.PI * 2 - this.rot;
 					tetra.n--;
 					return true;
 				}
 				if (hit === 3) {
-					this.y = downx;
+					this.y = downx + this.r;
 					this.rot = Math.PI * 2 - this.rot;
 					tetra.n--;
 					return true;
