@@ -19,6 +19,8 @@
 		<xsl:for-each select="s:urlset/s:url">
 			<li>
 				<xsl:value-of select="s:loc" />
+				<br></br>
+				Last modification: <xsl:value-of select="s:lastmod" />
 				<ul>
 					<xsl:for-each select="image:image">
 						<li>
