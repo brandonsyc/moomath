@@ -184,6 +184,16 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://nichodon.github.io/science</loc>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/science/0001</loc>
+		<lastmod>2017-08-27</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/science/0001/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://nichodon.github.io/programs</loc>
 	</url>
 	<url>
