@@ -46,8 +46,11 @@
                 border: 0.5px solid #bbb;
                 margin: 25px 0;
             }
-            ul {
+            ol {
                 list-style: none;
+            }
+            img {
+                box-shadow: 0 0 0 5px #eee;
             }
             .main {
                 background-color: #fff;
@@ -67,12 +70,47 @@
             .text {
                 text-align: left;
             }
-            .photo img {
-                box-shadow: 0 0 0 5px #666;
+            .photo {
                 margin: 10px 0;
             }
             .caption {
                 color: #bbb;
+            }
+            ol.notes {
+                padding: 0px;
+                margin: 25px 0px;
+                list-style-type: none;
+                border-bottom: solid 1px #ccc;
+            }
+
+            ol.notes li.note {
+                border-top: solid 1px #ccc;
+                padding: 10px;
+            }
+
+            ol.notes li.note img.avatar {
+                vertical-align: -4px;
+                margin-right: 10px;
+                width: 16px;
+                height: 16px;
+            }
+
+            ol.notes li.note span.action {
+                font-weight: bold;
+            }
+
+            ol.notes li.note .answer_content {
+                font-weight: normal;
+            }
+
+            ol.notes li.note blockquote {
+                border-color: #eee;
+                padding: 4px 10px;
+                margin: 10px 0px 0px 25px;
+            }
+
+            ol.notes li.note blockquote a {
+                text-decoration: none;
             }
         </style>
     </head>
@@ -83,16 +121,17 @@
             
             <div class="break"></div>
             
-            <ul>
+            <ol>
                 {block:Posts}
-                    <!--{block:Text}
-                        <li class="text">
+                    {block:Text}
+                        <li class="post text">
                             {block:Title}
                                 <a href="{Permalink}" class="title">{Title}</a>
+                            <h3><a href="{Permalink}">{Title}</a></h3>
                             {/block:Title}
                             {Body}
                         </li>
-                    {/block:Text}-->
+                    {/block:Text}
                     {block:Photo}
                         <li class="photo">
                             <img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
@@ -169,7 +208,7 @@
                         </li>
                     {/block:Audio}-->
                 {/block:Posts}
-            </ul>
+            </ol>
 
             {block:Pagination}
                 {block:PreviousPage}
