@@ -14,20 +14,22 @@
 			<body>
 				<div id="top"></div>
 				<div class="content">
-					<h1>Sitemap</h1>
-					<hr></hr>
-					<xsl:for-each select="s:urlset/s:url">
-						<h3><xsl:value-of select="s:loc" /></h3>
-						<p><strong>Last modification:</strong> <xsl:value-of select="s:lastmod" /></p>
-						<p><strong>Images:</strong></p>
-						<ol>
-							<xsl:for-each select="image:image">
-								<li>
-									<xsl:value-of select="image:loc" />
-								</li>
-							</xsl:for-each>
-						</ol>
-					</xsl:for-each>
+					<div class="article">
+						<h1>Sitemap</h1>
+						<hr></hr>
+						<xsl:for-each select="s:urlset/s:url">
+							<h3><xsl:value-of select="s:loc" /></h3>
+							<p><strong>Last modification: </strong><xsl:value-of select="s:lastmod" /></p>
+							<p><strong>Images:</strong></p>
+							<ol>
+								<xsl:for-each select="image:image">
+									<li>
+										<xsl:value-of select="image:loc" />
+									</li>
+								</xsl:for-each>
+							</ol>
+						</xsl:for-each>
+					</div>
 				</div>
 				<div id="bottom"></div>
 				<script src="frame.js"></script>
