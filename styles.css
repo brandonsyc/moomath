@@ -17,7 +17,7 @@ figcaption,
 label,
 input,
 button,
-li {
+li:not(.code) {
 	color: #333;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	letter-spacing: 1px;
@@ -26,7 +26,7 @@ li {
 	padding: 10px;
 	text-align: center;
 }
-ol li {
+ol li:not(.code) {
 	overflow-x: visible;
 	text-align: left;
 }
@@ -47,7 +47,7 @@ figcaption,
 label,
 input,
 button,
-li {
+li:not(.code) {
 	font-size: 15px;
 	line-height: 25px;
 }

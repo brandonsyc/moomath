@@ -24,6 +24,7 @@
 											<xsl:value-of select="s:loc" />
 											<br></br>
 											<strong>Last modification: </strong>
+											<br></br>
 											<xsl:value-of select="s:lastmod" />
 											<strong>Images: </strong>
 											<ol>
