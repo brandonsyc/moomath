@@ -16,14 +16,17 @@
 				<div class="content">
 					<div class="article">
 						<h1>Sitemap</h1>
+						<p>All links that can be found on Google Search are listed below.</p>
 						<div class="code">
 							<table>
 								<xsl:for-each select="s:urlset/s:url">
 									<tr>
 										<td>
-											<xsl:value-of select="s:loc" />
+											<strong><xsl:value-of select="s:loc" /></strong>
 											<br></br>
 											Last modification: <xsl:value-of select="s:lastmod" />
+											<br></br>
+											Priority: <xsl:value-of select="s:priority" />
 											<br></br>
 											Images:
 											<ol>
