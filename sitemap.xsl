@@ -16,29 +16,31 @@
 				<div class="content">
 					<div class="article">
 						<h1>Sitemap</h1>
-						<table>
-							<tr>
-								<th>URL</th>
-								<th>Last Mod</th>
-							</tr>
-							<xsl:for-each select="s:urlset/s:url">
+						<div class="code">
+							<table>
 								<tr>
-									<td>
-										<xsl:value-of select="s:loc" />
-									</td>
-									<td>
-										<xsl:value-of select="s:lastmod" />
-										<ol>
-											<xsl:for-each select="image:image">
-												<li>
-													<xsl:value-of select="image:loc" /> (Image)
-												</li>
-											</xsl:for-each>
-										</ol>
-									</td>
+									<th>URL</th>
+									<th>Last Mod</th>
 								</tr>
-							</xsl:for-each>
-						</table>
+								<xsl:for-each select="s:urlset/s:url">
+									<tr>
+										<td>
+											<xsl:value-of select="s:loc" />
+											<ol>
+												<xsl:for-each select="image:image">
+													<li>
+														<xsl:value-of select="image:loc" /> (Image)
+													</li>
+												</xsl:for-each>
+											</ol>
+										</td>
+										<td>
+											<xsl:value-of select="s:lastmod" />
+										</td>
+									</tr>
+								</xsl:for-each>
+							</table>
+						</div>
 					</div>
 				</div>
 				<div id="bottom"></div>
