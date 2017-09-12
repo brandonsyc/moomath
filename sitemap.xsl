@@ -18,14 +18,15 @@
 					<hr></hr>
 					<xsl:for-each select="s:urlset/s:url">
 						<h3><xsl:value-of select="s:loc" /></h3>
-						<p>Last modification: <xsl:value-of select="s:lastmod" /></p>
-						<ul>
+						<p><strong>Last modification:</strong> <xsl:value-of select="s:lastmod" /></p>
+						<p><strong>Images:</strong></p>
+						<ol>
 							<xsl:for-each select="image:image">
 								<li>
-									<xsl:value-of select="image:loc" /> (Image)
+									<xsl:value-of select="image:loc" />
 								</li>
 							</xsl:for-each>
-						</ul>
+						</ol>
 					</xsl:for-each>
 				</div>
 				<div id="bottom"></div>

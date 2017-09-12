@@ -88,17 +88,6 @@ ul li:hover {
 li a {
 	color: #333;
 }
-ul li ul {
-	background-color: #fff;
-	margin: 10px;
-}
-ul li ul li {
-	font-size: 10px;
-	text-align: right;
-}
-ul li ul li:hover {
-	background-color: #eee;
-}
 th,
 td {
 	border-bottom: 1px solid #ddd;
