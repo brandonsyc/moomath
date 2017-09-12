@@ -23,10 +23,9 @@
 										<td>
 											<xsl:value-of select="s:loc" />
 											<br></br>
-											<strong>Last modification: </strong>
+											Last modification: <xsl:value-of select="s:lastmod" />
 											<br></br>
-											<xsl:value-of select="s:lastmod" />
-											<strong>Images: </strong>
+											Images:
 											<ol>
 												<xsl:for-each select="image:image">
 													<li>
