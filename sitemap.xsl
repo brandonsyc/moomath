@@ -22,19 +22,21 @@
 								<th>Last Mod</th>
 							</tr>
 							<xsl:for-each select="s:urlset/s:url">
-								<td>
-									<xsl:value-of select="s:loc" />
-								</td>
-								<td>
-									<xsl:value-of select="s:lastmod" />
-									<ol>
-										<xsl:for-each select="image:image">
-											<li>
-												<xsl:value-of select="image:loc" /> (Image)
-											</li>
-										</xsl:for-each>
-									</ol>
-								</td>
+								<tr>
+									<td>
+										<xsl:value-of select="s:loc" />
+									</td>
+									<td>
+										<xsl:value-of select="s:lastmod" />
+										<ol>
+											<xsl:for-each select="image:image">
+												<li>
+													<xsl:value-of select="image:loc" /> (Image)
+												</li>
+											</xsl:for-each>
+										</ol>
+									</td>
+								</tr>
 							</xsl:for-each>
 						</table>
 					</div>
