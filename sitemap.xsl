@@ -18,24 +18,21 @@
 						<h1>Sitemap</h1>
 						<div class="code">
 							<table>
-								<tr>
-									<th>URL</th>
-									<th>Last Mod</th>
-								</tr>
 								<xsl:for-each select="s:urlset/s:url">
 									<tr>
 										<td>
 											<xsl:value-of select="s:loc" />
+											<br></br>
+											<strong>Last modification: </strong>
+											<xsl:value-of select="s:lastmod" />
+											<strong>Images: </strong>
 											<ol>
 												<xsl:for-each select="image:image">
 													<li>
-														<xsl:value-of select="image:loc" /> (Image)
+														<xsl:value-of select="image:loc" />
 													</li>
 												</xsl:for-each>
 											</ol>
-										</td>
-										<td>
-											<xsl:value-of select="s:lastmod" />
 										</td>
 									</tr>
 								</xsl:for-each>
