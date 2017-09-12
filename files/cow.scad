@@ -1,4 +1,4 @@
-$fn=50;
+$fn=65;
 
 //body
 color([1,0.875,0.75])
@@ -48,7 +48,7 @@ rotate ([5,0,5]) {
     }
 }
 
-//translate([-55,0,0]) tal();
+translate([-55,0,0]) rotate([0,-5,0]) tal();
 
 module huv() {
 	hull() {
@@ -120,7 +120,11 @@ module ir() {
 }
 
 module tal() {
-    resize([5,5,5]) sphere(10);
-	translate([0,0,-50]) resize([5,5,50]) cylinder(10,r=10);
-    translate([0,0,-50]) resize([5,5,5]) sphere(10);
+    color([1,0.875,0.75]) {
+        resize([5,5,10]) sphere(10);
+        translate([0,0,-25]) resize([5,5,25]) cylinder(10,r=10);
+        translate([0,0,-25]) resize([5,5,10]) sphere(10);
+    }
+    color([0.25,0.25,0.25]) 
+    translate([0,0,-25]) rotate([180,0,0]) hor();
 }
