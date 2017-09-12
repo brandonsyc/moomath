@@ -22,10 +22,10 @@
 								<th>Last Mod</th>
 							</tr>
 							<xsl:for-each select="s:urlset/s:url">
-								<tr>
+								<td>
 									<xsl:value-of select="s:loc" />
-								</tr>
-								<tr>
+								</td>
+								<td>
 									<xsl:value-of select="s:lastmod" />
 									<ol>
 										<xsl:for-each select="image:image">
@@ -34,7 +34,7 @@
 											</li>
 										</xsl:for-each>
 									</ol>
-								</tr>
+								</td>
 							</xsl:for-each>
 						</table>
 					</div>
