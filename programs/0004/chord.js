@@ -12,9 +12,17 @@ var chords = [[4, 7],
 			  [4, 7, 11],
 			  [4, 8, 10],
 			  [4, 8, 11],
+			  [2, 4, 7, 10],
+			  [2, 4, 5, 7, 10],
+			  [2, 4, 5, 7, 9, 10],
+			  [1, 4, 7, 10],
+			  [3, 4, 7, 10],
+			  [2, 4, 6, 7, 10],
+			  [2, 4, 5, 7, 8, 10],
 			  [2, 4, 7],
 			  [4, 5, 7],
-			  [5, 7]
+			  [5, 7],
+			  [2, 5, 7, 10]
 			 ];
 var names = [["Major Triad", "<sup></sup>"], 
 			 ["Minor Triad", "m<sup></sup>"], 
@@ -28,9 +36,17 @@ var names = [["Major Triad", "<sup></sup>"],
 			 ["Major Seventh", "M<sup>7</sup>"],
 			 ["Augmented Seventh", "+<sup>7</sup>"],
 			 ["Augmented Major Seventh", "+<sup>M7</sup>"],
+			 ["Dominant Ninth", "<sup>9</sup>"],
+			 ["Dominant Eleventh", "<sup>11</sup>"],
+			 ["Dominant Thirteenth", "<sup>13</sup>"],
+			 ["Seventh Minor Ninth", "<sup>7&minus;9</sup>"],
+			 ["Seventh Sharp Ninth", "<sup>7+9</sup>"],
+			 ["Seventh Augmented Eleventh", "<sup>7+11</sup>"],
+			 ["Seventh Diminished Thirteenth", "<sup>7-13</sup>"],
 			 ["Add Nine", "<sup>2</sup>"],
 			 ["Add Fourth", "<sup>4</sup>"],
-			 ["Suspended Fourth", "<sup>sus4</sup>"]
+			 ["Suspended Fourth", "<sup>sus4</sup>"],
+			 ["Jazz Sus", "<sup>9sus4</sup>"]
 			];
 var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 var indices;
@@ -38,6 +54,7 @@ var audio = [];
 for (var i = 36; i < 61; i++) {
 	audio.push(new Audio("sounds/" + i + ".wav"));
 }
+
 function toggle(x)
 {
 	"use strict";
