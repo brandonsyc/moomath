@@ -50,6 +50,7 @@ var names = [["Major Triad", "<sup></sup>"],
 			];
 var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 var indices;
+var base;
 var audio = [];
 for (var i = 36; i < 61; i++) {
 	audio.push(new Audio("sounds/" + i + ".wav"));
@@ -66,14 +67,20 @@ function toggle(x)
         key.className = key.className.replace(" down", "");
     }
 	states[x] = !states[x];
-   	together();
 	
-	indices.sort(function(a, b) {
-		return a - b;
-	});
-	
-	var chord = "Not a chord<sup></sup>";
-	for (var i = 0; i < indices.length; i++) {
+    base = together(true);
+	var chord = check();
+	if (chord === "Not a chord<sup></sup>") {
+		together(false);
+		indices.splice(indices.indexOf(base), 1);
+		chord = check();
+	}
+	document.getElementById("output").innerHTML = chord;
+}
+
+function check() {
+	"use strict";
+	for (i = 0; i < indices.length; i++) {
 		var dist = [];
 		for (var j = 1; j < indices.length; j++) {
 			dist.push(indices[j] - indices[0]);
@@ -95,26 +102,35 @@ function toggle(x)
 			}
 		}
 		if (index > -1) {
-			chord = names[j][0] + " (" + notes[((indices[0] % 12) + 12) % 12] + names[j][1] + ")";
-			break;
+			return names[j][0] + " (" + 
+				notes[((indices[0] % 12) + 12) % 12] + names[j][1] + 
+				"/" + notes[base % 12] + ")";
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
 		indices.pop();
 	}
-	document.getElementById("output").innerHTML = chord;
+	return "Not a chord<sup></sup>";
 }
 
-function together() { 
+function together(x) { 
 	"use strict";
 	indices = [];
 	var i = -1;
+	var out = -1;
 	while ((i = states.indexOf(true, i + 1)) !== -1) {
 		if (indices.indexOf(i % 12) === -1) {
         	indices.push(i % 12);
+			if (out === -1) {
+				out = i % 12;
+			}
 		}
-		if (!document.getElementById('toggle').checked) {
+		if (!document.getElementById('toggle').checked && x) {
 			audio[i].currentTime = 0;
 			audio[i].play();
 		}
     }
+	indices.sort(function(a, b) {
+		return a - b;
+	});
+	return out;
 }
