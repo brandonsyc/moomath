@@ -72,7 +72,6 @@ function toggle(x)
 	var chord = check();
 	if (chord === "Not a chord<sup></sup>") {
 		together(false);
-		indices.splice(indices.indexOf(base), 1);
 		chord = check();
 	}
 	document.getElementById("output").innerHTML = chord;
@@ -85,6 +84,7 @@ function check() {
 		for (var j = 1; j < indices.length; j++) {
 			dist.push(indices[j] - indices[0]);
 		}
+		console.log(dist);
 		var index = -1;
 		for (j = 0; j < chords.length; j++) {
 			var found = true;
@@ -119,7 +119,9 @@ function together(x) {
 	var out = -1;
 	while ((i = states.indexOf(true, i + 1)) !== -1) {
 		if (indices.indexOf(i % 12) === -1) {
-        	indices.push(i % 12);
+			if (x || out > -1) {
+        		indices.push(i % 12);
+			}
 			if (out === -1) {
 				out = i % 12;
 			}
