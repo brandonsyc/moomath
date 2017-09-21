@@ -4,6 +4,7 @@
 	xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 	<url>
 		<loc>https://nichodon.github.io</loc>
+		<priority>1.0</priority>
 		<image:image>
 			<image:loc>https://nichodon.github.io/images/favicon.png</image:loc>
 		</image:image>
@@ -13,12 +14,13 @@
 	</url>
 	<url>
 		<loc>https://nichodon.github.io/fractals</loc>
+		<priority>0.75</priority>
 	</url>
 	<url>
 		<loc>https://nichodon.github.io/fractals/0001</loc>
 		<lastmod>2017-05-18</lastmod>
 		<image:image>
-			<image:loc>https://nichodon.github.io/fractals/0001/images/complextalbe1.png</image:loc>
+			<image:loc>https://nichodon.github.io/fractals/0001/images/complextable1.png</image:loc>
 		</image:image>
 		<image:image>
 			<image:loc>https://nichodon.github.io/fractals/0001/images/fractal1.png</image:loc>
@@ -184,7 +186,19 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://nichodon.github.io/science</loc>
+		<priority>0.75</priority>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/science/0001</loc>
+		<lastmod>2017-08-27</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/science/0001/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://nichodon.github.io/programs</loc>
+		<priority>0.75</priority>
 	</url>
 	<url>
 		<loc>https://nichodon.github.io/programs/0001</loc>
@@ -232,7 +246,19 @@
 		<loc>https://nichodon.github.io/coming_soon</loc>
 	</url>
 	<url>
+		<loc>https://nichodon.github.io/other</loc>
+		<priority>0.75</priority>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/other/0001</loc>
+		<lastmod>2017-07-19</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/other/0001/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://nichodon.github.io/about</loc>
+		<priority>1.0</priority>
 		<image:image>
 			<image:loc>https://nichodon.github.io/images/back.png</image:loc>
 		</image:image>

@@ -75,7 +75,7 @@
 
 	<h1> [ ] </h1>
 	<p>Brackets are used to define a loop. When the program reaches a closing bracket, it goes back to its matching bracket if the current pointer value is not 0; otherwise, it continues. For example, if our tape was initialized as 0, 4, 5, 6, 2 and our pointer was at index 4 (value 6), the command [&lt;] would repeatedly move the pointer left until an integer with value 0 is reached, ending at index 0.</p>
-
+	
 	<h1> / </h1>
 	<p>Pairs of forward slashes containing a name denote a "marker." Markers are specific to this implementation and only used for development convenience, so they will not work in other interpreters. If you type in some marker, say, /udder/, then if you enter udder into the Next Marker input, the program will run until it reaches the marker. This is useful for debugging purposes.</p>
 
@@ -95,13 +95,14 @@
 
   <p>Important Note: All of these snippets are generated for fast execution time, not shortness. As such, many of them are trivial, but are included here for convenience purposes.</p>
   <h3>Constant</h3>
-  <p>Sets the value under the pointer to the number.</p>
+  <p>Sets the value under the pointer to the number (mod 255).</p>
   <label for="constant-optimizing">Integer</label>
   <input id="constant-optimizing" type="number" value=25></input>
   <input id="constant-optimizing-zero" type="checkbox" checked></input>
   <label for="constant-optimizing-zero">Assume Start Value is 0</label>
-	<button id="constant-optimizing-copy">Copy to Clipboard</button>
-  <pre id="constant-optimizing-output">+++++++++++++++++++++++++</pre>
+  <label for="constant-optimizing-right">Available Zero Blocks on Right</label>
+  <input id="constant-optimizing-right" type="number" value=0></input>
+  <pre id="constant-optimizing-output"></pre>
 
 
 

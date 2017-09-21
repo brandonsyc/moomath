@@ -1,0 +1,231 @@
+<!doctype html>
+<!--
+    ______ _______ _____   _____   ________
+   / ____//__  __// ___ \ / ___ \ / __  __ \
+  / /__     / /  / /  / // /__/ // / / / / /
+  \__  \   / /  / /  / //   ___// / /_/ / /
+ ____/ /  / /  / /__/ // /\ \  / /     / /
+/_____/  /_/   \_____//_/  \_\/_/     /_/
+
+                _____ __   __   __ _______ _____
+               / ___// /  / /  / //__  __// ___/  
+              / /__ / /  / /  / /   / /  / /__
+             / ___// /  / /  / /   / /  / ___/
+            / /   / /__/ /__/ /   / /  / /__
+           /_/   /____/\_____/   /_/  /____/
+
+-->
+<html>
+    <head>
+        <title>{Title}</title>
+        <link rel="shortcut icon" href="{Favicon}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="{MetaDescription}" />
+        <style type="text/css">
+            * {
+	            font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	            letter-spacing: 1px;
+	            margin: 0;
+	            padding: 0;
+            }
+            body {
+                background-color: #09b;
+            }
+            h1 {
+                font-weight: 100;
+            }
+            a {
+                color: #06b;
+                text-decoration: none;
+                transition: 0.25s;
+            }
+            a:hover {
+                text-shadow: 0 0 10px #bbb;
+            }
+            hr {
+                border: 0.5px solid #bbb;
+                margin: 25px 0;
+            }
+            ol {
+                list-style: none;
+            }
+            img {
+                box-shadow: 0 0 0 5px #eee;
+            }
+            .main {
+                background-color: #fff;
+                border-radius: 25px;
+                height: calc(100% - 200px);
+                margin: 50px;
+                padding: 50px;
+                text-align: center;
+                width: calc(100% - 200px);
+            }
+            .title {
+                font-size: 28px;
+            }
+            .break {
+                height: 50px;
+            }
+            .text {
+                text-align: left;
+            }
+            .photo {
+                margin: 10px 0;
+            }
+            .caption {
+                color: #bbb;
+            }
+            ol.notes {
+                padding: 0px;
+                margin: 25px 0px;
+                list-style-type: none;
+                border-bottom: solid 1px #ccc;
+            }
+
+            ol.notes li.note {
+                border-top: solid 1px #ccc;
+                padding: 10px;
+            }
+
+            ol.notes li.note img.avatar {
+                vertical-align: -4px;
+                margin-right: 10px;
+                width: 16px;
+                height: 16px;
+            }
+
+            ol.notes li.note span.action {
+                font-weight: bold;
+            }
+
+            ol.notes li.note .answer_content {
+                font-weight: normal;
+            }
+
+            ol.notes li.note blockquote {
+                border-color: #eee;
+                padding: 4px 10px;
+                margin: 10px 0px 0px 25px;
+            }
+
+            ol.notes li.note blockquote a {
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <h1>{Title}</h1><hr />
+            <p>{Description}</p>
+            
+            <div class="break"></div>
+            
+            <ol>
+                {block:Posts}
+                    {block:Text}
+                        <li class="post text">
+                            {block:Title}
+                                <a href="{Permalink}" class="title">{Title}</a>
+                            <h3><a href="{Permalink}">{Title}</a></h3>
+                            {/block:Title}
+                            {Body}
+                        </li>
+                    {/block:Text}
+                    {block:Photo}
+                        <li class="photo">
+                            <img src="{PhotoURL-500}" alt="{PhotoAlt}"/>
+                            {block:Caption}
+                                <p class="caption">{Caption}</p>
+                            {/block:Caption}
+                        </li>
+                    {/block:Photo}
+                    <!--{block:Panorama}
+                        <li class="post panorama">
+                            {LinkOpenTag}
+                            <img src="{PhotoURL-Panorama}" alt="{PhotoAlt}"/>
+                            {LinkCloseTag}
+                            {block:Caption}
+                                <div class="caption">{Caption}</div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Panorama}
+                    {block:Photoset}
+                        <li class="post photoset">
+                            {Photoset-500}
+                            {block:Caption}
+                                <div class="caption">{Caption}</div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Photoset}
+                    {block:Quote}
+                        <li class="post quote">
+                            "{Quote}"
+                            {block:Source}
+                                <div class="source">{Source}</div>
+                            {/block:Source}
+                        </li>
+                    {/block:Quote}
+                    {block:Link}
+                        <li class="post link">
+                            <a href="{URL}" class="link" {Target}>{Name}</a>
+                            {block:Description}
+                                <div class="description">{Description}</div>
+                            {/block:Description}
+                        </li>
+                    {/block:Link}
+                    {block:Chat}
+                        <li class="post chat">
+                            {block:Title}
+                                <h3><a href="{Permalink}">{Title}</a></h3>
+                            {/block:Title}
+                            <ul class="chat">
+                                {block:Lines}
+                                    <li class="{Alt} user_{UserNumber}">
+                                        {block:Label}
+                                            <span class="label">{Label}</span>
+                                        {/block:Label}
+                                        {Line}
+                                    </li>
+                                {/block:Lines}
+                            </ul>
+                        </li>
+                    {/block:Chat}
+                    {block:Video}
+                        <li class="post video">
+                            {Video-500}
+                            {block:Caption}
+                                <div class="caption">{Caption}</div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Video}
+                    {block:Audio}
+                        <li class="post audio">
+                            {AudioEmbed}
+                            {block:Caption}
+                                <div class="caption">{Caption}</div>
+                            {/block:Caption}
+                        </li>
+                    {/block:Audio}-->
+                {/block:Posts}
+            </ol>
+
+            {block:Pagination}
+                {block:PreviousPage}
+                    <a href="{PreviousPage}">Previous</a>
+                {/block:PreviousPage}
+                {block:JumpPagination length="5"}
+                    {block:CurrentPage}
+                        <span class="current_page">{PageNumber}</span>
+                    {/block:CurrentPage}
+                    {block:JumpPage}
+                        <a class="jump_page" href="{URL}">{PageNumber}</a>
+                    {/block:JumpPage}
+                {/block:JumpPagination}
+                {block:NextPage}
+                    <a href="{NextPage}">Next</a>
+                {/block:NextPage}
+            {/block:Pagination}
+        </div>
+    </body>
+</html>
