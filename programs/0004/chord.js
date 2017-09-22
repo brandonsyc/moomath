@@ -48,7 +48,6 @@ var names = [["Major Triad", "<sup></sup>"],
 			 ["Suspended Fourth", "<sup>sus4</sup>"],
 			 ["Jazz Sus", "<sup>9sus4</sup>"]
 			];
-var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
 var scale = [["A"],
 			 ["A&#9839;", "B&#9837;"],
 			 ["B", "C&#9837;"],
@@ -172,14 +171,26 @@ function together(x) {
 
 function key() {
 	"use strict";
-	var children = document.getElementById("piano").children;
 	tonic = document.querySelector('input[name="key"]:checked').id;
+	update();
+	var children = document.getElementById("piano").children;
+	for (var i = 0; i < children.length; i++) {
+		if (children[i].className !== "break") {
+			children[i].children[0].style.opacity = 0;
+		}
+	}
+	setTimeout(fade, 200);
+}
+
+function fade() {
+	"use strict";
 	var j = 0;
+	var children = document.getElementById("piano").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].className !== "break") {
 			children[i].children[0].innerHTML = scale[j % 12][code[tonic][j % 12]];
+			children[i].children[0].style.opacity = 1;
 			j++;
 		}
 	}
-	update();
 }

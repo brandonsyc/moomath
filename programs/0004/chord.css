@@ -23,6 +23,9 @@
 	vertical-align: top;
 	width: 5%;
 }
+.key p {
+	transition: 0.2s;
+}
 .key:not(.black) p {
 	margin-top: 350px;
 }
