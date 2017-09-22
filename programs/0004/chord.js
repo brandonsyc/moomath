@@ -70,12 +70,12 @@ for (var i = 36; i < 61; i++) {
 }
 var code = {};
 code.cf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.gf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.df = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.af = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.ef = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.bf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
-code.f = [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.gf = [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.df = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.af = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.ef = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.bf = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.f = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
 code.c = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
 code.g = [0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1];
 code.d = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1];
@@ -134,8 +134,8 @@ function check() {
 		}
 		if (index > -1) {
 			var mod = ((indices[0] % 12) + 12) % 12;
-			return names[j][0] + " (" + 
-				scale[mod][code[tonic][mod]] + names[j][1] + 
+			console.log(tonic);
+			return names[j][0] + " (" + scale[mod][code[tonic][mod]] + names[j][1] + 
 				"/" + scale[base % 12][code[tonic][mod]] + ")";
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
@@ -173,10 +173,17 @@ function key() {
 	"use strict";
 	tonic = document.querySelector('input[name="key"]:checked').id;
 	update();
+	var j = 0;
 	var children = document.getElementById("piano").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].className !== "break") {
-			children[i].children[0].style.opacity = 0;
+			var old = children[i].children[0].innerHTML;
+			children[i].children[0].innerHTML = scale[j % 12][code[tonic][j % 12]];
+			if (children[i].children[0].innerHTML !== old) {
+				children[i].children[0].style.opacity = 0;
+			}
+			children[i].children[0].innerHTML = old;
+			j++;
 		}
 	}
 	setTimeout(fade, 200);
@@ -194,3 +201,22 @@ function fade() {
 		}
 	}
 }
+
+/*
+
+censure v n
+an official reprimand; to critize or disapprove
+
+chastise v
+to discipline, scold, punish
+
+chronic adj
+constant, habitual
+
+clandestine adj
+done in secrecy or concealment
+
+commiserate v
+to feel or express sympathy, condolence
+
+*/
