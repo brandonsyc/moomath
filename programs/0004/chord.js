@@ -49,12 +49,42 @@ var names = [["Major Triad", "<sup></sup>"],
 			 ["Jazz Sus", "<sup>9sus4</sup>"]
 			];
 var notes = ["A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"];
+var scale = [["A"],
+			 ["A&#9839;", "B&#9837;"],
+			 ["B", "C&#9837;"],
+			 ["B&#9839;", "C"],
+			 ["C&#9839;", "D&#9837;"],
+			 ["D"],
+			 ["D&#9839;", "E&#9837;"],
+			 ["E", "F&#9837;"],
+			 ["E&#9839;", "F"],
+			 ["F&#9839;", "G&#9837;"],
+			 ["G"],
+			 ["G&#9839;", "A&#9837;"]
+			];
 var indices;
 var base;
+var tonic = "c";
 var audio = [];
 for (var i = 36; i < 61; i++) {
 	audio.push(new Audio("sounds/" + i + ".wav"));
 }
+var code = {};
+code.cf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.gf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.df = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.af = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.ef = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.bf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1];
+code.f = [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.c = [0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 1];
+code.g = [0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1];
+code.d = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1];
+code.a = [0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0];
+code.e = [0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
+code.b = [0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
+code.fs = [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0];
+code.cs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
 function toggle(x)
 {
@@ -67,7 +97,10 @@ function toggle(x)
         key.className = key.className.replace(" down", "");
     }
 	states[x] = !states[x];
-	
+	update();
+}
+
+function update() {
     base = together(true);
 	var chord = check();
 	if (chord === "Not a chord<sup></sup>") {
@@ -84,7 +117,6 @@ function check() {
 		for (var j = 1; j < indices.length; j++) {
 			dist.push(indices[j] - indices[0]);
 		}
-		console.log(dist);
 		var index = -1;
 		for (j = 0; j < chords.length; j++) {
 			var found = true;
@@ -102,9 +134,10 @@ function check() {
 			}
 		}
 		if (index > -1) {
+			var mod = ((indices[0] % 12) + 12) % 12;
 			return names[j][0] + " (" + 
-				notes[((indices[0] % 12) + 12) % 12] + names[j][1] + 
-				"/" + notes[base % 12] + ")";
+				scale[mod][code[tonic][mod]] + names[j][1] + 
+				"/" + scale[base % 12][code[tonic][mod]] + ")";
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
 		indices.pop();
@@ -126,7 +159,7 @@ function together(x) {
 				out = i % 12;
 			}
 		}
-		if (!document.getElementById('toggle').checked && x) {
+		if (!document.getElementById("toggle").checked && x) {
 			audio[i].currentTime = 0;
 			audio[i].play();
 		}
@@ -135,4 +168,18 @@ function together(x) {
 		return a - b;
 	});
 	return out;
+}
+
+function key() {
+	"use strict";
+	var children = document.getElementById("piano").children;
+	tonic = document.querySelector('input[name="key"]:checked').id;
+	var j = 0;
+	for (var i = 0; i < children.length; i++) {
+		if (children[i].className !== "break") {
+			children[i].children[0].innerHTML = scale[j % 12][code[tonic][j % 12]];
+			j++;
+		}
+	}
+	update();
 }
