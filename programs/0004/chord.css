@@ -2,7 +2,6 @@
 .piano {
 	font-size: 0;
 	height: 400px;
-	user-select: none;
 }
 .key {
 	border-top: 1px solid #eee;
@@ -26,6 +25,9 @@
 .key p {
 	transition: 0.2s;
 }
+.key p::selection {
+	background: none;
+}
 .key:not(.black) p {
 	margin-top: 350px;
 }
@@ -35,11 +37,11 @@
 }
 .down {
 	background-color: #07a;
-	box-shadow: inset 0px -1px 0px 5px rgba(51, 51, 51, 0.1);
+	box-shadow: inset 0px -2px 0px 5px rgba(51, 51, 51, 0.1);
 }
 .down:not(.black) {
 	background-color: #eee;
-	box-shadow: inset 0px -4px 0px 1px rgba(51, 51, 51, 0.1);
+	box-shadow: inset 0px -2px 0px 1px rgba(51, 51, 51, 0.1);
 }
 .black:not(.down) {
 	background-color: #08b;
