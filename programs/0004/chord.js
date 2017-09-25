@@ -1,6 +1,7 @@
 var states = [false, false, false, false, false, false, false, false, false, 
 			  false, false, false, false, false, false, false, false, 
 			  false, false, false, false, false, false, false, false];
+
 var chords = [[4, 7],
 			  [3, 7],
 			  [4, 8],
@@ -25,6 +26,7 @@ var chords = [[4, 7],
 			  [5, 7],
 			  [2, 5, 7, 10]
 			 ];
+
 var names = [["Major Triad", "<sup></sup>"], 
 			 ["Minor Triad", "m<sup></sup>"], 
 			 ["Augmented Triad", "aug<sup></sup>"],
@@ -49,6 +51,7 @@ var names = [["Major Triad", "<sup></sup>"],
 			 ["Suspended Fourth", "<sup>sus4</sup>"],
 			 ["Jazz Sus", "<sup>9sus4</sup>"]
 			];
+
 var scale = [["A"],
 			 ["A&#9839;", "B&#9837;"],
 			 ["B", "C&#9837;"],
@@ -62,11 +65,27 @@ var scale = [["A"],
 			 ["G"],
 			 ["G&#9839;", "A&#9837;"]
 			];
-var numerals = ["I", "&#9837;II", "ii", "&#9837;III", "iii", "IV", 
-				"&#9837;v", "V", "&#9837;VI", "vi", "&#9837;VII", "vii"];
+
+var numerals = [["I", "III"], ["&#9837;II", "&#9837;IV"], ["ii", "iv"],
+				["&#9837;III", "&#9837;V"], ["iii", "v"], ["IV", "VI"], 
+				["&#9837;v", "&#9837;vii"], ["V", "VII"],
+				["&#9837;VI", "&#9837;I"], ["vi", "i"],
+				["&#9837;VII", "&#9837;II"], ["vii", "ii"]
+			   ];
+
+var types = [["C&#9837;", "A&#9837;"], ["G&#9837;", "E&#9837;"],
+			 ["D&#9837;", "B&#9837;"], ["A&#9837;", "F"],
+			 ["E&#9837;","C"], ["B&#9837;", "G"], ["F", "D"],
+			 ["C", "A"], ["G", "E"], ["D", "B"],
+			 ["A", "F&#9839;"], ["E", "C&#9839;"],
+			 ["B", "G&#9839;"], ["F&#9839;", "D&#9839;"],
+			 ["C&#9839;", "A&#9839;"]
+			];
+
 var indices;
 var base;
 var tonic = "c";
+var size = 0;
 var audio = [];
 for (var i = 36; i < 61; i++) {
 	audio.push(new Audio("sounds/" + i + ".wav"));
@@ -138,7 +157,7 @@ function check() {
 		if (index > -1) {
 			var mod = ((indices[0] % 12) + 12) % 12;
 			var interval = base % 12 - code[tonic][12];
-			return names[j][0] + " on " + numerals[((interval % 12) + 12) % 12] + 
+			return names[j][0] + " on " + numerals[((interval % 12) + 12) % 12][size] + 
 				" (" + scale[mod][code[tonic][mod]] + names[j][1] + 
 				"/" + scale[base % 12][code[tonic][base % 12]] + ")";
 		}
@@ -209,7 +228,15 @@ function fade() {
 function mode() {
 	"use strict";
 	var hepta = document.querySelector('input[name="mode"]:checked').id;
+	size = ["major", "minor"].indexOf(hepta);
+	update();
 	console.log(hepta);
+	var j = 0;
+	var choices = document.getElementById("mode").children;
+	for (var i = 2; i < choices.length; i += 2) {
+		choices[i].innerHTML = types[j][["major", "minor"].indexOf(hepta)];
+		j++;
+	}
 }
 
 /*
