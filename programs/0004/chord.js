@@ -1,5 +1,6 @@
-// JavaScript Document
-var states = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+var states = [false, false, false, false, false, false, false, false, false, 
+			  false, false, false, false, false, false, false, false, 
+			  false, false, false, false, false, false, false, false];
 var chords = [[4, 7],
 			  [3, 7],
 			  [4, 8],
@@ -61,6 +62,8 @@ var scale = [["A"],
 			 ["G"],
 			 ["G&#9839;", "A&#9837;"]
 			];
+var numerals = ["I", "&#9837;II", "ii", "&#9837;III", "iii", "IV", 
+				"&#9837;v", "V", "&#9837;VI", "vi", "&#9837;VII", "vii"];
 var indices;
 var base;
 var tonic = "c";
@@ -134,8 +137,9 @@ function check() {
 		}
 		if (index > -1) {
 			var mod = ((indices[0] % 12) + 12) % 12;
-			console.log((((base % 12 - code[tonic][12]) % 12) + 12) % 12);
-			return names[j][0] + " (" + scale[mod][code[tonic][mod]] + names[j][1] + 
+			var interval = base % 12 - code[tonic][12];
+			return names[j][0] + " on " + numerals[((interval % 12) + 12) % 12] + 
+				" (" + scale[mod][code[tonic][mod]] + names[j][1] + 
 				"/" + scale[base % 12][code[tonic][base % 12]] + ")";
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
@@ -200,6 +204,12 @@ function fade() {
 			j++;
 		}
 	}
+}
+
+function mode() {
+	"use strict";
+	var hepta = document.querySelector('input[name="mode"]:checked').id;
+	console.log(hepta);
 }
 
 /*

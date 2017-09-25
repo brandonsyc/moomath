@@ -20,7 +20,7 @@
 <script src="chord.js"></script>
 
 <div class="box">
-	<p>This is a widget that recognizes what chord you input. Click the keys to toggle.</p><hr>
+	<p>Click the keyboard to toggle notes. Recognizes type of chord and base note.</p><hr>
 	<div class="piano" id="piano">
 		<div class="key" onClick="toggle(0)">
 			<p>A</p>
@@ -138,6 +138,13 @@
 		<label for="cs">C&#9839;</label>
 	</div>
 	<br>
+	<div onChange="mode()">
+		<input type="radio" name="mode" id="major" checked>
+		<label for="major">Major</label>
+		<input type="radio" name="mode" id="minor">
+		<label for="minor">Minor</label>
+	</div>
+	<hr>
 	<input type="checkbox" id="toggle" class="embed" title="toggle">
 	<label for="toggle">Mute</label>
 	<button onClick="together(true)">Play Chord</button>
