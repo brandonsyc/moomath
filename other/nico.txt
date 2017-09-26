@@ -1,1 +1,1 @@
-bash: afplay /System/Library/Sounds/Funk.aiff
+bash:afplay /System/Library/Sounds/Funk.aiff
