@@ -1,5 +1,5 @@
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
 
 ctx.strokeStyle = "#fff";
 ctx.fillStyle = "#fff";
@@ -32,6 +32,7 @@ class Edge {
       ctx.moveTo(this.x1, this.y1);
     }
     ctx.lineTo(this.x2, this.y2);
+    if (startStroke) ctx.stroke();
   }
 
   translate(x, y) {
@@ -48,6 +49,74 @@ class Edge {
   slope() {
     return (this.y2 - this.y1) / (this.x2 - this.x1);
   }
+
+  bounceIntersection(x1, y1, x2, y2) {
+    let intersectionPoint = getLineIntersection(x1, y1, x2, y2, this.x1, this.y1, this.x2, this.y2);
+    if (intersectionPoint) {
+      return {loc: intersectionPoint, angle: this.angle(), dist2: dist2(intersectionPoint[0], intersectionPoint[1], x1, y1)};
+    }
+    return null;
+  }
+
+  extend(dist) {
+    let angle = this.angle() - Math.PI / 2;
+    let transX = Math.cos(angle) * dist;
+    let transY = Math.sin(angle) * dist;
+    return new Edge(this.x1 + transX, this.y1 + transY, this.x2 + transX, this.y2 + transY);
+  }
+}
+
+function Circle(x, y, radius, precision) {
+  var circleEdges = [];
+  for (let i = 0; i < precision; i++) {
+    circleEdges.push(new Edge(x + Math.cos((i - 1) / precision * 2 * Math.PI),
+                              y + Math.sin((i - 1) / precision * 2 * Math.PI),
+                              x + Math.cos(i / precision * 2 * Math.PI),
+                              y + Math.sin(i / precision * 2 * Math.PI)));
+  }
+  return new Polygon(circleEdges, x, y);
+}
+
+class EdgeCircle {
+  constructor(x, y, angle, radius) {
+    this.x = x;
+    this.y = y;
+
+    this.angle = angle;
+
+    this.radius = 1.001 * radius;
+  }
+
+  bounceIntersection(x1, y1, x2, y2) {
+    let p1 = this.x;
+    let p2 = this.y;
+
+    let t = ((p1 - x1) * (x2 - x1) + (p2 - y1) * (y2 - y1)) / ((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+    let k1 = x1 + t * (x2 - x1);
+    let k2 = y1 + t * (y2 - y1);
+
+    let pl = (this.radius * this.radius - (k1 - p1) * (k1 - p1) - (k2 - p2) * (k2 - p2)) / ((k1 - x1) * (k1 - x1) + (k2 - y1) * (k2 - y1));
+
+    if (pl < 0 || pl === Infinity || pl === -Infinity) return null;
+
+    let l = 1 - Math.sqrt(pl);
+
+    let loc = [x1 + l * (k1 - x1), y1 + l * (k2 - y1)];
+    let dist = dist2(loc[0], loc[1], x1, y1);
+    if (dist >= dist2(x1, y1, x2, y2)) return null;
+
+    let angle = Math.atan2(p2 - loc[1], p1 - loc[0]) + Math.PI / 2;
+
+    //console.log(loc, angle, dist, x1, y1, x2, y2, p1, p2);
+
+    return {loc: loc, angle: angle, dist2: dist};
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+    ctx.stroke();
+  }
 }
 
 class Polygon {
@@ -60,7 +129,9 @@ class Polygon {
     }
 
     this.calculateBoundingBox();
-    this.boundingBoxes = [];
+    this.boundingBoxes = {};
+    this.boundingPhysicsList = {};
+    this.cornerObjects = {};
   }
 
   edge(index) {
@@ -68,19 +139,21 @@ class Polygon {
   }
 
   intersects(lineX1, lineY1, lineX2, lineY2) {
-    for (var edge = 0; edge < this.edges.length; edge++) {
+    for (let edge = 0; edge < this.edges.length; edge++) {
       if (getLineIntersection(this.edges[edge].x1, this.edges[edge].y1,
           this.edges[edge].x2, this.edges[edge].y2,
           lineX1, lineY1, lineX2, lineY2)) {
 
-        return {edge: edge};
+        return {
+          edge: edge
+        };
       }
     }
   }
 
   draw(fillIn = true) {
     ctx.beginPath();
-    for (var edge = 0; edge < this.edges.length; edge++) {
+    for (let edge = 0; edge < this.edges.length; edge++) {
       this.edges[edge].draw(!edge);
     }
     ctx.stroke();
@@ -88,7 +161,7 @@ class Polygon {
   }
 
   translate(x, y) {
-    for (var edge = 0; edge < this.edges.length; edge++) {
+    for (let edge = 0; edge < this.edges.length; edge++) {
       this.edges[edge].translate(x, y);
     }
     this.centerX += x;
@@ -109,15 +182,15 @@ class Polygon {
   }
 
   calculateBoundingBox() {
-    var maxEdgeX = -Infinity;
-    var minEdgeX = Infinity;
+    let maxEdgeX = -Infinity;
+    let minEdgeX = Infinity;
 
-    var maxEdgeY = -Infinity;
-    var minEdgeY = Infinity;
+    let maxEdgeY = -Infinity;
+    let minEdgeY = Infinity;
 
-    var currentEdge = null;
+    let currentEdge = null;
 
-    for (var edge = 0; edge < this.edges.length; edge++) {
+    for (let edge = 0; edge < this.edges.length; edge++) {
       currentEdge = this.edges[edge];
 
       if (currentEdge.x1 > maxEdgeX) {
@@ -181,13 +254,29 @@ class Polygon {
     }
   }
 
+  boundingPhysics(radius) {
+    if (this.boundingPhysicsList[radius]) {
+      return this.boundingPhysicsList[radius];
+    } else {
+      let newBoundingPhysics = [];
+
+      for (let edge = 0; edge < this.edges.length; edge++) {
+        newBoundingPhysics.push(this.edges[edge].extend(radius));
+        newBoundingPhysics.push(new EdgeCircle(this.edges[edge].x1, this.edges[edge].y1, 0, radius));
+      }
+
+      this.boundingPhysicsList[radius] = newBoundingPhysics;
+      return this.boundingPhysicsList[radius];
+    }
+  }
+
   contains(x, y) {
     if (x < this.minX || x > this.maxX || y < this.minY || y > this.maxY) {
       return false;
     }
 
-    for (var e = 0; e < this.edges.length; e++) {
-      var currentEdge = this.edges[e];
+    for (let e = 0; e < this.edges.length; e++) {
+      let currentEdge = this.edges[e];
 
       if (getLineIntersection(currentEdge.x1, currentEdge.y1, currentEdge.x2, currentEdge.y2, x, y, 40000, 40000)) {
         return true;
@@ -198,16 +287,46 @@ class Polygon {
   }
 
   corners(corner) {
-    var edge1 = this.edges[corner];
-    var edge2 = (corner === this.edges.length - 1 ? this.edges[0] : this.edges[corner + 1]);
-    return {x: edge1.x2, y: edge1.y2, edge1: edge1, edge2: edge2};
+    if (this.cornerObjects[corner]) {
+      return this.cornerObjects[corner];
+    } else {
+      let edge1 = this.edges[corner];
+      let edge2 = (corner === this.edges.length - 1 ? this.edges[0] : this.edges[corner + 1]);
+      this.cornerObjects[corner] = {
+        x: edge1.x2,
+        y: edge1.y2,
+        edge1: edge1,
+        edge2: edge2
+      };
+
+      return this.cornerObjects[corner];
+    }
+  }
+
+  bounceIntersection(x1, y1, x2, y2) {
+    let best = {dist2: Infinity};
+    let nextBest;
+
+    for (let edge = 0; edge < this.edges.length; edge++) {
+      nextBest = this.edges[edge].bounceIntersection(x1, y1, x2, y2);
+      if (nextBest && nextBest.dist2 < best.dist2) {
+        best = nextBest;
+      }
+    }
+
+    return best;
+  }
+
+  interact(mx1, my1, mx2, my2, radius) {
+    let boundingBoxF = this.boundingBox(radius);
+
   }
 }
 
 class GameObject {
   constructor(polygon, lives = 500, styles) {
 
-    var styles = styles || {};
+    styles = styles || {};
 
     this.shape = polygon;
     this.lives = lives;
@@ -238,6 +357,57 @@ class GameObject {
   }
 }
 
+class Physics {
+  constructor(canvas, ctx) {
+    this.canvas = canvas;
+    this.ctx = ctx || canvas.getContext('2d');
+
+    this.balls = [];
+    this.objects = [];
+  }
+
+  addBall(ball) {
+    this.balls.push(ball);
+  }
+
+  removeBall(index) {
+    this.balls.splice(index);
+  }
+
+  addObject(obj) {
+    this.objects.push(obj);
+  }
+
+  removeObject(index) {
+    this.objects.splice(index);
+  }
+
+  get ballCount() {
+    return this.balls.length;
+  }
+
+  get objectCount() {
+    return this.objects.length;
+  }
+
+  draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let obj = 0; obj < this.objects.length; obj++) {
+      let pF = this.objects[obj].shape.boundingPhysics(10);
+      for (let p = 0; p < pF.length; p++) {
+        pF[p].draw(true);
+      }
+      this.objects[obj].draw();
+    }
+    for (let ball = 0; ball < this.balls.length; ball++) {
+      ctx.fillStyle = "#fff";
+      this.balls[ball].draw();
+      this.balls[ball].move(this.objects);
+    }
+  }
+}
+
 class Ball {
   constructor(x, y, angle, magnitude, radius = 10) {
     this.x = x;
@@ -248,7 +418,7 @@ class Ball {
   }
 
   get movementEdge() {
-    var movementV = this.movementVector;
+    let movementV = this.movementVector;
 
     return [this.x, this.y,
       this.x + movementV[0], this.y + movementV[1]
@@ -262,15 +432,15 @@ class Ball {
   }
 
   set movementVector(value) {
-    var x = value[0];
-    var y = value[1];
+    let x = value[0];
+    let y = value[1];
 
     this.angle = Math.atan2(y, x);
     this.magnitude = Math.hypot(x, y);
   }
 
   draw() {
-    ctx.fillStyle = '#fff';
+    ctx.strokeStyle = '#fff';
 
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -281,112 +451,117 @@ class Ball {
   }
 
   get movementLine() {
-    if (this.movementLineEdge && false) {
-      return this.movementLineEdge;
-    } else {
-      this.movementLineEdge = new Edge(this.x, this.y,
+    return new Edge(this.x, this.y,
         this.x + this.magnitude * Math.cos(this.angle),
         this.y + this.magnitude * Math.sin(this.angle));
-      return this.movementLineEdge;
+  }
+
+  interacting(mx1, my1, mx2, my2, polygon) {
+    if (polygon.boundingBox(this.radius).contains(mx1, my1) ||
+      polygon.boundingBox(this.radius).intersects(mx1, my1, mx2, my2)) {
+
+      return true;
     }
+    return false;
   }
 
-  interacting(movement,polygon) {
-    return polygon.boundingBox(this.radius).contains(movement[0],movement[1]) ||
-      polygon.boundingBox(this.radius).intersects(movement[0], movement[1],
-        movement[2], movement[3]);
-  }
+  move(geometries) {
+    let geometry,edgeF,boundingP,bnceInter;
 
-  move(geometries, movement, preventCollide) {
-    // Assumes geometries are smaller than the ball in minimum dimension
+    let bouncing = true;
+    let newAngle = this.angle;
+    let newMag = this.magnitude;
+    let newX = this.x;
+    let newY = this.y;
 
-    var movement = movement || this.movementEdge;
+    let mx1,my1,mx2,my2;
 
-    var closestInteractionDist = Infinity;
-    var closestInteraction;
-    var closestInteractionPoly;
+    let iters = 0;
 
-    var tX, tY, currentEdge, currentAngle, tangentDelta, intersection, dist;
+    let lastInteractPoly,lastInteractEdgeF;
 
-    for (var j = 0; j < geometries.length; j++) {
-      if (preventCollide === j) continue;
+    while (bouncing && iters < 50) {
+      iters++;
+      bouncing = false;
 
-      if (this.interacting(movement,geometries[j].shape)) {
+      let bestBnceInter;
+      let bestBnceInterDist2 = Infinity;
+      let bestBncePoly;
+      let bestBnceEdgeF;
 
-        for (var corner = 0; corner < geometries[j].shape.edges.length - 1; corner++) {
-          var currentCorner = geometries[j].shape.corners(corner);
+      for (let geom = 0; geom < geometries.length; geom++) {
 
-          // console.log(currentCorner.edge1.angle(), currentCorner.edge2.angle());
-        }
+        mx1 = newX;
+        my1 = newY;
+        mx2 = newX + Math.cos(newAngle) * newMag;
+        my2 = newY + Math.sin(newAngle) * newMag;
 
-        for (var edge = 0; edge < geometries[j].shape.edges.length; edge++) {
-          currentEdge = geometries[j].shape.edges[edge];
-          currentAngle = currentEdge.angle() + Math.PI / 2;
+        geometry = geometries[geom].shape;
 
-          // TODO: Reject angles more than 180 deg from movement angle
+        if (this.interacting(mx1,my1,mx2,my2,geometry)) {
+          boundingP = geometry.boundingPhysics(this.radius);
 
-          tX = this.radius * Math.cos(currentAngle);
-          tY = this.radius * Math.sin(currentAngle);
-
-          intersection = getLineIntersection(currentEdge.x1, currentEdge.y1, currentEdge.x2, currentEdge.y2, movement[0] + tX, movement[1] + tY, movement[2] + tX, movement[3] + tY);
-
-          if (intersection) {
-            var dist = (intersection[0] - this.x - tX) * (intersection[0] - this.x - tX) +
-              (intersection[1] - this.y - tY) * (intersection[1] - this.y - tY);
-
-            if (dist < closestInteractionDist) {
-              closestInteractionDist = dist;
-              closestInteractionPoly = j;
-              closestInteraction = {loc: [intersection[0] - tX, intersection[1] - tY], angle: currentAngle};
+          for (edgeF = 0; edgeF < boundingP.length; edgeF++) {
+            if (lastInteractPoly === geom && lastInteractEdgeF === edgeF) {
+              continue;
             }
 
-            ctx.strokeStyle = "#f0f";
-            ctx.beginPath();
-            ctx.moveTo(movement[0] + tX, movement[1] + tY);
-            ctx.lineTo(movement[2] + 15*tX, movement[3] + 15*tY);
-            ctx.stroke();
+            bnceInter = boundingP[edgeF].bounceIntersection(mx1,my1,mx2,my2);
+
+            if (bnceInter && bnceInter.dist2 < bestBnceInterDist2) {
+              bestBnceInterDist2 = bnceInter.dist2;
+              bestBnceInter = bnceInter;
+              bestBncePoly = geom;
+              bestBnceEdgeF = edgeF;
+            }
           }
         }
       }
+
+      if (bestBnceInter) {
+        newAngle = 2 * bestBnceInter.angle - newAngle;
+        newMag = newMag - Math.sqrt(bestBnceInter.dist2);
+
+        newX = bestBnceInter.loc[0];
+        newY = bestBnceInter.loc[1];
+
+        lastInteractPoly = bestBncePoly;
+        lastInteractEdgeF = bestBnceEdgeF;
+
+        bouncing = true;
+      }
     }
 
-    if (closestInteraction) {
-      var newAngle = 2 * (closestInteraction.angle - Math.PI / 2 - this.angle) + this.angle;
-      var newDist = this.magnitude - Math.sqrt(closestInteractionDist);
+    this.x = mx2;
+    this.y = my2;
 
-      this.x = closestInteraction.loc[0];
-      this.y = closestInteraction.loc[1];
-      this.angle = newAngle;
-
-      tX = this.x + newDist * Math.cos(newAngle);
-      tY = this.y + newDist * Math.sin(newAngle);
-
-      //console.log([this.x, this.y, tX, tY]);
-
-      this.move(geometries, [this.x,this.y, tX, tY], closestInteractionPoly);
-      return;
-    } else {
-      this.x = movement[2];
-      this.y = movement[3];
-    }
+    this.angle = newAngle;
   }
 }
 
+function square(x) {
+  return x * x;
+}
+
+function dist2(x1, y1, x2, y2) {
+  return (y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1);
+}
+
 function getLineIntersection(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
-  var s1_x, s1_y, s2_x, s2_y;
+  let s1_x, s1_y, s2_x, s2_y;
   s1_x = p1_x - p0_x;
   s1_y = p1_y - p0_y;
   s2_x = p3_x - p2_x;
   s2_y = p3_y - p2_y;
 
-  var s, t;
+  let s, t;
 
   s = (-s1_y * (p0_x - p2_x) + s1_x * (p0_y - p2_y)) / (-s2_x * s1_y + s1_x * s2_y);
   t = (s2_x * (p0_y - p2_y) - s2_y * (p0_x - p2_x)) / (-s2_x * s1_y + s1_x * s2_y);
 
-  if (s >= 0 && s <= 1 && t >= 0 && t <= 1) {
-    var intX = p0_x + (t * s1_x);
-    var intY = p0_y + (t * s1_y);
+  if (s >= -1e-6 && s <= 1 + 1e-6 && t >= 1e-6 && t <= 1 + 1e-6) {
+    let intX = p0_x + (t * s1_x);
+    let intY = p0_y + (t * s1_y);
     return [intX, intY];
   }
 
@@ -394,7 +569,7 @@ function getLineIntersection(p0_x, p0_y, p1_x, p1_y, p2_x, p2_y, p3_x, p3_y) {
 }
 
 function Rectangle(x, y, width, height) {
-  var rectEdges = [
+  let rectEdges = [
     new Edge(x, y, x + width, y),
     new Edge(x + width, y, x + width, y + height),
     new Edge(x + width, y + height, x, y + height),
@@ -404,29 +579,29 @@ function Rectangle(x, y, width, height) {
 }
 
 function InverseRectangle(x, y, width, height) {
-  var rectEdges = [
-    new Edge(x, y, x, y+height),
-    new Edge(x, y+height, x+width, y+height),
-    new Edge(x+width, y+height, x+width, y),
-    new Edge(x+width, y, x, y)
+  let rectEdges = [
+    new Edge(x, y, x, y + height),
+    new Edge(x, y + height, x + width, y + height),
+    new Edge(x + width, y + height, x + width, y),
+    new Edge(x + width, y, x, y)
   ];
   return new Polygon(rectEdges, x + width / 2, y + height / 2);
 }
 
 function RoundedRectangle(x, y, width, height, roundedFactor = 0.2, circlePrecision = 10) {
-  var radius = roundedFactor * width;
+  let radius = roundedFactor * width;
 
-  var rectEdges = [
+  let rectEdges = [
     new Edge(x + radius, y, x + width - radius, y)
   ];
 
-  var prevX = x + width - radius;
-  var prevY = y;
+  let prevX = x + width - radius;
+  let prevY = y;
 
-  var newX = 0;
-  var newY = 0;
+  let newX = 0;
+  let newY = 0;
 
-  for (var angle = -Math.PI / 2; angle <= 0; angle += 0.5 * Math.PI / circlePrecision) {
+  for (let angle = -Math.PI / 2; angle <= 0; angle += 0.5 * Math.PI / circlePrecision) {
     newX = x + width - radius + radius * Math.cos(angle);
     newY = y + radius + radius * Math.sin(angle);
 
@@ -441,7 +616,7 @@ function RoundedRectangle(x, y, width, height, roundedFactor = 0.2, circlePrecis
   prevX = x + width;
   prevY = y + height - radius;
 
-  for (var angle = 0; angle <= Math.PI / 2; angle += 0.5 * Math.PI / circlePrecision) {
+  for (let angle = 0; angle <= Math.PI / 2; angle += 0.5 * Math.PI / circlePrecision) {
     newX = x + width - radius + radius * Math.cos(angle);
     newY = y + height - radius + radius * Math.sin(angle);
 
@@ -456,7 +631,7 @@ function RoundedRectangle(x, y, width, height, roundedFactor = 0.2, circlePrecis
   prevX = x + radius;
   prevY = y + height;
 
-  for (var angle = Math.PI / 2; angle <= Math.PI; angle += 0.5 * Math.PI / circlePrecision) {
+  for (let angle = Math.PI / 2; angle <= Math.PI; angle += 0.5 * Math.PI / circlePrecision) {
     newX = x + radius + radius * Math.cos(angle);
     newY = y + height - radius + radius * Math.sin(angle);
 
@@ -471,7 +646,7 @@ function RoundedRectangle(x, y, width, height, roundedFactor = 0.2, circlePrecis
   prevX = x;
   prevY = y + radius;
 
-  for (var angle = Math.PI; angle <= 1.5 * Math.PI; angle += 0.5 * Math.PI / circlePrecision) {
+  for (let angle = Math.PI; angle <= 1.5 * Math.PI; angle += 0.5 * Math.PI / circlePrecision) {
     newX = x + radius + radius * Math.cos(angle);
     newY = y + radius + radius * Math.sin(angle);
 
@@ -484,35 +659,41 @@ function RoundedRectangle(x, y, width, height, roundedFactor = 0.2, circlePrecis
   return new Polygon(rectEdges, x + width / 2, y + height / 2);
 }
 
-var objects = [];
-var balls = [];
+let physics = new Physics(canvas, ctx);
 
 function update() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  for (var obj = 0; obj < objects.length; obj++) {
-    objects[obj].shape.boundingBox(10).draw(false);
-    objects[obj].draw();
-  }
-  for (var ball = 0; ball < balls.length; ball++) {
-    balls[ball].draw();
-    balls[ball].move(objects);
-  }
+  physics.draw();
   requestAnimationFrame(update);
 }
 
-var colors = ["#f30", "#f60", "#f90", "#fc0", "#6f0", "#09f"];
-colors.reverse();
-
-for (i = 0; i < 3; i++) {
-  balls.push(new Ball(150, 150, i, 5));
+function Triangle(p1, p2, p3) {
+  return new Polygon([new Edge(p1[0], p1[1], p2[0], p2[1]),
+                      new Edge(p2[0], p2[1], p3[0], p3[1]),
+                      new Edge(p3[0], p3[1], p1[0], p1[1])],
+                     (p1[0] + p2[0] + p3[0]) / 3, (p1[1] + p2[1] + p3[1]) / 3);
 }
 
-objects.push(new GameObject(RoundedRectangle(50, 50, 50, 50)));
-objects.push(new GameObject(RoundedRectangle(300, 230, 50, 50)));
-objects.push(new GameObject(RoundedRectangle(250, 50, 50, 50)));
+let colors = ["#f30", "#f60", "#f90", "#fc0", "#6f0", "#09f"];
+colors.reverse();
 
-var totalBounding = new GameObject(InverseRectangle(0,0,canvas.width,canvas.height), Infinity, {display: false});
-objects.push(totalBounding);
+/**setTimeout(function udder() {
+  physics.addBall(new Ball(canvas.width / 2, 300, -0.4, Math.random()/0.1 * 0.5));
+  setTimeout(udder, 60);
+}, 250);**/
+
+physics.addBall(new Ball(canvas.width / 2, 300, -0.4, 3));
+
+for (i = -5; i < 6; i++) {
+  physics.addObject(new GameObject(Rectangle(canvas.width / 2 - 45 / 2 + 100 * i, 100, 45, 45)));
+}
+
+physics.addObject(new GameObject(Triangle([100, 250], [160, 250], [160, 300])));
+
+let totalBounding = new GameObject(InverseRectangle(0, 0, canvas.width, canvas.height), Infinity, {
+  display: false
+});
+
+physics.addObject(totalBounding);
 
 update();
