@@ -20,13 +20,13 @@
 <script src="chord.js"></script>
 
 <div class="box">
-	<p>This is a widget that recognizes what chord you input. Click the keys to toggle.</p><hr>
-	<div class="piano">
+	<p>Click the keyboard to toggle notes. Recognizes type of chord and base note.</p><hr>
+	<div class="piano" id="piano">
 		<div class="key" onClick="toggle(0)">
 			<p>A</p>
 		</div>
 		<div class="key black" onClick="toggle(1)">
-			<p>A#</p>
+			<p>B&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(2)">
 			<p>B</p>
@@ -35,13 +35,13 @@
 			<p>C</p>
 		</div>
 		<div class="key black" onClick="toggle(4)">
-			<p>C#</p>
+			<p>D&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(5)">
 			<p>D</p>
 		</div>
 		<div class="key black" onClick="toggle(6)">
-			<p>D#</p>
+			<p>E&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(7)">
 			<p>E</p>
@@ -51,19 +51,19 @@
 			<p>F</p>
 		</div>
 		<div class="key black" onClick="toggle(9)">
-			<p>F#</p>
+			<p>G&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(10)">
 			<p>G</p>
 		</div>
 		<div class="key black" onClick="toggle(11)">
-			<p>G#</p>
+			<p>A&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(12)">
 			<p>A</p>
 		</div>
 		<div class="key black" onClick="toggle(13)">
-			<p>A#</p>
+			<p>B&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(14)">
 			<p>B</p>
@@ -73,13 +73,13 @@
 			<p>C</p>
 		</div>
 		<div class="key black" onClick="toggle(16)">
-			<p>C#</p>
+			<p>D&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(17)">
 			<p>D</p>
 		</div>
 		<div class="key black" onClick="toggle(18)">
-			<p>D#</p>
+			<p>E&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(19)">
 			<p>E</p>
@@ -88,13 +88,13 @@
 			<p>F</p>
 		</div>
 		<div class="key black" onClick="toggle(21)">
-			<p>F#</p>
+			<p>G&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(22)">
 			<p>G</p>
 		</div>
 		<div class="key black" onClick="toggle(23)">
-			<p>G#</p>
+			<p>A&#9837;</p>
 		</div>
 		<div class="key" onClick="toggle(24)">
 			<p>A</p>
@@ -103,6 +103,47 @@
 
 	<p>Chord:</p>
 	<p id="output">Not a chord<sup></sup></p>
+	<hr>
+	<div onChange="key()" id="mode">
+		<label>Key:</label>
+		<input type="radio" name="key" id="cf">
+		<label for="cf">C&#9837;</label>
+		<input type="radio" name="key" id="gf">
+		<label for="gf">G&#9837;</label>
+		<input type="radio" name="key" id="df">
+		<label for="df">D&#9837;</label>
+		<input type="radio" name="key" id="af">
+		<label for="af">A&#9837;</label>
+		<input type="radio" name="key" id="ef">
+		<label for="ef">E&#9837;</label>
+		<input type="radio" name="key" id="bf">
+		<label for="bf">B&#9837;</label>
+		<input type="radio" name="key" id="f">
+		<label for="f">F</label>
+		<input type="radio" name="key" id="c" checked>
+		<label for="c">C</label>
+		<input type="radio" name="key" id="g">
+		<label for="g">G</label>
+		<input type="radio" name="key" id="d">
+		<label for="d">D</label>
+		<input type="radio" name="key" id="a">
+		<label for="a">A</label>
+		<input type="radio" name="key" id="e">
+		<label for="e">E</label>
+		<input type="radio" name="key" id="b">
+		<label for="b">B</label>
+		<input type="radio" name="key" id="fs">
+		<label for="fs">F&#9839;</label>
+		<input type="radio" name="key" id="cs">
+		<label for="cs">C&#9839;</label>
+	</div>
+	<br>
+	<div onChange="mode()">
+		<input type="radio" name="mode" id="major" checked>
+		<label for="major">Major</label>
+		<input type="radio" name="mode" id="minor">
+		<label for="minor">Minor</label>
+	</div>
 	<hr>
 	<input type="checkbox" id="toggle" class="embed" title="toggle">
 	<label for="toggle">Mute</label>
