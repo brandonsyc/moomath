@@ -66,6 +66,17 @@ class Edge {
   }
 }
 
+function Circle(x, y, radius, precision) {
+  var circleEdges = [];
+  for (let i = 0; i < precision; i++) {
+    circleEdges.push(new Edge(x + Math.cos((i - 1) / precision * 2 * Math.PI),
+                              y + Math.sin((i - 1) / precision * 2 * Math.PI),
+                              x + Math.cos(i / precision * 2 * Math.PI),
+                              y + Math.sin(i / precision * 2 * Math.PI)));
+  }
+  return new Polygon(circleEdges, x, y);
+}
+
 class EdgeCircle {
   constructor(x, y, angle, radius) {
     this.x = x;
@@ -73,7 +84,7 @@ class EdgeCircle {
 
     this.angle = angle;
 
-    this.radius = radius;
+    this.radius = 1.001 * radius;
   }
 
   bounceIntersection(x1, y1, x2, y2) {
@@ -84,23 +95,19 @@ class EdgeCircle {
     let k1 = x1 + t * (x2 - x1);
     let k2 = y1 + t * (y2 - y1);
 
-    let pl = (this.radius * this.radius - (k1 - p1) * (k1 - p1) - (k2 - p2) * (k2 - p2)) / ((p1 - x1) * (p1 - x1) + (p2 - y1) * (p2 - y1));
+    let pl = (this.radius * this.radius - (k1 - p1) * (k1 - p1) - (k2 - p2) * (k2 - p2)) / ((k1 - x1) * (k1 - x1) + (k2 - y1) * (k2 - y1));
 
     if (pl < 0 || pl === Infinity || pl === -Infinity) return null;
 
     let l = 1 - Math.sqrt(pl);
 
-    if (l < 0) return null;
-
     let loc = [x1 + l * (k1 - x1), y1 + l * (k2 - y1)];
     let dist = dist2(loc[0], loc[1], x1, y1);
     if (dist >= dist2(x1, y1, x2, y2)) return null;
 
-    let angle = Math.atan2(y1 - y2, x1 - x2);
+    let angle = Math.atan2(p2 - loc[1], p1 - loc[0]) + Math.PI / 2;
 
     //console.log(loc, angle, dist, x1, y1, x2, y2, p1, p2);
-
-    return null;
 
     return {loc: loc, angle: angle, dist2: dist};
   }
@@ -255,7 +262,7 @@ class Polygon {
 
       for (let edge = 0; edge < this.edges.length; edge++) {
         newBoundingPhysics.push(this.edges[edge].extend(radius));
-        newBoundingPhysics.push(new EdgeCircle(this.edges[edge].x1, this.edges[edge].y1, (this.edges[edge].angle() + this.edges[(edge + 1) % this.edges.length].angle()) / 2, radius));
+        newBoundingPhysics.push(new EdgeCircle(this.edges[edge].x1, this.edges[edge].y1, 0, radius));
       }
 
       this.boundingPhysicsList[radius] = newBoundingPhysics;
@@ -294,6 +301,20 @@ class Polygon {
 
       return this.cornerObjects[corner];
     }
+  }
+
+  bounceIntersection(x1, y1, x2, y2) {
+    let best = {dist2: Infinity};
+    let nextBest;
+
+    for (let edge = 0; edge < this.edges.length; edge++) {
+      nextBest = this.edges[edge].bounceIntersection(x1, y1, x2, y2);
+      if (nextBest && nextBest.dist2 < best.dist2) {
+        best = nextBest;
+      }
+    }
+
+    return best;
   }
 
   interact(mx1, my1, mx2, my2, radius) {
@@ -646,6 +667,13 @@ function update() {
   requestAnimationFrame(update);
 }
 
+function Triangle(p1, p2, p3) {
+  return new Polygon([new Edge(p1[0], p1[1], p2[0], p2[1]),
+                      new Edge(p2[0], p2[1], p3[0], p3[1]),
+                      new Edge(p3[0], p3[1], p1[0], p1[1])],
+                     (p1[0] + p2[0] + p3[0]) / 3, (p1[1] + p2[1] + p3[1]) / 3);
+}
+
 let colors = ["#f30", "#f60", "#f90", "#fc0", "#6f0", "#09f"];
 colors.reverse();
 
@@ -659,6 +687,8 @@ physics.addBall(new Ball(canvas.width / 2, 300, -0.4, 3));
 for (i = -5; i < 6; i++) {
   physics.addObject(new GameObject(Rectangle(canvas.width / 2 - 45 / 2 + 100 * i, 100, 45, 45)));
 }
+
+physics.addObject(new GameObject(Triangle([100, 250], [160, 250], [160, 300])));
 
 let totalBounding = new GameObject(InverseRectangle(0, 0, canvas.width, canvas.height), Infinity, {
   display: false

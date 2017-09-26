@@ -35,10 +35,10 @@ function resetVars() {
 	"use strict";
     start = null;
     nextAt = null;
-    
+
     oneFrameCircles = [];
     queuedCircles = [];
-    
+
     beatsLater = 1;
 }
 
@@ -62,18 +62,18 @@ function togglePlayback() {
 function playBeat() {
 	"use strict";
     var drift = null;
-    
+
     /**console.log(start);
     console.log(nextAt);
     console.log(beatsLater);**/
-    
+
     if (doSubdivisions) {
         drift = (new Date().getTime() - start) % (Math.min(60000.0 / Math.max(beat1, beat2) / bpm));
     }
 	else {
         drift = (new Date().getTime() - start) % (beatsLater * 60000.0 / Math.max(beat1, beat2) / bpm);
     }
-    
+
     //console.log(drift + " ms");
     if (beat1 === -1 || beat2 === -1) {
         play = false;
@@ -83,7 +83,7 @@ function playBeat() {
     if (beatNum % (beat1 * beat2) === 0) {
         if (playAccents) {
             playSoundAsync("accent1");
-        } 
+        }
 		else {
             playSoundAsync("click1");
             playSoundAsync("click2");
@@ -111,12 +111,12 @@ function playBeat() {
     if (doSubdivisions) {
         beatNum += 1;
         nextAt += 60000.0 / Math.max(beat1, beat2) / bpm;
-    } 
+    }
 	else {
         beatNum += beatsLater;
         nextAt += beatsLater * 60000.0 / Math.max(beat1, beat2) / bpm;
     }
-    
+
     /**beatNum += 1;
     nextAt += 60000.0/Math.max(beat1,beat2)/bpm;**/
     if (play) {
@@ -138,7 +138,7 @@ function drawCircle(a, beat, beats, rad) {
 		ctx.font = "20px Arial";
         ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 89, 100 * beat + 55);
 		ctx.font = "20px Arial";
-    } 
+    }
 	else {
         ctx.fillText(String(a % ((beat === 0) ? beat1 : beat2) + 1), 1300 / beats * a + 94, 100 * beat + 55);
     }
@@ -159,12 +159,12 @@ function initializeAudio() {
     sound.setAttribute('src', "sounds/click1.mp3");
     sound.setAttribute('id', 'click1');
     document.body.appendChild(sound);
-    
+
     sound = document.createElement('audio');
     sound.setAttribute('src', "sounds/click2.mp3");
     sound.setAttribute('id', 'click2');
     document.body.appendChild(sound);
-    
+
     sound = document.createElement('audio');
     sound.setAttribute('src', "sounds/accent1.mp3");
     sound.setAttribute('id', 'accent1');
@@ -188,14 +188,14 @@ function clearCanvas() {
 function drawBeats() {
 	"use strict";
     clearCanvas();
-    
+
     updateShowFlyline();
     updateAccents();
-    
+
     for (var i = 0; i <= beat1; i++) {
         drawCircle(i, 0, beat1, 20);
     }
-    
+
     for (i = 0; i <= beat2; i++) {
         drawCircle(i, 1, beat2, 20);
     }
@@ -205,16 +205,16 @@ function updateRhythm() {
 	"use strict";
     var r1 = document.getElementById("meter1").value;
     var r2 = document.getElementById("meter2").value;
-    
+
     if (r1 % 1 === 0 && r2 % 1 === 0 && 1 <= r1 && r1 <= 50 && 1 <= r2 && r2 <= 50) {
         beat1 = r1;
         beat2 = r2;
-        
+
         play = false;
         document.getElementById("toggle").innerHTML = "Play";
-        
+
         drawBeats();
-        
+
         return;
     }
     resetVars();
@@ -253,7 +253,7 @@ function flyLine(s,back) {
 			setTimeout(function() {
 				flyLine(s - 1 / 60.0);
 			}, 1000.0 / 60.0);
-        } 
+        }
 		else {
             setTimeout(function() {
 				flyLine(s + 1 / 60.0);
@@ -288,10 +288,3 @@ function updateAccents() {
 updateRhythm();
 updateBPM();
 initializeAudio();
-
-
-
-
-
-
-
