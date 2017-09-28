@@ -21,10 +21,15 @@
 	height: 100%;
 	width: 350px;
 }
-html, body {
+html,
+body {
 	height: 100%;
 }
-html, body, ul, button, p {
+html,
+body,
+ul,
+button,
+p {
 	margin: 0;
 	padding: 0;
 	vertical-align: middle;
@@ -38,7 +43,6 @@ ul {
 li {
 	border-bottom: 1px solid #bbb;
 	border-left: none;
-	border-right: 1px solid #bbb;
 	border-top: none;
 	width: 350px;
 }
@@ -82,4 +86,22 @@ button:not(.count):hover {
 }
 button:focus {
 	outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+	#controls {
+		height: 350px;
+		width: calc(100% - 15px);
+	}	
+	ul {
+		border-bottom: 1px solid #bbb;
+		height: 100%;
+		width: calc(100% + 15px);
+	}
+	li {
+		width: calc(100% - 6.5px);
+	}
+	p {
+		width: calc(100% - 100px);
+	}
 }
