@@ -1,85 +1,85 @@
-* {
+*::-webkit-scrollbar-track {
+	opacity: 0;
+}
+*::-webkit-scrollbar {
+	opacity: 0;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.25);
+	border-radius: 10px;
+	width: 10px;
+}
+#title {
+	bottom: 10px;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	position: fixed;
+	text-align: center;
+	width: 100%;
+}
+#controls {
+	border-right: 1px solid #bbb;
+	height: 100%;
+	width: 350px;
+}
+html, body {
+	height: 100%;
+}
+html, body, ul, button, p {
 	margin: 0;
+	padding: 0;
+	vertical-align: middle;
 }
-body {
-	overflow: hidden;
-}
-#c {
-	border-left: 1px solid #ddd;
-    position: absolute;
-    height: 100%;
-	left: 300px;
-    width: calc(100% - 300px);
-}
-#user {
+ul {
+	height: 100%;
 	list-style: none;
-	position: absolute;
-	width: 260px;
+	width: 365px;
+	overflow-y: scroll;
 }
-#user li {
-	border-bottom: 1px solid #ddd;
-	color: #bbb;
-	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	margin: -1px 0 0 -40px;
-	width: 300px;
+li {
+	border-bottom: 1px solid #bbb;
+	border-left: none;
+	border-right: 1px solid #bbb;
+	border-top: none;
+	width: 350px;
 }
-.active {
-	color: #333;
+p {
+	float: left;
 }
-#xes {
-	position: absolute;
-	left: 200px;
-	list-style: none;
+.mq-editable-field {
+	border: none !important;
+	box-shadow: none !important;
+	padding: 14px 10px;
+	width: 230px;
 }
 button {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
 	color: #bbb;
-	height: 39px;
-	transition: 0.2s;
+	height: 40px;
+	float: left;
+	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+	font-size: 15px;
+	margin: 5px;
+	transition: 0.125s;
+	width: 15px;
 }
-button:hover {
-	color: #333;
+button:not(.count):hover {
+	color: #777;
+}
+.count {
+	background-color: #096;
+	border-radius: 5px;
+	color: #fff;
+	width: 40px;
+}
+.count:hover {
+	height: 45px;
+	margin: 2.5px;
+	width: 45px;
+}
+.off {
+	background-color: #bbb;
 }
 button:focus {
 	outline: none;
-}
-input {
-	border: none;
-	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	font-size: 15px;
-	padding: 10px;
-	margin-top: 1px;
-	width: 225px;
-}
-input:focus {
-	outline: none;
-}
-input:disabled {
-	background-color: rgba(0, 0, 0, 0);
-}
-#controls {
-	overflow-x: none;
-	overflow-y: auto;
-	width: 320px;
-	height: calc(100% - 100px);
-	position: absolute;
-}
-#controls::-webkit-scrollbar-track {
-	opacity: 0;
-}
-#controls::-webkit-scrollbar {
-	opacity: 0;
-}
-#controls::-webkit-scrollbar-thumb {
-	border-radius: 10px;
-	background-color: rgba(0, 0, 0, 0.25);
-}
-#render {
-	height: 100px;
-	position: absolute;
-	border-top: 1px solid #ddd;
-	width: 300px;
-	bottom: 0;
-	vertical-align: middle;
 }
