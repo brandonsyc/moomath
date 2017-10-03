@@ -14,19 +14,39 @@
 	</head>
 	
 	<body>
-		<div id="title">Marbleslides 2.0 by Moomath</div>
+		<div id="title">Moomath<br>Marbleslides 2.0</div>
 		<div id="controls">
 			<ul>
-				<li>
-					<button class="count" onClick="add()">New</button>
+				<li id="new">
+					<button class="count off" onClick="add()">New</button>
 					<div style="clear:both"></div>
 				</li>
 			</ul>
+			<div id="settings" tabindex="0">
+				<p>Color:</p>
+				<div id="hue">
+					<input id="c1" type="radio" name="color">
+					<label for="c1" onClick="color(1)"></label>
+					<input id="c2" type="radio" name="color">
+					<label for="c2" onClick="color(2)"></label>
+					<input id="c3" type="radio" name="color">
+					<label for="c3" onClick="color(3)"></label>
+					<input id="c4" type="radio" name="color">
+					<label for="c4" onClick="color(4)"></label>
+				</div>
+				<hr>
+				<p>Input:</p>
+				<input type="text" id="domain">
+			</div>
 		</div>
 		<script src="graph.js"></script>
 		<script>
+			var colors = [];
+			var equations = [];
+			var current = null;
 			var num = 1;
 			var child = document.getElementById("controls").children[0];
+			var preset = ["#096", "#08b", "#c03", "#fc0"];
 			
 			function add() {
 				var li = document.createElement("li");
@@ -47,6 +67,9 @@
 				
 				var settings = document.createElement("button");
 				settings.innerHTML = "&#9881;";
+				settings.onclick = function() {
+					configure(li);
+				};
 				li.appendChild(settings);
 				
 				var remove = document.createElement("button");
@@ -68,6 +91,29 @@
 					autoCommands: "pi tau theta sqrt"
 				}).focus();
 				num++;
+				
+				colors.push(0);
+				equations.push(li);
+				
+				document.onmouseup = function() {
+					var focused = document.activeElement;
+					while (focused.tagName !== "LI") {
+						if (focused.id === "settings") {
+							return;
+						}
+						focused = focused.parentElement;
+						if (focused === null) {
+							break;
+						}
+					}
+					if (focused !== null && focused.id === "new") {
+						focused = null;
+					}
+					if (current !== focused) {
+						hide(current);
+					}
+					current = focused;
+				}
 			}
 			
 			function toggle(x) {
@@ -78,12 +124,53 @@
 				}
 			}
 			
+			function configure(x) {
+				var settings = document.getElementById("settings");
+				var div = x.children[2];
+				if (div.classList.contains("on")) {
+					div.classList.remove("on");
+					settings.style.transform = "translate(0, 100%)";
+					child.style.height = "100%";
+				} else {
+					div.classList.add("on");
+					settings.style.transform = "translate(0, 0)";
+					child.style.height = "calc(100% - " + settings.offsetHeight + "px)";
+					
+					document.getElementById("hue").children[colors[equations.indexOf(x)] * 2].checked = true;
+					current = x;
+				}
+			}
+			
+			function hide(x) {
+				var settings = document.getElementById("settings");
+				if (x !== null) {
+					var div = x.children[2];
+					div.classList.remove("on");
+				}
+				settings.style.transform = "translate(0, 100%)";
+				child.style.height = "100%";
+			}
+			
 			function backspace(x) {
+				hide(current);
+				current = null;
+				colors.splice(equations.indexOf(x), 1);
+				equations.splice(equations.indexOf(x), 1);
 				child.removeChild(x);
 				var children = child.children;
 				for (var i = 0; i < children.length - 1; i++) {
 					children[i].children[0].innerHTML = i + 1;
 				}
+			}
+			
+			function color(x) {
+				colors[equations.indexOf(current)] = x - 1;
+				current.children[0].style.backgroundColor = preset[x - 1]
+			}
+			
+			window.onload = function() {
+				document.getElementById("title").style.opacity = 0;
+				document.getElementById("title").style.backgroundColor = "#bbb";
 			}
 			
 			add();
