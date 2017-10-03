@@ -33,6 +33,16 @@
 					<label for="c3" onClick="color(3)"></label>
 					<input id="c4" type="radio" name="color">
 					<label for="c4" onClick="color(4)"></label>
+					<input id="c5" type="radio" name="color">
+					<label for="c5" onClick="color(5)"></label>
+					<input id="c6" type="radio" name="color">
+					<label for="c6" onClick="color(6)"></label>
+					<input id="c7" type="radio" name="color">
+					<label for="c7" onClick="color(7)"></label>
+					<input id="c8" type="radio" name="color">
+					<label for="c8" onClick="color(8)"></label>
+					<input id="c9" type="radio" name="color">
+					<label for="c9" onClick="color(9)"></label>
 				</div>
 				<hr>
 				<p>Input:</p>
@@ -46,7 +56,7 @@
 			var current = null;
 			var num = 1;
 			var child = document.getElementById("controls").children[0];
-			var preset = ["#096", "#08b", "#c03", "#fc0"];
+			var preset = ["#c03", "#e62", "#fc0", "#bc5", "#096", "#098", "#08b", "#738", "#000"];
 			
 			function add() {
 				var li = document.createElement("li");
@@ -92,7 +102,7 @@
 				}).focus();
 				num++;
 				
-				colors.push(0);
+				colors.push(4);
 				equations.push(li);
 				
 				document.onmouseup = function() {
@@ -130,11 +140,11 @@
 				if (div.classList.contains("on")) {
 					div.classList.remove("on");
 					settings.style.transform = "translate(0, 100%)";
-					child.style.height = "100%";
+					document.getElementById("controls").style.height = "100%";
 				} else {
 					div.classList.add("on");
 					settings.style.transform = "translate(0, 0)";
-					child.style.height = "calc(100% - " + settings.offsetHeight + "px)";
+					document.getElementById("controls").style.height = "calc(100% - " + settings.offsetHeight + "px)";
 					
 					document.getElementById("hue").children[colors[equations.indexOf(x)] * 2].checked = true;
 					current = x;

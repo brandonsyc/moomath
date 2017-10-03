@@ -12,12 +12,16 @@
 #settings {
 	align-items: center;
 	background-color: #fff;
+	border-right: 1px solid #bbb;
 	border-top: 1px solid #bbb;
 	display: flex;
 	flex-flow: row wrap;
 	transform: translate(0, 100%);
 	transition: 0.25s;
 	padding: 10px 0;
+	bottom: 0;
+	position: fixed;
+	width: 350px;
 }
 #settings input[type="text"] {
 	border-bottom: 1px solid #bbb;
@@ -63,11 +67,7 @@
 #controls {
 	border-right: 1px solid #bbb;
 	height: 100%;
-	width: 350px;
-}
-#settings {
-	bottom: 0;
-	position: fixed;
+	transition: 0.25s;
 	width: 350px;
 }
 html,
@@ -134,25 +134,40 @@ button:not(.count):hover {
 	width: 0;
 }
 #hue label {
-	border-radius: 15px;
+	border-radius: 12.5px;
 	font-size: 0;
-	padding: 15px;
+	padding: 10px;
 	transition: 0.25s;
 }
 #hue input:checked + label {
-	box-shadow: inset 0 0 0 2.5px rgba(0, 0, 0, 0.5);
+	padding: 12.5px;
 }
 label[for="c1"] {
-	background-color: #096;
-}
-label[for="c2"] {
-	background-color: #08b;
-}
-label[for="c3"] {
 	background-color: #c03;
 }
-label[for="c4"] {
+label[for="c2"] {
+	background-color: #e62;
+}
+label[for="c3"] {
 	background-color: #fc0;
+}
+label[for="c4"] {
+	background-color: #bc5;
+}
+label[for="c5"] {
+	background-color: #096;
+}
+label[for="c6"] {
+	background-color: #098;
+}
+label[for="c7"] {
+	background-color: #08b;
+}
+label[for="c8"] {
+	background-color: #738;
+}
+label[for="c9"] {
+	background-color: #000;
 }
 .count {
 	background-color: #096;
@@ -173,8 +188,11 @@ button:focus {
 }
 
 @media only screen and (max-width: 768px) {
+	#settings {
+		width: 100%;
+	}
 	#controls {
-		height: 350px;
+		height: 350px !important;
 		width: calc(100% - 15px);
 	}	
 	ul {
