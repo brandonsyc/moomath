@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Marbleslides 2.0 by Moomath</title>
+		<title>Grapheme by Moomath</title>
 		<link rel="stylesheet" type="text/css" href="graph.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="build/mathquill.css"/>
@@ -11,10 +11,21 @@
 		<script>
 			var MQ = MathQuill.getInterface(2);
 		</script>
+		<link rel="icon" href="images/favicon.png" sizes="256x256" type="image/png">
 	</head>
 	
 	<body>
-		<div id="title">Moomath<br>Marbleslides 2.0</div>
+		<canvas></canvas>
+		<div id="bottom">
+			<button class="left">x</button>
+			<button>+</button>
+			<button class="right">y</button>
+			<button class="left">x</button>
+			<button>-</button>
+			<button class="right">y</button>
+			<button class="center">&#8635;</button>
+		</div>
+		<div id="title">Grapheme by Moomath</div>
 		<div id="controls">
 			<ul>
 				<li id="new">
@@ -56,7 +67,7 @@
 			var current = null;
 			var num = 1;
 			var child = document.getElementById("controls").children[0];
-			var preset = ["#c03", "#e62", "#fc0", "#bc5", "#096", "#098", "#08b", "#738", "#000"];
+			var preset = ["#d5415c", "#ff8a00", "#d2a600", "#53a72b", "#00ae8c", "#00aec7", "#3268b1", "#a761a3", "#0c0e0e"];
 			
 			function add() {
 				var li = document.createElement("li");

@@ -9,6 +9,14 @@
 	border-radius: 10px;
 	width: 10px;
 }
+canvas {
+	background-color: #eee;
+	position: fixed;
+	left: 351px;
+	height: 100%;
+	width: calc(100% - 351px);
+	top: 0;
+}
 #settings {
 	align-items: center;
 	background-color: #fff;
@@ -52,7 +60,7 @@
 	color: #777;
 }
 #title {
-	background-color: #096;
+	background-color: #00ae8c;
 	border-radius: 100px;
 	color: #fff;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
@@ -69,6 +77,30 @@
 	height: 100%;
 	transition: 0.25s;
 	width: 350px;
+}
+#bottom button {
+	background-color: rgba(255, 255, 255, 0.75);
+	border: 1px solid #bbb;
+	margin: 5px 0;
+	width: 50px;
+}
+.left {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-right: none !important;
+	margin-left: 5px !important;
+	width: 25px !important;
+}
+.right {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-left: none !important;
+	margin-right: 5px !important;
+	width: 25px !important;
+}
+.center {
+	border-radius: 5px;
+	margin: 5px !important;
 }
 html,
 body {
@@ -110,6 +142,11 @@ p {
 	padding: 14px 10px;
 	width: 230px;
 }
+#bottom {
+	position: fixed;
+	left: 351px;
+	bottom: 0;
+}
 button {
 	background-color: rgba(0, 0, 0, 0);
 	border: none;
@@ -143,34 +180,34 @@ button:not(.count):hover {
 	padding: 12.5px;
 }
 label[for="c1"] {
-	background-color: #c03;
+	background-color: #d5415c;
 }
 label[for="c2"] {
-	background-color: #e62;
+	background-color: #ff8a00;
 }
 label[for="c3"] {
-	background-color: #fc0;
+	background-color: #d2a600;
 }
 label[for="c4"] {
-	background-color: #bc5;
+	background-color: #53a72b;
 }
 label[for="c5"] {
-	background-color: #096;
+	background-color: #00ae8c;
 }
 label[for="c6"] {
-	background-color: #098;
+	background-color: #00aec7;
 }
 label[for="c7"] {
-	background-color: #08b;
+	background-color: #3268b1;
 }
 label[for="c8"] {
-	background-color: #738;
+	background-color: #a761a3;
 }
 label[for="c9"] {
-	background-color: #000;
+	background-color: #0c0e0e;
 }
 .count {
-	background-color: #096;
+	background-color: #00ae8c;
 	border-radius: 5px;
 	color: #fff;
 	width: 40px;
