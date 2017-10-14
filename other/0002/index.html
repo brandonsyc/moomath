@@ -24,12 +24,20 @@
 			<button>-</button>
 			<button class="right">y</button>
 			<button class="center">&#8635;</button>
+			<input id="t1" type="checkbox" name="toggle" checked>
+			<label for="t1">X-Axis</label>
+			<input id="t2" type="checkbox" name="toggle" checked>
+			<label for="t2">Y-Axis</label>
+			<input id="t3" type="checkbox" name="toggle" checked>
+			<label for="t3">Grid</label>
 		</div>
 		<div id="title">Grapheme by Moomath</div>
 		<div id="controls">
 			<ul>
 				<li id="new">
-					<button class="count off" onClick="add()">New</button>
+					<button class="count off" onClick="add()">&#119943;</button>
+					<button class="count off" onClick="add()">&#9673;</button>
+					<button class="count off" onClick="folder()">&#128447;</button>
 					<div style="clear:both"></div>
 				</li>
 			</ul>
@@ -60,7 +68,6 @@
 				<input type="text" id="domain">
 			</div>
 		</div>
-		<script src="graph.js"></script>
 		<script>
 			var colors = [];
 			var equations = [];
@@ -68,6 +75,27 @@
 			var num = 1;
 			var child = document.getElementById("controls").children[0];
 			var preset = ["#d5415c", "#ff8a00", "#d2a600", "#53a72b", "#00ae8c", "#00aec7", "#3268b1", "#a761a3", "#0c0e0e"];
+			
+			function folder() {
+				var li = document.createElement("li");
+				li.classList.add("folder");
+				
+				var count = document.createElement("button");
+				count.innerHTML = "\u{1F5BF}";
+				count.classList.add("count");
+				count.classList.add("off");
+				li.appendChild(count);
+				
+				var input = document.createElement("input");
+				input.type = "text";
+				li.appendChild(input);
+				
+				var div = document.createElement("div");
+				div.style.clear = "both";
+				li.appendChild(div);
+				
+				child.insertBefore(li, child.children[child.children.length - 1]);
+			}
 			
 			function add() {
 				var li = document.createElement("li");
@@ -115,26 +143,6 @@
 				
 				colors.push(4);
 				equations.push(li);
-				
-				document.onmouseup = function() {
-					var focused = document.activeElement;
-					while (focused.tagName !== "LI") {
-						if (focused.id === "settings") {
-							return;
-						}
-						focused = focused.parentElement;
-						if (focused === null) {
-							break;
-						}
-					}
-					if (focused !== null && focused.id === "new") {
-						focused = null;
-					}
-					if (current !== focused) {
-						hide(current);
-					}
-					current = focused;
-				}
 			}
 			
 			function toggle(x) {
@@ -192,6 +200,26 @@
 			window.onload = function() {
 				document.getElementById("title").style.opacity = 0;
 				document.getElementById("title").style.backgroundColor = "#bbb";
+			}
+				
+			document.onmouseup = function() {
+				var focused = document.activeElement;
+				while (focused.tagName !== "LI") {
+					if (focused.id === "settings") {
+						return;
+					}
+					focused = focused.parentElement;
+					if (focused === null) {
+						break;
+					}
+				}
+				if (focused !== null && (focused.id === "new" || focused.classList.contains("folder"))) {
+					focused = null;
+				}
+				if (current !== focused) {
+					hide(current);
+				}
+				current = focused;
 			}
 			
 			add();
