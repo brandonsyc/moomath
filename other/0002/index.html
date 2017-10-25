@@ -90,18 +90,32 @@
 				input.type = "text";
 				li.appendChild(input);
 				
+				var settings = document.createElement("button");
+				settings.innerHTML = "&#9660;";
+				settings.onclick = function() {
+					//
+				};
+				li.appendChild(settings);
+				
+				var remove = document.createElement("button");
+				remove.innerHTML = "&#128473;";
+				remove.onclick = function() {
+					backspace(li);	
+				};
+				li.appendChild(remove);
+				
 				var div = document.createElement("div");
 				div.style.clear = "both";
 				li.appendChild(div);
 				
 				child.insertBefore(li, child.children[child.children.length - 1]);
+				input.focus();
 			}
 			
 			function add() {
 				var li = document.createElement("li");
 				
 				var count = document.createElement("button");
-				count.innerHTML = child.children.length;
 				count.classList.add("count");
 				count.onclick = function() {
 					toggle(count);
@@ -143,6 +157,8 @@
 				
 				colors.push(4);
 				equations.push(li);
+				
+				update();
 			}
 			
 			function toggle(x) {
@@ -177,7 +193,7 @@
 					div.classList.remove("on");
 				}
 				settings.style.transform = "translate(0, 100%)";
-				child.style.height = "100%";
+				document.getElementById("controls").style.height = "100%";
 			}
 			
 			function backspace(x) {
@@ -186,9 +202,19 @@
 				colors.splice(equations.indexOf(x), 1);
 				equations.splice(equations.indexOf(x), 1);
 				child.removeChild(x);
+				update();
+			}
+			
+			function update() {
+				var j = 0;
 				var children = child.children;
 				for (var i = 0; i < children.length - 1; i++) {
-					children[i].children[0].innerHTML = i + 1;
+					if (children[i].classList.contains("folder")) {
+						
+					} else {
+						j++;
+						children[i].children[0].innerHTML = j;
+					}
 				}
 			}
 			
