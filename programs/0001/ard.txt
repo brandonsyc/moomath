@@ -1,4 +1,4 @@
-gray,gy
+gray,Gy
 rad,rad
 :
 1

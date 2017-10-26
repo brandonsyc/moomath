@@ -1,9 +1,9 @@
-centimetre per second squared,cm/s&sup2;,cm/s2,centimetres per second squared,centimeter per second squared,centimeters per second squared,gal
-foot per second squared,ft/s&sup2;,ft/s2,feet per second squared
-standard gravity,&#119892;&#8320;,g0,standard gravities
-kilometre per hour per second,km/(h&sdot;s),km/hs,kilometres per hour per second,kilometer per hour per second,kilometers per hour per second,km/h/s
-kilometre per second squared,km/s&sup2;,km/s2,kilometres per second squared,kilometer per second squared,kilometers per second squared
-metre per second squared,m/s&sup2;,m/s2,meters per second squared,meter per second squared,meters per second squared
+centimetre per second squared,cm/s<sup>2</sup>,centimetres per second squared,centimeter per second squared,centimeters per second squared
+foot per second squared,ft/s<sup>2</sup>,feet per second squared
+standard gravity,g<sub>0</sub>,standard gravities
+kilometre per hour per second,km/(h&middot;s),kilometres per hour per second,kilometer per hour per second,kilometers per hour per second
+kilometre per second squared,km/s<sup>2</sup>,kilometres per second squared,kilometer per second squared,kilometers per second squared
+metre per second squared,m/s<sup>2</sup>,metres per second squared,meter per second squared,meters per second squared
 mile per hour per second,mph/s,miles per hour per second
 :
 0.01

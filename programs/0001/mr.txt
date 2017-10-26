@@ -1,15 +1,29 @@
-gram-mole per day,g-mol/d,gram-moles per day,mole per day,mol/d,moles per day
-gram-mole per hour,g-mol/d,gram-moles per hour,mole per hour,mol/h,moles per hour
-gram-mole per minute,g-mol/min,gram-moles per minute,mole per minute,mol/min,moles per minute
-gram-mole per second,g-mol/s,gram-moles per second,mole per second,mol/s,moles per second
-kilomole per day,kmol/d,kilomoles per day
+gram-mole per day,g&#8209;mol/d,gram-moles per day,gram-mole per day,gmol/d,gram-moles per day,mole per day,mol/d,moles per day
+gram-mole per hour,g&#8209;mol/h,gram-moles per hour,gram-mole per hour,gmol/h,gram-moles per hour,mole per hour,mol/h,moles per hour
+gram-mole per minute,g&#8209;mol/min,gram-moles per minute,gram-mole per minute,gmol/min,gram-moles per minute,mole per minute,mol/min,moles per minute
+gram-mole per second,g&#8209;mol/s,gram-moles per second,gram-mole per second,gmol/s,gram-moles per second,mole per second,mol/s,moles per second
 kilomole per day,kmol/d,kilomoles per day
 kilomole per hour,kmol/h,kilomoles per hour
 kilomole per minute,kmol/min,kilomoles per minute
 kilomole per second,kmol/s,kilomoles per second
-pound-mole per day,lb-mol/d,pound-moles per day
-pound-mole per hour,lb-mol/d,pound-moles per hour
-pound-mole per minute,lb-mol/min,pound-moles per minute
-pound-mole per second,lb-mol/s,pound-moles per second
+pound-mole per day,lb&#8209;mol/d,pound-moles per day,pound-mole per day,lbmol/d,pound-moles per day
+pound-mole per hour,lb&#8209;mol/h,pound-moles per hour,pound-mole per hour,lbmol/h,pound-moles per hour
+pound-mole per minute,lb&#8209;mol/min,pound-moles per minute,pound-mole per minute,lbmol/min,pound-moles per minute
+pound-mole per second,lb&#8209;mol/s,pound-moles per second,pound-mole per second,lbmol/s,pound-moles per second
 millimole per second,mmol/s,millimoles per second
-micromole per second,&#120583;mol/s,micromoles per second,umol/s,&mu;mol/s
+micromole per second,&micro;mol/s,micromoles per second
+:
+1/86400
+1/3600
+1/60
+1
+5/432
+5/18
+50/3
+1000
+4.5359237/864
+4.5359237/36
+45.359237/6
+453.59237
+0.001
+0.000001
