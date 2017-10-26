@@ -1,0 +1,7 @@
+degree Celsius,&deg;C,degrees Celsius,kelvin,K
+degree Fahrenheit,&deg;F,degrees Fahrenheit,degree Rankine,&deg;R,degrees Rankine
+kiloelectronvolt,keV
+:
+1
+5/9
+11.604505e6

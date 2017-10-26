@@ -1,0 +1,19 @@
+brake horsepower,bhp,brake horsepower,horsepower,hp,horsepower,indicated horsepower,ihp,indicated horsepower,shaft horsepower,shp,shaft horsepower
+large calorie per day,Cal/d,large calories per day
+large calorie per hour,Cal/h,large calories per hour,kilocalorie per hour,kcal/h,kilocalories per hour
+calorie per hour,cal/h,calories per hour
+metric horsepower,CV,metric horsepower,metric horsepower,hk,metric horsepower,metric horsepower,hp,metric horsepower,metric horsepower,PS,metric horsepower
+electric horsepower,hp,electric horsepower,electrical horsepower,hp,electrical horsepower
+kilojoule per day,kJ/d,kilojoules per day
+kilojoule per hour,kJ/h,kilojoules per hour
+watt,W
+:
+745.69987158227022
+4184/(3600*24)
+4184/3600
+4.184/3600
+735.49875
+746
+1000/(3600*24)
+1000/3600
+1
