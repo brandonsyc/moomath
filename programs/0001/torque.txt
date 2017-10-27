@@ -1,5 +1,11 @@
-per litre,/l,per litre,per liter,per liter
-per gallon,/gal,per gallon
+kilogram metre,kg&middot;m,kilogram meter,kilogram force-metre,kgf&middot;m,kilogram force-meter,kilogram metre,kg&middot;m,kilogram meter,metre kilogram-force,m&middot;kg<sub>f</sub>,metre kilograms-force,meter kilogram-force,meter kilograms-force,metre kilogram-force,m&middot;kgf,metre kilograms-force,meter kilogram-force,meter kilograms-force
+pound force-foot,ft&middot;lb<sub>f</sub>,pound force-feet,pound force-foot,lb&middot;ft,pound force-feet,pound force-foot,lbf&middot;ft,pound force-feet,pound-foot,lb&middot;ft,pound-feet
+pound force-inch,lb&middot;in
+millinewton metre,mN&middot;m,millinewton meter
+newton metre,N&middot;m,newton meter
 :
-1000
-264.172052
+9.80665
+1.3558179483314004
+0.1129848290276167
+0.001
+1
