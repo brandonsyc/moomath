@@ -20,10 +20,7 @@
 <script src="convert.js"></script>
 
 <p>
-	This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.<br><br>
-	<strong>NOTE</strong>: This program is in the midst of being updated. Some features may not work as expected!<br>
-	Acceleration, apua, ard, area, ca, charge, c02puv, density, ee, epum, erd, ld, mass, mf, mfs, mr are currently up to date and will convert correctly. However, some of these might be subject to change (additions / removals of units).<br>
-	Note to self: do energy, epul, flow, force, gradient, length, etc. So much!
+	This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.
 </p>
 
 <hr>
@@ -32,21 +29,23 @@
 <label for="area">Area</label>
 <input type="radio" id="density" name="type" value="density" onClick="update()">
 <label for="density">Density</label>
-<input type="radio" id="energy" name="type" value="area" onClick="update()">
+<input type="radio" id="energy" name="type" value="energy" onClick="update()">
 <label for="energy">Energy</label>
-<input type="radio" id="force" name="type" value="area" onClick="update()">
+<input type="radio" id="force" name="type" value="force" onClick="update()">
 <label for="force">Force</label>
-<input type="radio" id="length" name="type" value="area" onClick="update()">
+<input type="radio" id="length" name="type" value="length" onClick="update()">
 <label for="length">Length</label>
 <input type="radio" id="mass" name="type" value="mass" onClick="update()">
 <label for="mass">Mass</label>
-<input type="radio" id="speed" name="type" value="area" onClick="update()">
+<input type="radio" id="speed" name="type" value="speed" onClick="update()">
 <label for="speed">Speed</label>
-<input type="radio" id="temperature" name="type" value="area" onClick="update()">
+<input type="radio" id="temperature" name="type" value="temperature" onClick="update()">
 <label for="temperature">Temperature</label>
+<input type="radio" id="volume" name="type" value="volume" onClick="update()">
+<label for="volume">Volume</label>
 <button class="mbut" onClick="more()">&#8943;</button>
 <br>
-<div class="more">
+<div class="more most">
 	<input type="radio" id="ard" name="type" value="ard" onClick="update()">
 	<label for="ard">Absorbed Radiation Dose</label>
 	<input type="radio" id="acceleration" name="type" value="acceleration" onClick="update()">
@@ -67,6 +66,10 @@
 	<label for="erd">Equivalent Radiation Dose</label>
 	<input type="radio" id="ee" name="type" value="ee" onClick="update()">
 	<label for="ee">Exhaust Emission</label>
+	<input type="radio" id="flow" name="type" value="flow" onClick="update()">
+	<label for="flow">Flow</label>
+	<input type="radio" id="gradient" name="type" value="gradient" onClick="update()">
+	<label for="gradient">Gradient</label>
 	<input type="radio" id="ld" name="type" value="ld" onClick="update()">
 	<label for="ld">Linear Density</label>
 	<input type="radio" id="mfs" name="type" value="mfs" onClick="update()">
@@ -79,6 +82,24 @@
 	<label for="mr">Molar Rate</label>
 	<input type="radio" id="pua" name="type" value="pua" onClick="update()">
 	<label for="pua">Per Unit Area</label>
+	<input type="radio" id="puv" name="type" value="puv" onClick="update()">
+	<label for="puv">Per Unit Volume</label>
+	<input type="radio" id="power" name="type" value="power" onClick="update()">
+	<label for="power">Power</label>
+	<input type="radio" id="ppum" name="type" value="ppum" onClick="update()">
+	<label for="ppum">Power Per Unit Mass</label>
+	<input type="radio" id="pressure" name="type" value="pressure" onClick="update()">
+	<label for="pressure">Pressure</label>
+	<input type="radio" id="radioactivity" name="type" value="radioactivity" onClick="update()">
+	<label for="radioactivity">Radioactivity</label>
+	<input type="radio" id="tc" name="type" value="tc" onClick="update()">
+	<label for="tc">Temperature Change</label>
+	<input type="radio" id="time" name="type" value="time" onClick="update()">
+	<label for="time">Time</label>
+	<input type="radio" id="torque" name="type" value="torque" onClick="update()">
+	<label for="torque">Torque</label>
+	<input type="radio" id="vpua" name="type" value="vpua" onClick="update()">
+	<label for="vpua">Volume Per Unit Area</label>
 </div>
 
 <div class="box">
@@ -112,11 +133,14 @@
 		var div = document.getElementsByClassName("more")[0];
 		if (div.className === "more") {
 			div.className += " most";
+			div.style.maxHeight = div.scrollHeight + "px";
 		}
 		else {
 			div.className = "more";
+			div.style.maxHeight = "0px";
 		}
 	}
+	more();
 </script>
 
 <script src="../../frame.js"></script>
