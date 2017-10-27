@@ -37,17 +37,15 @@
 <div class="parallax" style="background-image: url(images/green.png);">
 	<div class="layer">
 		<div class="blurt">
-			<h1>Fractals in the Complex Plane</h1>
-			<p>Ever since the term was introduced by Benoit B. Mandelbrot, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the complex plane, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.</p>
-			<p>Before we begin, let's figure out exactly what a <strong>fractal</strong> is. Dictionary.com defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or</em>&hellip;</p>
+			<h1>3D Solar System</h1>
+			<p>We've been developing a three-dimensional model of the Solar System. It is an accurate representation of what is going on right now in space. The simulator recognizes over 730,000 different planets, moons, asteroids, and other bodies.</p>
 		</div>
-		<img class="avatar" src="fractals/0001/images/complextable1.png">
+		<img class="avatar" src="programs/0006/images/old.png">
 		<br>
 		<img class="avatar" src="fractals/0001/images/complextable1.png">
 		<div class="blurb">
-			<h1>Fractals in the Complex Plane</h1>
-			<p>Ever since the term was introduced by Benoit B. Mandelbrot, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the complex plane, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.</p>
-			<p>Before we begin, let's figure out exactly what a <strong>fractal</strong> is. Dictionary.com defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or</em>&hellip;</p>
+			<h1>Unit Converter</h1>
+			<p>The converter is finally done! This converter has the largest collection of unit and unit types in the Internet (or at least among the other converters we could find).</p>
 		</div>
 	</div>
 </div>
@@ -136,6 +134,7 @@
 		gif.style.transform = "translate(0%, " + rate + "%)";
 		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
 		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
+		console.log(docume.body.scrollTop);
 		if (document.body.scrollTop === 0) {
 			gif.childNodes[3].style.opacity = 1;
 		}
