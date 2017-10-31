@@ -139,12 +139,16 @@
 		for (var i = 0; i < parallax.length; i++) {
 			var p = document.getElementsByClassName("parallax")[i];
 			var percent = 10 * (p.getBoundingClientRect().top + p.clientHeight) / (document.body.clientHeight + p.clientHeight) + 100;
-			p.style.backgroundSize = percent + "% auto";
 			var imageSrc = p.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
 			var image = new Image();
 			image.src = imageSrc;
-			var width = image.width,height = image.height;
-			console.log(image.width / image.height + ", " + p.clientWidth / p.clientHeight);
+			var imgc = image.height / image.width;
+			var winc = window.innerHeight / window.innerWidth;
+			if (winc > imgc) {
+				p.style.backgroundSize = "auto " + percent + "%";
+			} else {
+				p.style.backgroundSize = percent + "% auto";
+			}
 		}
 		
 		if (window.scrollY === 0) {
