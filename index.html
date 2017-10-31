@@ -130,18 +130,30 @@
 	
 	window.onscroll = function() {
 		sticky.style.display = "inline";
-		var rate = document.body.scrollTop * 25 / gif.offsetHeight;
+		var rate = window.scrollY * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
 		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
 		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
-		console.log(docume.body.scrollTop);
-		if (document.body.scrollTop === 0) {
+		
+		var parallax = document.getElementsByClassName("parallax");
+		for (var i = 0; i < parallax.length; i++) {
+			var p = document.getElementsByClassName("parallax")[i];
+			var percent = 10 * (p.getBoundingClientRect().top + p.clientHeight) / (document.body.clientHeight + p.clientHeight) + 100;
+			p.style.backgroundSize = percent + "% auto";
+			var imageSrc = p.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
+			var image = new Image();
+			image.src = imageSrc;
+			var width = image.width,height = image.height;
+			console.log(image.width / image.height + ", " + p.clientWidth / p.clientHeight);
+		}
+		
+		if (window.scrollY === 0) {
 			gif.childNodes[3].style.opacity = 1;
 		}
 		else {
 			gif.childNodes[3].style.opacity = 0;
 		}
-		if (document.body.scrollTop > gif.offsetHeight) {
+		if (window.scrollY > gif.offsetHeight) {
 			sticky.style.backgroundColor = "#fff";
 		}
 		else {
