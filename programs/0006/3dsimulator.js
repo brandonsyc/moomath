@@ -236,7 +236,7 @@ function init() {
   elems.textCanv.height = window.innerHeight;
 
   // Default camera starting position
-  camera.position.y = 16e6;
+  camera.position.y = 12e6;
   camera.position.z = 25e7;
 
   scene.add(camera);
