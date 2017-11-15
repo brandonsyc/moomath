@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Planet Simulator</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="planet.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+<h1>Planet Simulator</h1>
+<p>29 June, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a> &amp; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+
+<div class="article">
+
+<div class="box">
+	<p>This widget is self explanatory, no? To add a body, click and drag. It's WIP</p>
+	<hr>
+	<canvas width="640" height="640" onMouseDown="pressed()" onClick="clicked()"></canvas>
+	<hr>
+	<input id="t1" name ="mode" type="radio" disabled>
+	<label for="t1">Select Mode:</label>
+	<input id="body" name ="mode" type="radio" checked>
+	<label for="body">Add Body</label>
+	<input id="o" name ="mode" type="radio">
+	<label for="o">Option</label>
+	<br><br>
+	<label for="mass">Earth Masses:</label>
+	<input id="mass" type="number" value="1000">
+	<label for="density">Earth Densities:</label>
+	<input id="density" type="number" value="0.001">
+	<br><br>
+	<input id="t2" name ="color" type="radio" disabled>
+	<label for="t2">Select Color:</label>
+	<div class="color">
+		<input id="green" name ="color" type="radio" checked>
+		<label for="green"><div></div></label>
+		<input id="blue" name ="color" type="radio">
+		<label for="blue"><div></div></label>
+		<input id="red" name ="color" type="radio">
+		<label for="red"><div></div></label>
+		<input id="yellow" name ="color" type="radio">
+		<label for="yellow"><div></div></label>
+	</div>
+	<br><br>
+	<div class="preset">
+		<button>Sun</button>
+		<button>Sirius</button>
+		<button>Canopus</button>
+		<button>Rigil Kentaurus</button>
+		<button>Arcturus</button>
+		<button>Vega</button>
+		<button>Capella</button>
+		<button>Rigel</button>
+	</div>
+	<br><br>
+	<button onClick="goodbye()">Clear</button>
+	<br><br>
+	<p>Fps: <span id="fps"></span> / 60</p>
+</div>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<div class="source-link">
+	<a href="http://nichodon.github.io/programs/0005/planet.js" target="_blank">Program Source Code</a>
+	<div class="separate"></div>
+</div>
+
+<script src="../../frame.js"></script>
+<script src="planet.js"></script>
+<script src="../../querystring.js"></script>
+
+</body>
+</html>

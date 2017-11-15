@@ -1,0 +1,5 @@
+kilogram per kilowatt,kg/kW,kilograms per kilowatt
+pound per horsepower,lb/hp,pounds per horsepower
+:
+0.001
+1/(83.82*19.6133)

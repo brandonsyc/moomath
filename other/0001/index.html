@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>How to Embed Our Programs</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+	<h1>How to Embed Our Programs</h1>
+	<p>19 July, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+
+	<div class="article">
+	<p>
+		If you would like to embed a program from our website, use this syntax (this feature uses <a href="https://en.wikipedia.org/wiki/Query_string" target="_blank">query strings</a>):
+	</p>
+
+	<div class="code">
+		<code class="prettyprint">
+			&lt;iframe src="https://nichodon.github.io/programs/[id]/?embed=true"&gt;&lt;/iframe&gt;
+		</code>
+	</div>
+
+	<p>
+		The [id] is a four-digit number (i.e. 0010). Note that you should set the width and height for the iframe. IDs of widgets can be found by hovering over them. Following the "?embed=true," there are additional settings you can change.<br>
+		<strong>Note</strong> that we are still developing this feature. More functionalities will be added soon!
+	</p>
+	
+	<p>
+		<strong>Disabled</strong> &ndash; contains a list of widget ids to be disabled, separated by commas.<br>Example: "?embed=true&amp;disabled=meter1,meter2"
+	</p>
+	
+	<h2>List of Tags Supported</h2>
+	
+	<div class="code">
+		<table>
+			<tbody>
+				<tr>
+					<th>Tag Name</th>
+					<th>Description</th>
+					<th>Main Setting</th>
+					<th>Disabled?</th>
+				</tr>
+				<tr>
+					<td>input[type=number]</td>
+					<td>Numberic text</td>
+					<td>Number</td>
+					<td>&#10003;</td>
+				</tr>
+				<tr>
+					<td>input[type=range]</td>
+					<td>Slider</td>
+					<td>Number</td>
+					<td>&#10003;</td>
+				</tr>
+				<tr>
+					<td>input[type=checkbox]</td>
+					<td>Checkbox</td>
+					<td>"checked" or "unchecked"</td>
+					<td>&#10003;</td>
+				</tr>
+				<tr>
+					<td>input[type=text]</td>
+					<td>Text input</td>
+					<td>Text</td>
+					<td>&#10003;</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	
+	<p>
+		Here is an example of an embed.
+	</p>
+
+	<iframe src="https://nichodon.github.io/programs/0002/?embed=true" width="100%" height="600px" style="border: none;"></iframe>
+
+	<div class="separate"></div>
+	</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+
+</body>
+</html>

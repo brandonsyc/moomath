@@ -1,0 +1,15 @@
+centimetre per second squared,cm/s<sup>2</sup>,centimetres per second squared,centimeter per second squared,centimeters per second squared
+foot per second squared,ft/s<sup>2</sup>,feet per second squared
+standard gravity,g<sub>0</sub>,standard gravities
+kilometre per hour per second,km/(h&middot;s),kilometres per hour per second,kilometer per hour per second,kilometers per hour per second
+kilometre per second squared,km/s<sup>2</sup>,kilometres per second squared,kilometer per second squared,kilometers per second squared
+metre per second squared,m/s<sup>2</sup>,metres per second squared,meter per second squared,meters per second squared
+mile per hour per second,mph/s,miles per hour per second
+:
+0.01
+0.3048
+9.80665
+5/18
+1000
+1
+0.44704

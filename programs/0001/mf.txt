@@ -1,0 +1,9 @@
+ampere per metre,A/m,amperes per metre,ampere per meter,amperes per meter
+kiloampere per metre,kA/m,kiloamperes per metre,kiloampere per meter,kiloamperes per meter
+megaampere per metre,MA/m,megaamperes per metre,megaampere per meter,megaamperes per meter
+oersted,Oe
+:
+1
+1000
+1e6
+79.5774715

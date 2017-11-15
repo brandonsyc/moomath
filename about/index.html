@@ -1,38 +1,70 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>About &ndash; Visual Math</title>
+<title>About &ndash; Moomath</title>
 <link rel="stylesheet" type="text/css" href="../styles.css">
 <link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
 <div id="top"></div>
 
+<div class="separate"></div>
+
 <div class="content">
 	<a href="https://github.com/anematode" target="_blank">
-		<img class="avatar" src="https://avatars3.githubusercontent.com/u/26530804?v=3&s=400">
+		<img class="avatar" src="../images/front.png" alt="front">
 	</a>
 	<div class="blurb">
-		<h1>anematode</h1>
-		<p>In publishing and graphic design, lorem ipsum is a filler text commonly used to demonstrate the graphic elements of a document or visual presentation. Replacing meaningful content with placeholder text allows designers to design the form of the content before the content itself has been produced.[1]</p><p>The lorem ipsum text is typically a scrambled section of De finibus bonorum et malorum, a 1st-century BC Latin text by Cicero, with words altered, added, and removed to make it nonsensical, improper Latin.[2]</p>
+		<h1>Timothy Herchen</h1>
+		<p><strong><i>anematode</i></strong></p>
+		<p>Hi! My name is Timothy Herchen (anematode), and I'm an incoming high school freshman living in Palo Alto, CA. My interests include math, programming, photography, music, and cows. Some of my past accomplishments are winning the 2016 BAMO (Bay Area Mathematical Olympiad) and winning the 2017 Stanford ProCo tournament in the Novice division.</p>
+		<p>Languages: C, C++, Python, Java, JavaScript, C#</p>
+		<p>Email: timothy.herchen@gmail.com<br>AoPS Account: anematode</p>
+		<p>Add me on Hangouts!</p>
 	</div>
-	<div class="clear"></div>
 	<hr>
-	<a href="https://github.com/Nichodon" target="_blank">
-		<img class="avatar" src="https://avatars3.githubusercontent.com/u/14132594?v=3&s=400">
-	</a>
-	<div class="blurb">
-		<h1>Nichodon</h1>
-		<p>In publishing and graphic design, lorem ipsum is a filler text commonly used to demonstrate the graphic elements of a document or visual presentation. Replacing meaningful content with placeholder text allows designers to design the form of the content before the content itself has been produced.[1]</p><p>The lorem ipsum text is typically a scrambled section of De finibus bonorum et malorum, a 1st-century BC Latin text by Cicero, with words altered, added, and removed to make it nonsensical, improper Latin.[2]</p>
+	<div class="blurt">
+		<h1>Brandon Chung</h1>
+		<p><strong><i>Nichodon</i></strong></p>
+		<p>Good <span></span>! I'm an incoming high school freshman (as of 10:53 28 June, 2017 CE) in Palo Alto, CA. I also have many great accomplishments. Like, once I sort of did some math thing and it was fun. I greatly enjoy composing music, programming, web design, and of course, bovine things.</p>
+		<p>Languages: English, Python, HTML, Java, JavaScript, CSS, XSLT, Arduino, OpenSCAD</p>
+		<p>Contact: Say "bananabas" &tau; times and you will summon me.<br><span></span></p>
 	</div>
-	<div class="clear"></div>
+	<a href="https://github.com/Nichodon" target="_blank">
+		<img class="avatar" src="../images/back.png" alt="back">
+	</a>
+	<hr>
+	<h1>Contributors</h1>
+	<p><a href="https://github.com/Maydoh1239" target="_blank">Maydoh1239</a> &bull; <a href="https://github.com/PaulThePerson">PaulThePerson</a></p>
 </div>
+
+<div class="separate"></div>
 
 <div id="bottom"></div>
 
 <script src="../frame.js"></script>
-
+<script>
+	var span = document.getElementsByTagName("span")[0];
+	var hour = new Date().getHours();
+	if (hour < 6) {
+		span.innerHTML = "morning";
+	}
+	else if (hour < 12) {
+		span.innerHTML = "day";
+	}
+	else if (hour < 18) {
+		span.innerHTML = "afternoon";
+	}
+	else {
+		span.innerHTML = "evening";
+	}
+	span = document.getElementsByTagName("span")[1];
+	if (hour < 3) {
+		span.innerHTML = "Shouldn't you be sleeping right now?";
+	}
+</script>
 </body>
 </html>

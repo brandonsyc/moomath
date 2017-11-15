@@ -1,0 +1,5 @@
+degree Celsius change,&deg;C,degrees Celsius change,kelvin change,K,kelvins change
+degree Fahrenheit change,&deg;F,degrees Fahrenheit change
+:
+1
+5/9

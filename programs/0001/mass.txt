@@ -1,0 +1,49 @@
+hundredweight,cwt,hundredweight,long hundredweight,Lcwt,long hundredweight,long hundredweight,long&nbsp;cwt,long hundredweight
+hundredweight,cwt,hundredweight,short hundredweight,Scwt,short hundredweight,short hundredweight,short&nbsp;cwt,short hundredweight
+short ton,ST,short ton,short ton,short ton,sh&nbsp;tn,ton,ton
+carat,carat
+drachm,drachm,dram
+pennyweight,dwt
+deadweight ton,deadweight ton,long ton,long ton,long ton,LT
+deadweight tonne,deadweight tonne,metric ton,metric ton,metric ton,t,tonne,t,metric ton,tonne,t,metric ton
+gram,g
+grain,gr
+gigatonne,Gt
+imperial gallon of water,imp&nbsp;gal H<sub>2</sub>O,imperial gallons of water
+kilotonne,kt
+pound,lb,pounder,pdr
+long quarter,long&nbsp;qtr,quarter,qtr
+megatonne,Mt
+ounce,oz
+troy ounce,ozt
+short quarter,short&nbsp;qtr
+solar mass,M<sub>&#9737;</sub>,solar masses
+stone,st,stone
+troy pound,troy pound
+US gallon of water,US&nbsp;gal H<sub>2</sub>O,US gallons of water,U.S. gallon of water,U.S. gallons of water
+viss,viss,viss
+:
+50.80234544
+45.359237
+907.18474
+0.0002
+0.001771845195
+0.00155517384
+1016.0469088
+1000
+0.001
+0.00006479891
+1000000000000
+10.00/2.2046226218488
+1000000
+0.45359237
+12.70058636
+1000000000
+0.028349523125
+0.0311034768
+11.33980925
+1.98855e30
+6.35029318
+0.3732417216
+3.785411784/1.00206219713184
+1.632932532

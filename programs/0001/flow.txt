@@ -1,0 +1,69 @@
+cubic foot per annum,cu&nbsp;ft/a,cubic feet per annum
+cubic foot per day,cu&nbsp;ft/d,cubic feet per day
+cubic foot per hour,cu&nbsp;ft/h,cubic feet per hour
+cubic foot per minute,cu&nbsp;ft/min,cubic feet per minute
+cubic foot per second,cu&nbsp;ft/s,cubic feet per second
+cubic mile per annum,cu&nbsp;mi/a,cubic miles per annum
+cubic yard per hour,cuyd/h,cubic yards per hour
+cubic yard per second,cu&nbsp;yd/s,cubic yards per second
+billion barrels per year,Gbbl/a,billion barrels per year
+imperial gallon per hour,imp&nbsp;gal/h,imperial gallons per hour
+imperial gallon per minute,imp gal/min,imperial gallons per minute
+imperial gallon per second,impgal/s,imperial gallons per second
+cubic kilometre per annum,km<sup>3</sup>/a,cubic kilometres per annum,cubic kilometer per annum,cubic kilometers per annum
+cubic kilometre per day,km<sup>3</sup>/d,cubic kilometres per day,cubic kilometer per day,cubic kilometers per day
+thousand barrels per year,kbbl/a,thousand barrels per year
+thousand barrels per day,kbbl/d,thousand barrels per day
+litre per hour,L/h,litres per hour,liter per hour,liters per hour
+litre per minute,L/min,litres per minute,liter per minute,liters per minute
+litre per second,L/s,litres per second,liter per second,liters per second
+cubic metre per annum,m<sup>3</sup>/a,cubic metres per annum,cubic meter per annum,cubic meters per annum
+cubic metre per day,m<sup>3</sup>/d,cubic metres per day,cubic meter per day,cubic meters per day
+cubic metre per hour,m<sup>3</sup>/h,cubic metres per hour,cubic meter per hour,cubic meters per hour
+cubic metre per minute,m<sup>3</sup>/min,cubic metres per minute,cubic meter per minute,cubic meters per minute
+cubic metre per second,m<sup>3</sup>/s,cubic metres per second,cubic meter per second,cubic meters per second
+million barrels per year,Mbbl/a,million barrels per year
+million barrels per day,Mbbl/d,million barrels per day
+barrel per year,bbl/a,barrels per year
+barrel per day,bbl/d,barrels per day
+trillion barrels per year,Tbbl/a,trillion barrels per year
+U.S. gallon per day,U.S.&nbsp;gal/d,U.S. gallons per day,US gallon per day,US&nbsp;gal/d,US gallons per day
+gallon per hour,gal/h,gallons per hour,gallon per hour,gal/h,gallons per hour
+U.S. gallon per minute,U.S.&nbsp;gal/min,U.S. gallons per minute,US gallon per minute,US&nbsp;gal/min,US gallons per minute
+US gallon per year,US&nbsp;gal/a,US gallons per year
+US gallon per second,USgal/s,US gallons per second,U.S. gallon per second,U.S. gallons per second
+:
+28316846592e-12/31,557,600
+28316846592e-12/86400
+28316846592e-12/3600
+28316846592e-12/60
+28316846592e-12
+4168181825440579584e-9/31,557,600
+0.9144^3/3600
+0.9144^3
+22081.56874/4383
+0.00454609/3600
+0.00454609/60
+0.00454609
+1e9/31,557,600
+1e9/86,400
+1.104078437/219,150
+5.520392185/3000
+0.001/3600
+0.001/60
+0.001
+1/31,557,600
+1/86400
+1/3600
+1/60
+1
+22.08156874/4383
+5.520392185/3
+1.104078437/219,150,000
+5.520392185/3,000,000
+22,081,568.74/4383
+0.003785411784/86400
+0.003785411784/3600
+0.003785411784/60
+0.003785411784/31,557,600
+0.003785411784

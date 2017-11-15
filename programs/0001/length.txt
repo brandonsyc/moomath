@@ -1,0 +1,79 @@
+admiralty mile,nmi&nbsp;(admiralty),British nautical mile,(Brit)&nbsp;nmi,nautical mile,nmi
+astronomical unit,AU
+bu,bu,bu
+chain,ch,[[Chain (unit)&#124;chain]],[[Chain (unit)&#124;ch]],chain,chain,[[Chain (unit)&#124;chain]],[[Chain (unit)&#124;chain]]
+dot/cm,dot/cm,dot/cm
+DPI,DPI,DPI
+fathom,fathom
+foot,ft,foot,foot,ft,feet
+furlong,furlong
+gigalight-year,Gly
+gigaparsec,Gpc
+hand,h
+inch,in,inches,in,in,in
+kilolight-year,kly
+kiloparsec,kpc
+lunar distance,LD
+league,league
+light-year,ly
+metre,m,meter
+mile,mi,route mile,mi,statute mile,mi
+mil,mil,thou,thou,thou
+megalight-year,Mly
+megaparsec,Mpc
+nautical mile,NM,nautical mile,nmi
+nautical mile,nmi,(pre-1954&nbsp;U.S.) nautical mile,(pre&#8209;1954&nbsp;U.S.) nmi,(pre-1954&nbsp;US) nautical mile,(pre&#8209;1954&nbsp;US) nmi,(pre-1954&nbsp;U.S.) nautical mile
+parsec,pc
+perch,perch,perches,pole,pole,rod,rd
+&micro;m,&micro;m,&micro;m
+royal cubit,cu
+route kilometre,km,route kilometer
+shaku,shaku,shaku
+smoot,sm
+solar radius,R<sub>&#9737;</sub>,solar radii
+sun,sun,sun
+verst,verst
+yard,yd
+microinch,&micro;in,microinches
+&aring;ngstr&ouml;m,&Aring;
+hertz,Hz,hertz
+:
+1853.184
+149,597,870,700
+1/330
+20.1168
+1/0.01
+1/0.0254
+1.8288
+0.3048
+201.168
+9.4607304725808e24
+3.0856775814671916e25
+0.1016
+0.0254
+9.4607304725808e18
+3.0856775814671916e19
+384,403,000
+4828.032
+9.4607304725808e15
+1
+1609.344
+0.0000254
+9.4607304725808e21
+3.0856775814671916e22
+1852
+1853.24496
+3.0856775814671916e16
+5.0292
+1e-6
+0.524
+1000
+10/33
+1.70180
+695700e3
+1/33
+1066.8
+0.9144
+0.0000000254
+0.0000000001
+1/299,792,458

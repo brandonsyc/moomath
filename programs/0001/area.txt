@@ -1,0 +1,41 @@
+thousand square feet,1000&nbsp;sq&nbsp;ft,thousand square feet
+are,a
+acre,acre
+arpent,arpent
+cuerda,cda
+decare,daa,dunam,dunam,dunum,dunum
+hectare,ha,hectare,ha
+Irish acre,Irish&nbsp;acres
+square %smetre,m<sup>2</sup>,square %smeter
+pondemaat,pond,pondemaat
+pyeong,pyeong,pyeong,tsubo,tsubo,tsubo
+rai,rai,rai
+rood,rood
+square foot,sq&nbsp;ft,square foot,square foot,sq&nbsp;ft,square feet
+square inch,sq&nbsp;in,square inches
+square mile,sq&nbsp;mi
+square nautical mile,sq&nbsp;nmi
+perch,perch,perches
+square verst,square verst
+square yard,sq&nbsp;yd
+:
+92.90304
+100
+4046.8564224
+3418.89
+3930.395625
+1000
+10,000
+6555.2385024
+1
+3674.363358816
+400/121
+1600
+1011.7141056
+0.09290304
+0.00064516
+2,589,988.110336
+3,429,904
+25.29285264
+1138062.24
+0.83612736

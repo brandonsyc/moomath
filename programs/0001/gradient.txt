@@ -1,0 +1,15 @@
+centimetre per kilometre,cm/km,centimetres per kilometre,centimeter per kilometer,centimeters per kilometer
+foot per mile,ft/mi,feet per mile
+foot per nautical mile,ft/nmi,feet per nautical mile
+inch per foot,in/ft,inches per foot
+inch per mile,in/mi,inches per mile
+metre per kilometre,m/km,metres per kilometre,meter per kilometer,meters per kilometer,millimetre per metre,mm/m,millimetres per metre,millimeter per meter,millimeters per meter
+millimetre per kilometre,mm/km,millimetres per kilometre,millimeter per kilometer,millimeters per kilometer
+:
+0.00001
+1/5280
+1.524/9260
+1/12
+1/63360
+0.001
+0.000001

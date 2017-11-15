@@ -1,0 +1,7 @@
+gram-mole,g&#8209;mol,gram-mole,gmol,mole,mol
+kilomole,kmol
+pound-mole,lb&#8209;mol,pound-mole,lbmol
+:
+1
+1000
+453.59237

@@ -1,0 +1,31 @@
+century,ha,centuries
+day,d
+decade,daa
+dog year,dog yr
+fortnight,fortnight
+hour,h
+billion years,Ta,billion years,trillion years,Ta,trillion years
+millennium,ka,millennia
+milliard years,Ga,milliard years,billion years,Ga,billion years,thousand million years,Ga,thousand million years
+million years,Ma,million years
+minute,min
+month,month,month,mo
+second,s
+week,week
+year,a,year,yr
+:
+3,155,760,000
+86,400
+315,576,000
+7 * 31,557,600
+1,209,600
+3600
+31,557,600,000,000,000,000
+31,557,600,000
+31,557,600,000,000,000
+31,557,600,000,000
+60
+2,629,800
+1
+604,800
+31,557,600

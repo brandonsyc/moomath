@@ -1,0 +1,7 @@
+ampere-hour,A&middot;h
+coulomb,C
+elementary charge,e
+:
+3600
+1
+1.602176487e-19

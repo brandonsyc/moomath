@@ -1,4 +1,3 @@
-// JavaScript Document
 var path;
 var rawFile = new XMLHttpRequest();
 rawFile.open("GET", "https://nichodon.github.io/" + path + "/search/list.txt", false);
@@ -14,9 +13,9 @@ rawFile.onreadystatechange = function ()
 			var ul = document.getElementsByClassName("list")[0];
 			for (var i = array.length - 1; i > -1; i--) {
 				var li = document.createElement("li");
-				var a = document.createElement('a');
-				a.appendChild(document.createTextNode(array[i].replace('-', '\u2013')));
-				a.href = ('../000' + (i + 1)).slice(-4) + "/";
+				var a = document.createElement("a");
+				a.appendChild(document.createTextNode(array[i]));
+				a.href = "https://nichodon.github.io/" + path + "/" + ("000" + (i + 1)).slice(-4) + "/";
 				li.appendChild(a);
 				ul.appendChild(li);
 			}

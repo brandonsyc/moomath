@@ -1,0 +1,47 @@
+centimetre per hour,cm/h,centimetres per hour,centimeter per hour,centimeters per hour
+centimetre per second,cm/s,centimetres per second,centimeter per second,centimeters per second
+centimetre per year,cm/year,centimetres per year,centimeter per year,centimeters per year
+foot per second,ft/s,foot per second,foot per second,ft/s,feet per second
+foot per minute,ft/min,feet per minute
+furlong per fortnight,furlong per fortnight,furlongs per fortnight
+inch per hour,in/h,inches per hour
+inch per second,in/s,inches per second
+inch per year,in/year,inches per year
+second,s
+kilometre per day,km/d,kilometres per day,kilometer per day,kilometers per day
+kilometre per hour,km/h,kilometres per hour,kilometer per hour,kilometers per hour
+kilometre per second,km/s,kilometres per second,kilometer per second,kilometers per second,kN&#8209;s/kg,kN&#8209;s/kg,kN&#8209;s/kg
+knot,kn
+metre per minute,m/min,metres per minute,meter per minute,meters per minute
+metre per second,m/s,metres per second,meter per second,meters per second,N&#8209;s/kg,N&#8209;s/kg,N&#8209;s/kg
+Mach,Mach,Mach
+mile per day,mi/d,miles per day
+mile per second,mi/s,miles per second
+millimetre per hour,mm/h,millimetres per hour,millimeter per hour,millimeters per hour
+mile per hour,mph,miles per hour
+g/(kN&middot;s),g/(kN&middot;s),g/(kN&middot;s)
+lb/(lbf&middot;h),lb/(lbf&middot;h),lb/(lbf&middot;h)
+:
+0.01/60/60
+0.01
+0.01/365.2425/24/60/60
+0.3048
+0.00508
+1.397/8,400
+0.0254/60/60
+0.0254
+0.0254/365.2425/24/60/60
+9.80665
+1.1574074074074074e-2
+10/36
+1000
+4.63/9
+1/60
+1
+0
+1.8626666666666667e-2
+1609.344
+0.001/60/60
+0.44704
+1/101972/9.80665
+1/9.80665/3600

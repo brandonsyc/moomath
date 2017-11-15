@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Brainf*ck Interpreter</title>
+<link rel="stylesheet" type="text/css" href="codemirror.css">
+<link rel="stylesheet" type="text/css" href="bf.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	<canvas id="bfvisualizer" width="1000" height="100"></canvas>
+	<canvas id="bfstats" width="1000" height="50"></canvas>
+
+	<br>
+
+	<button id="copy-tape">Copy Tape to Clipboard</button>
+	<button id="jump-pointer">Jump to Pointer</button>
+	<input type="number" value="0" id="jump-index">
+	<button id="jump">Jump to Index</button>
+	<label>Tape Length</label>
+	<input id="tapelength" type="number" min="3" max="1000000" value="30000">
+	<button id="non-code">Remove Non-code</button>
+
+	<br>
+
+	<div class="bf-container"></div>
+
+	<button id="reset">Reset</button>
+	<button id="start">Execute</button>
+	<button id="debug">Debug</button>
+	<button id="goto1">Next Output</button>
+	<button id="goto2">Go to Loop End</button>
+	<button id="goto3">Next Pointer Move</button>
+	<button id="goto4">Next Step</button>
+	<button id="goto5">Next Marker</button>
+	<input type="text" id="marker">
+	<input type="checkbox" id="censor-trigger" checked>
+	<label for="censor-trigger">Censor "<span class="censor">Brainf*ck</span>"</label>
+
+	<br>
+
+	<p>Input</p>
+	<div class="bf-container">
+		<pre contenteditable="true" id="input"></pre>
+	</div>
+
+	<p>Output</p>
+	<div class="bf-container">
+		<pre contenteditable="true" id="output"></pre>
+	</div>
+
+	<p>Console</p>
+	<div class="bf-container">
+		<pre id="console"> </pre>
+	</div>
+
+	<br>
+
+	<p><span class="censor">Brainf*ck</span> is a famous esoteric programming language, invented by Urban Müller in 1993. The language is Turing-complete, (roughly) meaning that it a programmer can write any algorithm in it, however complex or inefficient it may be.</p>
+	<p><span class="censor">Brainf*ck</span> consists of two pieces of memory. One is the tape, a long array of integers. At program initialization, all the integers are set to 0. The typical implementation of <span class="censor">brainf*ck</span> treats each of these integers as 8-bit unsigned integers (equivalent to unsigned char in C/C++). Programs can thus take advantage of overflow and underflow if desired. Furthermore, the tape itself can also "wrap around"; this allows programmers to use integers to the left of index 0. For <span class="censor">brainf*ck</span> to be truly Turing-complete, it must have an infinite tape, but since this is not possible in physical machines, a reasonably large buffer is used in its place. The other piece of data in <span class="censor">brainf*ck</span> is the pointer, a number which points to some index in the tape. This pointer can be moved around, and is the only pointer available in the program.</p>
+	<p>To write in <span class="censor">brainf*ck</span>, we must understand the eight valid characters run by a <span class="censor">brainf*ck</span> interpreter:</p>
+
+	<h1> &lt; &gt; </h1>
+	<p>The less-than sign is used in <span class="censor">brainf*ck</span> to move the pointer to the left (i.e. decrement the pointer by one). For example, if the pointer was at index 6, running &lt;&lt; would end the pointer at 4.</p>
+	<p>The greater-than sign is used to move the pointer to the right (i.e. increment the pointer by 1). For example, if the pointer was at index 6, running &gt;&gt;&gt; would move the pointer to index 9.</p>
+
+	<h1> + - </h1>
+	<p>The plus sign is used to increment the integer at the pointer's index by 1. For example, if the value under the pointer was 7, running ++ would change its value to 9. If the pointer's value is 255, then + will overflow the integer to 0.</p>
+	<p>The hyphen (representing a minus sign) is used the decrement the integer at the pointer's index by 1. For example, if the value under the pointer was 7, running -- would change its value to 5. If the pointer's value is 0, then - will underflow the integer to 255.</p>
+
+	<h1> . , </h1>
+	<p>The period/full stop is used to output the integer under the pointer as a single ASCII character (equivalent to chr(x) in Python, writing an unsigned char in C/C++, casting to char in Java, String.fromCharCode(x) in JS, etc.). If the integer under the pointer was 64, for example, then the output is '@'. In this implementation, output is written character by character to the output console.</p>
+	<p>The comma is used to input an integer, given as a character. Every time , is called in a program, another character is read from the input and its ASCII value is copied to the integer under the pointer. For example, if our input is @ and we do "&gt;&gt;," as our program, the integer at index 2 will be 64. In this implementation, when the end of input is reached, the integer under the pointer is set to 0.</p>
+
+	<h1> [ ] </h1>
+	<p>Brackets are used to define a loop. When the program reaches a closing bracket, it goes back to its matching bracket if the current pointer value is not 0; otherwise, it continues. For example, if our tape was initialized as 0, 4, 5, 6, 2 and our pointer was at index 4 (value 6), the command [&lt;] would repeatedly move the pointer left until an integer with value 0 is reached, ending at index 0.</p>
+	
+	<h1> / </h1>
+	<p>Pairs of forward slashes containing a name denote a "marker." Markers are specific to this implementation and only used for development convenience, so they will not work in other interpreters. If you type in some marker, say, /udder/, then if you enter udder into the Next Marker input, the program will run until it reaches the marker. This is useful for debugging purposes.</p>
+
+	<h1> Comments </h1>
+	<p>Any other characters besides these 9 are no-ops; they do nothing. As such, you can write comments anywhere, and with no special syntax, as long as they do not contain any of these 9 characters; those characters will be run. Note that operations put in markers will still be run.</p>
+
+	<h1> Implementation-Specific Details </h1>
+
+	<ul>
+		<li>EOF at operation , sets pointer value to 0.</li>
+		<li>Each integer is in the range 0 - 255, and can overflow or underflow without returning an error.</li>
+		<li>The tape loops back on itself, allowing the usage of indices to the "left" of index 0.</li>
+		<li>The implementation provides no optimization or infinite loop detection, but does try to find syntax errors.</li>
+	</ul>
+
+	<h1><span class="censor">Brainf*ck</span> Snippets</h1>
+
+  <p>Important Note: All of these snippets are generated for fast execution time, not shortness. As such, many of them are trivial, but are included here for convenience purposes.</p>
+  <h3>Constant</h3>
+  <p>Sets the value under the pointer to the number (mod 255).</p>
+  <label for="constant-optimizing">Integer</label>
+  <input id="constant-optimizing" type="number" value="25">
+  <input id="constant-optimizing-zero" type="checkbox" checked>
+  <label for="constant-optimizing-zero">Assume Start Value is 0</label>
+  <label for="constant-optimizing-right">Available Zero Blocks on Right</label>
+  <input id="constant-optimizing-right" type="number" value="0">
+  <pre id="constant-optimizing-output"></pre>
+
+
+
+
+	<p>Many more snippets <a href="https://esolangs.org/wiki/Brainfuck_algorithms">here</a>!</p>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="codemirror.js"></script>
+<script src="bf.js"></script>
+<script src="generators.js"></script>
+
+</html>

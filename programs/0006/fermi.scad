@@ -1,0 +1,1 @@
+linear_extrude(2.4) square(3,1.7);
