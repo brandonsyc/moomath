@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moles</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="stylesheet" type="text/css" href="codon.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+<h1>Codon Coder</h1>
+<p>17 November, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+
+<div class="article">
+<hr>
+<div id="dna" class="dna">
+	<p>DNA Strand :</p>
+	<br>
+	<input type="text" onKeyDown="check('input')" onKeyUp="check('input')" id="input" onFocus="update()">
+</div>
+<hr>
+<div id="rna" class="dna">
+	<p>RNA Strand:</p>
+	<br>
+	<input disabled>
+</div>
+<hr>
+<div id="amino" class="dna">
+	<p>Final Product:</p>
+	<br>
+</div>
+<hr>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+<script src="codon.js"></script>
+
+</body>
+</html>
