@@ -17,7 +17,7 @@ table.uau = "Tyr"; table.uac = "Tyr"; table.uaa = "Stop"; table.uag = "Stop";
 table.cau = "His"; table.cac = "His"; table.caa = "Gln"; table.cag = "Gln";
 table.aau = "Asn"; table.aac = "Asn"; table.aaa = "Lys"; table.aag = "Lys";
 table.gau = "Asp"; table.gac = "Asp"; table.gaa = "Glu"; table.gag = "Glu";
-table.ugu = "Cys"; table.ugc = "Cys"; table.uga = "Stop"; table.ucg = "Trp";
+table.ugu = "Cys"; table.ugc = "Cys"; table.uga = "Stop"; table.ugg = "Trp";
 table.cgu = "Arg"; table.cgc = "Arg"; table.cga = "Arg"; table.cgg = "Arg";
 table.agu = "Ser"; table.agc = "Ser"; table.aga = "Arg"; table.agg = "Arg";
 table.ggu = "Gly"; table.ggc = "Gly"; table.gga = "Gly"; table.ggg = "Gly";
@@ -37,6 +37,9 @@ function check(x) {
 		}
 	}
 	input.value = "";
+    if (event.keyCode === 8 && event.type === "keydown" && dna.children.length > 3) {
+		dna.removeChild(input.previousSibling);
+	}
 	stringit();
 }
 
@@ -87,11 +90,10 @@ function stringit() {
 	while (amino.children.length > 2) {
     	amino.removeChild(amino.lastChild);
 	}
-	var children = dna.children;
-	for (var i = 2; i < children.length - 1; i++) {
+	for (var i = 2; i < dna.children.length - 1; i++) {
 		var p = document.createElement("P");
-		if (data.includes(children[i].innerHTML)) {
-			var swap = comp[data.indexOf(children[i].innerHTML)];
+		if (data.includes(dna.children[i].innerHTML)) {
+			var swap = comp[data.indexOf(dna.children[i].innerHTML)];
 			p.innerHTML = swap;
 			rna.appendChild(p);
 			p.className = swap.toLowerCase();
@@ -101,12 +103,35 @@ function stringit() {
 			rna.appendChild(fake);
 			fake.disabled = true;
 		}
+		dna.children[i].classList.add("dis");
+		rna.children[i].classList.add("dis");
 	}
+	var regex = [/aug/.exec(out)];
 	out = out.replace(/.*?aug/, "aug");
 	var checked = " ";
 	for (i = 0; i < out.length; i++) {
 		checked += out.charAt(i);
 		checked += checked.length % 4 === 0 ? " " : "";
+	}
+	regex.push(/(uaa|uag|uga)/.exec(checked));
+	var go = false;
+	if (regex[0] !== null && regex[1] !== null) {
+		var start = [regex[0].index, regex[1].index];
+		start[1] -= Math.floor(start[1] / 4) - start[0] + 1;
+		for (i = 2; i < dna.children.length - 1; i++) {
+			if (dna.children[i].innerHTML === "") {
+				start[0]++;
+				start[1]++;
+			} else if (start[0] + 1 === i) {
+				go = true;
+			} else if (start[1] + 4 === i) {
+				go = false;
+			}
+			if (go) {
+				dna.children[i].classList.remove("dis");
+				rna.children[i].classList.remove("dis");
+			}
+		}	
 	}
 	var input = document.createElement("INPUT");
 	rna.appendChild(input);
@@ -123,4 +148,12 @@ function stringit() {
 			amino.appendChild(a);
 		}
 	}
+}
+
+function cleanse() {
+	"use strict";
+	while (dna.children.length > 3) {
+    	dna.removeChild(dna.lastChild.previousSibling.previousSibling);
+	}
+	stringit();
 }
