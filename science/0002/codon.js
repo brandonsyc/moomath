@@ -113,7 +113,7 @@ function stringit() {
 		checked += out.charAt(i);
 		checked += checked.length % 4 === 0 ? " " : "";
 	}
-	regex.push(/(uaa|uag|uga)/.exec(checked));
+	regex.push(/uaa|uag|uga/.exec(checked));
 	var go = false;
 	if (regex[0] !== null && regex[1] !== null) {
 		var start = [regex[0].index, regex[1].index];
