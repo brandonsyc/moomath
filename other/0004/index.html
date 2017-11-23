@@ -6,66 +6,98 @@
 </head>
 
 <style>
-* {
-  margin: 0px;
-}
+	
+	* {
+	  margin: 0px;
+	}
+	
+	button {
+		background-image: url(src/textures/px.jpg);
+		border: 2px solid #c96;
+		margin: 1px 0;
+		padding: 5px;
+		animation-name: bout;
+		animation-duration: 0.5s;
+	}
+	
+	button:hover {
+		animation-name: bin;
+		animation-duration: 0.5s;
+		transform: scale(1.1);
+	}
+	
+	@keyframes bin {
+		0% {transform: scale(1);}
+		25% {transform: scale(0.95);}
+		50% {transform: scale(1.1);}
+		75% {transform: scale(1.05);}
+		100% {transform: scale(1.1);}
+	}
+	
+	@keyframes bout {
+		0% {transform: scale(1.1);}
+		25% {transform: scale(1.15);}
+		50% {transform: scale(1);}
+		75% {transform: scale(1.05);}
+		100% {transform: scale(1);}
+	}
 
-.side {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  position: absolute;
-  width: 250px;
-  top: 15%;
-  right: 3;
+	.side {
+	  background-color: rgba(255, 255, 255, 0.3);
+	  border-radius: 4px;
+	  position: absolute;
+	  width: 250px;
+	  top: 15%;
+	  right: 3;
 
-  pointer-events: auto;
-  z-index: 100;
-}
+	  pointer-events: auto;
+	  z-index: 100;
+	}
 
-.left {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-  position: absolute;
-  width: 250px;
-  top: 15%;
-  left: 3;
+	.left {
+	  background-color: rgba(255, 255, 255, 0.3);
+	  border-radius: 4px;
+	  position: absolute;
+	  width: 250px;
+	  top: 15%;
+	  left: 3;
 
-  pointer-events: auto;
-  z-index: 100;
-}
+	  pointer-events: auto;
+	  z-index: 100;
+	}
 
-.side {
-  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
-}
+	.side {
+	  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	}
 
-.left {
-  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
-}
+	.left {
+	  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	}
 
-.side h2,h3 {
-  text-align: center;
-}
+	.side h2,h3 {
+	  text-align: center;
+	}
 
-.side p {
-  margin-left: 10px;
-}
+	.side p {
+	  margin-left: 10px;
+	}
 
-.side button {
-  margin-left: 10px;
-}
+	.side button {
+	  margin-left: 10px;
+	}
 
-.left h2 {
-  text-align: center;
-}
+	.left h2 {
+	  text-align: center;
+	}
 
-.left p {
-  margin-left: 10px;
-  margin-right: 10px;
-}
+	.left p {
+	  margin-left: 10px;
+	  margin-right: 10px;
+	}
 
-.left center {
-  text-align: center;
-}
+	.left center {
+	  text-align: center;
+	}
 </style>
 
 <body>
