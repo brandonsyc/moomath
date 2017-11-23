@@ -1,11 +1,94 @@
 <html lang="en">
+<head>
+<meta charset="utf-8">
 <title>Polycubes</title>
+<!-- <link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png"> (Moomath only) -->
+</head>
+
+<style>
+* {
+  margin: 0px;
+}
+
+.side {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  position: absolute;
+  width: 250px;
+  top: 15%;
+  right: 3;
+
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.left {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  position: absolute;
+  width: 250px;
+  top: 15%;
+  left: 3;
+
+  pointer-events: auto;
+  z-index: 100;
+}
+
+.side {
+  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+.left {
+  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+}
+
+.side h2,h3 {
+  text-align: center;
+}
+
+.side p {
+  margin-left: 10px;
+}
+
+.side button {
+  margin-left: 10px;
+}
+
+.left h2 {
+  text-align: center;
+}
+
+.left p {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.left center {
+  text-align: center;
+}
+</style>
 
 <body>
+  <div class="side">
+  </div>
+  <div class="left">
+    <br>
+    <h2>Help</h2>
+    <br>
+    <p>This script displays all polycubes with 1, 2, 3, ..., 7 cubes which fit in a 3 &times; 3 &times; 3 bounding box.
+      Click and drag to pan around the target, click on other polycubes to shift focus, scroll to zoom, and use arrow keys
+      or hold right click to move left and right.</p>
+      <br>
+    <h3>Source Code</h3>
+    <p class="center"><a href="https://github.com/anematode/polyomino">GitHub Repository</a></p>
+    <br>
+  </div>
 </body>
 
 <script src="src/c.js"></script>
 <script src="https://threejs.org/build/three.min.js"></script>
 <script src="src/orbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
 <script src="src/polycube.js"></script>
+
 </html>
