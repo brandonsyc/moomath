@@ -1,5 +1,7 @@
 # Moomath
 
+![Udder Cow](https://raw.githubusercontent.com/Nichodon/nichodon.github.io/master/images/front.png)
+
 ### (previously Visual Math, also known as nichodon.github.io)
 
 Welcome to the repository for [Moomath](moomath.com).
