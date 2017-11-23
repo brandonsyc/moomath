@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Chord Recognizer</title>
@@ -104,7 +104,7 @@
 	<p>Chord:</p>
 	<p id="output">Not a chord<sup></sup></p>
 	<hr>
-	<div onChange="key()" id="mode">
+	<div onChange="changeKey()" id="mode">
 		<label>Key:</label>
 		<input type="radio" name="key" id="cf">
 		<label for="cf">C&#9837;</label>
@@ -138,7 +138,7 @@
 		<label for="cs">C&#9839;</label>
 	</div>
 	<br>
-	<div onChange="mode()">
+	<div onChange="changeMode()">
 		<input type="radio" name="mode" id="major" checked>
 		<label for="major">Major</label>
 		<input type="radio" name="mode" id="minor">

@@ -84,8 +84,8 @@ var types = [["C&#9837;", "A&#9837;"], ["G&#9837;", "E&#9837;"],
 
 var indices;
 var base;
-var tonic = "c";
-var size = 0;
+var key = "c";
+var mode = 0;
 var audio = [];
 for (var i = 36; i < 61; i++) {
 	audio.push(new Audio("sounds/" + i + ".wav"));
@@ -110,12 +110,12 @@ code.cs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4];
 function toggle(x)
 {
 	"use strict";
-	var key = document.getElementsByClassName("key")[x];
-    if (key.className === "key" || key.className === "key black") {
-        key.className += " down";
+	var selected = document.getElementsByClassName("key")[x];
+    if (selected.className === "key" || selected.className === "key black") {
+        selected.className += " down";
     }
     else {
-        key.className = key.className.replace(" down", "");
+        selected.className = selected.className.replace(" down", "");
     }
 	states[x] = !states[x];
 	update();
@@ -156,10 +156,10 @@ function check() {
 		}
 		if (index > -1) {
 			var mod = ((indices[0] % 12) + 12) % 12;
-			var interval = base % 12 - code[tonic][12];
-			return names[j][0] + " on " + numerals[((interval % 12) + 12) % 12][size] + 
-				" (" + scale[mod][code[tonic][mod]] + names[j][1] + 
-				"/" + scale[base % 12][code[tonic][base % 12]] + ")";
+			var interval = base % 12 - code[key][12];
+			return names[j][0] + " on " + numerals[((interval % 12) + 12) % 12][mode] + 
+				" (" + scale[mod][code[key][mod]] + names[j][1] + 
+				"/" + scale[base % 12][code[key][base % 12]] + ")";
 		}
 		indices.splice(0, 0, indices[indices.length - 1] - 12);
 		indices.pop();
@@ -192,16 +192,16 @@ function together(x) {
 	return out;
 }
 
-function key() {
+function changeKey() {
 	"use strict";
-	tonic = document.querySelector('input[name="key"]:checked').id;
+	key = document.querySelector('input[name="key"]:checked').id;
 	update();
 	var j = 0;
 	var children = document.getElementById("piano").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].className !== "break") {
 			var old = children[i].children[0].innerHTML;
-			children[i].children[0].innerHTML = scale[j % 12][code[tonic][j % 12]];
+			children[i].children[0].innerHTML = scale[j % 12][code[key][j % 12]];
 			if (children[i].children[0].innerHTML !== old) {
 				children[i].children[0].style.opacity = 0;
 			}
@@ -218,19 +218,18 @@ function fade() {
 	var children = document.getElementById("piano").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].className !== "break") {
-			children[i].children[0].innerHTML = scale[j % 12][code[tonic][j % 12]];
+			children[i].children[0].innerHTML = scale[j % 12][code[key][j % 12]];
 			children[i].children[0].style.opacity = 1;
 			j++;
 		}
 	}
 }
 
-function mode() {
+function changeMode() {
 	"use strict";
 	var hepta = document.querySelector('input[name="mode"]:checked').id;
-	size = ["major", "minor"].indexOf(hepta);
+	mode = ["major", "minor"].indexOf(hepta);
 	update();
-	console.log(hepta);
 	var j = 0;
 	var choices = document.getElementById("mode").children;
 	for (var i = 2; i < choices.length; i += 2) {

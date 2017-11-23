@@ -6,7 +6,6 @@ input:not(.radio) {
 	font-size: 15px;
 	letter-spacing: 1px;
 	margin: 20px 0;
-	padding: 10px;
 	transition: 0.2s;
 	width: 100%;
 }
@@ -30,9 +29,10 @@ button {
 	border: 1px solid #ddd;
 	box-shadow: none;
 	color: #333;
+	font-size: 15px;
 	height: 100%;
 	margin: 20px 0;
-	padding: 18px;
+	padding: 14.25px;
 	transition: 0.2s;
 	width: 100%;
 }
@@ -55,6 +55,7 @@ button:active {
 	display: inline-block;
 	min-width: 300px;
 	width: 40%;
+	vertical-align: top;
 }
 .switch {
 	display: inline-block;
@@ -67,7 +68,6 @@ button:active {
 }
 .more {
 	height: auto;
-	max-height: 0;
 	transition: opacity 0.2s, max-height 0.5s 0.2s;
 	opacity: 0;
 	visibility: hidden;
@@ -78,7 +78,6 @@ button:active {
 	width: auto;
 }
 .most {
-	max-height: 500px;
 	transition: max-height 0.5s, opacity 0.2s 0.5s;
 	opacity: 1;
 	visibility: visible;

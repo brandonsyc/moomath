@@ -70,7 +70,6 @@ function search(x)
 
 	var search = document.getElementsByClassName("search")[x];
 	var unit = document.getElementsByClassName("unit")[x / 2];
-	var square = document.getElementsByClassName("square")[x / 2];
 	var number = -1;
 
 	var lowestEditDistance = 15;
@@ -100,11 +99,9 @@ function search(x)
 	numbers[x / 2] = number;
 	if (number !== -1 && search.value !== "") {
 		unit.innerHTML = units[number][0].charAt(0).toUpperCase() + units[number][0].slice(1) + " (" + units[number][1].trim() + ")";
-		square.className = "square " + ["green", "blue"][x / 2];
 	}
 	else {
 		unit.innerHTML = "Input";
-		square.className = "square";
 	}
 	check();
 }
@@ -114,22 +111,9 @@ function check()
 	"use strict";
 	var input = document.getElementsByClassName("search")[1];
 	var output = document.getElementsByClassName("search")[3];
-	var squares = document.getElementsByClassName("square");
 	if (numbers[0] > -1 && numbers[1] > -1) {
 		if (input.value !== "") {
 			output.value = input.value * values[numbers[0]] / values[numbers[1]];
-		}
-		if (values[numbers[0]] - values[numbers[1]] > 0) {
-			squares[0].style.width = "100%";
-			squares[0].style.paddingTop = "100%";
-			squares[1].style.width = values[numbers[1]] * 100 / values[numbers[0]] + "%";
-			squares[1].style.paddingTop = values[numbers[1]] * 100 / values[numbers[0]] + "%";
-		}
-		else {
-			squares[0].style.width = values[numbers[0]] * 100 / values[numbers[1]] + "%";
-			squares[0].style.paddingTop = values[numbers[0]] * 100 / values[numbers[1]] + "%";
-			squares[1].style.width = "100%";
-			squares[1].style.paddingTop = "100%";
 		}
 	}
 	else {

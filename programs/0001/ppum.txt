@@ -1,0 +1,15 @@
+horsepower per pound,hp/lb,horsepower per pound,shaft horsepower per pound,shp/lb,shaft horsepower per pound
+horsepower per long ton,hp/LT,horsepower per long ton
+horsepower per short ton,hp/ST,horsepower per short ton
+horsepower per tonne,hp/t,horsepower per tonne
+kilowatt per kilogram,kW/kg,kilowatts per kilogram
+kilowatt per tonne,kW/t,kilowatts per tonne
+metric horsepower per tonne,PS/t,metric horsepower per tonne
+:
+1643.986806
+5.13745876875/7
+0.821993403
+0.74569987158227022
+1000
+1
+0.73549875

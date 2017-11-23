@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Home &ndash; Moomath</title>
@@ -28,26 +28,22 @@
 	<div class="layer">
 		<h1>Variation on the Mandelbrot Set</h1>
 		<p>A program made this facsinating image!<br>It's sort of like Mandelbrot but not!</p>
-		<a href="fractals/">
-			<button>Read More</button>
-		</a>
+		<button onclick="location.href='fractals/'">Read More</button>
 	</div>
 </div>
 
 <div class="parallax" style="background-image: url(images/green.png);">
 	<div class="layer">
 		<div class="blurt">
-			<h1>Fractals in the Complex Plane</h1>
-			<p>Ever since the term was introduced by Benoit B. Mandelbrot, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the complex plane, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.</p>
-			<p>Before we begin, let's figure out exactly what a <strong>fractal</strong> is. Dictionary.com defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or</em>&hellip;</p>
+			<h1>3D Solar System</h1>
+			<p>We've been developing a three-dimensional model of the Solar System. It is an accurate representation of what is going on right now in space. The simulator recognizes over 730,000 different planets, moons, asteroids, and other bodies.</p>
 		</div>
-		<img class="avatar" src="fractals/0001/images/complextable1.png">
+		<img class="avatar" src="programs/0006/images/old.png" alt="planet">
 		<br>
-		<img class="avatar" src="fractals/0001/images/complextable1.png">
+		<img class="avatar" src="fractals/0001/images/complextable1.png" alt="table">
 		<div class="blurb">
-			<h1>Fractals in the Complex Plane</h1>
-			<p>Ever since the term was introduced by Benoit B. Mandelbrot, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the complex plane, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.</p>
-			<p>Before we begin, let's figure out exactly what a <strong>fractal</strong> is. Dictionary.com defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or</em>&hellip;</p>
+			<h1>Unit Converter</h1>
+			<p>The converter is finally done! This converter has the largest collection of unit and unit types in the Internet (or at least among the other converters we could find).</p>
 		</div>
 	</div>
 </div>
@@ -59,23 +55,23 @@
 	<div class="columns">
 		<div class="fourth">
 			<h3>Polyrhythm Player</h3>
-			<img src="programs/0002/images/thumb.png">
+			<img src="programs/0002/images/thumb.png" alt="poly">
 			<p>It plays any number to 32 on any other number to 32.</p>
 		</div>
 		<div class="fourth">
 			<h3>Time Signature Metronome</h3>
-			<img src="programs/0003/images/thumb.png">
+			<img src="programs/0003/images/thumb.png" alt="metronome">
 			<p>This customizable metronome can play <i>any</i> time signature up to 50!</p>
 		</div>
 		<div class="divider"></div>
 		<div class="fourth">
 			<h3>Chord Recognizer</h3>
-			<img src="programs/0004/images/thumb.png">
+			<img src="programs/0004/images/thumb.png" alt="piano">
 			<p>Playing the virtual piano.</p>
 		</div>
 		<div class="fourth">
 			<h3>Wip</h3>
-			<img src="programs/0005/images/thumb.png">
+			<img src="programs/0005/images/thumb.png" alt="wip">
 			<p>This is a work in progress.</p>
 		</div>
 	</div>
@@ -90,7 +86,7 @@
 	<h1>Featured Article</h1>
 	<hr>
 	<a href="fractals/0001/">
-		<img class="avatar" src="fractals/0001/images/complextable1.png">
+		<img class="avatar" src="fractals/0001/images/complextable1.png" alt="table">
 	</a>
 	<div class="blurb">
 		<h1>Fractals in the Complex Plane</h1>
@@ -104,9 +100,7 @@
 	<div class="layer">
 		<h1>Who We Are</h1>
 		<p>We are two high-schoolers who love pretty much anything nerdy, especially math.<br>In this website, we post articles on various cool math things.</p>
-		<a href="about/">
-			<button>About Us</button>
-		</a>
+		<button onclick="location.href='about/'">About Us</button>
 	</div>
 </div>
 
@@ -132,17 +126,34 @@
 	
 	window.onscroll = function() {
 		sticky.style.display = "inline";
-		var rate = document.body.scrollTop * 25 / gif.offsetHeight;
+		var rate = window.scrollY * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
 		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
 		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
-		if (document.body.scrollTop === 0) {
+		
+		var parallax = document.getElementsByClassName("parallax");
+		for (var i = 0; i < parallax.length; i++) {
+			var p = document.getElementsByClassName("parallax")[i];
+			var percent = 10 * (p.getBoundingClientRect().top + p.clientHeight) / (document.body.clientHeight + p.clientHeight) + 100;
+			var imageSrc = p.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
+			var image = new Image();
+			image.src = imageSrc;
+			var imgc = image.height / image.width;
+			var winc = window.innerHeight / window.innerWidth;
+			if (winc > imgc) {
+				p.style.backgroundSize = "auto " + percent + "%";
+			} else {
+				p.style.backgroundSize = percent + "% auto";
+			}
+		}
+		
+		if (window.scrollY === 0) {
 			gif.childNodes[3].style.opacity = 1;
 		}
 		else {
 			gif.childNodes[3].style.opacity = 0;
 		}
-		if (document.body.scrollTop > gif.offsetHeight) {
+		if (window.scrollY > gif.offsetHeight) {
 			sticky.style.backgroundColor = "#fff";
 		}
 		else {

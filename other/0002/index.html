@@ -1,29 +1,254 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Untitled Document</title>
-<link rel="stylesheet" type="text/css" href="graph.css">
-<script type="text/x-mathjax-config">
-	MathJax.Hub.Config({
-		messageStyle: "none"
-	});
-</script>
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-</head>
-
-<body>
-
-<div id="controls">
-	<ul id="user" onClick="">
-		<li><input placeholder="New Equation" disabled></li>
-	</ul>
-
-	<ul id="xes"></ul>
-</div>
-<p id="render"></p>
-
-<canvas id="c"></canvas>
-<script src="graph.js"></script>
-</body>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Grapheme by Moomath</title>
+		<link rel="stylesheet" type="text/css" href="graph.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="build/mathquill.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="build/mathquill.js"></script>
+		<script>
+			var MQ = MathQuill.getInterface(2);
+		</script>
+		<link rel="icon" href="images/favicon.png" sizes="256x256" type="image/png">
+	</head>
+	
+	<body>
+		<canvas></canvas>
+		<div id="bottom">
+			<button class="left">x</button>
+			<button>+</button>
+			<button class="right">y</button>
+			<button class="left">x</button>
+			<button>-</button>
+			<button class="right">y</button>
+			<button class="center">&#8635;</button>
+			<input id="t1" type="checkbox" name="toggle" checked>
+			<label for="t1">X-Axis</label>
+			<input id="t2" type="checkbox" name="toggle" checked>
+			<label for="t2">Y-Axis</label>
+			<input id="t3" type="checkbox" name="toggle" checked>
+			<label for="t3">Grid</label>
+		</div>
+		<div id="title">Grapheme by Moomath</div>
+		<div id="controls">
+			<ul>
+				<li id="new">
+					<button class="count off" onClick="add()">&#119943;</button>
+					<button class="count off" onClick="add()">&#9673;</button>
+					<button class="count off" onClick="folder()">&#128447;</button>
+					<div style="clear:both"></div>
+				</li>
+			</ul>
+			<div id="settings" tabindex="0">
+				<p>Color:</p>
+				<div id="hue">
+					<input id="c1" type="radio" name="color">
+					<label for="c1" onClick="color(1)"></label>
+					<input id="c2" type="radio" name="color">
+					<label for="c2" onClick="color(2)"></label>
+					<input id="c3" type="radio" name="color">
+					<label for="c3" onClick="color(3)"></label>
+					<input id="c4" type="radio" name="color">
+					<label for="c4" onClick="color(4)"></label>
+					<input id="c5" type="radio" name="color">
+					<label for="c5" onClick="color(5)"></label>
+					<input id="c6" type="radio" name="color">
+					<label for="c6" onClick="color(6)"></label>
+					<input id="c7" type="radio" name="color">
+					<label for="c7" onClick="color(7)"></label>
+					<input id="c8" type="radio" name="color">
+					<label for="c8" onClick="color(8)"></label>
+					<input id="c9" type="radio" name="color">
+					<label for="c9" onClick="color(9)"></label>
+				</div>
+				<hr>
+				<p>Input:</p>
+				<input type="text" id="domain">
+			</div>
+		</div>
+		<script>
+			var colors = [];
+			var equations = [];
+			var current = null;
+			var num = 1;
+			var child = document.getElementById("controls").children[0];
+			var preset = ["#d5415c", "#ff8a00", "#d2a600", "#53a72b", "#00ae8c", "#00aec7", "#3268b1", "#a761a3", "#0c0e0e"];
+			
+			function folder() {
+				var li = document.createElement("li");
+				li.classList.add("folder");
+				
+				var count = document.createElement("button");
+				count.innerHTML = "\u{1F5BF}";
+				count.classList.add("count");
+				count.classList.add("off");
+				li.appendChild(count);
+				
+				var input = document.createElement("input");
+				input.type = "text";
+				li.appendChild(input);
+				
+				var settings = document.createElement("button");
+				settings.innerHTML = "&#9660;";
+				settings.onclick = function() {
+					//
+				};
+				li.appendChild(settings);
+				
+				var remove = document.createElement("button");
+				remove.innerHTML = "&#128473;";
+				remove.onclick = function() {
+					backspace(li);	
+				};
+				li.appendChild(remove);
+				
+				var div = document.createElement("div");
+				div.style.clear = "both";
+				li.appendChild(div);
+				
+				child.insertBefore(li, child.children[child.children.length - 1]);
+				input.focus();
+			}
+			
+			function add() {
+				var li = document.createElement("li");
+				
+				var count = document.createElement("button");
+				count.classList.add("count");
+				count.onclick = function() {
+					toggle(count);
+				};
+				li.appendChild(count);
+				
+				var p = document.createElement("p");
+				var span = document.createElement("span");
+				span.id = "e" + num;
+				p.appendChild(span);
+				li.appendChild(p);
+				
+				var settings = document.createElement("button");
+				settings.innerHTML = "&#9881;";
+				settings.onclick = function() {
+					configure(li);
+				};
+				li.appendChild(settings);
+				
+				var remove = document.createElement("button");
+				remove.innerHTML = "&#128473;";
+				remove.onclick = function() {
+					backspace(li);	
+				};
+				li.appendChild(remove);
+				
+				var div = document.createElement("div");
+				div.style.clear = "both";
+				li.appendChild(div);
+				
+				child.insertBefore(li, child.children[child.children.length - 1]);
+				MQ.MathField(document.getElementById("e" + num), {
+					spaceBehavesLikeTab: true,
+					restrictMismatchedBrackets: true,
+					supSubsRequireOperand: true,
+					autoCommands: "pi tau theta sqrt"
+				}).focus();
+				num++;
+				
+				colors.push(4);
+				equations.push(li);
+				
+				update();
+			}
+			
+			function toggle(x) {
+				if (x.classList.contains("off")) {
+					x.classList.remove("off");
+				} else {
+					x.classList.add("off");
+				}
+			}
+			
+			function configure(x) {
+				var settings = document.getElementById("settings");
+				var div = x.children[2];
+				if (div.classList.contains("on")) {
+					div.classList.remove("on");
+					settings.style.transform = "translate(0, 100%)";
+					document.getElementById("controls").style.height = "100%";
+				} else {
+					div.classList.add("on");
+					settings.style.transform = "translate(0, 0)";
+					document.getElementById("controls").style.height = "calc(100% - " + settings.offsetHeight + "px)";
+					
+					document.getElementById("hue").children[colors[equations.indexOf(x)] * 2].checked = true;
+					current = x;
+				}
+			}
+			
+			function hide(x) {
+				var settings = document.getElementById("settings");
+				if (x !== null) {
+					var div = x.children[2];
+					div.classList.remove("on");
+				}
+				settings.style.transform = "translate(0, 100%)";
+				document.getElementById("controls").style.height = "100%";
+			}
+			
+			function backspace(x) {
+				hide(current);
+				current = null;
+				colors.splice(equations.indexOf(x), 1);
+				equations.splice(equations.indexOf(x), 1);
+				child.removeChild(x);
+				update();
+			}
+			
+			function update() {
+				var j = 0;
+				var children = child.children;
+				for (var i = 0; i < children.length - 1; i++) {
+					if (children[i].classList.contains("folder")) {
+						
+					} else {
+						j++;
+						children[i].children[0].innerHTML = j;
+					}
+				}
+			}
+			
+			function color(x) {
+				colors[equations.indexOf(current)] = x - 1;
+				current.children[0].style.backgroundColor = preset[x - 1]
+			}
+			
+			window.onload = function() {
+				document.getElementById("title").style.opacity = 0;
+				document.getElementById("title").style.backgroundColor = "#bbb";
+			}
+				
+			document.onmouseup = function() {
+				var focused = document.activeElement;
+				while (focused.tagName !== "LI") {
+					if (focused.id === "settings") {
+						return;
+					}
+					focused = focused.parentElement;
+					if (focused === null) {
+						break;
+					}
+				}
+				if (focused !== null && (focused.id === "new" || focused.classList.contains("folder"))) {
+					focused = null;
+				}
+				if (current !== focused) {
+					hide(current);
+				}
+				current = focused;
+			}
+			
+			add();
+		</script>
+	</body>
 </html>

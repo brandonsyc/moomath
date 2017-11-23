@@ -227,13 +227,12 @@ a.icon {
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
-	background-size: cover;
 	display: flex;
 	justify-content: center;
 	height: auto;
 }
 .layer {
-	background: linear-gradient(to right, rgba(51, 51, 51, 0.4) 0%, rgba(51, 51, 51, 0.6) 25%, rgba(51, 51, 51, 0.6) 75%, rgba(51, 51, 51, 0.4) 100%);
+	background: rgba(51, 51, 51, 0.4);
 	text-align: center;
 	padding: 50px 25px;
 	width: 100%;
