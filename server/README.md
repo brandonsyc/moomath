@@ -1,13 +1,13 @@
 # Server Files
 
-If something needs to be compiled on the server, place it in build.sh. The git repository is checked every 5 seconds by the server computer, and if any changes are detected, all changes are downloaded, then build.sh is run. Note that build.sh is run with 
+If something needs to be compiled on the server, place it in build.sh. The git repository is checked every 5 seconds by the server computer, and if any changes are detected, all changes are downloaded, then build.sh is run. Note that build.sh is run with root privileges; be careful!
 
 If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
 
 # Hardware Information
 
 | Property | Value |
-| --- | --- | --- |
+| --- | --- |
 | Device Type | Mac mini (Late 2014) |
 | Processor | 2.6 GHz Intel Core i5 |
 | Memory | 8 GB 1600 MHz DDR3 |
