@@ -1,6 +1,6 @@
 var textureLoader = new THREE.TextureLoader();
 
-var textureNoiseColor = textureLoader.load("textures/px.jpg");
+var textureNoiseColor = textureLoader.load("src/textures/px.jpg");
 textureNoiseColor.repeat.set(1, 1);
 textureNoiseColor.wrapS = textureNoiseColor.wrapT = THREE.RepeatWrapping;
 textureNoiseColor.format = THREE.RGBFormat;
