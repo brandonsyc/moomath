@@ -24,16 +24,16 @@ For a complete catalog, go the [website](moomath.com)!
 
 #### Language Skills
 
+Brandon Chung
+
+* Proficient in HTML, CSS, JS, English
+[ Add something here Brandon :P ]
+
 Timothy Herchen
 
 * Proficient in JS, English
 * Somewhat proficient in C++, non-OOP Python
 * Okay in C, Java, HTML, x86 Assembly (read-only!)
 * Shameful at C#, CSS, 中文
-
-Brandon Chung
-
-* Proficient in HTML, CSS, JS, English
-[ Add something here Brandon :P ]
 
 #### Other Projects
