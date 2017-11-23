@@ -20,6 +20,11 @@ Here's a table of some of our best content, with a lovely representative from ea
 
 For a complete catalog, go the [website](moomath.com)!
 
+## Contact Us
+
+Please email Timothy at timothy.herchen@gmail.com if you have any questions or would like to contribute! We'll likely be interested.
+Bug fixes, security issues, and website improvement are also appreciated.
+
 ## About Us
 
 #### Language Skills
@@ -37,3 +42,6 @@ Timothy Herchen
 * Shameful at C#, CSS, 中文
 
 #### Other Projects
+
+* Udderly Web Design (a light-hearted collaborative web designing team)
+* [Grapheme](https://github.com/anematode/grapheme) (highly WIP, a JS graphing calculator API)
