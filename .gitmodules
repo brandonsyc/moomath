@@ -1,0 +1,3 @@
+[submodule "other/0003"]
+	path = other/0003
+	url = https://github.com/anematode/polyomino
