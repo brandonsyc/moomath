@@ -2,6 +2,8 @@
 
 If something needs to be compiled on the server, place it in build.sh. The git repository is checked every 5 seconds by the server computer, and if any changes are detected, all changes are downloaded, then build.sh is run.
 
+If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
+
 # Hardware Information
 
 | Property | Value |
@@ -27,5 +29,6 @@ Yes, I'm aware this isn't the best computer out there (quite an understatement),
 * git (obviously)
 * Python
 * Node.js
+* Ruby
 
 Please request me (Timothy) if you need another tool or more information on specifics / how to use these tools through bash.
