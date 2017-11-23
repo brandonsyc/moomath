@@ -5,7 +5,7 @@ g++ -o ../programs/0006/server/astSearch ../programs/0006/server/asteroidrespond
 
 $formatted_time date
 
-echo "<html><body style='white-space: pre-wrap'>Build completed at " date + ".</body></html>" > build.html
+echo "<html><body style='white-space: pre-wrap'>Build completed at " + $formatted_time + ".</body></html>" > build.html
 
 # Restart Apache
 apachectl restart
