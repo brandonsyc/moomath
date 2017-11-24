@@ -68,7 +68,8 @@ function addCube(w, offX, offY, rWidth) {
     }
     k.desc += "<p>Dimensions: " + (1 + maxX - minX) + " &times; " + (1 + maxY - minY) + " &times; " + (1 + maxZ - minZ) + "</p>"
     k.desc += "<p>Cube Count: " + w + "</p><br>";
-    k.desc += "<button onclick='try{translateCamera(" + (cubes.length + 1) + ")}catch(e){;}'>Previous</button>";
+    
+    k.desc += "<button onclick='try{translateCamera(" + (cubes.length - 1) + ")}catch(e){;}'>Previous</button>";
     k.desc += "<button onclick='try{translateCamera(" + (cubes.length + 1) + ")}catch(e){;}'>Next</button><br>";
 
     if (w == 1 && i == 0) {
