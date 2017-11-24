@@ -1,39 +1,98 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>nope</title>
-<link rel="stylesheet" type="text/css" href="../../styles.css">
-<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-<link rel="stylesheet" type="text/css" href="logic.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>nope</title>
+		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+		<link rel="stylesheet" type="text/css" href="logic.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script>
+			var x = 0, z = 10, dir = 0, target = 0;
+			var data = 341;
+			var converted = (data >>> 0).toString(2);
+			console.log(-1 % 4);
+			
+			var scene = new THREE.Scene();
+			//scene.background = new THREE.Color( 0xffffff );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-<div id="top"></div>
+			var renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
 
-<div class="content">
-<h1>nope</h1>
-<p>? September, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+			var n = 0;
+			for ( var i = -1; i <= 1; i++ ) {
+				for ( var j = -1; j <= 1; j++ ) {
+					if (converted.charAt(n) === "1") {
+						var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+						var material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
+						var cube = new THREE.Mesh( geometry, material );
+						cube.position.set( i, 0, j );
+						scene.add( cube );
 
-<div class="article">
+						camera.position.z = 5;
+					}
+					n++;
+				}
+			}
+					
+			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
+			scene.add( directionalLight );
+			
+			for ( var i = -200; i <= 200; i += 50 ) {
+				for ( var j = -200; j <= 200; j += 50 ) {
+					var spotLight = new THREE.SpotLight( 0xffffff, 0.01);
+					spotLight.position.set( i, -10, j );
+					scene.add( spotLight );
 
-<div class="face" style="
-	background-color: red;
-	height: 50px;
-	transform: translateZ(10px);
-	width: 50px;
-"></div>
+					var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 );
+					var material = new THREE.MeshStandardMaterial( { color: 0xffff00 } );
+					var cube = new THREE.Mesh( geometry, material );
+					cube.position.set( i, -10, j );
+					scene.add( cube );
+				}
+			}
+			
 
-<div class="separate"></div>
-</div>
-</div>
+			var animate = function () {
+				requestAnimationFrame( animate );
+				
+				if (dir === 0) {
+					x -= 0.05;
+				} else if (dir === 1) {
+					z -= 0.05;
+				} else if (dir === 2) {
+					x += 0.05;
+				} else {
+					z += 0.05;
+				}
+				camera.position.set( x, 1.5, z );
+				var actual = Math.PI * -(dir - 1) / 2;
+				if (actual > target) {
+					target += 0.05;
+				} else if (actual < target) {
+					target -= 0.05;
+				}
+				if (Math.abs(actual - target) < 0.05) {
+					target = actual;
+				}
+				camera.rotation.y = target;
 
-<div id="bottom"></div>
+				renderer.render(scene, camera);
+			};
 
-<script src="../../frame.js"></script>
-<script src="logic.js"></script>
-<script src="../../querystring.js"></script>
-
-</body>
+			animate();
+			
+			document.body.onkeydown = function() {
+				if (window.event.keyCode === 37) {
+					dir = (dir + 3) % 4;
+				} else if (window.event.keyCode === 39) {
+					dir = (dir + 1) % 4;
+				}
+			}
+		</script>
+	</body>
 </html>
