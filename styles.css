@@ -333,6 +333,8 @@ a.icon {
 	text-align: center;
 }
 .article p {
+	margin: auto;
+	max-width: 1000px;
 	text-align: justify;
 }
 .figure {
