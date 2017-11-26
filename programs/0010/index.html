@@ -10,10 +10,11 @@
 	<body>
 		<script src="https://threejs.org/build/three.min.js"></script>
 		<script>
-			var x = 0, z = 10, dir = 0, target = 0;
-			var data = 341;
+			var x = 0, z = 10, dir = 1, target = 0, next = 1, last = 1;
+			var data = 29834759837459873;
 			var converted = (data >>> 0).toString(2);
-			console.log(-1 % 4);
+			
+			var matrix = [];
 			
 			var scene = new THREE.Scene();
 			//scene.background = new THREE.Color( 0xffffff );
@@ -22,59 +23,79 @@
 			var renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
+						var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 );
+						var material = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
+						var cube = new THREE.Mesh( geometry, material );
+						cube.position.set( 0, 2, 5 );
+						scene.add( cube );
 
 			var n = 0;
-			for ( var i = -1; i <= 1; i++ ) {
-				for ( var j = -1; j <= 1; j++ ) {
+			for ( var i = 0; i <= 5; i++ ) {
+				var row = [];
+				for ( var j = 0; j <= 5; j++ ) {
+					row.push(converted.charAt(n) === "1");
 					if (converted.charAt(n) === "1") {
 						var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-						var material = new THREE.MeshStandardMaterial( { color: 0x00ff00 } );
+						var material = new THREE.MeshStandardMaterial( { color: 0x0000ff } );
 						var cube = new THREE.Mesh( geometry, material );
 						cube.position.set( i, 0, j );
 						scene.add( cube );
-
-						camera.position.z = 5;
 					}
 					n++;
 				}
+				console.log(row);
+				matrix.push(row);
 			}
-					
-			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.5 );
-			scene.add( directionalLight );
-			
-			for ( var i = -200; i <= 200; i += 50 ) {
-				for ( var j = -200; j <= 200; j += 50 ) {
-					var spotLight = new THREE.SpotLight( 0xffffff, 0.01);
-					spotLight.position.set( i, -10, j );
-					scene.add( spotLight );
-
-					var geometry = new THREE.BoxGeometry( 0.1, 0.1, 0.1 );
-					var material = new THREE.MeshStandardMaterial( { color: 0xffff00 } );
-					var cube = new THREE.Mesh( geometry, material );
-					cube.position.set( i, -10, j );
-					scene.add( cube );
-				}
-			}
+				
+			var light = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
+			scene.add( light );
 			
 
 			var animate = function () {
 				requestAnimationFrame( animate );
 				
-				if (dir === 0) {
-					x -= 0.05;
-				} else if (dir === 1) {
-					z -= 0.05;
-				} else if (dir === 2) {
-					x += 0.05;
-				} else {
-					z += 0.05;
+				var center = Math.abs(x % 1) < 0.05 && Math.abs(z % 1) < 0.05;
+				console.log(center);
+				
+				if (center) {
+					dir = next;
 				}
-				camera.position.set( x, 1.5, z );
+				if (dir === 0) {
+					if ( !center || x < 1 || z < 0 || x >= matrix.length + 1 || z >= matrix[0].length || 
+						!matrix[Math.round(x) - 1][Math.round(z)] ) {
+						x -= 0.05;
+					}
+				} else if (dir === 1) {
+					if ( !center || x < 0 || z < 1 || x >= matrix.length || z >= matrix[0].length + 1 || 
+						!matrix[Math.round(x)][Math.round(z) - 1] ) {
+						z -= 0.05;
+					}
+				} else if (dir === 2) {
+					if ( !center || x < -1 || z < 0 || x >= matrix.length - 1 || z >= matrix[0].length || 
+						!matrix[Math.round(x) + 1][Math.round(z)] ) {
+						x += 0.05;
+					}
+				} else {
+					if ( !center || x < 0 || z < -1 || x >= matrix.length || z >= matrix[0].length - 1 || 
+						!matrix[Math.round(x)][Math.round(z) + 1] ) {
+						z += 0.05;
+					}
+				}
+				
+				camera.position.set( x, 1, z );
+				light.position.set( x, 0, z );
+				
 				var actual = Math.PI * -(dir - 1) / 2;
+				if (next === 3 && last === 0) {
+					actual = Math.PI;
+				}
+				if (next === 0 && last === 3 && target < 0) {
+					target = -target;
+				}
 				if (actual > target) {
-					target += 0.05;
+					target += 0.1;
 				} else if (actual < target) {
-					target -= 0.05;
+					target -= 0.1;
 				}
 				if (Math.abs(actual - target) < 0.05) {
 					target = actual;
@@ -87,11 +108,15 @@
 			animate();
 			
 			document.body.onkeydown = function() {
-				if (window.event.keyCode === 37) {
-					dir = (dir + 3) % 4;
-				} else if (window.event.keyCode === 39) {
-					dir = (dir + 1) % 4;
+				if (dir === next) {
+					last = dir;
+					if (window.event.keyCode === 37) {
+						next = (dir + 3) % 4;
+					} else if (window.event.keyCode === 39) {
+						next = (dir + 1) % 4;
+					}
 				}
+				console.log(next + "   " + last);
 			}
 		</script>
 	</body>

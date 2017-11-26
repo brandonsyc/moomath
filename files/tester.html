@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+	<script>
+		var c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+		
+		var i = "110001010010111110011000101001011111001100010100101111100110001010010111110011000101001011111001100010100101111100110001010010111110011000101001011111001100010100101111100";
+		
+		function getthing(x) {
+			var out = "";
+			for (var t = 0; t < x.length; t += 5) {
+				out += c.charAt(parseInt(x.substr(t, 5), 2));
+			}
+			console.log(out);
+		}
+		
+		getthing(i);
+	</script>
+</body>
+</html>
