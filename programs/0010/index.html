@@ -13,14 +13,14 @@
 			var x = 0, z = 10, dir = 1, target = 0, next = 1, dx = 0, dz = 0, actual = 0;
 			
 			var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-			
-			var data = "YUXZRJPTCS7GFF6MKL4YUXZRJPTCS7GFF6A";
+			var data = "77QBW5W5QAWXQR656Q6XAH6X6Q6XQBW5SA2XQRX5QA";
 			
 			
 			var converted = "";
 			for (var t = 0; t < data.length; t++) {
-				converted += code.indexOf(data.charAt(t)).toString(2);
+				converted += ("00000" + code.indexOf(data.charAt(t)).toString(2)).slice(-5);
 			}
+			console.log(converted);
 			
 			var matrix = [];
 			
@@ -33,12 +33,12 @@
 			document.body.appendChild( renderer.domElement );
 
 			var n = 0;
-			for ( var i = 0; i <= 19; i++ ) {
+			for ( var i = 0; i < 21; i++ ) {
 				var row = [];
-				for ( var j = 0; j <= 19; j++ ) {
+				for ( var j = 0; j < 10; j++ ) {
 					row.push(converted.charAt(n) === "1");
 					if (converted.charAt(n) === "1") {
-						var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+						var geometry = new THREE.BoxGeometry( 1, 2, 1 );
 						var material = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
 						var cube = new THREE.Mesh( geometry, material );
 						cube.position.set( i, 0, j );
@@ -46,8 +46,8 @@
 					}
 					n++;
 				}
-				console.log(row);
 				matrix.push(row);
+			console.log(row);
 			}
 			
 			var light = new THREE.PointLight( 0xffffff, 1, 100 );
@@ -84,11 +84,10 @@
 					}
 				}
 				
-				camera.position.set( x + dx, 1, z + dz );
-				light.position.set( x + dx, 2, z + dz );
+				camera.position.set( x + dx, 1.5, z + dz );
+				light.position.set( x + dx, 1.5, z + dz );
 				
 				actual = Math.PI * -(dir - 1) / 2;
-				console.log(actual + "  " + target);
 				if (actual < -3 && target > 1.5) {
 					actual = -actual;
 				} else if (actual < -1.5 && target > 3) {
