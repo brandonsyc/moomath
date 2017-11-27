@@ -13,7 +13,7 @@
 			var x = 0, z = 10, dir = 1, target = 0, next = 1, dx = 0, dz = 0, actual = 0;
 			
 			var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-			var data = "77QBW5W5QAWXQR656Q6XAH6X6Q6XQBW5SA2XQRX5QA";
+			var data = "77QBW5W5QAWXQR656Q6XAH6X6Q6XQBW5SA2XQRX5QA77";
 			
 			
 			var converted = "";
@@ -33,7 +33,7 @@
 			document.body.appendChild( renderer.domElement );
 
 			var n = 0;
-			for ( var i = 0; i < 21; i++ ) {
+			for ( var i = 0; i < 22; i++ ) {
 				var row = [];
 				for ( var j = 0; j < 10; j++ ) {
 					row.push(converted.charAt(n) === "1");
@@ -47,8 +47,13 @@
 					n++;
 				}
 				matrix.push(row);
-			console.log(row);
+				console.log(row);
 			}
+			
+			var geometry = new THREE.BoxGeometry( 0.5, 0.25, 0.5 );
+			var material = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
+			var going = new THREE.Mesh( geometry, material );
+			scene.add( going );
 			
 			var light = new THREE.PointLight( 0xffffff, 1, 100 );
 			scene.add( light );
@@ -67,18 +72,22 @@
 					dz = 0;
 				}
 				if (dir === 0) {
+					going.position.set(x - 1, 1, z);
 					if ( !matrix[x - 1] || !center || !matrix[x - 1][z] ) {
 						dx -= 0.05;
 					}
 				} else if (dir === 1) {
+					going.position.set(x, 1, z - 1);
 					if ( !matrix[x] || !center || !matrix[x][z - 1] ) {
 						dz -= 0.05;
 					}
 				} else if (dir === 2) {
+					going.position.set(x + 1, 1, z);
 					if ( !matrix[x + 1] || !center || !matrix[x + 1][z] ) {
 						dx += 0.05;
 					}
 				} else {
+					going.position.set(x, 1, z + 1);
 					if ( !matrix[x] || !center || !matrix[x][z + 1] ) {
 						dz += 0.05;
 					}
