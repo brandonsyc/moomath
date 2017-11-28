@@ -2,7 +2,7 @@
 #include <vector>
 #include "polyomino.h"
 
-const int polyomino_cube_limit = 10;
+const int polyomino_cube_limit = 8;
 
 const int puzzleSize = 2;
 
