@@ -18,7 +18,7 @@ Here's a table of some of our best content, with a lovely representative from ea
 | Solar System Simulator | [Link](https://nichodon.github.io/programs/0006/) | Science |
 | Brainf\*ck Interpreter (WIP) | [Link](https://nichodon.github.io/programs/0008/) | Programming |
 
-For a complete catalog, go the [website](moomath.com)!
+For a complete catalog, go the [website](http://moomath.com)!
 
 ## Contact Us
 
