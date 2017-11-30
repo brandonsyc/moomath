@@ -6,5 +6,8 @@ g++ -o ../programs/0006/server/astSearch ../programs/0006/server/asteroidrespond
 # Convert nichodon.github.io links into moomath links (hopefully temporary)
 python moomath_convert.py paginate.js frame.js sitemap.xml search.js other/0001/index.html programs/0001/index.html
 
+# Convert 404.html
+python trim404.py
+
 # Restart Apache
 apachectl restart
