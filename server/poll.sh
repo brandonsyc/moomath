@@ -9,7 +9,19 @@ do
      echo "Changes detected, pulling... (overwriting all local changes)"
      git fetch --all
      git reset --hard origin/master
-     sh ./build.sh
+     
+     echo "" > build.html
+     echo "<html><body style='white-space: pre-wrap'>Build started at " >> build.html
+     echo $(date) >> build.html
+     echo ".\n" >> build.html
+
+     sh ./build.sh >> build.html
+
+     echo "Build finished at "
+     echo $(date) >> build.html
+     echo ".\n" >> build.html
+     echo "</body></html>" >> build.html
+
      echo "Build complete."
   fi
   sleep 5
