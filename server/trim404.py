@@ -4,7 +4,7 @@ path = "../404.html"
 trimoff = 3
 
 f = open(path, 'r')
-g = '\n'.join(f.split('\n')[trimoff:])
+g = '\n'.join(f.read().split('\n')[trimoff:])
 f.close()
 
 f = open(path, 'w')
