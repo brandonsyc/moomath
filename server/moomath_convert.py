@@ -9,7 +9,7 @@ for w in xrange(1, len(sys.argv)):
 
     k = p.read()
 
-    print "Replaced " + k.count('https://nichodon.github.io') + k.count('http://nichodon.github.io') + " instances of nichodon.github.io in " + sys.argv[w] + ".\n"
+    print "Replaced " + str(k.count('https://nichodon.github.io') + k.count('http://nichodon.github.io')) + " instances of nichodon.github.io in " + sys.argv[w] + ".\n"
     k = k.replace('https://nichodon.github.io', 'http://moomath.com').replace('http://nichodon.github.io', 'http://moomath.com') # Update if moomath becomes HTTPS
 
     p.close()
