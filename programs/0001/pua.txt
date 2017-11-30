@@ -1,0 +1,13 @@
+per acre,/acre,per acre,inhabitant per acre,/acre,inhabitants per acre
+per hectare,/ha,per hectare,inhabitant per hectare,/ha,inhabitants per hectare
+per square centimetre,/cm<sup>2</sup>,per square centimetre,per square centimeter,per square centimeter
+per square inch,/in<sup>2</sup>,per square inch
+per square kilometre,/km<sup>2</sup>,per square kilometre,per square kilometer,per square kilometer,inhabitant per square kilometre,/km<sup>2</sup>,inhabitants per square kilometre,inhabitant per square kilometer,inhabitants per square kilometer
+per square mile,/sq&nbsp;mi,per square mile,inhabitant per square mile,/sq&nbsp;mi,inhabitants per square mile
+:
+1/4046.8564224
+100e-6
+1e4
+1/0.00064516
+1e-6
+1/2,589,988.110336

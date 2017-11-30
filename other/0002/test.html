@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Udder</title>
+</head>
+<body>
+<canvas id="grapher" width="640" height="640" style="border-style: dotted;"></canvas>
+<br>
+<button onclick="clearCanvas()">
+Clear Canvas
+</button>
+<button onclick="regeneratePoints();drawPoints()">
+Regenerate Points
+</button>
+<button onclick="iteratePoints();drawPoints()">
+Point Iteration
+</button>
+<label for='root'>Function (f(x,y))</label>
+<input type='text' id='root' oninput='try{eval("rootFunc=function(x,y){var val ="+caretReplace(this.value)+";if(val){return val;}return false;};");}catch(e){rootFunc=function(x,y){return 0;}};autoRegenerate=true'></input>
+</body>
+
+<script src="graphCalc.js"></script>
+<html>

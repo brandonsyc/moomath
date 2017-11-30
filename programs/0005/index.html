@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Planet Simulator</title>
@@ -21,7 +21,7 @@
 <div class="box">
 	<p>This widget is self explanatory, no? To add a body, click and drag. It's WIP</p>
 	<hr>
-	<canvas width="768px" height="768px" onMouseDown="pressed()" onClick="clicked()"></canvas>
+	<canvas width="640" height="640" onMouseDown="pressed()" onClick="clicked()"></canvas>
 	<hr>
 	<input id="t1" name ="mode" type="radio" disabled>
 	<label for="t1">Select Mode:</label>
@@ -30,10 +30,10 @@
 	<input id="o" name ="mode" type="radio">
 	<label for="o">Option</label>
 	<br><br>
-	<label for="mass">Mass:</label>
-	<input id="mass" type="number" value="1">
-	<label for="density">Density:</label>
-	<input id="density" type="number" value="1">
+	<label for="mass">Earth Masses:</label>
+	<input id="mass" type="number" value="1000">
+	<label for="density">Earth Densities:</label>
+	<input id="density" type="number" value="0.001">
 	<br><br>
 	<input id="t2" name ="color" type="radio" disabled>
 	<label for="t2">Select Color:</label>
@@ -48,6 +48,17 @@
 		<label for="yellow"><div></div></label>
 	</div>
 	<br><br>
+	<div class="preset">
+		<button>Sun</button>
+		<button>Sirius</button>
+		<button>Canopus</button>
+		<button>Rigil Kentaurus</button>
+		<button>Arcturus</button>
+		<button>Vega</button>
+		<button>Capella</button>
+		<button>Rigel</button>
+	</div>
+	<br><br>
 	<button onClick="goodbye()">Clear</button>
 	<br><br>
 	<p>Fps: <span id="fps"></span> / 60</p>
@@ -60,7 +71,7 @@
 <div id="bottom"></div>
 
 <div class="source-link">
-	<a href="http://nichodon.github.io/programs/0005/planet.js" target="_blank">Program Source Code</a>
+	<a href="planet.js" target="_blank">Program Source Code</a>
 	<div class="separate"></div>
 </div>
 

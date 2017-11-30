@@ -1,0 +1,27 @@
+pound per square inch,lb/in<sup>2</sup>,pounds per square inch,pound-force per square inch,lbf/in<sup>2</sup>,pounds-force per square inch,pound per square inch,psi,pounds per square inch
+standard atmosphere,atm
+barye,Ba
+bar,bar
+decibar,dbar
+inch of mercury,inHg,inches of mercury
+kilobarye,kBa,millibar,mb,millibar,mbar
+kilogram-force per square centimetre,kg<sub>f</sub>/cm<sup>2</sup>,kilograms-force per square centimetre,kilogram-force per square centimeter,kilograms-force per square centimeter,kilogram per square centimetre,kg/cm<sup>2</sup>,kilograms per square centimetre,kilogram per square centimeter,kilograms per square centimeter,kilogram-force per square centimetre,kgf/cm<sup>2</sup>,kilograms-force per square centimetre,kilogram-force per square centimeter,kilograms-force per square centimeter
+kilopound per square inch,ksi,kilopounds per square inch
+millimetre of mercury,mmHg,millimetres of mercury,millimeter of mercury,millimeters of mercury
+pascal,Pa
+pound per square foot,psf,pounds per square foot
+torr,Torr
+:
+444,822,161.52605/64,516
+101,325
+0.1
+100,000
+10,000
+3386.388640341
+100
+98,066.5
+444,822,161,526.05/64,516
+133.322387415
+1
+444,822,161.52605/9,290,304
+20,265/152

@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Search &ndash; Programs</title>
@@ -13,13 +13,10 @@
 
 <div class="content">
 	<h1>Fractals</h1>
-</div>
-
-<div class="content">
-<div class="article">
-	<input type="text" class="input" onkeyup="search()" placeholder="Input title or date" autofocus>
-	<ul class="list"></ul>
-</div>
+	<div class="article">
+		<input type="text" class="input" onkeyup="search()" placeholder="Input title or date" autofocus>
+		<ul class="list"></ul>
+	</div>
 </div>
 
 <div class="separate"></div>
@@ -33,10 +30,10 @@
 <script>
 function search() {
     var input, filter, ul, li, a, i;
-    input = document.getElementsByClassName('input')[0];
+    input = document.getElementsByClassName("input")[0];
     filter = input.value.toUpperCase();
     ul = document.getElementsByClassName("list")[0];
-    li = ul.getElementsByTagName('li');
+    li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByTagName("a")[0];
         if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {

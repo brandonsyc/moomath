@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+	<script>
+		var c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+		
+		var i = `
+1111111111
+1000000001
+1011011101
+1011011101
+1000000000
+1011010111
+1000010001
+1111011101
+1111010000
+1111010111
+0000000111
+1111010111
+1111010000
+1111010111
+1000000001
+1011011101
+1001000000
+1101010111
+1000010001
+1011111101
+1000000000
+1111111111
+`.replace(/\r?\n|\r/g,"");
+		
+		function getthing(x) {
+			var out = "";
+			for (var t = 0; t < x.length; t += 5) {
+				out += c.charAt(parseInt(x.substr(t, 5), 2));
+			}
+			console.log(out);
+		}
+		
+		getthing(i);
+	</script>
+</body>
+</html>

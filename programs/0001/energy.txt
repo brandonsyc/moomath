@@ -1,7 +1,163 @@
-board of trade unit,B.O.T.U.
-barrel of oil equivalent,bboe,barrels of oil equivalent,BOE
-british thermal unit,BTU
-british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
-british thermal unit (59&deg;F),BTU&#8325;&#8329;&deg;F,BTU-59F,british thermal units (59&deg;F)
-british thermal unit (60&deg;F),BTU&#8326;&#8329;&deg;F,BTU-60F,british thermal units (60&deg;F)
-british thermal unit (39&deg;F),BTU&#8323;&#8329;&deg;F,BTU-39F,british thermal units (39&deg;F)
+Board of Trade Unit,B.O.T.U.,kilowatt-hour,kW&middot;h,kilowatt-hour,kWh
+barrel of oil equivalent,bboe,barrels of oil equivalent,barrel of oil equivalent,BOE,barrels of oil equivalent
+British thermal unit,BTU,British thermal unit,Btu,British thermal unit (IT),BTU<sub>IT</sub>,British thermal units (IT),British thermal unit (IT),Btu<sub>IT</sub>,British thermal units (IT)
+British thermal unit (39&deg;F),BTU<sub>39&deg;F</sub>,British thermal units (39&deg;F),British thermal unit (39&deg;F),Btu<sub>39&deg;F</sub>,British thermal units (39&deg;F)
+British thermal unit (59&deg;F),BTU<sub>59&deg;F</sub>,British thermal units (59&deg;F),British thermal unit (59&deg;F),Btu<sub>59&deg;F</sub>,British thermal units (59&deg;F)
+British thermal unit (60&deg;F),BTU<sub>60&deg;F</sub>,British thermal units (60&deg;F),British thermal unit (60&deg;F),Btu<sub>60&deg;F</sub>,British thermal units (60&deg;F)
+British thermal unit (63&deg;F),BTU<sub>63&deg;F</sub>,British thermal units (63&deg;F),British thermal unit (63&deg;F),Btu<sub>63&deg;F</sub>,British thermal units (63&deg;F)
+British thermal unit (ISO),BTU<sub>ISO</sub>,British thermal units (ISO)
+British thermal unit (mean),BTU<sub>mean</sub>,British thermal units (mean),British thermal unit (mean),Btu<sub>mean</sub>,British thermal units (mean)
+British thermal unit (thermochemical),BTU<sub>th</sub>,British thermal units (thermochemical),British thermal unit (thermochemical),Btu<sub>th</sub>,British thermal units (thermochemical)
+calorie,Cal,Calorie (thermochemical),Cal<sub>th</sub>,Calories (thermochemical),gram of TNT,gram of TNT,grams of TNT,kilocalorie,kcal,kilocalorie (thermochemical),kcal<sub>th</sub>,kilocalories (thermochemical),microton of TNT,microton of TNT,microtons of TNT,microtonne of TNT,microtonne of TNT,microtonnes of TNT
+calorie,cal,calorie (thermochemical),cal<sub>th</sub>,calories (thermochemical)
+Calorie (15&deg;C),Cal<sub>15</sub>,Calories (15&deg;C),kilocalorie (15&deg;C),kcal<sub>15</sub>,kilocalories (15&deg;C)
+calorie (15&deg;C),cal<sub>15</sub>,calories (15&deg;C)
+Calorie (International Steam Table),Cal<sub>IT</sub>,Calories (International Steam Table),kilocalorie (International Steam Table),kcal<sub>IT</sub>,kilocalories (International Steam Table)
+calorie (International Steam Table),cal<sub>IT</sub>,calories (International Steam Table)
+cubic centimetre-atmosphere,cc&middot;atm,cubic centimeter-atmosphere,cubic centimetre-atmosphere,cm<sup>3</sup>&middot;atm,cubic centimeter-atmosphere,millilitre-atmosphere,L&middot;atm,milliliter-atmosphere,millilitre-atmosphere,l&middot;atm,milliliter-atmosphere,standard cubic centimetre,scc,standard cubic centimeter
+Celsius heat unit (International Table),CHU<sub>IT</sub>,Celsius heat units (International Table)
+cubic foot of atmosphere,cu&nbsp;ft&nbsp;atm,cubic foot of atmosphere,cubic foot of atmosphere,cu&nbsp;ft&nbsp;atm,cubic feet of atmosphere,standard cubic foot,scf,standard cubic feet,standard cubic foot,scf,standard cubic foot
+cubic foot of natural gas,cuftnaturalgas,cubic foot of natural gas,cubic foot of natural gas,cuftnaturalgas,cubic feet of natural gas
+cubic yard of atmosphere,cu&nbsp;yd&nbsp;atm,cubic yards of atmosphere,standard cubic yard,scy
+Hartree,E<sub>h</sub>
+erg,erg
+electronvolt,eV
+femtoelectronvolt,feV
+foe,foe
+foot-pound,ft&middot;lb,foot-pound force,ft&middot;lb<sub>f</sub>,foot-pounds force,foot-pound force,ft&middot;lbf,foot-pounds force
+foot-poundal,ft&middot;pdl
+gigaelectronvolt,GeV
+gigalitre-atmosphere,GL&middot;atm,gigaliter-atmosphere,gigalitre-atmosphere,Gl&middot;atm,gigaliter-atmosphere
+gigatonne of oil equivalent,Gtoe,gigatonnes of oil equivalent
+gigaton of TNT,gigaton of TNT,gigatons of TNT,gigatonne of TNT,gigatonne of TNT,gigatonnes of TNT
+gigawatt-hour,GW&middot;h,gigawatt-hour,GWh
+horsepower-hour,hp&middot;h
+imperial gallon-atmosphere,imp gal&middot;atm
+inch-pound,in&middot;lb,inch-pound force,in&middot;lb<sub>f</sub>,inch-pounds force,inch-pound force,in&middot;lbf,inch-pounds force
+inch-ounce force,in&middot;oz<sub>f</sub>,inch-ounces force,inch-ounce force,in&middot;ozf,inch-ounces force
+joule,J
+kilo barrel of oil equivalent,kBOE,kilo barrels of oil equivalent
+kiloerg,kerg
+kiloelectronvolt,keV
+kilogram of TNT,kilogram of TNT,kilograms of TNT,megacalorie,Mcal,megacalorie (thermochemical),Mcal<sub>th</sub>,megacalories (thermochemical),milliton of TNT,milliton of TNT,millitons of TNT,millitonne of TNT,millitonne of TNT,millitonnes of TNT
+kilolitre-atmosphere,kL&middot;atm,kiloliter-atmosphere,kilolitre-atmosphere,kl&middot;atm,kiloliter-atmosphere,cubic metre-atmosphere,m<sup>3</sup>&middot;atm,cubic meter-atmosphere
+kilotonne,kt,kiloton,kiloton of TNT,kt,kilotons of TNT,kilotonne of TNT,kilotonne of TNT,kilotonnes of TNT
+kilotonne of oil equivalent,ktoe,kilotonnes of oil equivalent
+litre-atmosphere,L&middot;atm,liter-atmosphere,litre-atmosphere,l&middot;atm,liter-atmosphere,standard litre,sl,standard liter
+millicalorie,mcal,millicalorie (thermochemical),mcal<sub>th</sub>,millicalories (thermochemical)
+megacalorie (15&deg;C),Mcal<sub>15</sub>,megacalories (15&deg;C)
+millicalorie (15&deg;C),mcal<sub>15</sub>,millicalories (15&deg;C)
+megacalorie (International Steam Table),Mcal<sub>IT</sub>,megacalories (International Steam Table),thermie,th
+millicalorie (International Steam Table),mcal<sub>IT</sub>,millicalories (International Steam Table)
+megaerg,Merg
+millierg,merg
+megaelectronvolt,MeV
+millielectronvolt,meV
+megalitre-atmosphere,ML&middot;atm,megaliter-atmosphere,megalitre-atmosphere,Ml&middot;atm,megaliter-atmosphere
+million British thermal units,MMBtu,million British thermal units
+megatonne,Mt,megaton,megaton of TNT,Mt,megatons of TNT,megatonne of TNT,megatonne of TNT,megatonnes of TNT
+megatonne of oil equivalent,Mtoe,megatonnes of oil equivalent
+megawatt-hour,MW&middot;h,megawatt-hour,MWh
+milliwatt-hour,mW&middot;h,milliwatt-hour,mWh
+nanoelectronvolt,neV
+petaelectronvolt,PeV
+picoelectronvolt,peV
+Pferdest&auml;rkenstunde,PSh
+quadrillion British thermal units,quad,quadrillion British thermal units
+rydberg,Ry
+tonne,t,ton,ton of TNT,ton of TNT,tons of TNT,tonne of TNT,tonne of TNT,tonnes of TNT
+teraelectronvolt,TeV
+therm (EC),thm (EC),therms (EC)
+therm (UK),thm (UK),therms (UK)
+therm (US),thm (US),therms (US),therm (U.S.),therms (U.S.)
+tonne of oil equivalent,toe,tonnes of oil equivalent
+teraton of TNT,teraton of TNT,teratons of TNT,teratonne of TNT,teratonne of TNT,teratonnes of TNT
+terawatt-hour,TW&middot;h,terawatt-hour,TWh
+US gallon-atmosphere,US&nbsp;gal&middot;atm,U.S. gallon-atmosphere
+watt-hour,W&middot;h,watt-hour,Wh
+microerg,&micro;erg
+microelectronvolt,&micro;eV
+microlitre-atmosphere,&micro;L&middot;atm,microliter-atmosphere,microlitre-atmosphere,&micro;l&middot;atm,microliter-atmosphere
+microwatt-hour,&micro;W&middot;h,microwatt-hour,&micro;Wh
+:
+3,600,000
+6,117,863,200
+1055.05585262
+1059.67
+1054.804
+1054.68
+1054.6
+1055.056
+1055.87
+1054.35026444
+4184
+4.184
+4185.8
+4.1858
+4186.8
+4.1868
+0.101325
+1899.100534716
+2869.2044809344
+1,055,055.85262
+77,468.5209852288
+4.35974417e-18
+0.0000001
+1.602176487e-19
+1.602176487e-34
+1e44
+1.3558179483314004
+0.0421401100938048
+1.602176487e-10
+101,325,000,000
+4.1868e19
+4.184e18
+3.6e12
+2,684,519.537696172792
+460.63256925
+0.1129848290276167
+0.00706155181422604375
+1
+6.1178632e12
+0.0001
+1.602176487e-16
+4,184,000
+101,325
+4.184e12
+4.1868e13
+101.325
+0.004184
+4,185,800
+0.0041858
+4,186,800
+0.0041868
+0.1
+0.0000000001
+1.602176487e-13
+1.602176487e-22
+101,325,000
+1,055,055,852.62
+4.184e15
+4.1868e16
+3,600,000,000
+3.6
+1.602176487e-28
+0.0001602176487
+1.602176487e-31
+2647795.5
+1.054804e18
+2.1798741e-18
+4,184,000,000
+1.602176487e-7
+105,506,000
+105,505,585.257348
+105,480,400
+41,868,000,000
+4.184e21
+3.6e15
+383.5568490138
+3600
+1e-13
+1.602176487e-25
+0.000101325
+0.0036

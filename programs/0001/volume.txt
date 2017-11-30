@@ -1,0 +1,99 @@
+12&nbsp;US&nbsp;fl&nbsp;oz (355&nbsp;mL) serving,12&nbsp;US&nbsp;fl&nbsp;oz (355&nbsp;mL) serving,12&nbsp;U.S.&nbsp;fl&nbsp;oz (355&nbsp;mL) serving,12&nbsp;US&nbsp;fl&nbsp;oz (355&nbsp;ml) serving,12&nbsp;US&nbsp;fl&nbsp;oz (355&nbsp;ml) serving,12&nbsp;U.S.&nbsp;fl&nbsp;oz (355&nbsp;ml) serving,12&nbsp;US&nbsp;fl&nbsp;oz serving,12&nbsp;US&nbsp;fl&nbsp;oz serving,12&nbsp;U.S.&nbsp;fl&nbsp;oz serving
+acre foot,acre&middot;ft,acre foot,acre foot,acre&middot;ft,acre feet
+Australian tablespoon,AU&nbsp;tbsp
+board foot,bd&nbsp;ft,board feet,board foot,board foot,board feet,board foot,board foot,board foot
+cubic centimetre,cc,cubic centimeter
+cubic inch,cu&nbsp;in,cubic inches,cubic inch,cu&nbsp;in,cubic inches
+cord,cord
+cubic foot,cu&nbsp;ft,cubic foot,cubic foot,cu&nbsp;ft,cubic feet
+cubic mile,cu&nbsp;mi
+cubic yard,cu&nbsp;yd
+firkin,firkin
+billion barrels,Gbbl,billion barrels
+grains water,gr H<sub>2</sub>O,grains water
+gross register ton,grt
+imperial barrel,imp&nbsp;bbl
+imperial bushel,imp&nbsp;bsh,imperial bushel,imp&nbsp;bu
+imperial gallon,imp&nbsp;gal
+gill,gi
+imperial kenning,kenning
+imperial fluid ounce,imp&nbsp;fl&nbsp;oz
+imperial peck,pk
+imperial pint,imp&nbsp;pt
+imperial quart,imp&nbsp;qt
+kilderkin,kilderkin
+thousand barrels,kbbl,thousand barrels,thousand barrels,Mbbl,thousand barrels
+litre,L,liter,litre,l,liter
+cubic %smetre,m<sup>3</sup>,cubic %smeter,st&egrave;re,st&egrave;re
+million barrels,MMbbl,million barrels,million barrels,Mbbl,million barrels
+measurement ton,MTON
+million US gallons,million US&nbsp;gal,million US gallons,million U.S. gallons,million U.S. gallons
+barrel,bbl
+trillion barrels,Tbbl,trillion barrels
+US barrel,US&nbsp;bbl,U.S. barrel
+US beer barrel,US&nbsp;bbl,U.S. beer barrel
+US bushel,US&nbsp;bsh,U.S. bushel,US bushel,US&nbsp;bu,U.S. bushel
+US dry barrel,US&nbsp;dry&nbsp;bbl,U.S. dry barrel
+US dry gallon,US&nbsp;dry&nbsp;gal,U.S. dry gallon
+US dry pint,US&nbsp;dry&nbsp;pt,U.S. dry pint
+US dry quart,US&nbsp;dry&nbsp;qt,U.S. dry quart
+US gallon,US fl gal,U.S. gallon,US gallon,US&nbsp;gal,U.S. gallon
+gill,gi
+US kenning,US&nbsp;kenning,U.S. kenning
+US minim,US&nbsp;min,U.S. minim
+US fluid ounce,US&nbsp;fl&nbsp;oz,U.S. fluid ounce
+US peck,US&nbsp;pk,U.S. peck
+US pint,US&nbsp;pt,U.S. pint
+US quart,US&nbsp;qt,U.S. quart,US quart,US&nbsp;qt,U.S. quart
+US tablespoon,US&nbsp;tbsp,U.S. tablespoon
+case,case
+:
+12*0.0000295735295625
+1233.48183754752
+0.000020
+0.0023597372167
+0.000001
+0.000016387064
+3.624556363776
+0.028316846592
+4,168,181,825.440579584
+0.764554857984
+0.04091481
+158987294.928
+0.00000006479891
+2.8316846592
+0.16365924
+0.03636872
+0.00454609
+0.0001420653125
+0.01818436
+0.0000284130625
+0.00909218
+0.00056826125
+0.0011365225
+0.08182962
+158.987294928
+0.001
+1
+158987.294928
+0.028316846592*40
+3785.411784
+0.158987294928
+158987294928
+0.119240471196
+0.117347765304
+0.03523907016688
+0.11562819898508
+0.00440488377086
+0.0005506104713575
+0.001101220942715
+0.003785411784
+0.0001182941183
+0.01761953508344
+0.000000061611519921875
+0.0000295735295625
+0.00880976754172
+0.000473176473
+0.000946352946
+0.000946352946/64
+0.009

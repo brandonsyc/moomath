@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Breakout Revamped</title>
+<link rel="stylesheet" type="text/css" href="../../styles.css">
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+<link rel="stylesheet" type="text/css" href="break.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div id="top"></div>
+
+<div class="content">
+<h1>Breakout Revamped</h1>
+<p>2 September, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+
+<div class="article">
+
+<p><strong>Playing window to tall?</strong> Try resizing your window.</p>
+
+<div id="container">
+	<canvas id="canvas" width="1000" height="500"></canvas>
+</div>
+
+<div class="separate"></div>
+</div>
+</div>
+
+<div id="bottom"></div>
+
+<script src="../../frame.js"></script>
+<script src="../../querystring.js"></script>
+
+<script>
+	class Tetra {
+		constructor(x, y, width, height, n) {
+			this.x = x;
+			this.y = y;
+			this.width = width;
+			this.height = height;
+			this.n = n;
+		}
+	}
+	
+	class Ball {
+		constructor(x, y, rot, mag, r) {
+			this.x = x;
+			this.y = y;
+			this.rot = rot;
+			this.mag = mag;
+			this.r = r;
+		}
+		
+		edge() {
+			if (this.x > 1000 - this.r) {
+				this.x = 1000 - this.r - this.r;
+				this.rot = Math.PI - this.rot;
+				return true;
+			}
+			if (this.x < this.r) {
+				this.x = this.r;
+				this.rot = Math.PI - this.rot;
+				return true;
+			}
+			if (this.y > 500 - this.r) {
+				this.y = 500 - this.r - this.r;
+				this.rot = Math.PI * 2 - this.rot;
+				return true;
+			}
+			if (this.y < this.r) {
+				this.y = this.r;
+				this.rot = Math.PI * 2 - this.rot;
+				return true;
+			}
+			return false;
+		}
+		
+		dist(x1, y1, x2, y2) {
+			return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+		}
+		
+		four(tetra) {
+			var velx = this.mag * Math.cos(this.rot);
+			var vely = this.mag * Math.sin(this.rot);
+			var slopex = vely / velx;
+			var slopey = velx / vely;
+			
+			for (var i = 0; i < tetras.length; i++) {
+				var tetra = tetras[i];
+				
+				var leftx = tetra.x - tetra.width / 2 - this.r;
+				var rightx = tetra.x + tetra.width / 2 + this.r;
+				var upx = tetra.y - tetra.height / 2 - this.r;
+				var downx = tetra.y + tetra.height / 2 + this.r;
+				
+				var lefty = slopex * (leftx - this.x) + this.y;
+				var righty = slopex * (rightx - this.x) + this.y;
+				var upy = slopey * (upx - this.y) + this.x;
+				var downy = slopey * (downx - this.y) + this.x;
+				
+				var min = -1;
+				var hit = -1;
+				
+				if (lefty > upx && lefty < downx && velx > 0) {
+					var left = this.dist(this.x - velx, this.y - vely, leftx, lefty);
+					if ((min < left || min === -1) && left < this.mag) {
+						min = left;
+						hit = 0;
+					}
+				}
+				if (righty > upx && righty < downx && velx < 0) {
+					var right = this.dist(this.x - velx, this.y - vely, rightx, righty);
+					if ((min < right || min === -1) && right < this.mag) {
+						min = right;
+						hit = 1;
+					}
+				}
+				if (upy > leftx && upy < rightx && vely > 0) {
+					var up = this.dist(this.x - velx, this.y - vely, upy, upx);
+					if ((min < up || min === -1) && up < this.mag) {
+						min = up;
+						hit = 2;
+					}
+				}
+				if (downy > leftx && downy < rightx && vely < 0) {
+					var down = this.dist(this.x - velx, this.y - vely, downy, downx);
+					if ((min < down || min === -1) && down < this.mag) {
+						min = down;
+						hit = 3;
+					}
+				}
+				
+				if (hit === 0) {
+					this.x = leftx - this.r;
+					this.rot = Math.PI - this.rot;
+					tetra.n--;
+					return true;
+				}
+				if (hit === 1) {
+					this.x = rightx + this.r;
+					this.rot = Math.PI - this.rot;
+					tetra.n--;
+					return true;
+				}
+				if (hit === 2) {
+					this.y = upx - this.r;
+					this.rot = Math.PI * 2 - this.rot;
+					tetra.n--;
+					return true;
+				}
+				if (hit === 3) {
+					this.y = downx + this.r;
+					this.rot = Math.PI * 2 - this.rot;
+					tetra.n--;
+					return true;
+				}
+			}
+			return false;
+		}
+		
+		move() {
+			var velx = this.mag * Math.cos(this.rot);
+			var vely = this.mag * Math.sin(this.rot);
+			
+			this.x += velx;
+			this.y += vely;
+			
+			var fix = 0;
+			while (this.edge()) {fix += 1; if (fix > 100) {console.log("error edge"); break;}};
+			fix = 0;
+			while (this.four()) {fix += 1; if (fix > 100) {console.log("error four"); break;}};
+		}
+	}
+	
+	var canvas = document.getElementById("canvas");
+	var ctx = canvas.getContext("2d");
+	
+	var balls = [];
+	for (var i = 1; i < 16; i++) {
+		balls.push(new Ball(500, 475, -i * Math.PI / 16, 10, 5));
+	}
+	var tetras = [];
+	for (var i = 0; i < 20; i++) {
+		tetras.push(new Tetra(i * 50 + 25, 200, 45, 45, 300));
+	}
+		
+	var colors = ["#f30", "#f60", "#f90", "#fc0", "#6f0", "#09f"];
+	colors.reverse();
+	
+	function bulb() {
+		canvas.style.width = document.body.offsetWidth * 0.9375 + "px";
+		canvas.style.height = document.body.offsetWidth * 0.46875 + "px";
+		document.getElementById("container").style.height = document.body.offsetWidth * 0.46875 + "px";
+	
+		ctx.fillStyle = "#eee";
+		ctx.fillRect(0, 0, canvas.width, canvas.height);
+		
+		for (var i = 0; i < balls.length; i++) {
+			var ball = balls[i];
+			ctx.fillStyle = "#bbb";
+			ctx.beginPath();
+			ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+			ctx.fill();
+			ball.move();
+		}
+		
+		for (var i = 0; i < tetras.length; i++) {
+			var tetra = tetras[i];
+			ctx.fillStyle = colors[Math.ceil(tetra.n / 50) - 1];
+			ctx.globalAlpha = 0.25;
+			ctx.fillRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
+			ctx.globalAlpha = 1;
+			ctx.strokeStyle = colors[Math.ceil(tetra.n / 50) - 1];
+			ctx.strokeRect(tetra.x - tetra.width / 2, tetra.y - tetra.height / 2, tetra.width, tetra.height);
+			ctx.fillStyle = "#000";
+			ctx.font = "15px Segoe UI";
+			ctx.textAlign = "center";
+			ctx.textBaseline = "middle"; 
+			ctx.fillText(tetra.n, tetra.x, tetra.y);
+		}
+	}
+	
+	setInterval(function() {
+		bulb();
+	}, 1000 / 60);
+</script>
+
+</body>
+</html>
