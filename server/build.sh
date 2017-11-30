@@ -3,10 +3,8 @@
 # Compile asteroidresponder
 g++ -o ../programs/0006/server/astSearch ../programs/0006/server/asteroidresponder.cpp -O3 -std=c++11
 
-echo "" > build.html
-echo "<html><body style='white-space: pre-wrap'>Build completed at " >> build.html
-echo $(date) >> build.html
-echo "</body></html>" >> build.html
+# Convert nichodon.github.io links into moomath links (hopefully temporary)
+python moomath_convert.py paginate.js frame.js sitemap.xml search.js other/0001/index.html programs/0001/index.html
 
 # Restart Apache
 apachectl restart
