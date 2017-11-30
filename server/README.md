@@ -4,6 +4,8 @@ If something needs to be compiled on the server, place it in build.sh. The git r
 
 If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
 
+Do not run this file if you are contributing to the repository! It will mess things up.
+
 # Hardware Information
 
 | Property | Value |

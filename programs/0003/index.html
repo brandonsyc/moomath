@@ -46,37 +46,37 @@
 	</p>
 
 	<hr>
-	
+
 	<div class="signature-label">
 		<p>Time Signature</p>
 	</div>
-	
+
 	<div class="signature" id="signature">
 		<input type="text" value="4" id="numerator" onInput="updateSignature()" class="embed" title="numerator">
 		<hr>
 		<input type="text" value="4" id="denominator" onInput="updateSignature()" class="embed" title="denominator">
 	</div>
-	
+
 	<br><br>
-   
+
 	<div class="signature-label">
 		<p>Click Volume</p>
 	</div>
-	
+
 	<div class="signature-label">
 		<input id="volume" min="0" max="200" value="80" type="range" onInput="updateVolume()" class="embed" title="volume">
 	</div>
-	
+
 	<div class="bpm-label">
 		<p>BPM</p>
 	</div>
-	
+
 	<div class="bpm-label">
 		<input id="bpm" min="5" max="800" value="120" type="number" onInput="updateBPM()" class="embed" title="bpm">
 	</div>
-	
+
 	<br>
-	
+
 	<div class="beat-length-label">
 		<p>Beat Length</p>
 		<input type="radio" value="note-length" id="wholeNoteLength" onClick="updateBeatLength(4)" name="select">
@@ -92,9 +92,9 @@
 		<input type="radio" value="note-length" id="sixteenthNoteLength" onClick="updateBeatLength(0.25)" name="select">
 		<label for="sixteenthNoteLength">Sixteenth</label>
 	</div>
-	
+
 	<br>
-	
+
 	<div class="beat-length-label">
 		<p>Note Subdivisions</p>
 		<input type="radio" value="subdivision-length" id="noSubdivisions" onClick="updateSubdivisions(0)" name="subdivision" checked="checked">
@@ -106,9 +106,9 @@
 		<input type="radio" value="subdivision-length" id="sixteenthSubdivisions" onClick="updateSubdivisions(3)" name="subdivision">
 		<label for="sixteenthSubdivisions">Sixteenth</label>
 	</div>
-	
+
 	<br>
-		
+
 	<div class="beat-length-label">
 		<p>Playback</p>
 		<label for="playNonAccentedBeats">Play Non-accented Beats</label>
@@ -116,13 +116,13 @@
 		<label for="swingValue">Eighth Swing</label>
 		<input type="range" value="50" id="swingValue" onInput="updateSwing()" min="50" max="75" disabled>
 	</div>
-	
+
 	<hr><br>
-	
+
 	<button id="togglePlayback" onClick="togglePlayback()">Play</button>
-	
+
 	<br><br>
-	
+
 	<div>
 		<canvas class="shadow" id="beater" width="1500" height="350"></canvas>
 	</div>
@@ -133,7 +133,7 @@
 </div>
 
 <div class="source-link">
-	<a href="http://nichodon.github.io/programs/0003/metronome.js" target="_blank">Program Source Code</a>
+	<a href="metronome.js" target="_blank">Program Source Code</a>
 	<div class="separate"></div>
 </div>
 <div id="bottom"></div>

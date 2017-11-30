@@ -27,7 +27,7 @@
 <div class="parallax" style="background-image: url(images/fractal.jpg);">
 	<div class="layer">
 		<h1>Variation on the Mandelbrot Set</h1>
-		<p>A program made this facsinating image!<br>It's sort of like Mandelbrot but not!</p>
+		<p>A program made this fascinating image!<br>It's sort of like the Mandelbrot set, but not!</p>
 		<button onclick="location.href='fractals/'">Read More</button>
 	</div>
 </div>
@@ -36,7 +36,7 @@
 	<div class="layer">
 		<div class="blurt">
 			<h1>3D Solar System</h1>
-			<p>We've been developing a three-dimensional model of the Solar System. It is an accurate representation of what is going on right now in space. The simulator recognizes over 730,000 different planets, moons, asteroids, and other bodies.</p>
+			<p>We've been developing a three-dimensional model of the Solar System. It is a close representation of what is going on right now in space. The simulator recognizes over 730,000 different planets, moons, asteroids, and other bodies.</p>
 		</div>
 		<img class="avatar" src="programs/0006/images/old.png" alt="planet">
 		<br>
@@ -49,19 +49,19 @@
 </div>
 
 <div class="content">
-	<h2>We are of the musicians as well!</h2>
+	<h2>We are musicians as well!</h2>
 	<p>We also obsess over nerdy music things. It's pretty fun. Here are some of our best music programs:</p>
 	<div class="separate"></div>
 	<div class="columns">
 		<div class="fourth">
 			<h3>Polyrhythm Player</h3>
 			<img src="programs/0002/images/thumb.png" alt="poly">
-			<p>It plays any number to 32 on any other number to 32.</p>
+			<p>It plays any number to 50 on any other number to 50.</p>
 		</div>
 		<div class="fourth">
 			<h3>Time Signature Metronome</h3>
 			<img src="programs/0003/images/thumb.png" alt="metronome">
-			<p>This customizable metronome can play <i>any</i> time signature up to 50!</p>
+			<p>This customizable metronome can play <i>any</i> time signature!</p>
 		</div>
 		<div class="divider"></div>
 		<div class="fourth">
@@ -70,7 +70,7 @@
 			<p>Playing the virtual piano.</p>
 		</div>
 		<div class="fourth">
-			<h3>Wip</h3>
+			<h3>WIP</h3>
 			<img src="programs/0005/images/thumb.png" alt="wip">
 			<p>This is a work in progress.</p>
 		</div>
@@ -111,26 +111,26 @@
 <script>
 	var topnav = document.getElementsByClassName("topnav")[0];
 	topnav.style.display = "none";
-	
+
 	var header = document.getElementsByClassName("header")[0];
 	header.style.display = "none";
-	
+
 	var sticky = document.getElementById("sticky");
 	sticky.style.display = "inline";
 	sticky.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-	
+
 	var gif = document.getElementsByClassName("gif")[0];
 	gif.childNodes[1].style.transform = "translate(0%, 50%)";
 	gif.childNodes[3].style.transform = "translate(0%, -10%)";
 	gif.childNodes[3].style.transition = "0.2s";
-	
+
 	window.onscroll = function() {
 		sticky.style.display = "inline";
 		var rate = window.scrollY * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
 		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
 		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
-		
+
 		var parallax = document.getElementsByClassName("parallax");
 		for (var i = 0; i < parallax.length; i++) {
 			var p = document.getElementsByClassName("parallax")[i];
@@ -146,7 +146,7 @@
 				p.style.backgroundSize = percent + "% auto";
 			}
 		}
-		
+
 		if (window.scrollY === 0) {
 			gif.childNodes[3].style.opacity = 1;
 		}
