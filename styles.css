@@ -59,6 +59,11 @@ a {
 	text-decoration: none;
 	transition: 0.5s;
 }
+
+a:h {
+	font-size: 30px;
+}
+
 a:hover {
 	text-shadow: 2px 2px 10px #333;
 }
