@@ -1,23 +1,20 @@
-// JavaScript Document
 var path;
 var rawFile = new XMLHttpRequest();
 rawFile.open("GET", "https://nichodon.github.io/" + path + "/search/list.txt", false);
-rawFile.onreadystatechange = function ()
-{
+rawFile.onreadystatechange = function () {
 	"use strict";
-	if(rawFile.readyState === 4)
-	{
-		if(rawFile.status === 200 || rawFile.status === 0)
-		{
+	if(rawFile.readyState === 4) {
+		if(rawFile.status === 200 || rawFile.status === 0) {
 			var allText = rawFile.responseText;
 			var array = allText.split("\n");
 			var content = document.getElementsByClassName("content")[0];
 			var columns = document.createElement("DIV");
 			columns.classList.add("columns");
 			for (var i = array.length - 1; i > -1; i--) {
-		 		if (!/\S/g.test(array[i]) || array[i] === '') {
+		 		if (!/\S/g.test(array[i]) || array[i] === "") {
 					continue;
 				}
+				console.log(i);
 				var split = array[i].split(" \u2013 ");
 
 				var fourth = document.createElement("DIV");

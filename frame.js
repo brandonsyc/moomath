@@ -44,14 +44,12 @@ for (var j = 0; j < 2; j++) {
 	for (var i = 0; i < linkz.length; i++) {
 		if (linkz[i].href === undefined) {
 			var links = linkz[i].children;
-			for (var k = 0; k < links.length; k++)
-			{
+			for (var k = 0; k < links.length; k++) {
 				if (links[k].href === window.location.href.replace("#top", "")) {
 					links[k].classList.add("active");
 				}
 			}
-		}
-		else if (linkz[i].href === window.location.href.replace("#top", "")) {
+		} else if (linkz[i].href === window.location.href.replace("#top", "")) {
 			linkz[i].classList.add("active");
 		}
 	}
@@ -64,8 +62,7 @@ window.onscroll = function() {
 	if (window.scrollY > navbar.offsetTop) {
 		sticky.style.display = "inline";
 		navbar.style.boxShadow = "none";
-	}
-	else {
+	} else {
 		sticky.style.display = "none";
 		navbar.style.boxShadow = "0px 20px 25px rgba(51, 51, 51, 0.2)";
 	}
@@ -77,14 +74,12 @@ function show() {
 	var sticky = document.getElementById("sticky");
 	if (navbar.className === "topnav") {
 		navbar.className += " responsive";
-	}
-	else {
+	} else {
 		navbar.className = "topnav";
 	}
 	if (sticky.className === "topnav") {
 		sticky.className += " responsive";
-	}
-	else {
+	} else {
 		sticky.className = "topnav";
 	}
 }

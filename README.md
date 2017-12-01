@@ -1,7 +1,5 @@
 # M O O M A T H
 
-Welcome to the repository for [Moomath](https://nichodon.github.io/moomath).
-
 ![Io is wonderful](https://raw.githubusercontent.com/Nichodon/nichodon.github.io/master/images/favicon.png)
 
 ## Contributing
