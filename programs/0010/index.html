@@ -1,39 +1,181 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>nope</title>
-<link rel="stylesheet" type="text/css" href="../../styles.css">
-<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-<link rel="stylesheet" type="text/css" href="logic.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+	<head>
+		<meta charset="utf-8">
+		<title>3D Pacman</title>
+		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+		<link rel="stylesheet" type="text/css" href="logic.css">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script>
+			
+			class Person {
+				constructor( x, z, dir, dx, dz, obj ) {
+					this.x = x;
+					this.z = z;
+					this.dir = dir;
+					this.dx = dx;
+					this.dz = dz;
+					this.obj = obj;
+				}
+				
+				act() {
+					var center = Math.abs( this.dx ) >= 1 || Math.abs( this.dz ) >= 1 || 
+						( this.dx == 0 && this.dz == 0 );
 
-<div id="top"></div>
+					if ( center ) {
+						this.dir = next;
+						this.x = Math.round( this.x + this.dx );
+						this.z = Math.round( this.z + this.dz );
+						this.dx = 0;
+						this.dz = 0;
+					}
+					if ( this.dir === 0 ) {
+						if ( !matrix[this.x - 1] || !center || !matrix[this.x - 1][this.z] ) {
+							this.dx -= 0.05;
+						}
+					} else if ( this.dir === 1 ) {
+						if ( !matrix[this.x] || !center || !matrix[this.x][this.z - 1] ) {
+							this.dz -= 0.05;
+						}
+					} else if ( this.dir === 2 ) {
+						if ( !matrix[this.x + 1] || !center || !matrix[this.x + 1][this.z] ) {
+							this.dx += 0.05;
+						}
+					} else {
+						if ( !matrix[this.x] || !center || !matrix[this.x][this.z + 1] ) {
+							this.dz += 0.05;
+						}
+					}
+					
+					this.obj.position.set( this.x + this.dx, 1.5, this.z + this.dz );
+				}
+			}
+			
+			
+			var x = 0, z = 10, dir = 1, target = 0, next = 1, dx = 0, dz = 0, actual = 0;
+			var colors = [0xff0000, 0xff99cc, 0x00ffff, 0xff9900];
+			
+			var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+			var data = "77QBW5W5QAWXQR656Q6XAH6X6Q6XQBW5SA2XQRX5QA77";
+			
+			
+			var converted = "";
+			for (var t = 0; t < data.length; t++) {
+				converted += ("00000" + code.indexOf(data.charAt(t)).toString(2)).slice(-5);
+			}
+			console.log(converted);
+			
+			var matrix = [];
+			var intersection = [];
+			
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
 
-<div class="content">
-<h1>nope</h1>
-<p>? September, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+			var renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
 
-<div class="article">
+			var n = 0;
+			for ( var i = 0; i < 22; i++ ) {
+				var row = [];
+				var nope = [];
+				for ( var j = 0; j < 10; j++ ) {
+					row.push(converted.charAt(n) === "1");
+					nope.push(true);
+					if (converted.charAt(n) === "1") {
+						var geometry = new THREE.BoxGeometry( 1, 2, 1 );
+						var material = new THREE.MeshPhongMaterial( { color: 0x0000ff } );
+						var cube = new THREE.Mesh( geometry, material );
+						cube.position.set( i, 0, j );
+						scene.add( cube );
+					}
+					n++;
+				}
+				matrix.push(row);
+				intersection.push(nope);
+				console.log(row);
+			}
+			
+			for ( var i = 0; i < 22; i++ ) {
+				for ( var j = 0; j < 10; j++ ) {
+					var exits = 0;
+					if ( !matrix[i - 1] || !matrix[i - 1][j] ) {
+						exits++;
+					}
+					if ( !matrix[i][j - 1] ) {
+						exits++;
+					}
+					if ( !matrix[i + 1] || !matrix[i + 1][j] ) {
+						exits++;
+					}
+					if ( !matrix[i][j + 1] ) {
+						exits++;
+					}
+					intersection[i][j] = exits > 2 && !matrix[i][j];
+					if (intersection[i][j]) {
+						
+			var geometry = new THREE.BoxGeometry( 0.25, 0.25, 0.25 );
+			var material = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+			var going = new THREE.Mesh( geometry, material );
+			scene.add( going );
+						going.position.set(i, 1, j);
+					}
+				}
+			}
+				console.log(intersection);
+			
+			var geometry = new THREE.BoxGeometry( 0.5, 0.25, 0.5 );
+			var material = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
+			var going = new THREE.Mesh( geometry, material );
+			scene.add( going );
+			
+			var light = new THREE.PointLight( 0xffffff, 1, 100 );
+			scene.add( light );
+			
+			var pacman = new Person(0, 10, 1, 0, 0, camera);
 
-<div class="face" style="
-	background-color: red;
-	height: 50px;
-	transform: translateZ(10px);
-	width: 50px;
-"></div>
+			var animate = function () {
+				requestAnimationFrame( animate );
+				
+				pacman.act();
+				
+				light.position.set( pacman.x + pacman.dx, 1.5, pacman.z + pacman.dz );
+				
+				actual = Math.PI * -(pacman.dir - 1) / 2;
+				if (actual < -3 && target > 1.5) {
+					actual = -actual;
+				} else if (actual < -1.5 && target > 3) {
+					target = -target;
+				} else if (actual > 1.5 && target < -3) {
+					target = -target;
+				}
+				if (actual > target) {
+					target += 0.1;
+				} else if (actual < target) {
+					target -= 0.1;
+				}
+				if (Math.abs(actual - target) < 0.05) {
+					target = actual;
+				}
+				camera.rotation.y = target;
 
-<div class="separate"></div>
-</div>
-</div>
+				renderer.render(scene, camera);
+			};
 
-<div id="bottom"></div>
-
-<script src="../../frame.js"></script>
-<script src="logic.js"></script>
-<script src="../../querystring.js"></script>
-
-</body>
+			animate();
+			
+			document.body.onkeydown = function() {
+				if (target === actual) {
+					if (window.event.keyCode === 37) {
+						next = (pacman.dir + 3) % 4;
+					} else if (window.event.keyCode === 39) {
+						next = (pacman.dir + 1) % 4;
+					}
+				}
+			}
+		</script>
+	</body>
 </html>
