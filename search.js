@@ -12,7 +12,9 @@ rawFile.onreadystatechange = function ()
 			var array = allText.split("\n");
 			var ul = document.getElementsByClassName("list")[0];
 			for (var i = array.length - 1; i > -1; i--) {
-				if (!/\S/g.test(array[i]) || (array[i] === '')) continue;
+				if (!/\S/g.test(array[i]) || (array[i] === '')) {
+					continue;
+				}
 				var li = document.createElement("li");
 				var a = document.createElement("a");
 				a.appendChild(document.createTextNode(array[i]));
