@@ -5,9 +5,8 @@ function cow() {
 	cows++;
 	var div = document.createElement("DIV");
 	div.style.backgroundImage = "url(https://nichodon.github.io/images/back.png)";
-	if (Math.random() < 0.5)
-	{
-	div.style.backgroundImage = "url(https://nichodon.github.io/images/front.png)";
+	if (Math.random() < 0.5) {
+		div.style.backgroundImage = "url(https://nichodon.github.io/images/front.png)";
 	}
 	div.style.width = "100px";
 	div.style.height = "200px";
@@ -23,23 +22,23 @@ function cow() {
 	span.style.transition = "0.5s";
 	span.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
 	if (cows === 1024) {
-	window.location.replace("http://moomath.com/");
+		window.location.replace("https://nichodon.github.io");
 	} else if (cows >= 512) {
 		span.innerHTML = "EXPLOSIVE MOO!";
 	} else if (cows >= 256) {
-		span.innerHTML = "Hugest MOO!";
+		span.innerHTML = "Hugest Moo!";
 	} else if (cows >= 128) {
-		span.innerHTML = "Biggest MOO!";
+		span.innerHTML = "Greater Moo!";
 	} else if (cows >= 64) {
-		span.innerHTML = "Huger Moo!";
+		span.innerHTML = "Larger Moo!";
 	} else if (cows >= 32) {
 		span.innerHTML = "Bigger Moo!";
 	} else if (cows >= 16) {
-		span.innerHTML = "Mega Moo!";
-	} else if (cows >= 8) {
-		span.innerHTML = "Super Moo!";
-	} else if (cows >= 4) {
 		span.innerHTML = "Huge Moo!";
+	} else if (cows >= 8) {
+		span.innerHTML = "Great Moo!";
+	} else if (cows >= 4) {
+		span.innerHTML = "Large Moo!";
 	} else if (cows >= 2) {
 		span.innerHTML = "Big Moo!";
 	} else {
