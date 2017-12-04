@@ -22,21 +22,27 @@ function cow() {
 	var span = document.getElementsByTagName("span")[0];
 	span.style.transition = "0.5s";
 	span.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
-	if (cows === 128) {
-	window.location.replace("https://nichodon.github.io/");
+	if (cows === 1024) {
+	window.location.replace("http://moomath.com/");
+	} else if (cows >= 512) {
+		span.innerHTML = "EXPLOSIVE MOO!";
+	} else if (cows >= 256) {
+		span.innerHTML = "Hugest MOO!";
+	} else if (cows >= 128) {
+		span.innerHTML = "Biggest MOO!";
 	} else if (cows >= 64) {
-		span.innerHTML = "EXPLOSIVE Moo!";
-	} else if (cows >= 32) {
-		span.innerHTML = "Hugest Moo!";
-	} else if (cows >= 16) {
-		span.innerHTML = "Biggest Moo!";
-	} else if (cows >= 8) {
 		span.innerHTML = "Huger Moo!";
-	} else if (cows >= 4) {
+	} else if (cows >= 32) {
 		span.innerHTML = "Bigger Moo!";
-	} else if (cows >= 2) {
+	} else if (cows >= 16) {
+		span.innerHTML = "Mega Moo!";
+	} else if (cows >= 8) {
+		span.innerHTML = "Super Moo!";
+	} else if (cows >= 4) {
 		span.innerHTML = "Huge Moo!";
-	} else {
+	} else if (cows >= 2) {
 		span.innerHTML = "Big Moo!";
+	} else {
+		span.innerHTML = "Moo!";
 	}
 }
