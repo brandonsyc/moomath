@@ -50,5 +50,5 @@ Bug fixes, security issues, and website improvement are also appreciated.
 
 ## Other Projects
 
-* Udderly Web Design (a light-hearted collaborative web designing team) 
+* Udderly Web Design (a light-hearted collaborative web designing team)
 * [Grapheme](https://github.com/anematode/grapheme) (highly WIP, a JS graphing calculator API)
