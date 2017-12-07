@@ -1,14 +1,8 @@
-# M O O M A T H
+# Moomath
 
-To the [website](http://moomath.com)!
+Welcome to the repository for [Moomath](http://moomath.com)!
 
 ![Io is wonderful](https://raw.githubusercontent.com/Nichodon/nichodon.github.io/master/images/favicon.png)
-
-## Contributing
-
-Though we'd love to have direct contributions, you don't have to be an excellent programmer to contribute, either! Novel ideas are appreciated, as well as bug fixes and/or code quality improvements. If you'd actually like to write or fix some code, please fork this the repository and make a pull request. This is a rather small project as of now, so we don't have any particular standards on how to contribute.
-
-If you've found an issue with something, please notify us! Assuming you have a GitHub account, you can add one on our [Issues](https://github.com/Nichodon/nichodon.github.io/issues) page. If not, just shoot Timothy an email – contact information is above. Critical security issues, however, should probably not be reported on the GitHub Issues page, as it is public. If you have found a dangerous flaw (e.g. allowing running of shell commands on the server computer) please email Timothy.
 
 ## About
 
@@ -25,6 +19,12 @@ Here's a table of some of our best content, with a lovely representative from ea
 | Brainf\*ck Interpreter (WIP) | [Link](https://nichodon.github.io/programs/0008/) | Programming |
 
 For a complete catalog, go the [website](http://moomath.com)!
+
+## Contributing
+
+Though we'd love to have direct contributions, you don't have to be an excellent programmer to contribute, either! Novel ideas are appreciated, as well as bug fixes and/or code quality improvements. If you'd actually like to write or fix some code, please fork this the repository and make a pull request. This is a rather small project as of now, so we don't have any particular standards on how to contribute.
+
+If you've found an issue with something, please notify us! Assuming you have a GitHub account, you can add one on our [Issues](https://github.com/Nichodon/nichodon.github.io/issues) page. If not, just shoot Timothy an email – contact information is above. Critical security issues, however, should probably not be reported on the GitHub Issues page, as it is public. If you have found a dangerous flaw (e.g. allowing running of shell commands on the server computer) please email Timothy.
 
 #### Language Skills
 
