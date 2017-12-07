@@ -197,6 +197,13 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://nichodon.github.io/science/0002</loc>
+		<lastmod>2017-11-07</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/science/0002/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://nichodon.github.io/programs</loc>
 		<priority>0.75</priority>
 	</url>
@@ -243,6 +250,13 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://nichodon.github.io/programs/0007</loc>
+		<lastmod>2017-08-26</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/programs/0007/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
 		<loc>https://nichodon.github.io/coming_soon</loc>
 	</url>
 	<url>
@@ -254,6 +268,27 @@
 		<lastmod>2017-07-19</lastmod>
 		<image:image>
 			<image:loc>https://nichodon.github.io/other/0001/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/other/0002</loc>
+		<lastmod>2017-08-16</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/other/0002/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/other/0003</loc>
+		<lastmod>2017-11-10</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/other/0003/images/thumb.png</image:loc>
+		</image:image>
+	</url>
+	<url>
+		<loc>https://nichodon.github.io/other/0004</loc>
+		<lastmod>2017-11-24</lastmod>
+		<image:image>
+			<image:loc>https://nichodon.github.io/other/0004/images/thumb.png</image:loc>
 		</image:image>
 	</url>
 	<url>

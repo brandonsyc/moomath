@@ -1,6 +1,6 @@
 # M O O M A T H
 
-Welcome to the repository for [Moomath](https://nichodon.github.io/moomath).
+To the [website](http://moomath.com)!
 
 ![Io is wonderful](https://raw.githubusercontent.com/Nichodon/nichodon.github.io/master/images/favicon.png)
 
@@ -24,7 +24,7 @@ Here's a table of some of our best content, with a lovely representative from ea
 | Solar System Simulator | [Link](https://nichodon.github.io/programs/0006/) | Science |
 | Brainf\*ck Interpreter (WIP) | [Link](https://nichodon.github.io/programs/0008/) | Programming |
 
-For a complete catalog, go the [website](https://nichodon.github.io/moomath)!
+For a complete catalog, go the [website](http://moomath.com)!
 
 #### Language Skills
 

@@ -19,21 +19,18 @@ if (getParameterByName("embed") !== null) {
 			var code = getParameterByName(parameters[i]);
 			if (code === "checked" || code === "unchecked") {
 				element.checked = code === "checked";
-			}
-			else {
+			} else {
 				element.value = getParameterByName(parameters[i]);
 			}
 		}
 	}
 }
 
-function getUrlVars()
-{
+function getUrlVars() {
 	"use strict";
 	var vars = [], hash;
 	var hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
-	for(var i = 0; i < hashes.length; i++)
-	{
+	for(var i = 0; i < hashes.length; i++) {
 		hash = hashes[i].split("=");
 		vars.push(hash[0]);
 		vars[hash[0]] = hash[1];
@@ -100,8 +97,7 @@ function prepareEmbed() {
 				divs[i].style.height = "0px";
 				divs[i].style.position = "fixed";
 				divs[i].style.top = "0px";
-			}
-			else {
+			} else {
 				divs[i].style.visibility = "visible";
 			}
 		}
