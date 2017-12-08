@@ -1,189 +1,331 @@
-var _get = function get(object, property, receiver) {
-  if (object === null) object = Function.prototype;
-  var desc = Object.getOwnPropertyDescriptor(object, property);
-  if (desc === undefined) {
-    var parent = Object.getPrototypeOf(object);
-    if (parent === null) {
-      return undefined;
-    } else {
-      return get(parent, property, receiver);
-    }
-  } else if ("value" in desc) {
-    return desc.value;
-  } else {
-    var getter = desc.get;
-    if (getter === undefined) {
-      return undefined;
-    }
-    return getter.call(receiver);
-  }
-};
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
-  return typeof obj;
-} : function(obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-var _createClass = function() {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-  return function(Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-function _possibleConstructorReturn(self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
 (function(global, build) {
   global.METRO = {};
 
   build(global.METRO);
-})(window, function(exports) {
-  var getContext = function getContext() {
+})(window, (function(exports) {
+  class Rhythm {
+    constructor(beats, duration = -1, copy = false) {
+      this.beats = copy ? copyBeats(beats) : beats;
+      this._sort();
+
+      if (duration === -1) {
+        this.duration = getLength(beats);
+        this.beats.splice(-1, 1);
+      } else {
+        this.duration = duration;
+      }
+
+      this.count = this.beats.length;
+    }
+
+    apply(f, copy = false, ret = true) {
+      if (copy) return this.copy().apply(f, false);
+
+      for (let i = 0; i < this.beats.length; i++) {
+        f(this.beats[i]);
+      }
+
+      if (ret) return this;
+    }
+
+    shift(x, copy = false, ret = true) {
+      if (copy) return this.copy().shift(x, false);
+
+      this.apply(y => (y.time += x));
+      this.duration += x;
+
+      if (ret) return this;
+    }
+
+    stretch(x, copy = false, ret = true) {
+      if (copy) return this.copy().stretch(x, false);
+
+      this.apply(y => (y.time *= x));
+      this.duration *= x;
+
+      if (ret) return this;
+    }
+
+    squish(x, copy = false, ret = true) {
+      if (copy) return this.copy().squish(x, false);
+
+      this.stretch(1 / x);
+
+      if (ret) return this;
+    }
+
+    snip(length, copy = false, ret = true) {
+      if (copy) return this.copy().snip(length, false);
+      let i = 0;
+
+      for (; i < this.count; i++) {
+        if (this.beats[i].time >= length) {
+          this.beats.length = i;
+          break;
+        }
+      }
+
+      this.duration = length;
+      this.count = i;
+
+      if (ret) return this;
+    }
+
+    _sort() {
+      this.beats.sort((x, y) => Math.sign(x.time - y.time));
+    }
+
+    repeat(count, copy = false, ret = true) {
+      if (copy) return this.copy().repeat(count, false);
+      let cp = this.copy();
+
+
+      for (let i = 0; i < count - 1; i++) {
+        this.concat(cp);
+      }
+
+      if (ret) return this;
+    }
+
+    copy() {
+      return new Rhythm(copyBeats(this.beats), this.duration);
+    }
+
+    concat(rhythm, copy = false, ret = true) {
+      if (copy) return this.copy().concat(rhythm, false);
+
+      rhythm = rhythm.copy();
+      rhythm.shift(this.duration);
+
+      this.beats = this.beats.concat(rhythm.beats);
+      this.count += rhythm.count;
+      this.duration += rhythm.count;
+
+      if (ret) return this;
+    }
+
+    union(rhythm, offset = 0, copy = false, ret = true) {
+      if (copy) return this.copy().union(rhythm, offset, false);
+
+      rhythm = rhythm.copy();
+      rhythm.shift(offset);
+      this.beats = this.beats.concat(rhythm.beats);
+
+      this._sort();
+      this.count += rhythm.count;
+    }
+
+    boost(factor, copy = false, ret = true) {
+      if (copy) return this.copy().boost(volume, false);
+
+      this.apply(function(y) {
+        if (y.volume !== undefined) y.volume *= factor;
+      });
+
+      if (ret) return this;
+    }
+
+    addBeat(...beats) {
+      this.beats = this.beats.concat(beats);
+
+      this._sort();
+      this.count += beats.length;
+    }
+  }
+
+  class Beat {
+    constructor() {
+      // Every beat inherits from this
+
+      this.lastBeatTime = 0;
+    }
+
+    gobble(time, min = 1) {
+      let beats = [];
+      let nextBeat = {
+        time: 0
+      };
+      let c = 0;
+
+      while ((this.lastBeatTime >= nextBeat.time - time) || (c < min)) {
+        nextBeat = this.next();
+        if (!nextBeat) break;
+        beats.push(Object.assign({}, nextBeat));
+        c++;
+      }
+
+      this.lastBeatTime = nextBeat.time;
+      return beats;
+    }
+
+    gobbleMeasure(max = 500) {
+      let beats = [];
+      let nextBeat = {
+        time: 0
+      };
+
+      do {
+        nextBeat = this.next();
+        beats.push(Object.assign({}, nextBeat));
+      } while (!nextBeat.startMeasure && beats.length < 500);
+
+      this.lastBeatTime = nextBeat.time;
+
+      return beats;
+    }
+
+    _reset() {
+      this.lastBeatTime = 0;
+    }
+  }
+
+  class SimpleLoop extends Beat {
+    constructor(rhythm) {
+      super();
+
+      this.rhythm = rhythm.copy();
+
+      this.count = 0;
+      this.cycle = 0;
+    }
+
+    reset() {
+      this.count = 0;
+      this.cycle = 0;
+
+      this._reset();
+    }
+
+    next() {
+      let b = Object.assign({}, this.rhythm.beats[this.count]);
+      b.time += this.cycle * this.rhythm.duration;
+
+      this.count += 1;
+      this.count %= this.rhythm.count;
+      if (this.count === 0) this.cycle += 1;
+
+      return b;
+    }
+
+    prev() {
+      let b = Object.assign({}, this.rhythm.beats[this.count]);
+      b.time += this.cycle * this.rhythm.duration;
+
+      this.count -= 1;
+      if (this.count === -1) {
+        this.cycle -= 1;
+        this.count = this.rhythm.count - 1;
+      }
+
+      return b;
+    }
+
+    copy() {
+      let p = new Simple(this.rhythm);
+
+      p.count = this.count;
+      p.cycle = this.cycle;
+    }
+  }
+
+  let getContext = function() {
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     return new AudioContext();
-  };
+  }
 
-  var BufferLoader = function() {
-    function BufferLoader(audioContext) {
-      _classCallCheck(this, BufferLoader);
-
+  class BufferLoader {
+    constructor(audioContext) {
       this.context = audioContext;
       this.sources = [];
     }
 
-    _createClass(BufferLoader, [{
-      key: "addSource",
-      value: function addSource(sources, call) {
-        if (!call) {
-          if (Array.isArray(sources)) {
-            for (var i = 0; i < sources.length; i++) {
-              this.sources.push(sources[i]);
-            }
-          } else {
-            this.sources.push(sources);
+    addSource(sources, call) {
+      if (!call) {
+        if (Array.isArray(sources)) {
+          for (let i = 0; i < sources.length; i++) {
+            this.sources.push(sources[i]);
           }
         } else {
-          this.sources.push({
-            url: sources,
-            callback: call
-          });
+          this.sources.push(sources);
         }
+      } else {
+        this.sources.push({
+          url: sources,
+          callback: call
+        });
       }
-    }, {
-      key: "sourcesLeft",
-      value: function sourcesLeft() {
-        return this.sourceCount > 0;
+    }
+
+    get sourceCount() {
+      return this.sources.length;
+    }
+
+    sourcesLeft() {
+      return (this.sourceCount > 0);
+    }
+
+    peekSource() {
+      if (this.sourcesLeft()) {
+        return this.sources[0];
       }
-    }, {
-      key: "peekSource",
-      value: function peekSource() {
-        if (this.sourcesLeft()) {
-          return this.sources[0];
-        }
+    }
+
+    getSource() {
+      if (this.sourcesLeft()) {
+        return this.sources.shift();
       }
-    }, {
-      key: "getSource",
-      value: function getSource() {
-        if (this.sourcesLeft()) {
-          return this.sources.shift();
-        }
+    }
+
+    loadSource() {
+      if (!this.sourcesLeft()) {
+        return;
       }
-    }, {
-      key: "loadSource",
-      value: function loadSource() {
-        if (!this.sourcesLeft()) {
-          return;
-        }
 
-        var source = this.getSource();
+      let source = this.getSource();
 
-        var request = new XMLHttpRequest();
-        request.open("GET", source.url, true);
-        request.responseType = "arraybuffer";
+      let request = new XMLHttpRequest();
+      request.open("GET", source.url, true);
+      request.responseType = "arraybuffer";
 
-        var loader = this;
+      let loader = this;
 
-        request.onload = function() {
-          loader.context.decodeAudioData(request.response, function(buffer) {
+      request.onload = function() {
+        loader.context.decodeAudioData(
+          request.response,
+          function(buffer) {
             if (!buffer) {
               throw new Error("Error decoding audio data.");
               return;
             }
             source.callback(buffer);
-          }, function(error) {
+          },
+          function(error) {
             throw new Error("Error loading audio file.");
-          });
-        };
-
-        request.onerror = function() {
-          throw new Error("Could not connect to audio files.");
-        };
-
-        request.send();
+          }
+        );
       }
-    }, {
-      key: "loadAll",
-      value: function loadAll() {
-        while (this.sourcesLeft()) {
-          this.loadSource();
-        }
-      }
-    }, {
-      key: "sourceCount",
-      get: function get() {
-        return this.sources.length;
-      }
-    }]);
 
-    return BufferLoader;
-  }();
+      request.onerror = function() {
+        throw new Error("Could not connect to audio files.");
+      }
+
+      request.send();
+    }
+
+    loadAll() {
+      while (this.sourcesLeft()) {
+        this.loadSource();
+      }
+    }
+  }
 
   function extractFileName(url) {
-    var name = url.substring(url.lastIndexOf('/') + 1);
+    let name = url.substring(url.lastIndexOf('/') + 1);
     return name.substr(0, name.lastIndexOf('.')) || name;
   }
 
-  var MetronomeAudioContext = function() {
-    function MetronomeAudioContext() {
-      _classCallCheck(this, MetronomeAudioContext);
-
+  class MetronomeAudioContext {
+    constructor() {
       this.audioCtx = getContext();
 
       this.bufferLoader = new BufferLoader(this.audioCtx);
@@ -197,434 +339,386 @@ function _classCallCheck(instance, Constructor) {
       this.sampleCount = 0;
     }
 
-    _createClass(MetronomeAudioContext, [{
-      key: "createBufferSource",
-      value: function createBufferSource() {
-        return this.audioCtx.createBufferSource();
-      }
-    }, {
-      key: "createGain",
-      value: function createGain() {
-        return this.audioCtx.createGain();
-      }
-    }, {
-      key: "addSample",
-      value: function addSample(url, name, _callback) {
-        var that = this;
-        name = name || extractFileName(url);
-        _callback = _callback || function(name) {};
+    createBufferSource() {
+      return this.audioCtx.createBufferSource();
+    }
 
-        this.samples[name] = {
-          ready: false,
-          buffer: null
-        };
-        this.bufferLoader.addSource({
-          url: url,
-          callback: function callback(buffer) {
-            that.samples[name] = {
-              ready: true,
-              buffer: buffer
-            };
+    createGain() {
+      return this.audioCtx.createGain();
+    }
 
-            if (that.allSamplesReady() && that.onLoaded) that.onLoaded();
-            _callback(name);
-          }
-        });
-        this.bufferLoader.loadSource();
-      }
-    }, {
-      key: "getVolumeNode",
-      value: function getVolumeNode(vol) {
-        var roundVol = parseInt(vol * 100) / 100;
-        if (this.volumes[roundVol]) return this.volumes[roundVol];
+    get destination() {
+      return this.audioCtx.destination;
+    }
 
-        var newNode = this.createGain();
-        newNode.connect(this.masterGainNode);
+    addSample(url, name, callback) {
+      let that = this;
+      name = name || extractFileName(url);
+      callback = callback || function(name) {};
 
-        newNode.gain.value = vol;
-        this.volumes[roundVol] = newNode;
+      this.samples[name] = {
+        ready: false,
+        buffer: null
+      };
+      this.bufferLoader.addSource({
+        url: url,
+        callback: function(buffer) {
+          that.samples[name] = {
+            ready: true,
+            buffer: buffer
+          };
 
-        return newNode;
-      }
-    }, {
-      key: "allSamplesReady",
-      value: function allSamplesReady() {
-        for (var sample in this.samples) {
-          if (!this.samples[sample].ready) return false;
+          if (that.allSamplesReady() && that.onLoaded) that.onLoaded();
+          callback(name);
         }
-        return true;
-      }
-    }, {
-      key: "getBuffer",
-      value: function getBuffer(name) {
-        return this.samples[name].buffer;
-      }
-    }, {
-      key: "schedulePlay",
-      value: function schedulePlay(name, time) {
-        var isOffset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-        var modifiers = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : {};
+      });
+      this.bufferLoader.loadSource();
+    }
 
-        if (modifiers === null || !((typeof modifiers === "undefined" ? "undefined" : _typeof(modifiers)) === 'object')) {
-          modifiers = {};
-        }
-        modifiers.volume = modifiers.volume || 1;
+    getVolumeNode(vol) {
+      let roundVol = parseInt(vol * 100) / 100;
+      if (this.volumes[roundVol]) return this.volumes[roundVol];
 
-        var source = this.createBufferSource();
-        source.buffer = this.getBuffer(name);
-        source.connect(this.getVolumeNode(modifiers.volume));
+      let newNode = this.createGain();
+      newNode.connect(this.masterGainNode);
 
-        source.start(time + (isOffset ? this.currentTime : 0));
-        source.onended = markNodeFinishedConstructor(source, modifiers.onend);
+      newNode.gain.value = vol;
+      this.volumes[roundVol] = newNode;
 
-        return source;
+      return newNode;
+    }
+
+    allSamplesReady() {
+      for (let sample in this.samples) {
+        if (!this.samples[sample].ready) return false;
       }
-    }, {
-      key: "destination",
-      get: function get() {
-        return this.audioCtx.destination;
-      }
-    }, {
-      key: "currentTime",
-      get: function get() {
-        return this.audioCtx.currentTime;
-      }
-    }]);
+      return true;
+    }
 
-    return MetronomeAudioContext;
-  }();
+    get currentTime() {
+      return this.audioCtx.currentTime;
+    }
+
+    getBuffer(name) {
+      return this.samples[name].buffer;
+    }
+
+    schedulePlay(name, time, isOffset = false, modifiers = {}) {
+      if (modifiers === null || !(typeof modifiers === 'object')) {
+        modifiers = {};
+      }
+      modifiers.volume = modifiers.volume || 1;
+
+      let source = this.createBufferSource();
+      source.buffer = this.getBuffer(name);
+      source.connect(this.getVolumeNode(modifiers.volume));
+
+      source.start(time + (isOffset ? this.currentTime : 0));
+      source.onended = markNodeFinishedConstructor(source, modifiers.onend);
+
+      return source;
+    }
+  }
 
   function markNodeFinishedConstructor(node, other) {
     if (typeof other === "function") {
       return function() {
         node.finished = true;
         other();
-      };
+      }
     } else {
       return function() {
         node.finished = true;
-      };
+      }
     }
   }
 
   Array.prototype.removeIf = function(f) {
-    for (var i = this.length - 1; i >= 0; i--) {
+    for (let i = this.length - 1; i >= 0; i--) {
       if (f(this[i])) {
         this.splice(i, 1);
       }
     }
-  };
+  }
 
-  var MAXPLAYING = 500;
-  var RESOLUTION = 1;
+  let MAXPLAYING = 500;
+  let RESOLUTION = 1;
 
-  var SchedulerContext = function() {
-    function SchedulerContext(ctx) {
-      _classCallCheck(this, SchedulerContext);
-
+  class SchedulerContext {
+    constructor(ctx) {
       this.audio = ctx || new MetronomeAudioContext();
 
       this.playing = [];
       this.referenceStart = this.audio.currentTime;
     }
 
-    _createClass(SchedulerContext, [{
-      key: "schedulePlay",
-      value: function schedulePlay(name, time) {
-        var modifiers = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    schedulePlay(name, time, modifiers = {}) {
+      this.playing.push(this.audio.schedulePlay(name,
+        time + this.referenceStart,
+        false, modifiers));
 
-        this.playing.push(this.audio.schedulePlay(name, time + this.referenceStart, false, modifiers));
-
+      if (this.playing.length > MAXPLAYING) {
+        this.clearFinished();
         if (this.playing.length > MAXPLAYING) {
-          this.clearFinished();
-          if (this.playing.length > MAXPLAYING) {
-            this.stopAll();
+          this.stopAll();
 
-            throw new Error("Maximum queued beats exceeded.");
-          }
+          throw new Error("Maximum queued beats exceeded.");
         }
       }
-    }, {
-      key: "play",
-      value: function play(name) {
-        var modifiers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    }
 
-        this.schedulePlay(name, 0, true, modifiers);
+    play(name, modifiers = {}) {
+      this.schedulePlay(name, 0, true, modifiers);
+    }
+
+    stopAll() {
+      for (let i = 0; i < this.playing.length; i++) {
+        this.playing[i].onended = null;
+        this.playing[i].stop();
       }
-    }, {
-      key: "stopAll",
-      value: function stopAll() {
-        for (var i = 0; i < this.playing.length; i++) {
-          this.playing[i].onended = null;
-          this.playing[i].stop();
+
+      this._clearPlaying();
+    }
+
+    clearFinished() {
+      this.playing.removeIf(a => a.finished);
+    }
+
+    _clearPlaying() {
+      this.playing = [];
+    }
+
+    get _currentTime() {
+      return this.audio.currentTime;
+    }
+
+    setReference(time, isOffset = true) {
+      this.referenceStart = time + (isOffset ? this._currentTime : 0);
+    }
+  }
+
+  /* Format for AutomationTrack:
+
+  {volume: {time: 1, }}
+  */
+
+  let defaultAutomationVolumeTrack = [{
+    time: 0,
+    volume: 1
+  }];
+  let defaultAutomationBPMTrack = [{
+    time: 0,
+    bpm: 120
+  }];
+
+  class AutomationTrack {
+    constructor(keys) {
+      if (keys) {
+        this.volume = keys.volume || defaultAutomationVolumeTrack;
+        this.bpm = keys.bpm || defaultAutomationBPMTrack;
+      } else {
+        this.volume = defaultAutomationVolumeTrack;
+        this.bpm = defaultAutomationBPMTrack;
+      }
+    }
+
+    convertTime(time) {
+      let bpm = this.bpm;
+
+      if (bpm.length === 1) return interonsetFromBPM(bpm[0].bpm) * time;
+      let last = bpm[bpm.length - 1];
+
+      for (let i = 0; i < bpm.length; i++) {
+        if (bpm[i].time >= time) {
+          last = (i > 0) ? bpm[i - 1] : bpm[0];
+          break;
         }
-
-        this._clearPlaying();
       }
-    }, {
-      key: "clearFinished",
-      value: function clearFinished() {
-        this.playing.removeIf(function(a) {
-          return a.finished;
-        });
-      }
-    }, {
-      key: "_clearPlaying",
-      value: function _clearPlaying() {
-        this.playing = [];
-      }
-    }, {
-      key: "setReference",
-      value: function setReference(time) {
-        var isOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
 
-        this.referenceStart = time + (isOffset ? this._currentTime : 0);
+      return interonsetFromBPM(last.bpm) * (time - last.time) + last.time / 2;
+    }
+
+    convertVolume(time, volume) {
+      let volumes = this.volume;
+
+      if (volumes.length === 1) return volumes[0].volume * volume;
+      let last = volumes[volumes.length - 1];
+
+      for (let i = 0; i < volumes.length; i++) {
+        if (volumes[i].time >= time) {
+          last = (i > 0) ? volumes[i - 1] : volumes[0];
+          break;
+        }
       }
-    }, {
-      key: "_currentTime",
-      get: function get() {
-        return this.audio.currentTime;
-      }
-    }]);
 
-    return SchedulerContext;
-  }();
+      return last.volume * volume;
+    }
+  }
 
-  var BeatPlayer = function() {
-    function BeatPlayer(beat, scheduler) {
-      _classCallCheck(this, BeatPlayer);
+  /*const Interpolation = {
+    LINEAR: 0
+  }*/
 
+  class BeatPlayer {
+    constructor(beat, scheduler, automation) {
       this.beat = beat;
       this.scheduler = scheduler;
+      this.automation = automation;
+
+      if (!this.automation || !(this.automation instanceof AutomationTrack)) {
+        this.automation = new AutomationTrack();
+      }
 
       this.playing = false;
       this.R = {
-        onstart: function onstart() {
+        onstart: function() {
           return;
         },
-        onstop: function onstop() {
+        onstop: function() {
           return;
         },
-        onallocate: function onallocate(x) {
+        onallocate: function(x) {
           return;
-        }
+        },
       };
     }
 
-    _createClass(BeatPlayer, [{
-      key: "start",
-      value: function start() {
-        if (this.playing) return;
-        this.scheduler.setReference(0);
+    start() {
+      if (this.playing) return;
+      this.scheduler.setReference(0);
 
-        this.beat.reset();
-        this.R.onstart();
-        this._allocateBeats();
-        this.playing = true;
-      }
-    }, {
-      key: "_allocateBeats",
-      value: function _allocateBeats() {
-        var _this = this;
+      this.beat.reset();
+      this.R.onstart();
+      this._allocateBeats();
+      this.playing = true;
+    }
 
-        this.scheduler.clearFinished();
+    _allocateBeats() {
+      this.scheduler.clearFinished();
 
-        var beats = this.beat.gobble(2 * RESOLUTION);
-        var didDelegateRecall = false;
+      let beats = this.beat.gobble(2 * RESOLUTION);
+      let didDelegateRecall = false;
+      let that = this;
+      let time, volume;
 
-        for (var i = 0; i < beats.length; i++) {
-          if (!didDelegateRecall && beats[i].time >= beats[0].time + 0.9 * RESOLUTION) {
-            (function() {
-              var that = _this;
-              _this.scheduler.schedulePlay(beats[i].sound, beats[i].time, {
-                onend: function onend() {
-                  that._allocateBeats();
-                },
-                volume: beats[i].volume
-              });
-              didDelegateRecall = true;
-            })();
-          } else {
-            this.scheduler.schedulePlay(beats[i].sound, beats[i].time, {
-              volume: beats[i].volume
-            });
-          }
+      for (let i = 0; i < beats.length; i++) {
+        if (!didDelegateRecall) {
+          time = beats[i].time;
+          volume = beats[i].volume;
+
+          this.scheduler.schedulePlay(beats[i].sound, this.automation.convertTime(time), {
+            onend: function() {
+              that._allocateBeats();
+            },
+            volume: this.automation.convertVolume(time, volume)
+          });
+          didDelegateRecall = true;
+        } else {
+          time = beats[i].time;
+          volume = beats[i].volume;
+          this.scheduler.schedulePlay(beats[i].sound, this.automation.convertTime(time), {
+            volume: this.automation.convertVolume(time, volume)
+          });
         }
-
-        this.R.onallocate(beats);
       }
-    }, {
-      key: "stop",
-      value: function stop() {
-        this.scheduler.stopAll();
-        this.playing = false;
 
-        this.R.onstop();
-      }
-    }]);
+      this.R.onallocate(beats);
+    }
 
-    return BeatPlayer;
-  }();
+    stop() {
+      this.scheduler.stopAll();
+      this.playing = false;
 
-  var defaultBeatNameCount = 0;
+      this.R.onstop();
+    }
+  }
 
-  var Metronome = function() {
-    function Metronome(context) {
-      _classCallCheck(this, Metronome);
+  let defaultBeatNameCount = 0;
 
+  class Metronome {
+    constructor(context) {
       this.audio = context || new MetronomeAudioContext();
 
       this.players = {};
       this.animator = null;
     }
 
-    _createClass(Metronome, [{
-      key: "playerExists",
-      value: function playerExists(id) {
-        return !!this.getPlayer(id);
-      }
-    }, {
-      key: "setAnimator",
-      value: function setAnimator(animator) {
-        this.animator = animator;
-      }
-    }, {
-      key: "getPlayer",
-      value: function getPlayer(id) {
-        return this.players[id];
-      }
-    }, {
-      key: "addBeat",
-      value: function addBeat(beat, id) {
-        if (beat instanceof Beat) {
-          if (!id) {
-            id = '__' + defaultBeatNameCount;
-            defaultBeatNameCount += 1;
-          } else {
-            id = id;
-          }
-
-          var scheduler = new SchedulerContext(this.audio);
-          var player = new BeatPlayer(beat, scheduler);
-          this.players[id] = player;
-        }
-      }
-    }, {
-      key: "stopPlayer",
-      value: function stopPlayer(id) {
-        this.getPlayer(id).stop();
-      }
-    }, {
-      key: "startPlayer",
-      value: function startPlayer(id) {
-        this.getPlayer(id).start();
-      }
-    }, {
-      key: "destroyPlayer",
-      value: function destroyPlayer(id) {
-        this.players[id] = undefined;
-      }
-    }, {
-      key: "startAll",
-      value: function startAll() {
-        var delay = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-
-        if (delay == 0) {
-          for (var id in this.players) {
-            this.startPlayer(id);
-          }
-        } else {
-          var that = this;
-          return setTimeout(function() {
-            that.startAll(0);
-          }, delay * 1000);
-        }
-      }
-    }, {
-      key: "stopAll",
-      value: function stopAll() {
-        for (var id in this.players) {
-          this.stopPlayer(id);
-        }
-      }
-    }, {
-      key: "mute",
-      value: function mute() {
-        this.volume = 0;
-      }
-    }, {
-      key: "addSample",
-      value: function addSample(name, url, callback) {
-        this.audio.addSample(name, url, callback);
-      }
-    }, {
-      key: "volume",
-      set: function set(vol) {
-        this.audio.masterGainNode.gain.value = vol;
-      },
-      get: function get() {
-        return this.audio.masterGainNode.gain.value;
-      }
-    }]);
-
-    return Metronome;
-  }();
-
-  var Beat = function() {
-    function Beat() {
-      _classCallCheck(this, Beat);
-
-      // Every beat inherits from this
-
-      this.lastBeatTime = 0;
+    playerExists(id) {
+      return !!this.getPlayer(id);
     }
 
-    _createClass(Beat, [{
-      key: "gobble",
-      value: function gobble(time) {
-        var beats = [];
-        var nextBeat = {
-          time: 0
-        };
+    setAnimator(animator) {
+      this.animator = animator;
+    }
 
-        while (this.lastBeatTime > nextBeat.time - time) {
-          nextBeat = this.next();
-          if (!nextBeat) break;
-          beats.push(Object.assign({}, nextBeat));
+    getPlayer(id) {
+      return this.players[id];
+    }
+
+    addBeat(beat, id, automation) {
+      if (beat instanceof Beat) {
+        if (!id) {
+          id = '__' + defaultBeatNameCount;
+          defaultBeatNameCount += 1;
+        } else {
+          id = id;
         }
 
-        this.lastBeatTime = nextBeat.time;
+        let scheduler = new SchedulerContext(this.audio);
+        let player = new BeatPlayer(beat, scheduler, automation);
+        this.players[id] = player;
 
-        return beats;
+        return player;
       }
-    }, {
-      key: "gobbleMeasure",
-      value: function gobbleMeasure() {
-        var max = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 500;
+    }
 
-        var beats = [];
-        var nextBeat = {
-          time: 0
-        };
+    stopPlayer(id) {
+      this.getPlayer(id).stop();
+    }
 
-        do {
-          nextBeat = this.next();
-          beats.push(Object.assign({}, nextBeat));
-        } while (!nextBeat.startMeasure && beats.length < 500);
+    startPlayer(id) {
+      this.getPlayer(id).start();
+    }
 
-        this.lastBeatTime = nextBeat.time;
+    destroyPlayer(id) {
+      this.players[id] = undefined;
+    }
 
-        return beats;
+    startAll(delay = 0) {
+      if (delay == 0) {
+        for (let id in this.players) {
+          this.startPlayer(id);
+        }
+      } else {
+        let that = this;
+        return setTimeout(function() {
+          that.startAll(0);
+        }, delay * 1000);
       }
-    }, {
-      key: "_reset",
-      value: function _reset() {
-        this.lastBeatTime = 0;
-      }
-    }]);
+    }
 
-    return Beat;
-  }();
+    stopAll() {
+      for (let id in this.players) {
+        this.stopPlayer(id);
+      }
+    }
+
+    set volume(vol) {
+      this.audio.masterGainNode.gain.value = vol;
+    }
+
+    get volume() {
+      return this.audio.masterGainNode.gain.value;
+    }
+
+    mute() {
+      this.volume = 0;
+    }
+
+    addSample(name, url, callback) {
+      this.audio.addSample(name, url, callback);
+    }
+  }
 
   function BPMFromInteronset(interonset) {
     return 60 / interonset;
@@ -650,594 +744,69 @@ function _classCallCheck(instance, Constructor) {
     return Math.round(Math.max(RESOLUTION / interonsetFromBPS(bps), 1));
   }
 
-  var ConstantBeat = function(_Beat) {
-    _inherits(ConstantBeat, _Beat);
-
-    function ConstantBeat(config) {
-      _classCallCheck(this, ConstantBeat);
-
-      var _this2 = _possibleConstructorReturn(this, (ConstantBeat.__proto__ || Object.getPrototypeOf(ConstantBeat)).call(this));
-
-      config = config || {};
-
-      if (config.bpm !== undefined) {
-        config.interonset = interonsetFromBPM(config.bpm);
-      } else if (config.bps !== undefined) {
-        config.interonset = interonsetFromBPS(config.bps);
-      }
-
-      _this2.sound = config.sound;
-
-      _this2.interonset = config.interonset || 0.5;
-      _this2.volume = config.volume || 1;
-
-      _this2.count = 0;
-      return _this2;
-    }
-
-    _createClass(ConstantBeat, [{
-      key: "reset",
-      value: function reset() {
-        _get(ConstantBeat.prototype.__proto__ || Object.getPrototypeOf(ConstantBeat.prototype), "_reset", this).call(this);
-        this.count = 0;
-      }
-    }, {
-      key: "next",
-      value: function next() {
-        this.count += 1;
-        return {
-          time: this.interonset * (this.count - 1),
-          sound: this.sound,
-          volume: this.volume
-        };
-      }
-    }, {
-      key: "bpm",
-      get: function get() {
-        return BPMFromInteronset(this.interonset);
-      },
-      set: function set(bps) {
-        this.interonset = interonsetFromBPM(bps);
-      }
-    }, {
-      key: "bps",
-      get: function get() {
-        return BPSFromInteronset(this.interonset);
-      }
-    }]);
-
-    return ConstantBeat;
-  }(Beat);
-
-  var ConstantTime = function(_Beat2) {
-    _inherits(ConstantTime, _Beat2);
-
-    function ConstantTime(config) {
-      _classCallCheck(this, ConstantTime);
-
-      var _this3 = _possibleConstructorReturn(this, (ConstantTime.__proto__ || Object.getPrototypeOf(ConstantTime)).call(this));
-
-      config = config || {};
-
-      if (config.bpm !== undefined) {
-        config.interonset = interonsetFromBPM(config.bpm);
-      } else if (config.bps !== undefined) {
-        config.interonset = interonsetFromBPS(config.bps);
-      }
-
-      _this3.normalVolume = config.normalVolume || config.soundVolume || config.volume || 0.5;
-      _this3.accentVolume = config.accentVolume || config.volume || 1;
-
-      _this3.normal = config.sound || config.normal;
-      _this3.accent = config.accent || _this3.normal;
-
-      _this3.num = config.count || config.num || 4;
-
-      _this3.interonset = config.interonset || 0.5;
-
-      _this3.count = 0;
-      return _this3;
-    }
-
-    _createClass(ConstantTime, [{
-      key: "reset",
-      value: function reset() {
-        _get(ConstantTime.prototype.__proto__ || Object.getPrototypeOf(ConstantTime.prototype), "_reset", this).call(this);
-        this.count = 0;
-      }
-    }, {
-      key: "next",
-      value: function next() {
-        this.count += 1;
-        if ((this.count - 1) % this.num === 0) {
-          return {
-            time: this.interonset * (this.count - 1),
-            sound: this.accent,
-            volume: this.accentVolume
-          };
-        } else {
-          return {
-            time: this.interonset * (this.count - 1),
-            sound: this.normal,
-            volume: this.normalVolume
-          };
-        }
-      }
-    }, {
-      key: "bpm",
-      get: function get() {
-        return BPMFromInteronset(this.interonset);
-      },
-      set: function set(bps) {
-        this.interonset = interonsetFromBPM(bps);
-      }
-    }, {
-      key: "bps",
-      get: function get() {
-        return BPSFromInteronset(this.interonset);
-      }
-    }]);
-
-    return ConstantTime;
-  }(Beat);
-
-  var Rhythm = function() {
-    function Rhythm(beats) {
-      var _empty = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-
-      _classCallCheck(this, Rhythm);
-
-      if (!_empty && (!Array.isArray(beats) || beats.length <= 1)) {
-        throw new Error("There must be at least two beats provided in an array.");
-      }
-
-      this.beats = beats;
-      this.sort();
-    }
-
-    _createClass(Rhythm, [{
-      key: "sort",
-      value: function sort() {
-        this.beats.sort(function(x, y) {
-          return Math.sign(x.time - y.time);
-        });
-      }
-    }, {
-      key: "add",
-      value: function add(beat) {
-        if (Array.isArray(beat)) {
-          this.beats = this.beats.concat(beat);
-        } else {
-          this.beats.push(beat);
-        }
-
-        this.sort();
-      }
-    }, {
-      key: "duration",
-      value: function duration() {
-        return this.beats[this.beats.length - 1].time - this.beats[0].time;
-      }
-    }, {
-      key: "count",
-      value: function count() {
-        return this.beats.length;
-      }
-    }, {
-      key: "stretch",
-      value: function stretch(f) {
-        for (var i = 0; i < this.beats.length; i++) {
-          this.beats[i].time = this.beats[i].time * f;
-        }
-      }
-    }, {
-      key: "squish",
-      value: function squish(f) {
-        this.stretch(1 / f);
-      }
-    }, {
-      key: "increaseVolume",
-      value: function increaseVolume(f) {
-        for (var i = 0; i < this.beats.length; i++) {
-          this.beats[i].volume += f;
-        }
-      }
-    }, {
-      key: "decreaseVolume",
-      value: function decreaseVolume(f) {
-        this.increaseVolume(-f);
-      }
-    }, {
-      key: "multiplyVolume",
-      value: function multiplyVolume(f) {
-        for (var i = 0; i < this.beats.length; i++) {
-          this.beats[i].volume *= f;
-        }
-      }
-    }, {
-      key: "divideVolume",
-      value: function divideVolume(f) {
-        this.multiplyVolume(1 / f);
-      }
-    }, {
-      key: "shift",
-      value: function shift(time) {
-        for (var i = 0; i < this.beats.length; i++) {
-          this.beats[i].time += time;
-        }
-      }
-    }, {
-      key: "concat",
-      value: function concat(rhythm) {
-        if (rhythm instanceof RhythmicMotif) {
-          this.beats = this.beats.concat(rhythm);
-        }
-      }
-    }, {
-      key: "copy",
-      value: function copy() {
-        var p = new Rhythm([], true);
-
-        for (var i = 0; i < this.beats.length; i++) {
-          p.add(Object.assign({}, this.beats[i]));
-        }
-
-        return p;
-      }
-    }, {
-      key: "apply",
-      value: function apply(f) {
-        var usereturn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
-
-        for (var i = 0; i < this.beats.length; i++) {
-          if (usereturn) {
-            this.beats[i] = f(this.beats[i]);
-          } else {
-            f(this.beats[i]);
-          }
-        }
-      }
-    }]);
-
-    return Rhythm;
-  }();
-
-  function fixStartMeasure(rhythm) {
-    rhythm.beats[0].startMeasure = true;
+  function getLength(beats) {
+    return beats[beats.length - 1].time - beats[0].time;
   }
 
-  var GenericLoop = function(_Beat3) {
-    _inherits(GenericLoop, _Beat3);
+  function copyBeat(beat) {
+    return Object.assign({}, beat);
+  }
 
-    function GenericLoop(rhythm) {
-      var loop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  function copyBeats(beats) {
+    return beats.map(copyBeat);
+  }
 
-      _classCallCheck(this, GenericLoop);
+  function beatShift(beat, time) {
+    let l = copyBeat(beat);
+    l.time += time;
 
-      var _this4 = _possibleConstructorReturn(this, (GenericLoop.__proto__ || Object.getPrototypeOf(GenericLoop)).call(this));
+    return l;
+  }
 
-      _this4.rhythm = rhythm.copy();
-
-      if (loop) fixStartMeasure(_this4.rhythm);
-      _this4.loop = loop;
-      _this4.count = 0;
-
-      _this4.cycle = 0;
-      return _this4;
-    }
-
-    _createClass(GenericLoop, [{
-      key: "reset",
-      value: function reset() {
-        _get(GenericLoop.prototype.__proto__ || Object.getPrototypeOf(GenericLoop.prototype), "_reset", this).call(this);
-        this.rhythm.shift(-this.cycle * this.rhythm.duration());
-
-        this.count = 0;
-        this.cycle = 0;
-      }
-    }, {
-      key: "next",
-      value: function next() {
-        this.count += 1;
-
-        if (this.loop && this.count == this.rhythm.beats.length) {
-          this.count = 1;
-          this.cycle += 1;
-
-          this.rhythm.shift(this.rhythm.duration());
-          return this.rhythm.beats[0];
-        }
-
-        return this.rhythm.beats[this.count - 1];
-      }
-    }, {
-      key: "copy",
-      value: function copy() {
-        return new GenericLoop(this.rhythm, this.loop);
-      }
-    }]);
-
-    return GenericLoop;
-  }(Beat);
-
-  var Animation = {
+  const Animation = {
     SIMPLE: 0,
     LINEAR: 1
-  };
+  }
 
-  var getNewAnimationClass = function getNewAnimationClass(x, y) {
-    switch (x) {
-      case Animation.SIMPLE:
-        return new SimpleMetronomeAnimation(y);
-      case Animation.LINEAR:
-        return new LinearMetronomeAnimation(y);
-    }
-  };
+  let utils = {
+    BPMFromInteronset,
+    BPSFromInteronset,
+    interonsetFromBPM,
+    interonsetFromBPS
+  }
 
-  var SimpleMetronomeAnimation = function() {
-    function SimpleMetronomeAnimation(player) {
-      _classCallCheck(this, SimpleMetronomeAnimation);
-
-      this.player = player;
-      this.animator = null;
-
-      this.onnext = false;
-      this.active = false;
-      this.startTime = 0;
-      this.allocatedBeats = [];
-      this.lastBeatTime = 0;
-      this.cooldown = 0;
-
-      this.configure({});
+  class TimeSignature {
+    constructor(numerator = 4, denominator = 4) {
+      this.num = numerator;
+      this.den = denominator;
     }
 
-    _createClass(SimpleMetronomeAnimation, [{
-      key: "setAnimator",
-      value: function setAnimator(animator) {
-        this.animator = animator;
-      }
-    }, {
-      key: "configure",
-      value: function configure(config) {
-        this.xmin = config.xmin || 0;
-        this.ymin = config.ymin || 0;
-
-        this.xmax = config.xmax || (this.animator ? this.animator.canvas.width : 100);
-        this.ymax = config.ymax || (this.animator ? this.animator.canvas.height : 100);
-
-        this.length = config.length || 2;
-      }
-    }, {
-      key: "onstart",
-      value: function onstart() {
-        this.allocatedBeats = [];
-        this.lastBeatTime = -1;
-        this.cooldown = 0;
-
-        this.startTime = Date.now();
-        this.active = true;
-      }
-    }, {
-      key: "clearFinished",
-      value: function clearFinished() {
-        var _this5 = this;
-
-        this.allocatedBeats.removeIf(function(x) {
-          return x.time < _this5.time;
-        });
-      }
-    }, {
-      key: "onallocate",
-      value: function onallocate(beats) {
-        this.allocatedBeats = this.allocatedBeats.concat(beats);
-        this.clearFinished();
-      }
-    }, {
-      key: "onstop",
-      value: function onstop() {
-        this.allocatedBeats = [];
-
-        this.active = false;
-        this.onnext = false;
-      }
-    }, {
-      key: "drawClick",
-      value: function drawClick() {
-        var c = this.animator.ctx;
-        var centerX = (this.xmin + this.xmax) / 2;
-        var centerY = (this.ymin + this.ymax) / 2;
-        var radius = (this.xmax - this.xmin) / 10;
-
-        c.beginPath();
-        c.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
-        c.fillStyle = 'green';
-        c.fill();
-        c.lineWidth = 5;
-        c.strokeStyle = '#003300';
-        c.stroke();
-      }
-    }, {
-      key: "animate",
-      value: function animate() {
-        if (!this.active) return;
-        for (var i = 0; i < this.allocatedBeats.length; i++) {
-          var beat = this.allocatedBeats[i];
-
-          if (beat.time < this.time && beat.time > this.lastBeatTime) {
-            this.lastBeatTime = beat.time;
-            this.cooldown = this.length;
-
-            this.drawClick();
-            return;
-          }
-        }
-
-        if (this.cooldown > 0) {
-          this.cooldown--;
-          this.drawClick();
-        }
-      }
-    }, {
-      key: "time",
-      get: function get() {
-        return (Date.now() - this.startTime) / 1000;
-      }
-    }]);
-
-    return SimpleMetronomeAnimation;
-  }();
-
-  var LinearMetronomeAnimation = function() {
-    function LinearMetronomeAnimation(player) {
-      _classCallCheck(this, LinearMetronomeAnimation);
-
-      this.active = false;
-      this.player = player;
-
-      this.beat = null;
-      this.startTime = 0;
-      this.measureTime = 0;
-      this.animator = null;
-      this.allocatedBeats = [];
-
-      this.configure({});
+    get length() {
+      return this.num / this.den;
     }
 
-    _createClass(LinearMetronomeAnimation, [{
-      key: "setAnimator",
-      value: function setAnimator(animator) {
-        this.animator = animator;
-      }
-    }, {
-      key: "configure",
-      value: function configure(config) {
-        this.xmin = config.xmin || 0;
-        this.ymin = config.ymin || 0;
-
-        this.xmax = config.xmax || (this.animator ? this.animator.canvas.width : 100);
-        this.ymax = config.ymax || (this.animator ? this.animator.canvas.height : 100);
-      }
-    }, {
-      key: "onstart",
-      value: function onstart() {
-        this.beat = this.player.beat.copy();
-        this.active = true;
-
-        this.startTime = Date.now();
-
-        this.getMeasure();
-      }
-    }, {
-      key: "getMeasure",
-      value: function getMeasure() {
-        this.allocatedBeats = this.beat.gobbleMeasure(500);
-      }
-    }, {
-      key: "onallocate",
-      value: function onallocate(d) {
-        return;
-      }
-    }, {
-      key: "linePos",
-      value: function linePos() {
-        if (this.time < this.allocatedBeats[0].time) return -1;
-      }
-    }, {
-      key: "animate",
-      value: function animate() {
-        if (this.allocatedBeats && this.time > this.allocatedBeats[this.allocatedBeats.length - 1].time) this.getMeasure();
-        var lineX = this.linePos();
-      }
-    }, {
-      key: "onstop",
-      value: function onstop() {
-        this.active = false;
-      }
-    }, {
-      key: "time",
-      get: function get() {
-        return Date.now() - this.startTime;
-      }
-    }]);
-
-    return LinearMetronomeAnimation;
-  }();
-
-  var MetronomeAnimator = function() {
-    function MetronomeAnimator(metronome, canvas, ctx) {
-      _classCallCheck(this, MetronomeAnimator);
-
-      if (metronome instanceof Metronome) {
-        metronome.setAnimator(this);
-        this.metronome = metronome;
-
-        this.canvas = canvas;
-        this.ctx = ctx || canvas.getContext('2d');
-      } else {
-        throw new Error("First argument must be metronome.");
-      }
+    get beatLength() {
+      return 1 / this.den;
     }
 
-    _createClass(MetronomeAnimator, [{
-      key: "getPlayer",
-      value: function getPlayer(id) {
-        return this.metronome.players[id];
-      }
-    }, {
-      key: "setupAnimation",
-      value: function setupAnimation(id, animationType) {
-        var player = this.getPlayer(id);
+    toString() {
+      return this.num + " / " + this.den;
+    }
 
-        player.R.animationType = animationType;
-        player.R.animation = getNewAnimationClass(animationType, player);
+    rhythm(accent, normal) {
+      if (!normal) normal = accent;
+      if (!accent) accent = normal;
 
-        this._setupAnimation(player);
-        player.R.animation.setAnimator(this);
-      }
-    }, {
-      key: "_setupAnimation",
-      value: function _setupAnimation(player) {
-        player.R.onstart = function() {
-          player.R.animation.onstart();
-        };
-        player.R.onallocate = function(beats) {
-          player.R.animation.onallocate(beats);
-        };
-        player.R.onstop = function() {
-          player.R.animation.onstop();
-        };
-      }
-    }, {
-      key: "configureAnimation",
-      value: function configureAnimation(id, config) {
-        this.getPlayer(id).R.animation.configure(config);
-      }
-    }, {
-      key: "clear",
-      value: function clear() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      }
-    }, {
-      key: "animate",
-      value: function animate() {
-        this.clear();
-        var player = void 0;
-        for (var k in this.players) {
-          player = this.players[k];
-          if (player.R && player.R.animation) {
-            player.R.animation.animate();
-          }
-        }
-      }
-    }, {
-      key: "players",
-      get: function get() {
-        return this.metronome.players;
-      }
-    }]);
+      let k = [];
+      k.push({time: 0, sound: accent, volume: 1});
 
-    return MetronomeAnimator;
-  }();
+      for (let i = 1; i < this.num; i++) {
+        k.push({time: i / this.den, sound: normal, volume: 1});
+      }
+
+      return new Rhythm(k, this.length);
+    }
+  }
 
   exports.BufferLoader = BufferLoader;
   exports.MetronomeAudioContext = MetronomeAudioContext;
@@ -1245,12 +814,12 @@ function _classCallCheck(instance, Constructor) {
   exports.getContext = getContext;
   exports.Metronome = Metronome;
   exports.Beat = Beat;
-  exports.ConstantBeat = ConstantBeat;
-  exports.ConstantTime = ConstantTime;
   exports.Rhythm = Rhythm;
-  exports.GenericLoop = GenericLoop;
-  exports.MetronomeAnimator = MetronomeAnimator;
   exports.Animation = Animation;
+  exports.SimpleLoop = SimpleLoop;
+  exports.AutomationTrack = AutomationTrack;
+  exports.TimeSignature = TimeSignature;
+  exports.utils = utils;
   exports.MAXPLAYING = MAXPLAYING;
   exports.RESOLUTION = RESOLUTION;
-});
+}));
