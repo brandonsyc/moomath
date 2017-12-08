@@ -11,7 +11,7 @@ do
      git reset --hard origin/master
      
      echo "" > build.html
-     echo "<html><body style='white-space: pre-wrap'>Build started at " >> build.html
+     echo "<html><body style='white-space: pre-wrap'><p style='font-family: monospace'>Build started at " >> build.html
      echo $(date) >> build.html
      echo ".\n" >> build.html
 
@@ -20,7 +20,7 @@ do
      echo "Build finished at "
      echo $(date) >> build.html
      echo ".\n" >> build.html
-     echo "</body></html>" >> build.html
+     echo "</p></body></html>" >> build.html
 
      echo "Build complete."
   fi
