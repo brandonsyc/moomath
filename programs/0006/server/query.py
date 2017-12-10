@@ -1,6 +1,9 @@
 import sys,time
 import os.path
 
+if len(sys.argv) < 1:
+    sys.exit()
+
 p = open("needed.txt", "a")
 p.write(sys.argv[1] + '\n')
 p.close()

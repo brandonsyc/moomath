@@ -41,8 +41,6 @@ int main(int argc, char **argv) {
 
   while (true) {
     if (exists(queryPath)) {
-      std::cout << "Milk!" << std::endl;
-
       std::ifstream searches;
       searches.open(queryPath);
 
@@ -53,8 +51,6 @@ int main(int argc, char **argv) {
       }
 
       if (queries.size() == 0) continue;
-
-      std::cout << "New Query" << std::endl;
 
       searches.close();
 
