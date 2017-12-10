@@ -8,6 +8,8 @@ p = open("needed.txt", "a")
 p.write(sys.argv[1] + '\n')
 p.close()
 
+print sys.argv[1]
+
 results = "searchResults.txt"
 
 time.sleep(0.07)
