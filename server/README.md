@@ -2,7 +2,7 @@
 
 If something needs to be compiled on the server, place it in build.sh. The git repository is checked every 5 seconds by the server computer, and if any changes are detected, all changes are downloaded, then build.sh is run. Note that build.sh is run with root privileges; be careful!
 
-If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](http://moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
+If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](https://www.moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
 
 Do not run this file if you are contributing to the repository! It will mess things up.
 
