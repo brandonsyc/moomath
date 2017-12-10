@@ -11,7 +11,6 @@ document.getElementById("top").innerHTML =
 			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 			'<a href="https://nichodon.github.io/science/">Science</a>' +
 			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
 			'<a href="https://nichodon.github.io/other/">Other</a>' +
 			'<a href="https://nichodon.github.io/about/">About</a>' +
 		'</div>' +
@@ -25,7 +24,6 @@ document.getElementById("top").innerHTML =
 			'<a href="https://nichodon.github.io/fractals/">Fractals</a>' +
 			'<a href="https://nichodon.github.io/science/">Science</a>' +
 			'<a href="https://nichodon.github.io/programs/">Programs</a>' +
-			'<a href="https://nichodon.github.io/coming_soon/">Worksheets</a>' +
 			'<a href="https://nichodon.github.io/other/">Other</a>' +
 			'<a href="https://nichodon.github.io/about/">About</a>' +
 		'</div>' +
