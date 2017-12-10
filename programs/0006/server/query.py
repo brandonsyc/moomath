@@ -1,5 +1,8 @@
 import sys,time
 import os.path
+print "udder"
+
+sys.exit()
 
 if len(sys.argv) < 1:
     sys.exit()
