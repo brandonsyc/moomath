@@ -2,14 +2,16 @@ import sys,time
 import os.path
 print "udder"
 
-sys.exit()
-
 if len(sys.argv) < 1:
     sys.exit()
+   
+print sys.argv[1]
 
 p = open("needed.txt", "a")
 p.write(sys.argv[1] + '\n')
 p.close()
+
+sys.exit()
 
 print sys.argv[1]
 
