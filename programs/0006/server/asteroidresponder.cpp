@@ -1,93 +1,134 @@
-//============================================================================
-// Name        : asteroidresponder.cpp
-// Author      : 
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
-#include <iostream>
-#include <fstream>
 #include <chrono>
+#include <cstdio>
+#include <fstream>
+#include <iostream>
 #include <string>
+#include <sys/stat.h>
+#include <thread>
+#include <unistd.h>
+#include <vector>
 
-using namespace std;
+#define DEBUG false
 typedef std::chrono::high_resolution_clock Clock;
 
-int main (int argc, char** argv) {
-	cout.precision(7);
+inline bool exists(const std::string &name) {
+  struct stat buffer;
+  return (stat(name.c_str(), &buffer) == 0);
+}
 
-	streampos size;
-	char * memblock;
+int main(int argc, char **argv) {
 
-	ifstream file ("astJ2000.bin", ios::in|ios::binary|ios::ate);
-	if (file.is_open()) {
-		size = file.tellg();
-		memblock = new char[size];
-		file.seekg(0, ios::beg);
-		file.read(memblock, size);
-		file.close();
-	} else {
-		cout << "Unable to open file";
-	}
+  std::streampos size;
+  char *memblock;
 
-	int i = 0;
-	int thisLength,queryPos,floatStart,charDiff;
+  std::ifstream file("astJ2000.bin",
+                     std::ios::in | std::ios::binary | std::ios::ate);
+  if (file.is_open()) {
+    size = file.tellg();
+    memblock = new char[size];
+    file.seekg(0, std::ios::beg);
+    file.read(memblock, size);
+    file.close();
+  } else {
+    std::cout << "Unable to open file";
+  }
 
-	int charSize = (int)size;
-	int querySize = (int)strlen(argv[1]);
+  const std::string queryPath = "needed.txt";
+	const std::string outputPath = "searchResults.txt";
 
-	float output;
+  std::remove(queryPath.c_str());
+  std::remove(outputPath.c_str());
 
-	int totalAsteroids = 0;
-	int maxAsteroids = 50;
+  while (true) {
+    if (exists(queryPath)) {
+      std::ifstream searches;
+      searches.open(queryPath);
 
-	if (argc > 2) {
-		maxAsteroids = stoi(argv[2]);
-	}
+      std::string line;
+      std::vector<std::string> queries;
+      while (std::getline(searches, line)) {
+        queries.push_back(line);
+      }
 
-	auto t1 = Clock::now();
-	while (i < charSize - 1) {
-		thisLength = (int)memblock[i];
-		queryPos = 0;
+      searches.close();
 
-		for (int j = i + 1; j < i + thisLength + 1; j++) {
-			if (memblock[j] == 32) continue;
+      std::remove(queryPath.c_str());
+			std::remove(outputPath.c_str());
 
-			charDiff = argv[1][queryPos] - memblock[j];
-			if (charDiff == 0 || charDiff == -32 || charDiff == 32) {
-				queryPos += 1;
-				if (queryPos == querySize) {
-					for (int k = i + 1; k < i + thisLength + 1; k++) {
-						cout << memblock[k];
-					}
-					cout << ',';
+      std::ofstream searchResults;
+      searchResults.open(outputPath);
+      searchResults.precision(7);
 
-					floatStart = i + thisLength + 1;
-					for (int p = 0; p < 7; p++) {
-						*((unsigned char*)(&output)) = memblock[floatStart];
-						*((unsigned char*)(&output) + 1) = memblock[floatStart+1];
-						*((unsigned char*)(&output) + 2) = memblock[floatStart+2];
-						*((unsigned char*)(&output) + 3) = memblock[floatStart+3];
+      for (std::string query : queries) {
 
-						cout << output << (p == 6 ? ';' : ',');
-						floatStart += 4;
-					}
+        searchResults << query << ": ";
 
-					totalAsteroids += 1;
+        int totalAsteroids = 0;
+        int maxAsteroids = 50;
 
-					if (totalAsteroids == maxAsteroids) return 0;
-					break;
-				}
-			} else {
-				queryPos = 0;
-			}
-		}
-		i += thisLength + 29;
-	}
+        int i = 0;
+        int thisLength, queryPos, floatStart, charDiff;
 
-	auto t2 = Clock::now();
-	/**std::cout << "\n$\nSearched through " <<
-	              << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 - t1).count()
-	              << " nanoseconds" << std::endl;**/
+        int charSize = (int)size;
+        int querySize = (int)query.length();
+
+        float output;
+
+        auto t1 = Clock::now();
+
+        while (i < charSize - 1) {
+          thisLength = (int)memblock[i];
+          queryPos = 0;
+
+          for (int j = i + 1; j < i + thisLength + 1; j++) {
+            if (memblock[j] == 32)
+              continue;
+
+            charDiff = query[queryPos] - memblock[j];
+            if (charDiff == 0 || charDiff == -32 || charDiff == 32) {
+              queryPos += 1;
+              if (queryPos == querySize) {
+                for (int k = i + 1; k < i + thisLength + 1; k++) {
+                  searchResults << memblock[k];
+                }
+                searchResults << ',';
+
+                floatStart = i + thisLength + 1;
+                for (int p = 0; p < 7; p++) {
+                  *((unsigned char *)(&output)) = memblock[floatStart];
+                  *((unsigned char *)(&output) + 1) = memblock[floatStart + 1];
+                  *((unsigned char *)(&output) + 2) = memblock[floatStart + 2];
+                  *((unsigned char *)(&output) + 3) = memblock[floatStart + 3];
+
+                  searchResults << output << (p == 6 ? ';' : ',');
+                  floatStart += 4;
+                }
+
+                totalAsteroids += 1;
+
+                if (totalAsteroids == maxAsteroids)
+                  return 0;
+                break;
+              }
+            } else {
+              queryPos = 0;
+            }
+          }
+          i += thisLength + 29;
+        }
+
+        auto t2 = Clock::now();
+        if (DEBUG)
+          std::cout << "\nSearched through "
+                    << std::chrono::duration_cast<std::chrono::nanoseconds>(t2 -
+                                                                            t1)
+                           .count()
+                    << " nanoseconds" << std::endl;
+        searchResults << "\n";
+      }
+
+      searchResults.close();
+      std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    }
+  }
 }
