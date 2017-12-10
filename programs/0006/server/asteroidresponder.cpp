@@ -41,6 +41,8 @@ int main(int argc, char **argv) {
 
   while (true) {
     if (exists(queryPath)) {
+      std::cout << "Milk!" << std::endl;
+
       std::ifstream searches;
       searches.open(queryPath);
 
@@ -49,6 +51,10 @@ int main(int argc, char **argv) {
       while (std::getline(searches, line)) {
         queries.push_back(line);
       }
+
+      if (queries.size() == 0) continue;
+
+      std::cout << "New Query" << std::endl;
 
       searches.close();
 
@@ -60,7 +66,6 @@ int main(int argc, char **argv) {
       searchResults.precision(7);
 
       for (std::string query : queries) {
-
         searchResults << query << ": ";
 
         int totalAsteroids = 0;
@@ -106,9 +111,7 @@ int main(int argc, char **argv) {
 
                 totalAsteroids += 1;
 
-                if (totalAsteroids == maxAsteroids)
-                  return 0;
-                break;
+                if (totalAsteroids == maxAsteroids) break;
               }
             } else {
               queryPos = 0;
@@ -128,7 +131,7 @@ int main(int argc, char **argv) {
       }
 
       searchResults.close();
-      std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
+    std::this_thread::sleep_for(std::chrono::milliseconds(45));
   }
 }
