@@ -3,6 +3,16 @@
 
   build(global.METRO);
 })(window, (function(exports) {
+  window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+  if (!window.AudioContext) {
+    throw new Error("The Web Audio API is not supported by this browser.");
+  }
+
+  let context = new AudioContext();
+  let masterGainNode = context.createGain();
+  masterGainNode.connect(context.destination);
+
   class Rhythm {
     constructor(beats, duration = -1, copy = false) {
       this.beats = copy ? copyBeats(beats) : beats;
@@ -228,11 +238,6 @@
     }
   }
 
-  let getContext = function() {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    return new AudioContext();
-  }
-
   class BufferLoader {
     constructor(audioContext) {
       this.context = audioContext;
@@ -326,15 +331,15 @@
 
   class MetronomeAudioContext {
     constructor() {
-      this.audioCtx = getContext();
+      this.audioCtx = context;
 
       this.bufferLoader = new BufferLoader(this.audioCtx);
       this.samples = {};
 
       this.volumes = {};
 
-      this.masterGainNode = this.createGain();
-      this.masterGainNode.connect(this.destination);
+      this.gainNode = this.createGain();
+      this.gainNode.connect(this.destination);
 
       this.sampleCount = 0;
     }
@@ -348,7 +353,7 @@
     }
 
     get destination() {
-      return this.audioCtx.destination;
+      return masterGainNode;
     }
 
     addSample(url, name, callback) {
@@ -380,7 +385,7 @@
       if (this.volumes[roundVol]) return this.volumes[roundVol];
 
       let newNode = this.createGain();
-      newNode.connect(this.masterGainNode);
+      newNode.connect(masterGainNode);
 
       newNode.gain.value = vol;
       this.volumes[roundVol] = newNode;
@@ -704,11 +709,11 @@
     }
 
     set volume(vol) {
-      this.audio.masterGainNode.gain.value = vol;
+      this.audio.gainNode.gain.value = vol;
     }
 
     get volume() {
-      return this.audio.masterGainNode.gain.value;
+      return this.audio.gainNode.gain.value;
     }
 
     mute() {
@@ -819,6 +824,8 @@
   exports.SimpleLoop = SimpleLoop;
   exports.AutomationTrack = AutomationTrack;
   exports.TimeSignature = TimeSignature;
+  exports.context = context;
+  exports.masterGainNode = masterGainNode;
   exports.utils = utils;
   exports.MAXPLAYING = MAXPLAYING;
   exports.RESOLUTION = RESOLUTION;
