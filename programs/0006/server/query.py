@@ -17,7 +17,6 @@ except:
     print "Error in os.system call"
     sys.exit()
 
-
 if len(sys.argv) < 1:
     sys.exit()
 
@@ -31,6 +30,7 @@ time.sleep(0.1)
 
 k = open(results, "r")
 l = k.read().split("\n")
+print l
 k.close()
 
 for i in l:
