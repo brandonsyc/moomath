@@ -17,11 +17,19 @@ inline bool exists(const std::string &name) {
 }
 
 int main(int argc, char **argv) {
-
   std::streampos size;
   char *memblock;
 
-  std::ifstream file("astJ2000.bin",
+  #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+  static const char slash = '\\';
+  #else
+  static const char slash = '/';
+  #endif
+
+  std::string file_path = __FILE__;
+  std::string dir_path = /* __FILE__REPLACE__ */ file_path.substr(0, file_path.rfind(slash));
+
+  std::ifstream file(dir_path + "astJ2000.bin",
                      std::ios::in | std::ios::binary | std::ios::ate);
   if (file.is_open()) {
     size = file.tellg();
@@ -33,14 +41,14 @@ int main(int argc, char **argv) {
     std::cout << "Unable to open file";
   }
 
-  const std::string queryPath = "needed.txt";
-	const std::string outputPath = "searchResults.txt";
+  const std::string queryPath = dir_path + "needed.txt";
+	const std::string outputPath = dir_path + "searchResults.txt";
 
   std::remove(queryPath.c_str());
   std::remove(outputPath.c_str());
 
   while (true) {
-    if (exists(queryPath)) {
+    if (exists(queryPath.c_str())) {
       std::ifstream searches;
       searches.open(queryPath);
 
