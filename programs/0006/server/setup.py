@@ -23,7 +23,7 @@ else
     echo "1"
 fi""").read())
     if p:
-        os.system("sh setupSearch.sh")
+        os.system("sh %ssetupSearch.sh" % dir_path)
         time.sleep(0.2)
 except OSError:
     print "Error in os.system call"
