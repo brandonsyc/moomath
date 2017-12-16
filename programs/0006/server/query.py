@@ -16,6 +16,7 @@ time.sleep(0.1)
 
 k = open(results, "r")
 l = k.read().split("\n")
+print l
 k.close()
 
 for i in l:
