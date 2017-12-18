@@ -63,7 +63,7 @@ var grid = {
   alignGridToTarget: true,
   alignGridColor: "#777777"
 };
-F
+
 var audio = {
   music: document.getElementById("music"),
   boop1: new Audio('sounds/boop.mp3'),
