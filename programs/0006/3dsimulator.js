@@ -63,7 +63,7 @@ var grid = {
   alignGridToTarget: true,
   alignGridColor: "#777777"
 };
-
+F
 var audio = {
   music: document.getElementById("music"),
   boop1: new Audio('sounds/boop.mp3'),
@@ -1240,7 +1240,7 @@ function setCameraPositionFromOffsets() {
 function lockBodyOnWheel(event) {
   event.preventDefault();
 
-  if ((1 + event.deltaY / 100) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
+  if ((1 + event.deltaY / 250) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
     return;
   }
 
