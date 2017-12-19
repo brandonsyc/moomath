@@ -236,12 +236,16 @@ a.icon {
 	text-align: center;
 	padding: 50px 25px;
 	width: 100%;
+	align-items: center;
 }
 .layer h1 {
 	color: #eee;
 }
 .layer p {
 	color: #eee;
+	max-width: 750px;
+	text-align: left;
+	margin: auto auto;
 }
 .source-link {
 	max-width: 300px;
