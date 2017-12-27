@@ -33,10 +33,10 @@ var htmlBottom = '<div class="footer">' +
 	'<p><a href="#top"><strong>Go to Top</strong></a><br>' +
 	'&copy; 2017 &ndash; ' + new Date().getFullYear() + ' <a href="https://github.com/anematode" target="_blank">anematode</a> & <a href="https://github.com/Nichodon" target="_blank">Nichodon</a><br>' +
 	'Contact: <a href="mailto:timothy.herchen@gmail.com?Subject=Moomath">timothy.herchen@gmail.com</a><br>' +
-	'<a href="https://nichodon.github.io/sitemap">Sitemap</a> &ndash; ';
+	'<a href="https://nichodon.github.io/sitemap">Sitemap</a>';
 
 if (typeof HIDE_SOURCE_LINK_ === 'undefined') {
-	htmlBottom += '<a href="https://github.com/Nichodon/nichodon.github.io/blob/master' + document.location.pathname + 'index.html">Source</a>'
+	htmlBottom += ' &ndash; <a href="https://github.com/Nichodon/nichodon.github.io/blob/master' + document.location.pathname + 'index.html">Source</a>'
 }
 
 htmlBottom += '</p></div>'
