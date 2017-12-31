@@ -1240,7 +1240,7 @@ function setCameraPositionFromOffsets() {
 function lockBodyOnWheel(event) {
   event.preventDefault();
 
-  if ((1 + event.deltaY / 100) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
+  if ((1 + event.deltaY / 250) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
     return;
   }
 
@@ -1697,7 +1697,7 @@ function searchBody(bodyName) {
   }
 
   searchRequest = new XMLHttpRequest();
-  searchRequest.open("GET", "http://moomath.com/programs/0006/server/searchAsteroids.php?" +
+  searchRequest.open("GET", "https://moomath.com/programs/0006/server/searchAsteroids.php?" +
     modifiedQuery, true);
 
   searchRequest.onload = function(self, oEvent) {

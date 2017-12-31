@@ -1,6 +1,7 @@
 Unit Converter – 17 June, 2017 – Nichodon
-Polyrhythm Player – 19 June, 2017 – anematode & Nichodon
+Polyrhythm Player – 19 June, 2017 – anematode
 Time Signature Metronome – 21 June, 2017 – anematode
 Chord Recognizer – 26 June, 2017 – Nichodon
-Planet Simulator – 29 June, 2017 – anematode & Nichodon
+Planet Simulator – 29 June, 2017 – Nichodon
 3D Solar System Simulator – 12 July, 2017 – anematode & Nichodon
+Brainf*ck Interpreter – 26 August, 2017 – anematode

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<style>
+		/* Not proud to use style tag but too lazy to make an external at the moment */
+		span::selection {
+			background: none;
+		}
+	</style>
+<meta charset="utf-8">
+<title>Whups!</title>
+<link rel="stylesheet" type="text/css" href="https://nichodon.github.io/styles.css">
+<link rel="icon" href="https://nichodon.github.io/images/favicon.png" sizes="16x16" type="image/png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<script src="https://nichodon.github.io/images/moo.js"></script>
+<div id="top"></div>
+
+<div class="content">
+<h1><span onClick="cow()" style="z-index: 100; position: relative;">500</span> Internal Server Error</h1>
+</div>
+
+<div id="bottom"></div>
+
+<script src="https://nichodon.github.io/frame.js"></script>
+
+<script>
+    var p = document.createElement("P");
+    var node = document.createTextNode("The page " + window.location.href.replace("https://nichodon.github.io/", "") + " caused an internal server error! Please contact us if you think this is an error.");
+    p.appendChild(node);
+    document.getElementsByClassName("content")[0].appendChild(p);
+</script>
+
+</body>
+</html>
