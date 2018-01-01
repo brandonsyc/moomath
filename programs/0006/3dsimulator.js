@@ -1240,7 +1240,7 @@ function setCameraPositionFromOffsets() {
 function lockBodyOnWheel(event) {
   event.preventDefault();
 
-  if ((1 + event.deltaY / 100) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
+  if ((1 + event.deltaY / 250) * ctrlS.lockBOR < 1.2 * objs[focusBody].radius) {
     return;
   }
 

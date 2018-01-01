@@ -45,3 +45,5 @@ function cow() {
 		span.innerHTML = "Moo!";
 	}
 }
+
+var HIDE_SOURCE_LINK_ = true;
