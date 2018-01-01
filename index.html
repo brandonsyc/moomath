@@ -18,32 +18,36 @@
 	</div>
 </div>
 
-<div class="parallax" style="background-image: url(images/fractal.jpg);">
-	<div class="layer">
+<div class="parallax">
+	<div class="screen"></div>
+	<div class="layer" style="background-image: url(images/fractal.jpg);">
 		<h1>Featured Math Article</h1>
 		<p><strong>Base-Motif Fractals</strong><br>A Base-Motif Fractal is a self-similar shape, or fractal, determined by two shapes: a base curve, and a motif. The base curve is not a "curve" in the ordinary sense of a curve; in fact, it is composed of straight lines. To produce the associated fractal, we translate, rotate, and scale the motif, also composed of straight lines, and replace each of the lines in the base curve with a transformed, but geometrically similar, motif. We do the same thing with the resulting curve, again and again, to infinity. Let's see this process&hellip;</p>
-		<button onclick="location.href='fractals/0003'">Read More</button>
+		<button onclick="location.href='fractals/0003'">Read More</button><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	</div>
 </div>
 
-<div class="parallax" style="background-image: url(images/green.png);">
-	<div class="layer">
+<div class="parallax">
+	<div class="screen"></div>
+	<div class="layer" style="background-image: url(images/green.png);">
 		<h1>Featured Music Article</h1>
 		<p><strong>Time Signature Metronome</strong><br>This online metronome has the ability to play any time signature. Its capabilities include having different polymeters, different measures, and swung eighth notes.</p>
 		<button onclick="location.href='programs/0003'">To Program</button>
 	</div>
 </div>
 
-<div class="parallax" style="background-image: url(images/team.jpg);">
-	<div class="layer">
+<div class="parallax">
+	<div class="screen"></div>
+	<div class="layer" style="background-image: url(images/team.jpg);">
 		<h1>Contribute!</h1>
 		<p>We would love if you want to contribute an article! You don't have to be an excellent programmer; novel ideas are appreciated. If you'd actually like to write or fix some code, please fork this the repository and make a pull request.</p>
 		<button onclick="location.href='https://github.com/Nichodon/nichodon.github.io'">Repository</button>
 	</div>
 </div>
 
-<div class="parallax" style="background-image: url(programs/0006/images/marsTexture.jpg);">
-	<div class="layer">
+<div class="parallax">
+	<div class="screen"></div>
+	<div class="layer" style="background-image: url(programs/0006/images/marsTexture.jpg);">
 		<h1>Who We Are</h1>
 		<p>In this website, we post articles on various cool math things. We're two high school freshmen who share a love of programming, music, math, and, well, anything nerdy and our goal for this website is to provide nice visualizations for math and computer science. We wish to feature unique projects that no one else has done. </p>
 		<button onclick="location.href='about/'">About Us</button>
@@ -69,29 +73,30 @@
 	gif.childNodes[1].style.transform = "translate(0%, 50%)";
 	gif.childNodes[3].style.transform = "translate(0%, -10%)";
 	gif.childNodes[3].style.transition = "0.2s";
+	
+	var parallax = document.getElementsByClassName("parallax");
 
 	window.onscroll = function() {
 		sticky.style.display = "inline";
 		var rate = window.scrollY * 25 / gif.offsetHeight;
 		gif.style.transform = "translate(0%, " + rate + "%)";
-		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
-		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
-
-		var parallax = document.getElementsByClassName("parallax");
+		
 		for (var i = 0; i < parallax.length; i++) {
-			var p = document.getElementsByClassName("parallax")[i];
-			var percent = 10 * (p.getBoundingClientRect().top + p.clientHeight) / (document.body.clientHeight + p.clientHeight) + 100;
-			var imageSrc = p.style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
+			var p = parallax[i];
+			var imageSrc = p.children[1].style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
 			var image = new Image();
 			image.src = imageSrc;
 			var imgc = image.height / image.width;
 			var winc = window.innerHeight / window.innerWidth;
-			if (winc > imgc) {
-				p.style.backgroundSize = "auto " + percent + "%";
+			if (winc < imgc) {
+				p.children[1].style.backgroundSize = "auto 100%";
 			} else {
-				p.style.backgroundSize = percent + "% auto";
+				p.children[1].style.backgroundSize = "100% auto";
 			}
 		}
+		
+		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
+		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
 
 		if (window.scrollY === 0) {
 			gif.childNodes[3].style.opacity = 1;
