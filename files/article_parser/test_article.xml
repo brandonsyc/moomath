@@ -11,11 +11,11 @@
       <title>Are you Ready?</title>
 
       <content>
-        <p>tl; dr: I expect you to have programmed before in another, imperative (i.e. not functional) language. I also expect you to know the very basics of the command line (how to open it on your computer, and the cd command). Finally, I expect you to
-          understand binary and hexadecimal notation: though you don't have to be able to read it quickly!</p>
+        <p><b>tl; dr</b>: I expect you to have programmed before in another, <vocab>imperative</vocab> (not <vocab>functional</vocab>) language. I also expect you to know the very basics of the <vocab>command line</vocab> (how to open it on your computer, and the <vocab>cd</vocab> command). Finally, I expect you to
+          understand <vocab>binary</vocab> and <vocab>hexadecimal</vocab> notation: though you don't have to be able to read it quickly!</p>
 
         <p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably object-oriented (OO) and
-          imperative: either a primarily scripting language like JS or Python, or a more heavyweight language like Java or C#. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
+          imperative: either a primarily scripting language like <vocab>JS</vocab> or <vocab>Python</vocab>, or a more heavyweight language like <vocab>Java</vocab> or <vocab>C#</vocab>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
           functions, etc. which are ubiquitous in almost all such programming languages will not be explained beyond features and characteristics specific to C++.</p>
 
         <p>When discussing first languages with people who haven’t programmed before, I typically recommend a language like Python or Ruby: high-level languages that are not so “close to the metal,” but close to the way us humans think. With a little
@@ -25,11 +25,11 @@
           particular, so don’t take my complaints about it seriously, but functional programming requires such a different thinking paradigm than imperative programming that you might find some very standard implementation in imperative languages unnatural.
           This is not to degrade the importance and beauty of functional programming, but to point out that it is very different.</p>
 
-        <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait and gather more experience. A language may have certain syntax or “looks,” but syntax is only a part of what makes a language useful,
-          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like C. A language comes shipped not just with a different appearance, but with
+        <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait and gather more experience. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful,
+          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <vocab>C</vocab>. A language comes shipped not just with a different appearance, but with
           different conventions, structure, and thinking paradigm.</p>
 
-        <p>As to more specific requirements, I expect you to know how to navigate folders using the command line on your system (i.e. knowing cd), as well as understand binary. Both of these are relatively easy to pick up.</p>
+        <p>As to more specific requirements, I expect you to know how to navigate folders using the <vocab>command line</vocab> on your system (i.e. knowing <vocab>cd</vocab>), as well as understand <vocab>binary</vocab> and <vocab>hexadecimal</vocab>. Both of these are relatively easy to pick up.</p>
       </content>
     </section>
 
@@ -37,14 +37,14 @@
       <title>Do You Need This?</title>
 
       <content>
-        <p>tl; dr: If you're already comfortable with all commonly-used features of C++, this is not for you, though you may find some parts of it entertaining.</p>
+        <p><b>tl; dr</b>: If you're already comfortable with all commonly-used features of C++, this is not for you, though you may find some parts of it entertaining.</p>
 
         <p>I’m not a professional developer by any means, just another nerdy teenager interested in programming and how computers work. I’m not trained as a teacher, either.</p>
 
         <p>So why am I writing this, you might ask? There is no lack of quality textbooks for C++, after all. Well, looking at online tutorials for C++, I find a few issues that really impede an interested programmer from learning the language for use. The
           vast majority of online tutorials teach C++ as either
 
-          <list enumerate="number">
+          <list enum="number">
             <item>A small, perhaps even only syntactic extension of C</item>
             <item>A purely object-oriented language like Java, where almost every concept is represented as an object</item>
           </list>
@@ -59,7 +59,7 @@
           because this gives me a unique perspective on the language: unlike a newbie, I’m not completely clueless, but unlike a seasoned developer, I do not explain concepts to a beginner in a way that takes an unnecessarily high-level view of a subject.
           Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
 
-        <p>If you already are an experienced C++ programmer comfortable with types and templates and throw and such things, this is not for you. In fact, you’re probably already a better programmer than I am.</p>
+        <p>If you already are an experienced C++ programmer comfortable with types and templates and <inl>throw</inl> and such things, this is not for you. In fact, you’re probably already a better programmer than I am.</p>
 
       </content>
     </section>
@@ -67,25 +67,25 @@
     <section>
       <title>Are You Interested?</title>
       <content>
-        <p>tl; dr: C++ was designed for high-performance situations and large codebases, not for quick and dirty scripts. If you are interested in writing highly performant programs, you might enjoy learning C++.</p>
+        <p><b>tl; dr</b>: C++ was designed more for high-performance situations and large codebases, not for quick and dirty scripts. If you are interested in writing highly performant programs, you might enjoy learning C++.</p>
 
         <p>Assuming you didn’t skip here, the fact that you read this far seems to me that you might be interested. C++ is an amazingly powerful language, an elegant combination of both low-level performance and high-level abstraction, but it takes a while
           to get used to.</p>
 
-        <p>It is no secret that developing good code in C++ takes more time than developing in related languages. This is because there is a lot less fluff separating you, the programmer, from the machine, your computer’s processor(s). C++ particularly
+        <p>It is no secret that developing good code in C++ can <link to="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.113.1831&amp;rep=rep1&amp;type=pdf#page=6">take more time</link> than developing in other languages, especially scripting languages. This is because there is a lot less fluff separating you, the programmer, from the machine, your computer’s processor(s). Consequently, C++ particularly
           excels in situations where you</p>
 
-        <list enumerate="lowercase">
+        <list enum="lowercase">
           <item>want to maximize performance</item>
-          <item>are working with small amounts of processing power and/or RAM</item>
+          <item>are working with small amounts of processing power and/or <vocab>RAM</vocab></item>
           <item>work with large amounts of data</item>
         </list>
 
         <p>among others. If you’re just writing quick and dirty scripts to process text or something, then C++ probably isn’t for you; some people just find C++ too complex a language for their little code snippets. In large codebases or programs that need
           good performance, however, C++ can work wonders.</p>
 
-        <p>If C++ is too complicated for you to grasp now and you’d like to try a language with similar performance benefits, you can try C, which is by and large a subset of C++, or try newer OO languages inspired by C++ like D (such a creative name) or
-          Rust. C, of course, is extremely popular, but not always as scalable as C++. I know nothing about D, but it doesn’t seem that popular, probably for reasons of C++'s historicity. Though I've personally never really looked into it (and I probably
+        <p>If C++ is too complicated for you to grasp now and you’d like to try a language with similar performance benefits, you can try C, which is by and large a subset of C++, or try newer OO languages inspired by C++ like <link to="https://dlang.org/">D</link> (such a creative name) or
+          <link to="https://www.rust-lang.org/en-US/">Rust</link>. C, of course, is extremely popular, but not always as scalable as C++. I know nothing about D, but it doesn’t seem that popular, probably for reasons of C++'s historicity. Though I've personally never really looked into it (and I probably
           should), from what I've seen Rust seems quite a wonderful language with performance benefits comparable to C++. It is relatively new and not yet that mature, but perhaps in the future we’ll see entire operating systems being written in Rust!</p>
 
         <p>If you’re still excited to learn C++, let’s dive in!</p>
