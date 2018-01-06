@@ -43,7 +43,7 @@ function lpF() {
       lastPXTime = Date.now();
     }
   } else {
-    if (mX < window.innerWidth / 10) {
+    if (mX < window.innerWidth / 10 && mY > window.innerHeight / 4) {
       if (Date.now() > lastPXTime + 200) {
         inSidebar = true;
         document.getElementById("sidebar").className += " use";
@@ -58,8 +58,8 @@ function lpF() {
 var mX = 1000, mY = 0;
 
 function mPL(e) {
-mX = e.pageX;
-mY = e.pageY;
+mX = e.clientX;
+mY = e.clientY;
 }
 
 document.addEventListener("mousemove", mPL);
@@ -73,7 +73,12 @@ setInterval(lpF, 20);
 Preface
 <ul><li class="t-elem" udderref="b"><b>0.0</b>: Are you Ready?</li>
 <li class="t-elem" udderref="c"><b>0.1</b>: Do You Need This?</li>
-<li class="t-elem" udderref="d"><b>0.2</b>: Are You Interested?</li></li></ul> <!-- end tree -->
+<li class="t-elem" udderref="d"><b>0.2</b>: Are You Interested?</li></ul></li>
+<li class="t-elem" udderref="e"><b>1</b>:
+Udder
+<ul><li class="t-elem" udderref="f"><b>1.0</b>: Cow</li>
+<li class="t-elem" udderref="g"><b>1.1</b>: Mask</li>
+<li class="t-elem" udderref="h"><b>1.2</b>: Teat</li></ul></li></ul> <!-- end tree -->
 </div>
 
 <div class="content-c" id="content-c">
@@ -96,16 +101,25 @@ Preface
 <script>;
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script></script>
 <!-- End header scripts --><h1 id='a' style="padding-top: 80px; margin-top: -80px;">0: Preface</h1>
 <div class="content"><p>This section tries to help you figure out whether this tutorial is right for you.</p></div><h2 id='b' style="padding-top: 80px; margin-top: -80px;">0.0: Are you Ready?</h2>
 <div class="content">
-<p><b>tl; dr</b>: I expect you to have programmed before in another, <a arrow="true" delay="200" href="javascript:void(0);" id="f_PU3zHYE7vf" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a> (not <a arrow="true" delay="200" href="javascript:void(0);" id="f_eKJ3BwPSce" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the <a arrow="true" delay="200" href="javascript:void(0);" id="f_oWox7jH2Tr" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> (how to open it on your computer, and the <a arrow="true" delay="200" href="javascript:void(0);" id="f_r3uOSwrjrg" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a> command). Finally, I expect you to
-          understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_yqiww7tA29" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_IAAZyDONjw" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation: though you don't have to be able to read it quickly!</p>
+<p><b>tl; dr</b>: I expect you to have programmed before in another, <a arrow="true" delay="200" href="javascript:void(0);" id="f_EsAuYKZXde" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a> (not <a arrow="true" delay="200" href="javascript:void(0);" id="f_4KLH6kwYpg" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the <a arrow="true" delay="200" href="javascript:void(0);" id="f_hoSp5aOVMj" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> (how to open it on your computer, and the <a arrow="true" delay="200" href="javascript:void(0);" id="f_3EXiQOa5j1" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a> command). Finally, I expect you to
+          understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_gj6IhiXAcM" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_5NByi8av90" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation: though you don't have to be able to read it quickly!</p>
 
         
 <p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably object-oriented (OO) and
-          imperative: either a primarily scripting language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_M3NI2nAimL" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_MLLW01Vz9V" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_qwhiYdnWFZ" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_NWeN0W6eem" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
+          imperative: either a primarily scripting language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_VxXEh7VKHl" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_0rgiHCTSOK" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_OuZrPJCSjq" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_XhGFEl216y" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
           functions, etc. which are ubiquitous in almost all such programming languages will not be explained beyond features and characteristics specific to C++.</p>
 
         
@@ -119,11 +133,11 @@ Preface
 
         
 <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait and gather more experience. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful,
-          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <a arrow="true" delay="200" href="javascript:void(0);" id="f_34EbNfJ8fB" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with
+          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <a arrow="true" delay="200" href="javascript:void(0);" id="f_1Pabn9osE8" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with
           different conventions, structure, and thinking paradigm.</p>
 
         
-<p>As to more specific requirements, I expect you to know how to navigate folders using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_QGADeEWb0W" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> on your system (i.e. knowing <a arrow="true" delay="200" href="javascript:void(0);" id="f_YgeKGiBrRD" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_FvjHqQc1gY" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_4I8HLiNTjx" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
+<p>As to more specific requirements, I expect you to know how to navigate folders using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_s0L0xB0YVT" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> on your system (i.e. knowing <a arrow="true" delay="200" href="javascript:void(0);" id="f_HtxSO5kdVc" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_Jq3stTkVL7" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_G2sGt5Gw8C" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
       
 </div>
 
@@ -156,7 +170,7 @@ Preface
           Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
 
         
-<p>If you already are an experienced C++ programmer comfortable with types and templates and <span class="cpp inline-code" id="f_LGxdJlKqHR">throw</span> and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
+<p>If you already are an experienced C++ programmer comfortable with types and templates and <span class="cpp inline-code" id="f_r1Dae5yClX">throw</span> and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
 
       
 </div>
@@ -176,7 +190,7 @@ Preface
         
 <ol type="a">
           <li>want to maximize performance</li>
-          <li>are working with small amounts of processing power and/or <a arrow="true" delay="200" href="javascript:void(0);" id="f_mHrRhvE0Z7" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a></li>
+          <li>are working with small amounts of processing power and/or <a arrow="true" delay="200" href="javascript:void(0);" id="f_lzgR9m6k1M" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a></li>
           <li>work with large amounts of data</li>
         </ol>
 
@@ -193,9 +207,9 @@ Preface
 <p>If you&#8217;re still excited to learn C++, let&#8217;s dive in!</p>
 
         
-<div class="tab-system" id="f_oCcK4hsq5q" style=";max-height: 750px;">
-          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_6TIzIwSKp4', 'f_oCcK4hsq5q')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_8i6TkboFNi', 'f_oCcK4hsq5q')">Python</button></div><div class="tab-content" id="f_6TIzIwSKp4">
-            <div class="code-cf" id="f_FSudoccG7k">
+<div class="tab-system" id="f_5Ra24XjPco" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_VerrpLjPj6', 'f_5Ra24XjPco')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_EM1VoYcVB7', 'f_5Ra24XjPco')">Python</button></div><div class="tab-content" id="f_VerrpLjPj6">
+            <div class="code-cf" id="f_xTccNvpLQk">
               
 #include &lt;iostream&gt; <br />
  <br />
@@ -212,8 +226,8 @@ int main() { <br />
 
             </div>
           </div>
-          <div class="tab-content" id="f_8i6TkboFNi">
-            <div class="code-cf" id="f_223rHeF6lK">
+          <div class="tab-content" id="f_EM1VoYcVB7">
+            <div class="code-cf" id="f_BGycP7IizF">
               
 print "Hello World!" <br />
 
@@ -223,28 +237,181 @@ print "Hello World!" <br />
         </div>
       
 </div>
+<h1 id='e' style="padding-top: 80px; margin-top: -80px;">1: Udder</h1>
+<div class="content"><p>This section tries to help you figure out whether this tutorial is right for you.</p></div><h2 id='f' style="padding-top: 80px; margin-top: -80px;">1.0: Cow</h2>
+<div class="content">
+<p><b>tl; dr</b>: I expect you to have programmed before in another, <a arrow="true" delay="200" href="javascript:void(0);" id="f_iNBptAn7fE" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a> (not <a arrow="true" delay="200" href="javascript:void(0);" id="f_EKPbK47gMJ" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the <a arrow="true" delay="200" href="javascript:void(0);" id="f_l4q7TE8NG6" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> (how to open it on your computer, and the <a arrow="true" delay="200" href="javascript:void(0);" id="f_49aPFldZjG" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a> command). Finally, I expect you to
+          understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_nzLV6JfQ23" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_wP6kJSoOTl" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation: though you don't have to be able to read it quickly!</p>
+
+        
+<p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably object-oriented (OO) and
+          imperative: either a primarily scripting language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_obaS0iOd0x" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_9rhpzWLCwo" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_E35NQcMoFA" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_iL7akr77u3" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
+          functions, etc. which are ubiquitous in almost all such programming languages will not be explained beyond features and characteristics specific to C++.</p>
+
+        
+<p>When discussing first languages with people who haven&#8217;t programmed before, I typically recommend a language like Python or Ruby: high-level languages that are not so &#8220;close to the metal,&#8221; but close to the way us humans think. With a little
+          explanation, even a non-programmer can, perhaps with some difficulty, read basic Python code. I find that C++, on the other hand, is one of those languages whose syntax takes more getting used to.</p>
+
+        
+<p>Experience solely in languages that are not imperative &#8211; like Scheme, which unfortunately seems to be the most popular language in high-school classes &#8211; most likely will not be helpful. I&#8217;m known to have quite the bias against Scheme in
+          particular, so don&#8217;t take my complaints about it seriously, but functional programming requires such a different thinking paradigm than imperative programming that you might find some very standard implementation in imperative languages unnatural.
+          This is not to degrade the importance and beauty of functional programming, but to point out that it is very different.</p>
+
+        
+<p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait and gather more experience. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful,
+          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <a arrow="true" delay="200" href="javascript:void(0);" id="f_XQoboWPsfx" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with
+          different conventions, structure, and thinking paradigm.</p>
+
+        
+<p>As to more specific requirements, I expect you to know how to navigate folders using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_UY3S36rCQd" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> on your system (i.e. knowing <a arrow="true" delay="200" href="javascript:void(0);" id="f_dNZdXM5bzj" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_9N5zgH8Uqv" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_r9yRFbAN3V" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
+      
+</div>
+
+<h2 id='g' style="padding-top: 80px; margin-top: -80px;">1.1: Mask</h2>
+<div class="content">
+<p><b>tl; dr</b>: If you're already comfortable with all commonly-used features of C++, this is not for you, though you may find some parts of it entertaining.</p>
+
+        
+<p>I&#8217;m not a professional developer by any means, just another nerdy teenager interested in programming and how computers work. I&#8217;m not trained as a teacher, either.</p>
+
+        
+<p>So why am I writing this, you might ask? There is no lack of quality textbooks for C++, after all. Well, looking at online tutorials for C++, I find a few issues that really impede an interested programmer from learning the language for use. The
+          vast majority of online tutorials teach C++ as either
+
+          <ol type="1">
+            <li>A small, perhaps even only syntactic extension of C</li>
+            <li>A purely object-oriented language like Java, where almost every concept is represented as an object</li>
+          </ol>
+
+        </p>
+
+        
+<p>I think the problem with teaching these two ways of thought is not that their style is necessarily factually incorrect, per se, but that they are not taking full advantage of C++. As far as languages go, C++ is enormously complex and powerful, but
+          with that complexity and power comes the power to mess up in unobvious ways. This, combined with the fact that most of these tutorials attempt to teach from the most basic grounds of programming up, makes fully teaching the language difficult. Once
+          you have learned it, however, you can see the beauties of its design.</p>
+
+        
+<p>I don&#8217;t know and do not profess to know all of C++&#8217;s features; this takes many years of learning and usage. I do profess, however, the understanding of how it works and how to write mediocre-quality code in it. I write this now rather than later
+          because this gives me a unique perspective on the language: unlike a newbie, I&#8217;m not completely clueless, but unlike a seasoned developer, I do not explain concepts to a beginner in a way that takes an unnecessarily high-level view of a subject.
+          Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
+
+        
+<p>If you already are an experienced C++ programmer comfortable with types and templates and <span class="cpp inline-code" id="f_yUhRiMXml2">throw</span> and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
+
+      
+</div>
+
+<h2 id='h' style="padding-top: 80px; margin-top: -80px;">1.2: Teat</h2>
+<div class="content">
+<p><b>tl; dr</b>: C++ was designed more for high-performance situations and large codebases, not for quick and dirty scripts. If you are interested in writing highly performant programs, you might enjoy learning C++.</p>
+
+        
+<p>Assuming you didn&#8217;t skip here, the fact that you read this far seems to me that you might be interested. C++ is an amazingly powerful language, an elegant combination of both low-level performance and high-level abstraction, but it takes a while
+          to get used to.</p>
+
+        
+<p>It is no secret that developing good code in C++ can <a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.113.1831&amp;rep=rep1&amp;type=pdf#page=6" target="_blank">take more time</a> than developing in other languages, especially scripting languages. This is because there is a lot less fluff separating you, the programmer, from the machine, your computer&#8217;s processor(s). Consequently, C++ particularly
+          excels in situations where you</p>
+
+        
+<ol type="a">
+          <li>want to maximize performance</li>
+          <li>are working with small amounts of processing power and/or <a arrow="true" delay="200" href="javascript:void(0);" id="f_mNQYsWWSC9" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a></li>
+          <li>work with large amounts of data</li>
+        </ol>
+
+        
+<p>among others. If you&#8217;re just writing quick and dirty scripts to process text or something, then C++ probably isn&#8217;t for you; some people just find C++ too complex a language for their little code snippets. In large codebases or programs that need
+          good performance, however, C++ can work wonders.</p>
+
+        
+<p>If C++ is too complicated for you to grasp now and you&#8217;d like to try a language with similar performance benefits, you can try C, which is by and large a subset of C++, or try newer OO languages inspired by C++ like <a href="https://dlang.org/" target="_blank">D</a> (such a creative name) or
+          <a href="https://www.rust-lang.org/en-US/" target="_blank">Rust</a>. C, of course, is extremely popular, but not always as scalable as C++. I know nothing about D, but it doesn&#8217;t seem that popular, probably for reasons of C++'s historicity. Though I've personally never really looked into it (and I probably
+          should), from what I've seen Rust seems quite a wonderful language with performance benefits comparable to C++. It is relatively new and not yet that mature, but perhaps in the future we&#8217;ll see entire operating systems being written in Rust!</p>
+
+        
+<p>If you&#8217;re still excited to learn C++, let&#8217;s dive in!</p>
+
+        
+<div class="tab-system" id="f_ZgjfDnVny5" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_JY8DnNWAwK', 'f_ZgjfDnVny5')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_TW8URoQ7Mo', 'f_ZgjfDnVny5')">Python</button></div><div class="tab-content" id="f_JY8DnNWAwK">
+            <div class="code-cf" id="f_MsYfpXcWuv">
+              
+#include &lt;iostream&gt; <br />
+ <br />
+int main() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; "Hello, World!\n"; <br />
+ <br />
+&nbsp;&nbsp;&nbsp;&nbsp;int x = 4; <br />
+ <br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (x &lt;= 5) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; "Yay"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;} <br />
+} <br />
+
+
+            </div>
+          </div>
+          <div class="tab-content" id="f_TW8URoQ7Mo">
+            <div class="code-cf" id="f_BNRMlOXmEA">
+              
+print "Hello World!" <br />
+
+
+            </div>
+          </div>
+        </div>
+
+        
+<figure>
+          <image alt="Yay" src="IMG_0479.jpg" width="300" />
+
+          <figcaption>Yes</figcaption>
+        </figure>
+      
+</div>
 
 <!-- Begin footer scripts -->
-<script>;tippy('#f_PU3zHYE7vf', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_eKJ3BwPSce', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_oWox7jH2Tr', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_r3uOSwrjrg', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_yqiww7tA29', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_IAAZyDONjw', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_M3NI2nAimL', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_MLLW01Vz9V', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_qwhiYdnWFZ', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_NWeN0W6eem', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_34EbNfJ8fB', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_QGADeEWb0W', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_YgeKGiBrRD', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_FvjHqQc1gY', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_4I8HLiNTjx', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_LGxdJlKqHR"));;
-;tippy('#f_mHrRhvE0Z7', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_FSudoccG7k"));;
-;hljs.highlightBlock(document.getElementById("f_223rHeF6lK"));;
-;document.getElementById("f_oCcK4hsq5q").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_oCcK4hsq5q").getElementsByClassName("tablinks")[0].className+=" active-f";</script>
+<script>;tippy('#f_EsAuYKZXde', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_4KLH6kwYpg', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_hoSp5aOVMj', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_3EXiQOa5j1', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_gj6IhiXAcM', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_5NByi8av90', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_VxXEh7VKHl', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_0rgiHCTSOK', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_OuZrPJCSjq', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_XhGFEl216y', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_1Pabn9osE8', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_s0L0xB0YVT', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_HtxSO5kdVc', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_Jq3stTkVL7', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_G2sGt5Gw8C', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_r1Dae5yClX"));;
+;tippy('#f_lzgR9m6k1M', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_xTccNvpLQk"));;
+;hljs.highlightBlock(document.getElementById("f_BGycP7IizF"));;
+;document.getElementById("f_5Ra24XjPco").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_5Ra24XjPco").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;tippy('#f_iNBptAn7fE', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_EKPbK47gMJ', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_l4q7TE8NG6', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_49aPFldZjG', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_nzLV6JfQ23', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_wP6kJSoOTl', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_obaS0iOd0x', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_9rhpzWLCwo', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_E35NQcMoFA', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_iL7akr77u3', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_XQoboWPsfx', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_UY3S36rCQd', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_dNZdXM5bzj', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_9N5zgH8Uqv', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_r9yRFbAN3V', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_yUhRiMXml2"));;
+;tippy('#f_mNQYsWWSC9', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_MsYfpXcWuv"));;
+;hljs.highlightBlock(document.getElementById("f_BNRMlOXmEA"));;
+;document.getElementById("f_ZgjfDnVny5").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_ZgjfDnVny5").getElementsByClassName("tablinks")[0].className+=" active-f";</script>
 <!-- End footer scripts -->
 
 

@@ -68,3 +68,10 @@ switch: A statement which, given an input, jumps to the corresponding case in co
 ofstream: A class in the standard library, found in #include <fstream>, allowing output to a file from a program.
 ifstream: A class in the standard library, found in #include <fstream>, allowing input from a file to a program.
 RAM: Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD
+pointer: A variable storing the position of another variable in memory.
+object-oriented: A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of "classes."
+object oriented: A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of "classes."
+segmentation fault: An error occurring when a program attempts to access an invalid or disallowed portion of memory.
+seg fault: An error occurring when a program attempts to access an invalid or disallowed portion of memory.
+multithreading: A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.
+executable: A file directly runnable by the computer, requiring no further interpretation.
