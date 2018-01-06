@@ -40,7 +40,7 @@ var lastPXTime = Date.now();
 var delay = 200;
 function lpF() {
   if (inSidebar) {
-    if (mX < window.innerWidth / 5) {
+    if (mX < window.innerWidth / 4) {
       lastPXTime = Date.now();
     }
 
@@ -51,7 +51,7 @@ function lpF() {
       lastPXTime = Date.now();
     }
   } else {
-    if (mX < window.innerWidth / 10) {
+    if (mX < window.innerWidth / 10 && mY > window.innerHeight / 4) {
       if (Date.now() > lastPXTime + 200) {
         inSidebar = true;
         document.getElementById("sidebar").className += " use";
@@ -66,8 +66,8 @@ function lpF() {
 var mX = 1000, mY = 0;
 
 function mPL(e) {
-mX = e.pageX;
-mY = e.pageY;
+mX = e.clientX;
+mY = e.clientY;
 }
 
 document.addEventListener("mousemove", mPL);
@@ -260,7 +260,7 @@ class Section:
         if self.hasChildren():
             header = "<b>%s</b>:\n%s\n<ul>"
             footer = "</ul>"
-            return header % (self.fullref, self.title.text) + "\n".join("""<li class="t-elem" udderref="%s">%s</li>""" % (hashID(s.fullref), s.generateSectionTree()) for s in self.children)
+            return header % (self.fullref, self.title.text) + "\n".join("""<li class="t-elem" udderref="%s">%s</li>""" % (hashID(s.fullref), s.generateSectionTree()) for s in self.children) + footer
         else:
             return '%s' % ("<b>%s</b>: %s" % (self.fullref, self.title.text))
 
@@ -441,9 +441,9 @@ class Article:
         return self.__str__()
 
 if __name__ == "__main__":
-    file_name = "test_article.xml"
-    vocab_name = "test_vocab.txt"
-    output_name = "test_output.html"
+    file_name = "cpp_article.xml"
+    vocab_name = "vocab.txt"
+    output_name = "output.html"
 
     article_reader = ArticleReader(file_name)
 

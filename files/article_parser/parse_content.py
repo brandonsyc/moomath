@@ -6,6 +6,10 @@ from xml.sax.saxutils import escape
 
 nilRef = "javascript:void(0);"
 
+tabSystemFile = "js/tab-system.js"
+tippyFile = "js/tippy.min.js"
+
+
 def generateTippyTooltipScript(result, attribs, thash):
     jsObject = ";tippy('#%s', {" % thash
 
@@ -29,7 +33,7 @@ def includeJSScriptGen(script_path):
     return """</script>\n<script src="%s"></script>\n<script>""" % script_path
 
 def addTabModule(article):
-    article.addHeaderScript(includeJSScriptGen("tab-system.js"))
+    article.addHeaderScript(includeJSScriptGen(tabSystemFile))
 
 def escapeJSScriptGen(contf):
     return """</script>\n%s\n<script>""" % contf
@@ -42,7 +46,7 @@ newlineInsert = randomObjHash() + randomObjHash()
 tabInsert = randomObjHash() + randomObjHash()
 
 def addTippyModule(article):
-    article.addHeaderScript(includeJSScriptGen("tippy.min.js"))
+    article.addHeaderScript(includeJSScriptGen(tippyFile))
 
 def addHighlighterModule(article):
     article.addHeaderScript(escapeJSScriptGen("""<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>"""))
@@ -50,6 +54,7 @@ def addHighlighterModule(article):
 def parseInlineCode(inline_code, article):
     if "hljs" not in article.opts:
         addHighlighterModule(article)
+        article.opts["hljs"] = True
 
     attrib = inline_code.attrib
 
@@ -59,9 +64,12 @@ def parseInlineCode(inline_code, article):
     article.addFooterScript(generateHLJSScript(attrib, attrib["id"]))
 
     if "lang" in attrib:
-        if "class" in attrib:
+        if "class" not in attrib:
             attrib["class"] = ""
-        attrib["class"] += attrib["lang"]
+        if attrib["lang"] == "none":
+            attrib["class"] += " nohighlight"
+        else:
+            attrib["class"] += " " + attrib["lang"]
         attrib.pop("lang", None)
 
     if "class" in attrib:
@@ -124,6 +132,12 @@ def parseTooltip(ref, article):
     article.addFooterScript(generateTippyTooltipScript(attrib["title"], attrib, thash))
 
     attrib["id"] = thash
+
+def parseText(ref, article):
+    ref.tag = "div"
+    ref.attrib["class"] = "code-cf"
+
+    return XMLtostr(ref)
 
 def parseTabSystem(ref, article):
     if "tabsystem" not in article.opts:
@@ -196,6 +210,8 @@ def parseInlineHTML(ref, article):
 def parseVocab(ref, article):
     attrib = ref.attrib
 
+    if "alias" in attrib:
+        attrib["title"] = article.findVocab(attrib["alias"])
     if "title" not in attrib:
         attrib["title"] = article.findVocab(ref.text)
 
@@ -221,17 +237,29 @@ def parseParagraph(node, article):
     for ref in node.iterfind('list'):
         parseList(ref, article)
 
+    for ref in itertools.chain(node.iterfind('text'), node.iterfind('txt')):
+        parseText(ref, article)
+
     return XMLtostr(node)
 
 def parseCode(node, article):
     if "hljs" not in article.opts:
         addHighlighterModule(article)
+        article.opts["hljs"] = True
 
     attrib = node.attrib
 
     node.tag = "div"
     attrib["id"] = randomObjHash()
     attrib["class"] = "code-cf"
+
+    if "lang" in attrib:
+        if attrib["lang"] == "none":
+            attrib["class"] += " nohighlight"
+        else:
+            attrib["class"] += " " + attrib["lang"]
+    else:
+        attrib["class"] += " cpp"
 
     article.addFooterScript(generateHLJSScript(attrib, attrib["id"]))
     return XMLtostr(node)
@@ -272,13 +300,49 @@ def parseList(node, article):
 
     return XMLtostr(node)
 
+def parseImage(node, article):
+    attrib = node.attrib
+
+    if "file" in attrib:
+        attrib["src"] = attrib["file"]
+        attrib.pop("file", None)
+    if "loc" in attrib:
+        attrib["src"] = attrib["loc"]
+        attrib.pop("loc", None)
+    if "src" not in attrib:
+        raise AttributeError("src attribute not in image.")
+    if "max-width" in attrib:
+        if "style" not in attrib:
+            attrib["style"] = ""
+        attrib["style"] += ";max-width:%s;" % attrib["max-width"]
+        attrib.pop("max-width", None)
+    if "min-width" in attrib:
+        if "style" not in attrib:
+            attrib["style"] = ""
+        attrib["style"] += ";min-width:%s;" % attrib["min-width"]
+        attrib.pop("min-width", None)
+
+    return XMLtostr(node)
+
+def parseFigure(node, article):
+    for capt in node.iterfind("figcaption"):
+        parseParagraph(capt, article)
+
+    for img in node.iterfind("image"):
+        parseImage(img, article)
+
+    return XMLtostr(node)
+
 node_type_dict = {
 "p": parseParagraph,
 "list": parseList,
 "code": parseCode,
 "tab-system": parseTabSystem,
 "inline-html": parseInlineHTML,
-"html": parseInlineHTML
+"html": parseInlineHTML,
+"figure": parseFigure,
+"text": parseText,
+"txt": parseText
 }
 
 def XMLtostr(node):
