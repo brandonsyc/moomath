@@ -429,8 +429,8 @@
           </code>
 
           <p>Save this to a file, say,
-            <inl lang="none">hello.cc</inl>. Go to the command line, navigate to the directory containing
-            <inl lang="none">hello.cc</inl>
+            <code lang="none">hello.cc</code>. Go to the command line, navigate to the directory containing
+            <code lang="none">hello.cc</code>
             and run the following command:</p>
 
           <code lang="none">g++ -o hello hello.cc</code>
@@ -444,7 +444,7 @@
           <figure>
             <image file="images/executable_illustration_1.png"/>
 
-            <figcaption>The executable and the source file, chilling.</figcaption>
+            <figcaption>The executable and the source file, chilling out.</figcaption>
           </figure>
 
           <p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running <inl lang="none">./hello</inl>. Either way, you should get something like this:</p>
@@ -452,7 +452,7 @@
           <figure>
             <image file="images/hello_world_output1.png"/>
 
-            <figcaption>The result of executing the <inl lang="none">hello</inl> executable.</figcaption>
+            <figcaption>The result of executing the <code lang="none">hello</code> executable.</figcaption>
           </figure>
 
 <p>As you can see, the executable ran and something rather boring happened: "Hello, World!" was printed to the console. All that manure for what in Python 2 we could have done as just print "Hello, World!"? Man!</p>
@@ -503,15 +503,19 @@
 
 <code lang="none">g++ -E hello.cc</code>
 
-<p>The <inl lang="none">–E></inl> compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also <inl>#include</inl>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
+<p>The <inl lang="none">–E</inl> compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also <inl>#include</inl>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
 
 <p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called <inl>std::cout</inl>. This object can be given things to write to the console.</p>
 
 <p>In the naming hierarchy, where does this object live, you might ask? Well, it lives in the namespace, or group of names, "std" (for standard, not for...) and is called cout. I like to think of namespaces as folders. If you keep things in folders all nicely organized, it's harder to accidentally reference a file with the same name, but in different locations. In the same way we keep our variables and functions in namespaces so they don't get mixed up.</p>
 
-<p>The third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
+<p>The third line defines a function. This function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
 
-<p>Lines four and five are a block comment. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like.</p>
+<p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and <inl lang="python">if __name__ == "__main__"</inl> in Python. If we called our function "main1" instead, nothing will actually be run.</p>
+
+<p>At the end of third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
+
+<p>We can also write block comments. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like, including in the middle of statements (but I don't recommend it).</p>
 
 <tab-system>
 <tab title="C++">
@@ -536,32 +540,72 @@
 </tab>
 </tab-system>
 
-<p>The sixth line defines a function. Oh come on! We need a function for the most basic of programs? Well, this function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
+<p>The fourth line is probably the strangest line of the program to foreigners. What <inl>&lt;&lt;</inl> is doing is streaming the string "Hello, World\n" to <inl>std::cout</inl>. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's <inl lang="java">System.out.println</inl>, Python's <inl lang="python">print</inl>, C's <inl lang="c">printf</inl> and JS's <inl lang="javascript">console.log</inl>, all of which are framed as a function.</p>
 
-<p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and <inl lang="python">if __name__ == "__main__"</inl> in Python. If we called our function "main1" instead, nothing will actually be run.</p>
-
-<p>The seventh line is probably the strangest line of the program to foreigners. What <inl>&lt;&lt;</inl> is doing is piping the string "Hello, World\n" to std::cout. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's <inl lang="java">System.out.println</inl>, Python's <inl lang="python">print</inl>, C's <inl lang="c">printf</inl> and JS's <inl lang="javascript">console.log</inl>, all of which are framed as a function.</p>
-
-<p>To be more precise, <inl>&lt;&lt;</inl> is a binary operator (an operator taking two arguments), which passes the string to <inl>std::cout</inl> for <inl>std::cout</inl> to handle. Furthermore, this operator returns std::cout again, and since operators are evaluated from left to right, we can do something like:</p>
+<p>To be more precise, <inl>&lt;&lt;</inl> is a binary operator (an operator taking two arguments), which passes the string to <inl>std::cout</inl> for <inl>std::cout</inl> to handle. Furthermore, this operator returns <inl>std::cout</inl> again, and since operators are evaluated from left to right, we can do something like:</p>
 
 <code>
   <include file="snippets/merry_christmas_orig.cc" />
 </code>
 
-and it will write out "Merry Christmas to you!", because it is evaluated as
+<p>and it will write out "Merry Christmas to you!", because it is evaluated as</p>
 
 <code>
   <include file="snippets/merry_christmas_parsed_as.cc" />
 </code>
 
-<p>The seventh line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
+<p>The fourth line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
 
-<p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The standard declares that if the end of main is reached, the function implicitly returns 0. Convenient!</p>
+<p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The C++ standard declares that if the end of main is reached, the function implicitly returns 0. Convenient!</p>
 
 <p>Well now that we understand (hopefully) what the code does, how does the computer?</p>
+</content>
+</section>
 
+<section>
+<title>The Compiler</title>
+
+<content>
+<p>The workings of a compiler are wonderful but mysterious. Personally, I have no clue how they work, so I treat them as sort of a black box. I feed my laboriously written source code into and blithely watch as worthless assembly comes out ("garbage in, garbage out").</p>
+
+<p>Jokes aside, a compiler is the heart and soul of a C++ environment. Without it, the computer has no idea what you want it to do. Fundamentally, the compiler, given source code, converts the code to assembly. Assembly is not exactly a single language, but rather a class of language that maps extremely closely to what the computer's CPU can do. If you want to see the assembly output of a C++ program, compile like so:</p>
+
+<code lang="none">g++ -S hello.cc</code>
+
+<p>This will write the assembly output of the compiler to a file called <code lang="none">hello.s</code>.</p>
+
+<p>The file's content looks really complicated, but every operation is extremely simple. Move this chunk of memory here, do this operation here; it's very basic, so basic that a programmer cannot really represent high-level concepts in it. It makes me slightly sick to think that people used to have to write large programs in this. Thankfully, most people don't have to experience writing assembly anymore.</p>
+
+<p>We're not done yet, though, but we're close. The computer must convert the assembly into machine code. Machine code simply consists of a long hexadecimal sequence telling the <vocab>CPU</vocab> exactly what to do and is completely unreadable to the common human. The conversion from assembly to machine code is not done by the compiler itself, but by a vendor-provided <vocab>assembler</vocab>.</p>
+
+<p>Thankfully, we don't need to handle the assembly intermediate step. Without <inl lang="none">–S</inl>, the compiler will just output machine code that we can use immediately.</p>
+
+<p>Well that was long. I sincerely hope you haven't seen a hello world example/explanation that long before. Perhaps it was excessive, but I wanted to show you exactly what is going on so you don't get confused later when I talk about compiling, and also get you to appreciate how much fluff languages like Python abstract away for you. I won't even go close to this much into detail in the future, but a lot of people seem to get confused about the role of a compiler and how to even compile and execute a C++ file, so I thought this would be helpful for uninformed individuals. I'm sure some or maybe even most of it was redundant information to you.</p>
+
+<p>If you want to play around with this example, you can download it <link to="examples/example1.zip" download="">here</link>. To compile <code lang="none">hello.cc</code>, just run <inl lang="none">make</inl>. To output assembly to <code lang="none">hello.s</code>, run <inl lang="none">make asm</inl>. Finally, to print out preprocessor output, do <inl lang="none">make pre</inl>. Enjoy!</p>
         </content>
       </section>
+
+      <section>
+
+        <title>Summary</title>
+
+        <content>
+<p>We've just looked at a very basic program. You've learned the role of the function main (the function that’s actually run) as well as learned what printing looks like.</p>
+
+<p>C++ is a compiled language. Thus, its source code is turned into machine code by a <vocab>compiler</vocab> and <vocab>assembler</vocab>. To compile your program, run in a shell:</p>
+
+<code lang="none">g++ -o &lt;machine code output file name&gt; &lt;path to source&gt;</code>
+
+<p>For example, to compile udder.cc to milk, we do:</p>
+
+<code lang="none">g++ -o milk udder.cc</code>
+
+<p>As an aside, I suggest you compile to <code lang="none">milk.exe</code> on Windows.</p>
+
+<p>We can run <code lang="none">milk</code>/<code lang="none">milk.exe</code> in the command line by doing <inl lang="none">./milk</inl>. We can also open it as you would normally open a file in the system file viewer (Explorer, Finder, etc.), which should open up a command line interface and run the program immediately.</p>
+</content>
+</section>
     </section>
   </section>
 </article>

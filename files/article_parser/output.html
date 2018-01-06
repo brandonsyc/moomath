@@ -95,7 +95,9 @@ Setting Up a C++ Environment
 <li class="t-elem" udderref="s"><b>2.1</b>:
 Hello, World! Example
 <ul><li class="t-elem" udderref="t"><b>2.1.0</b>: The Program</li>
-<li class="t-elem" udderref="u"><b>2.1.1</b>: How it Works</li></ul></li></ul></li></ul> <!-- end tree -->
+<li class="t-elem" udderref="u"><b>2.1.1</b>: How it Works</li>
+<li class="t-elem" udderref="v"><b>2.1.2</b>: The Compiler</li>
+<li class="t-elem" udderref="w"><b>2.1.3</b>: Summary</li></ul></li></ul></li></ul> <!-- end tree -->
 </div>
 
 <div class="content-c" id="content-c">
@@ -118,28 +120,28 @@ Hello, World! Example
 <div class="content">
 <p>
           <b>tl; dr</b>: I expect you to have programmed before in another,
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_P7EiHlCCta" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_tad4KTwnbV" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a>
           (not
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_JXB2p3Jp9y" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_FsgfYXLPXW" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_8d9RooJvir" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_3grXJwy2eF" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
           (how to open it on your computer, and the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Va1ocNB5wl" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_u0IueM5bcn" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
           command). Finally, I expect you to understand
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_1Tk3zirhXZ" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_tFxYcvLspz" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
           and
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_QipJrzNpvc" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_3R60B2tGo4" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>
           notation: though you don't have to be able to read it quickly!</p>
 
         
 <p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_2O3UK8KCAs" maxwidth="180px" placement="bottom" title="A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of &quot;classes.&quot;&#10;">object-oriented</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_RbH7yMeI9I" maxwidth="180px" placement="bottom" title="A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of &quot;classes.&quot;&#10;">object-oriented</a>
           (OO) and imperative: either a primarily scripting language like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_X5o7PbHpTI" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_4Y3zQxsHB5" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a>
           or
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_v3tJHjDC9e" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_QwhALSrkOq" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_ipVF23q5wq" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_NCHEEaNNH4" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a>
           or
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_dOrmIyhNUi" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops, functions, etc. which are ubiquitous in almost all such programming languages will not be explained
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_rxFqeY7oPV" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops, functions, etc. which are ubiquitous in almost all such programming languages will not be explained
           beyond features and characteristics specific to C++.</p>
 
         
@@ -155,16 +157,16 @@ Hello, World! Example
         
 <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful, elegant, or appropriate
           for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_8HV0kp9HNC" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with different conventions, structure, and thinking paradigm.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_bsIFvyRJfc" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with different conventions, structure, and thinking paradigm.</p>
 
         
 <p>As to more specific requirements, I expect you to know how to navigate folders using the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_cb3XKSASC6" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_kxJJJlVUSs" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
           on your system (i.e. knowing
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_oujkRwjqpO" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_IlI1G8uJsw" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_1KFxLzmcpS" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_0wubMJDcZd" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
           and
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_1h1NNPBKC8" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_vQNF8EhhnM" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
       
 </div>
 
@@ -199,7 +201,7 @@ Hello, World! Example
 
         
 <p>If you already are an experienced C++ programmer comfortable with types and templates and
-          <span class="cpp inline-code" id="f_vKajaAHTVE">throw</span>
+          <span class="cpp inline-code" id="f_8CRfhyBP7b">throw</span>
           and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
 
       
@@ -224,7 +226,7 @@ Hello, World! Example
 <ol type="a">
           <li>want to maximize performance</li>
           <li>are working with small amounts of processing power and/or
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_0RO5Fv1okv" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_UffFS7fxYh" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a>
           </li>
           <li>work with large amounts of data</li>
         </ol>
@@ -256,11 +258,11 @@ Hello, World! Example
             <b>General-purpose</b>: C++ is meant for a wide variety of uses. You&#8217;ll see C++ code being used in a variety of places, from spaceships to video games to common desktop applications.</li>
           <li>
             <b>Strongly typed</b>: Unlike Python and JS, but like Java, C and C#, every variable has a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_qobmYgtuOe" maxwidth="180px" placement="bottom" title="Information representing what kind of data a variable represents.&#10;">type</a>. This type is set and cannot be later changed.</li>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_swY6lhwevo" maxwidth="180px" placement="bottom" title="Information representing what kind of data a variable represents.&#10;">type</a>. This type is set and cannot be later changed.</li>
           <li>
             <b>Compiled</b>: A computer is not that smart; it&#8217;s just extremely fast. C++ code, which a programmer can read (<a href="http://ioccc.org/" target="_blank">hopefully</a>
             :P), is translated by a compiler into
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_vi1dXoNIyX" maxwidth="180px" placement="bottom" title="The binary instructions run directly by a processor.&#10;">machine code</a>. This contrasts with a language like Python, Java or C# in which the code is, to some degree, interpreted: where another native-level program reads the code, figures out what to do, and then executes it on the processor.
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_8EYNuiHrF9" maxwidth="180px" placement="bottom" title="The binary instructions run directly by a processor.&#10;">machine code</a>. This contrasts with a language like Python, Java or C# in which the code is, to some degree, interpreted: where another native-level program reads the code, figures out what to do, and then executes it on the processor.
             Because of this intermediate step, well-written C++ code is inherently faster than the equivalent
             <i>interpreted</i>
             Python and Java code, with few exceptions. I know Java can be compiled as well, so please don't hate on me for saying this.</li>
@@ -285,7 +287,7 @@ Hello, World! Example
         </p></div><h3 id='h' style="padding-top: 80px; margin-top: -80px;">1.1.0: Why not C?</h3>
 <div class="content">
 <p>C is a wonderful language, and there are some systems where it is definitely better to use than C++. Even though C++ is not inherently slower than C like
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_VicBiBLkqG" maxwidth="180px" placement="bottom" title="A program execution system where an interpreter serves as a relay between the code itself and the processor's instructions.&#10;">interpreted</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_epUBk4xFBP" maxwidth="180px" placement="bottom" title="A program execution system where an interpreter serves as a relay between the code itself and the processor's instructions.&#10;">interpreted</a>
             languages are, keeping C++&#8217;s speed at par with C in practice necessitates restricting some of C++&#8217;s language features: not all, but some. These features are those that cannot be implemented by the compiler without some significant overhead. As such,
             C is often the language of choice for small systems.</p>
 
@@ -293,7 +295,7 @@ Hello, World! Example
 <p>C&#8217;s concepts, however, are almost completely low-level. This is not a bad thing, but can make programming higher-level libraries more difficult. C++ has the low-level capabilities of C, but combines it with higher-level ideas, such as classes and
             templates and so forth. While this may have some (usually small) overhead, expressing yourself in C++, especially when solving a complex problem or writing in large codebases, is usually easier than expressing yourself in C. Furthermore, it&#8217;s harder
             to mess up something critical in C++, because
-            <a alias="compiler" arrow="true" delay="200" href="javascript:void(0);" id="f_mocMseEdrr" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compilers</a>
+            <a alias="compiler" arrow="true" delay="200" href="javascript:void(0);" id="f_YPjKBVFyTa" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compilers</a>
             can do stricter compile-time checking and warn you of possible errors.
           </p>
 
@@ -307,9 +309,9 @@ Hello, World! Example
 
           
 <p>Using Java has some performance costs, though. The usage of the
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_uxysC5l53d" maxwidth="180px" placement="bottom" title="An environment where Java code is run.&#10;">Java Virtual Machine</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_Z3uQ8T91Kk" maxwidth="180px" placement="bottom" title="An environment where Java code is run.&#10;">Java Virtual Machine</a>
             (JVM), which adds an intermediate layer, means that there is an inherent performance loss. Memory usage is also much higher than equivalent native-level programs. Accessing memory can be slow, and there is no concept of
-            <a alias="pointer" arrow="true" delay="200" href="javascript:void(0);" id="f_sFpfuRUC3P" maxwidth="180px" placement="bottom" title="A variable storing the position of another variable in memory.&#10;">pointers</a>
+            <a alias="pointer" arrow="true" delay="200" href="javascript:void(0);" id="f_SKuC1AN23x" maxwidth="180px" placement="bottom" title="A variable storing the position of another variable in memory.&#10;">pointers</a>
             like in C or C++, making certain algorithms much slower than their C/C++ counterparts. If you need to write code with native speed to be used in Java programs, you need to use interfaces like the Java Native Interface (JNI). I was attempting to use
             this, in fact, for our robotics team, but found it incredibly difficult to use. Furthermore, simply using the JNI incurs performance issues during transfer of control between JVM and JNI. Java is also quite verbose compared to most other languages.
             Personally, I wish they would add operator overloading to the language, but perhaps that is a silly idea.</p>
@@ -350,7 +352,7 @@ Hello, World! Example
 
           
 <p>If you&#8217;re attempting to find an error in a larger program, you might have a hard time if it&#8217;s not found at compile-time. In the worst case scenario you just get a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_rbzEm7shoK" maxwidth="180px" placement="bottom" title="An error occurring when a program attempts to access an invalid or disallowed portion of memory.&#10;">segmentation fault</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_MIdoldkGQZ" maxwidth="180px" placement="bottom" title="An error occurring when a program attempts to access an invalid or disallowed portion of memory.&#10;">segmentation fault</a>
             or some other, more obscure error, and have no clue where it came from. Thankfully, tools like
             <a href="http://valgrind.org/" target="_blank">Valgrind</a>
             and
@@ -382,14 +384,14 @@ Hello, World! Example
           <a href="https://en.wikipedia.org/wiki/Moore%27s_law#Near-term_limits" target="_blank">are slowing</a>, and programmers must take advantage of the growth of the number of cores in a processor. Python, unfortunately, suffers from the
           <a href="https://en.wikipedia.org/wiki/Global_interpreter_lock" target="_blank">Global Interpreter Lock</a>
           (GIL) which makes
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_XYuoLWm783" maxwidth="180px" placement="bottom" title="A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.&#10;">multithreading</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_og3PRXblyO" maxwidth="180px" placement="bottom" title="A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.&#10;">multithreading</a>
           much more difficult. Threading used to be a similarly sore spot for C++, as it had no built-in thread concept like Java does, but C++11 brought with it std::thread, a standardized threading system portable across all supported computers. There also
           exist portable frameworks like
           <a href="http://www.openmp.org/" target="_blank">OpenMP</a>
           and
           <a href="https://www.khronos.org/opencl/" target="_blank">OpenCL</a>
           that allow C or C++ programmers to take advantage of multiple cores and/or multiple
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_5bEeaEQCql" maxwidth="180px" placement="bottom" title="Graphics processing unit, a part of a computer that processes data, and typically consisting of a large number of small threads which operate independently.&#10;">GPU</a>s with easier code. Java interfaces to these frameworks are currently lacking in performance.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_0yFIabzP5b" maxwidth="180px" placement="bottom" title="Graphics processing unit, a part of a computer that processes data, and typically consisting of a large number of small threads which operate independently.&#10;">GPU</a>s with easier code. Java interfaces to these frameworks are currently lacking in performance.</p>
 
         
 <p>In terms of popularity (which I personally think is a poor index), C++ is consistently
@@ -405,7 +407,7 @@ Hello, World! Example
           <a href="https://en.wikipedia.org/wiki/Bjarne_Stroustrup" target="_blank">Bjarne Stroustrup</a>
           in 1979. He applied the concept of classes, inspired by
           <a href="https://en.wikipedia.org/wiki/Simula" target="_blank">Simula</a>, to the already extant C. Throughout the years, C++ developed as a language and was eventually standardized by
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Ky5Cy423Ms" maxwidth="180px" placement="bottom" title="International Organization for Standardization, an organization which (among many other things) standardizes the C++ language.&#10;">ISO</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_jqCXpP5z3v" maxwidth="180px" placement="bottom" title="International Organization for Standardization, an organization which (among many other things) standardizes the C++ language.&#10;">ISO</a>
           in 1998. A committee of representatives from various companies in the programming industry, as well as some independent members, continually work on the language definition, expanding it and taking suggestions from the public. Every five years or so
           ISO ratifies a new standard. After the initial standardization, there have been four official standards: C++03, C++11, C++14, and C++17. All of these add new features from the language, some much more significant than others. Small errors or
           mis-features are occasionally removed, but conservatively so as to maintain backwards-compatibility. Given this committee process, C++ is not owned in whole or in part by any company or person.</p>
@@ -421,7 +423,7 @@ Hello, World! Example
 <h2 id='o' style="padding-top: 80px; margin-top: -80px;">2.0: Setting Up a C++ Environment</h2>
 <div class="content">
 <p>Before you start learning C++, you need to have an environment. For this tutorial you&#8217;ll need to have a C++
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_N4nf0osxgz" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>, preferably one that can handle C++11 and a text editor. The most reputable C++ compilers are probably
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_LXLguxMn2L" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>, preferably one that can handle C++11 and a text editor. The most reputable C++ compilers are probably
           <a href="https://clang.llvm.org/" target="_blank">Clang</a>,
           <a href="https://gcc.gnu.org/projects/cxx-status.html" target="_blank">GCC</a>, and the
           <a href="https://software.intel.com/en-us/c-compilers" target="_blank">Intel compiler</a>. A text editor that&#8217;s not Notepad or TextEdit or whatever is quite important; syntax highlighting is strongly recommended. For free text editors, you can try
@@ -438,10 +440,10 @@ Hello, World! Example
 
         
 <p>As stated in Are You Ready?, you will need a basic understanding of the command line on your computer. This is Terminal on macOS, and Command Prompt on Windows. I suggest you learn the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_hry2fbh8Iv" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_WMRX0g3iTI" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
           command, as well as
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_QJfjmDUBdx" maxwidth="180px" placement="bottom" title="A command on Unix and Unix-like machines which prints out all the files and folders in the current directory.&#10;">ls</a>
-          (<a arrow="true" delay="200" href="javascript:void(0);" id="f_N5m9tyyVvx" maxwidth="180px" placement="bottom" title="A command on Windows which prints out all the files and folders in the current directory.&#10;">dir</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_VJDe5M1Xns" maxwidth="180px" placement="bottom" title="A command on Unix and Unix-like machines which prints out all the files and folders in the current directory.&#10;">ls</a>
+          (<a arrow="true" delay="200" href="javascript:void(0);" id="f_TsqI8aZwZZ" maxwidth="180px" placement="bottom" title="A command on Windows which prints out all the files and folders in the current directory.&#10;">dir</a>
           on Windows).</p>
       
 </div><h3 id='p' style="padding-top: 80px; margin-top: -80px;">2.0.0: macOS</h3>
@@ -449,15 +451,15 @@ Hello, World! Example
 <p>XCode command-line tools come with the Clang compiler, as well as GNU Make. In Terminal, enter in the following command:</p>
 
           
-<div class="code-cf nohighlight" id="f_VH9HosEEce" lang="none">xcode-select --install</div>
+<div class="code-cf nohighlight" id="f_hH6zUNjb7u" lang="none">xcode-select --install</div>
 
           
 <p>This will install XCode's tools. You may have already done this, considering it also contains important development tools such as Git, Subversion, etc. To test out your Clang installation, try running the command
-            <span class="nohighlight inline-code" id="f_4WbbNwFP9E">g++ -v</span>
+            <span class=" nohighlight inline-code" id="f_3BpQdE5n4j">g++ -v</span>
             in Terminal. It should print out something along the lines of:</p>
 
           
-<div class="code-cf nohighlight" id="f_LKF43kw1PO" lang="none">
+<div class="code-cf nohighlight" id="f_bGqMkoCG5s" lang="none">
             
 Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/usr/include/c++/4.2.1 <br />
 Apple LLVM version 9.0.0 (clang-900.0.37) <br />
@@ -474,11 +476,11 @@ InstalledDir: /Library/Developer/CommandLineTools/usr/bin <br />
 
           
 <p>To check your make installation you can run
-            <span class="nohighlight inline-code" id="f_CywdoXIFEm">make &#8211;v</span>
+            <span class=" nohighlight inline-code" id="f_oeRXFkigkM">make &#8211;v</span>
             which should print out something like:</p>
 
           
-<div class="code-cf nohighlight" id="f_RbXdC9l4FJ" lang="none">
+<div class="code-cf nohighlight" id="f_yAs38nMxHw" lang="none">
             
 GNU Make 3.81 <br />
 Copyright (C) 2006  Free Software Foundation, Inc. <br />
@@ -486,7 +488,6 @@ This is free software; see the source for copying conditions. <br />
 There is NO warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. <br />
  <br />
 This program built for i386-apple-darwin11.3.0 <br />
-Microsoft Windows <br />
 
 
           </div>
@@ -498,40 +499,40 @@ Microsoft Windows <br />
 <p>Unfortunately, it is somewhat of a hassle to install a C++ compiler on Windows. For GCC, you need to install a GNU development interface to Windows like MinGW.
             <a href="http://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/" target="_blank">This website</a>
             provides a good tutorial to do this. Don&#8217;t fret! You only have to do this once; or you could switch to Unix. ;) You can check your installation with
-            <span class="nohighlight inline-code" id="f_HeUyAOpdAP">g++ -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_E30a3McBDS">g++ -v</span>.</p>
 
           
 <p>Installing GNU Make is similarly done through MinGW. You can check your installation with
-            <span class="nohighlight inline-code" id="f_EMh9usEoUm">make -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_HUBZcuM46I">make -v</span>.</p>
         
 </div>
 
 <h3 id='r' style="padding-top: 80px; margin-top: -80px;">2.0.2: Linux</h3>
 <div class="content">
 <p>First, test whether GCC is already installed with
-            <span class="nohighlight inline-code" id="f_1XR3f4B3CQ">g++ -v</span>. If not, to install GCC on Linux you can run:</p>
+            <span class=" nohighlight inline-code" id="f_ZdFsupACcg">g++ -v</span>. If not, to install GCC on Linux you can run:</p>
 
           
-<div class="code-cf nohighlight" id="f_y3GMBQ19iE" lang="none">
+<div class="code-cf nohighlight" id="f_AyVgZrUyp0" lang="none">
             sudo apt-get install gcc
           </div>
 
           
 <p>Note that you will likely have to enter in your password for the installation to work. You can check your installation with
-            <span class="nohighlight inline-code" id="f_PBueLN1ooN">g++ -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_QKdfhby3Ht">g++ -v</span>.</p>
 
           
 <p>Check if GNU Make is already installed with
-            <span class="nohighlight inline-code" id="f_MwjogzvQVJ">make &#8211;v</span>. To install make, run:</p>
+            <span class=" nohighlight inline-code" id="f_BrGgd5xL0i">make &#8211;v</span>. To install make, run:</p>
 
           
-<div class="code-cf nohighlight" id="f_3elbuRbTAI" lang="none">
+<div class="code-cf nohighlight" id="f_y3dBAdO5a6" lang="none">
             sudo apt-get install make
           </div>
 
           
 <p>You can check your installation with
-            <span class="nohighlight inline-code" id="f_NbueVbwRQp">make -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_MAUGTi5s3M">make -v</span>.</p>
         
 </div>
 
@@ -543,14 +544,11 @@ Microsoft Windows <br />
 <p>In your text editor, type in or copy-paste the following code:</p>
 
           
-<div class="code-cf cpp" id="f_iaXxlkdvm6">
+<div class="code-cf cpp" id="f_RCHYSMehLf">
             
 #include &lt;iostream&gt; <br />
  <br />
-// Udder <br />
-/* foo <br />
-&nbsp;&nbsp;&nbsp;&nbsp;bar */ <br />
-int main() { <br />
+int main() { // Hello World program <br />
 &nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; "Hello, World!\n"; <br />
 } <br />
 
@@ -559,44 +557,44 @@ int main() { <br />
 
           
 <p>Save this to a file, say,
-            <span class="nohighlight inline-code" id="f_WpxohCr9O3">hello.cc</span>. Go to the command line, navigate to the directory containing
-            <span class="nohighlight inline-code" id="f_57AlXYgy4d">hello.cc</span>
+            <code lang="none">hello.cc</code>. Go to the command line, navigate to the directory containing
+            <code lang="none">hello.cc</code>
             and run the following command:</p>
 
           
-<div class="code-cf nohighlight" id="f_Lrm7bfBy7p" lang="none">g++ -o hello hello.cc</div>
+<div class="code-cf nohighlight" id="f_zXLOej2gOS" lang="none">g++ -o hello hello.cc</div>
 
           
 <p>Note that g++ is simply an alias for the C++ compiler. This should create an
-            <a alias="executable" arrow="true" delay="200" href="javascript:void(0);" id="f_xyMI4qGpio" maxwidth="180px" placement="bottom" title="A file directly runnable by the computer, requiring no further interpretation.&#10;">executable file</a>
+            <a alias="executable" arrow="true" delay="200" href="javascript:void(0);" id="f_pkliK8c1xb" maxwidth="180px" placement="bottom" title="A file directly runnable by the computer, requiring no further interpretation.&#10;">executable file</a>
             called
-            <span class="nohighlight inline-code" id="f_Fs2hoobEBH">hello</span>
+            <span class=" nohighlight inline-code" id="f_BoSLFeCtJy">hello</span>
             in the same folder.</p>
 
           
 <figure>
             <image src="images/executable_illustration_1.png" />
 
-            <figcaption>The executable and the source file, chilling.</figcaption>
+            <figcaption>The executable and the source file, chilling out.</figcaption>
           </figure>
 
           
-<p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running <span class="nohighlight inline-code" id="f_oGFgBjR3Ts">./hello</span>. Either way, you should get something like this:</p>
+<p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running <span class=" nohighlight inline-code" id="f_NNiCNfRGvg">./hello</span>. Either way, you should get something like this:</p>
 
           
 <figure>
             <image src="images/hello_world_output1.png" />
 
-            <figcaption>The result of executing the <span class="nohighlight inline-code" id="f_drjFhCa0FH">hello</span> executable.</figcaption>
+            <figcaption>The result of executing the <code lang="none">hello</code> executable.</figcaption>
           </figure>
 
 
 <p>As you can see, the executable ran and something rather boring happened: "Hello, World!" was printed to the console. All that manure for what in Python 2 we could have done as just print "Hello, World!"? Man!</p>
 
 
-<div class="tab-system" id="f_16nrJcM6RQ" style=";max-height: 750px;">
-<div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_7GEeesgL9h', 'f_16nrJcM6RQ')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_00BL7H9Vis', 'f_16nrJcM6RQ')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_1LqROvVRiI', 'f_16nrJcM6RQ')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_CjiXOxTfXz', 'f_16nrJcM6RQ')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_IzThALomH6', 'f_16nrJcM6RQ')">JS</button></div><div class="tab-content" id="f_7GEeesgL9h">
-  <div class="code-cf cpp" id="f_y29dYjoTId">
+<div class="tab-system" id="f_hdCxKISsOz" style=";max-height: 750px;">
+<div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_mHYEFh9UsD', 'f_hdCxKISsOz')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_1RIlrABv99', 'f_hdCxKISsOz')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_0bML49GkDM', 'f_hdCxKISsOz')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_5jZvwMADvo', 'f_hdCxKISsOz')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_tVSPPcpS7X', 'f_hdCxKISsOz')">JS</button></div><div class="tab-content" id="f_mHYEFh9UsD">
+  <div class="code-cf cpp" id="f_XaHIfL0zE9">
   
 #include &lt;iostream&gt; <br />
  <br />
@@ -607,24 +605,24 @@ int main() { <br />
 
 </div>
 </div>
-<div class="tab-content" id="f_00BL7H9Vis">
-  <div class="code-cf python" id="f_6MoezsrXmp" lang="python">
+<div class="tab-content" id="f_1RIlrABv99">
+  <div class="code-cf python" id="f_BQJ0Q7knnj" lang="python">
   
 print "Hello, World!" <br />
 
 
 </div>
 </div>
-<div class="tab-content" id="f_1LqROvVRiI">
-  <div class="code-cf python" id="f_etPiJIb38V" lang="python">
+<div class="tab-content" id="f_0bML49GkDM">
+  <div class="code-cf python" id="f_w3YEHkQ5mg" lang="python">
   
 print ("Hello, World!") <br />
 
 
 </div>
 </div>
-<div class="tab-content" id="f_CjiXOxTfXz">
-  <div class="code-cf java" id="f_NyEAfYqSgl" lang="java">
+<div class="tab-content" id="f_5jZvwMADvo">
+  <div class="code-cf java" id="f_oWT1QdjgYl" lang="java">
   
 public class HelloWorld { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) { <br />
@@ -635,8 +633,8 @@ public class HelloWorld { <br />
 
 </div>
 </div>
-<div class="tab-content" id="f_IzThALomH6">
-  <div class="code-cf javascript" id="f_o8CuYlzou1" lang="javascript">
+<div class="tab-content" id="f_tVSPPcpS7X">
+  <div class="code-cf javascript" id="f_pMnYJ2k0qj" lang="javascript">
   
 console.log("Hello, World!"); <br />
 
@@ -653,7 +651,7 @@ console.log("Hello, World!"); <br />
 <p>Let's dissect this and figure out precisely what is going on here. First, let's discuss the C++ code.</p>
 
 
-<p>Loosely, the first line <span class="cpp inline-code" id="f_XIhEzhFOYM">#include &lt;iostream&gt;</span> tells the C++ compiler that we want the source code of the file "iostream" to be inserted here. The preprocessor sees this instruction, called a preprocessing directive, and just replaces it with the contents of "iostream." Note that we call this preprocessing because all this happens before the code is actually examined for errors and syntax and such.</p>
+<p>Loosely, the first line <span class="cpp inline-code" id="f_UNDSQRKm2s">#include &lt;iostream&gt;</span> tells the C++ compiler that we want the source code of the file "iostream" to be inserted here. The preprocessor sees this instruction, called a preprocessing directive, and just replaces it with the contents of "iostream." Note that we call this preprocessing because all this happens before the code is actually examined for errors and syntax and such.</p>
 
 
 <p>Where is this magical iostream file coming from? Well, iostream is part of the C++ Standard Library, a C++ library shipped with all standards-compliant compilers. It's designed to make programming a lot easier for us developers by providing efficient and/or elegant implementations for common tasks.</p>
@@ -662,27 +660,33 @@ console.log("Hello, World!"); <br />
 <p>To see what the code looks like after preprocessing, you can run the command:</p>
 
 
-<div class="code-cf nohighlight" id="f_jPcacIJMhE" lang="none">g++ -E hello.cc</div>
+<div class="code-cf nohighlight" id="f_3kgQ3LSTgV" lang="none">g++ -E hello.cc</div>
 
 
-<p>The <span class="nohighlight inline-code" id="f_di8xj2zrtl">&#8211;E&gt;</span> compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also <span class="cpp inline-code" id="f_xBKjFy2lfJ">#include</span>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
+<p>The <span class=" nohighlight inline-code" id="f_DzPGq9V7QE">&#8211;E</span> compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also <span class="cpp inline-code" id="f_GJ2EHw7zyq">#include</span>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
 
 
-<p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called <span class="cpp inline-code" id="f_ytteY9XKlv">std::cout</span>. This object can be given things to write to the console.</p>
+<p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called <span class="cpp inline-code" id="f_xBheoMGhqb">std::cout</span>. This object can be given things to write to the console.</p>
 
 
 <p>In the naming hierarchy, where does this object live, you might ask? Well, it lives in the namespace, or group of names, "std" (for standard, not for...) and is called cout. I like to think of namespaces as folders. If you keep things in folders all nicely organized, it's harder to accidentally reference a file with the same name, but in different locations. In the same way we keep our variables and functions in namespaces so they don't get mixed up.</p>
 
 
-<p>The third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
+<p>The third line defines a function. This function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
 
 
-<p>Lines four and five are a block comment. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like.</p>
+<p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and <span class=" python inline-code" id="f_wsVU7VaZUs">if __name__ == "__main__"</span> in Python. If we called our function "main1" instead, nothing will actually be run.</p>
 
 
-<div class="tab-system" id="f_hQS453lGyw" style=";max-height: 750px;">
-<div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_FjjTerpT0T', 'f_hQS453lGyw')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_4xYZKU20SW', 'f_hQS453lGyw')">Python</button><button class="tablinks" onclick="openTabID(event, 'f_o2U4W1vpcL', 'f_hQS453lGyw')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_eRq39R7Hoc', 'f_hQS453lGyw')">JS</button></div><div class="tab-content" id="f_FjjTerpT0T">
-  <div class="code-cf cpp" id="f_p1UZxTO9Y9">
+<p>At the end of third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
+
+
+<p>We can also write block comments. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like, including in the middle of statements (but I don't recommend it).</p>
+
+
+<div class="tab-system" id="f_h0BJ2JqX3r" style=";max-height: 750px;">
+<div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_2rmSVkJOhu', 'f_h0BJ2JqX3r')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_RduCLqEz7F', 'f_h0BJ2JqX3r')">Python</button><button class="tablinks" onclick="openTabID(event, 'f_FNYoW2N7Y8', 'f_h0BJ2JqX3r')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_kSCE1SY6BV', 'f_h0BJ2JqX3r')">JS</button></div><div class="tab-content" id="f_2rmSVkJOhu">
+  <div class="code-cf cpp" id="f_aoDoHGgLFe">
   
 // line comment <br />
 /* Succulent <br />
@@ -694,21 +698,21 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
 </div>
 </div>
-<div class="tab-content" id="f_4xYZKU20SW">
-  <div class="code-cf python" id="f_yyCVLoYnGh" lang="python">
+<div class="tab-content" id="f_RduCLqEz7F">
+  <div class="code-cf python" id="f_HwPcamRX7W" lang="python">
   
 # line comment <br />
 """Succulent <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;docstring for <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;all those <br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;worthy""" <br />
-# No Python equivalent  <br />
+&nbsp;&nbsp;&nbsp;&nbsp;docstring for <br />
+&nbsp;&nbsp;&nbsp;&nbsp;all those <br />
+&nbsp;&nbsp;&nbsp;&nbsp;worthy""" <br />
+# No Python equivalent <br />
 
 
 </div>
 </div>
-<div class="tab-content" id="f_o2U4W1vpcL">
-  <div class="code-cf java" id="f_F1vd60rPmC" lang="java">
+<div class="tab-content" id="f_FNYoW2N7Y8">
+  <div class="code-cf java" id="f_nwsP1tQ8gD" lang="java">
   
 // line comment <br />
 /* Succulent <br />
@@ -720,8 +724,8 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
 </div>
 </div>
-<div class="tab-content" id="f_eRq39R7Hoc">
-  <div class="code-cf javascript" id="f_DaswO5LNLm" lang="javascript">
+<div class="tab-content" id="f_kSCE1SY6BV">
+  <div class="code-cf javascript" id="f_ptdmtjyMJd" lang="javascript">
   
 // line comment <br />
 /* Succulent <br />
@@ -736,19 +740,13 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 </div>
 
 
-<p>The sixth line defines a function. Oh come on! We need a function for the most basic of programs? Well, this function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
+<p>The fourth line is probably the strangest line of the program to foreigners. What <span class="cpp inline-code" id="f_jDeN8irRLu">&lt;&lt;</span> is doing is streaming the string "Hello, World\n" to <span class="cpp inline-code" id="f_NcYAD4bpXE">std::cout</span>. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's <span class=" java inline-code" id="f_61kr7URKV7">System.out.println</span>, Python's <span class=" python inline-code" id="f_u7jTYW4Q3j">print</span>, C's <span class=" c inline-code" id="f_ASFQDbT4WL">printf</span> and JS's <span class=" javascript inline-code" id="f_Le7Ub1SOdJ">console.log</span>, all of which are framed as a function.</p>
 
 
-<p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and <span class="python inline-code" id="f_QNXT5NwFta">if __name__ == "__main__"</span> in Python. If we called our function "main1" instead, nothing will actually be run.</p>
+<p>To be more precise, <span class="cpp inline-code" id="f_AbOFvxQAMN">&lt;&lt;</span> is a binary operator (an operator taking two arguments), which passes the string to <span class="cpp inline-code" id="f_aK3djzVkPq">std::cout</span> for <span class="cpp inline-code" id="f_M0ZsLQRtgf">std::cout</span> to handle. Furthermore, this operator returns <span class="cpp inline-code" id="f_ixRuUJK0Gm">std::cout</span> again, and since operators are evaluated from left to right, we can do something like:</p>
 
 
-<p>The seventh line is probably the strangest line of the program to foreigners. What <span class="cpp inline-code" id="f_RDLys4uRJ2">&lt;&lt;</span> is doing is piping the string "Hello, World\n" to std::cout. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's <span class="java inline-code" id="f_fn9Rw96h2z">System.out.println</span>, Python's <span class="python inline-code" id="f_LcRqyLfiHj">print</span>, C's <span class="c inline-code" id="f_INA2N4v6EB">printf</span> and JS's <span class="javascript inline-code" id="f_Bf6BVF8v76">console.log</span>, all of which are framed as a function.</p>
-
-
-<p>To be more precise, <span class="cpp inline-code" id="f_zUA9g85ctO">&lt;&lt;</span> is a binary operator (an operator taking two arguments), which passes the string to <span class="cpp inline-code" id="f_ZGza5yebdq">std::cout</span> for <span class="cpp inline-code" id="f_2YBOVe449e">std::cout</span> to handle. Furthermore, this operator returns std::cout again, and since operators are evaluated from left to right, we can do something like:</p>
-
-
-<div class="code-cf cpp" id="f_qVWtZPho0E">
+<div class="code-cf cpp" id="f_q6UPHbXFmt">
   
 #include &lt;iostream&gt; <br />
  <br />
@@ -759,10 +757,11 @@ int main() { <br />
 
 </div>
 
-and it will write out "Merry Christmas to you!", because it is evaluated as
+
+<p>and it will write out "Merry Christmas to you!", because it is evaluated as</p>
 
 
-<div class="code-cf cpp" id="f_JdkLxI2eUf">
+<div class="code-cf cpp" id="f_JGAGYSQGkL">
   
 (((std::cout &lt;&lt; "Merry ") &lt;&lt; "Christmas ") &lt;&lt; "to ") &lt;&lt; "you!\n"; <br />
 
@@ -770,98 +769,162 @@ and it will write out "Merry Christmas to you!", because it is evaluated as
 </div>
 
 
-<p>The seventh line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
+<p>The fourth line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
 
 
-<p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The standard declares that if the end of main is reached, the function implicitly returns 0. Convenient!</p>
+<p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The C++ standard declares that if the end of main is reached, the function implicitly returns 0. Convenient!</p>
 
 
 <p>Well now that we understand (hopefully) what the code does, how does the computer?</p>
 
+</div>
+
+<h3 id='v' style="padding-top: 80px; margin-top: -80px;">2.1.2: The Compiler</h3>
+<div class="content">
+<p>The workings of a compiler are wonderful but mysterious. Personally, I have no clue how they work, so I treat them as sort of a black box. I feed my laboriously written source code into and blithely watch as worthless assembly comes out ("garbage in, garbage out").</p>
+
+
+<p>Jokes aside, a compiler is the heart and soul of a C++ environment. Without it, the computer has no idea what you want it to do. Fundamentally, the compiler, given source code, converts the code to assembly. Assembly is not exactly a single language, but rather a class of language that maps extremely closely to what the computer's CPU can do. If you want to see the assembly output of a C++ program, compile like so:</p>
+
+
+<div class="code-cf nohighlight" id="f_nLClyn8REO" lang="none">g++ -S hello.cc</div>
+
+
+<p>This will write the assembly output of the compiler to a file called <code lang="none">hello.s</code>.</p>
+
+
+<p>The file's content looks really complicated, but every operation is extremely simple. Move this chunk of memory here, do this operation here; it's very basic, so basic that a programmer cannot really represent high-level concepts in it. It makes me slightly sick to think that people used to have to write large programs in this. Thankfully, most people don't have to experience writing assembly anymore.</p>
+
+
+<p>We're not done yet, though, but we're close. The computer must convert the assembly into machine code. Machine code simply consists of a long hexadecimal sequence telling the <a arrow="true" delay="200" href="javascript:void(0);" id="f_lyf8l67wn9" maxwidth="180px" placement="bottom" title="Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.&#10;">CPU</a> exactly what to do and is completely unreadable to the common human. The conversion from assembly to machine code is not done by the compiler itself, but by a vendor-provided <a arrow="true" delay="200" href="javascript:void(0);" id="f_zwNG10z9SB" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>.</p>
+
+
+<p>Thankfully, we don't need to handle the assembly intermediate step. Without <span class=" nohighlight inline-code" id="f_A12NlRxA8H">&#8211;S</span>, the compiler will just output machine code that we can use immediately.</p>
+
+
+<p>Well that was long. I sincerely hope you haven't seen a hello world example/explanation that long before. Perhaps it was excessive, but I wanted to show you exactly what is going on so you don't get confused later when I talk about compiling, and also get you to appreciate how much fluff languages like Python abstract away for you. I won't even go close to this much into detail in the future, but a lot of people seem to get confused about the role of a compiler and how to even compile and execute a C++ file, so I thought this would be helpful for uninformed individuals. I'm sure some or maybe even most of it was redundant information to you.</p>
+
+
+<p>If you want to play around with this example, you can download it <a download="" href="examples/example1.zip" target="_blank">here</a>. To compile <code lang="none">hello.cc</code>, just run <span class=" nohighlight inline-code" id="f_cYzzlwNQ9d">make</span>. To output assembly to <code lang="none">hello.s</code>, run <span class=" nohighlight inline-code" id="f_UAP0Q2mWvn">make asm</span>. Finally, to print out preprocessor output, do <span class=" nohighlight inline-code" id="f_m1n0D4Ihtk">make pre</span>. Enjoy!</p>
         
 </div>
 
+<h3 id='w' style="padding-top: 80px; margin-top: -80px;">2.1.3: Summary</h3>
+<div class="content">
+<p>We've just looked at a very basic program. You've learned the role of the function main (the function that&#8217;s actually run) as well as learned what printing looks like.</p>
+
+
+<p>C++ is a compiled language. Thus, its source code is turned into machine code by a <a arrow="true" delay="200" href="javascript:void(0);" id="f_Pj3EtOOfs4" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_E0C7uFol9o" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>. To compile your program, run in a shell:</p>
+
+
+<div class="code-cf nohighlight" id="f_dSVaH8rvxr" lang="none">g++ -o &lt;machine code output file name&gt; &lt;path to source&gt;</div>
+
+
+<p>For example, to compile udder.cc to milk, we do:</p>
+
+
+<div class="code-cf nohighlight" id="f_2tgSfY33ou" lang="none">g++ -o milk udder.cc</div>
+
+
+<p>As an aside, I suggest you compile to <code lang="none">milk.exe</code> on Windows.</p>
+
+
+<p>We can run <code lang="none">milk</code>/<code lang="none">milk.exe</code> in the command line by doing <span class=" nohighlight inline-code" id="f_G7zymkxqFp">./milk</span>. We can also open it as you would normally open a file in the system file viewer (Explorer, Finder, etc.), which should open up a command line interface and run the program immediately.</p>
+
+</div>
+
 <!-- Begin footer scripts -->
-<script>;tippy('#f_P7EiHlCCta', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_JXB2p3Jp9y', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_FsgfYXLPXW', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_Va1ocNB5wl', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_1Tk3zirhXZ', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_QipJrzNpvc', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_2O3UK8KCAs', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_X5o7PbHpTI', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_v3tJHjDC9e', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_QwhALSrkOq', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_dOrmIyhNUi', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_8HV0kp9HNC', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_cb3XKSASC6', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_oujkRwjqpO', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_IlI1G8uJsw', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_1h1NNPBKC8', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_vKajaAHTVE"));;
-;tippy('#f_0RO5Fv1okv', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_qobmYgtuOe', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_vi1dXoNIyX', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_VicBiBLkqG', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_mocMseEdrr', {alias: 'compiler', arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_uxysC5l53d', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_sFpfuRUC3P', {alias: 'pointer', arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_rbzEm7shoK', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_XYuoLWm783', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_5bEeaEQCql', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_Ky5Cy423Ms', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_N4nf0osxgz', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_hry2fbh8Iv', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_QJfjmDUBdx', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_N5m9tyyVvx', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_VH9HosEEce"));;
-;hljs.highlightBlock(document.getElementById("f_4WbbNwFP9E"));;
-;hljs.highlightBlock(document.getElementById("f_LKF43kw1PO"));;
-;hljs.highlightBlock(document.getElementById("f_CywdoXIFEm"));;
-;hljs.highlightBlock(document.getElementById("f_RbXdC9l4FJ"));;
-;hljs.highlightBlock(document.getElementById("f_HeUyAOpdAP"));;
-;hljs.highlightBlock(document.getElementById("f_EMh9usEoUm"));;
-;hljs.highlightBlock(document.getElementById("f_1XR3f4B3CQ"));;
-;hljs.highlightBlock(document.getElementById("f_y3GMBQ19iE"));;
-;hljs.highlightBlock(document.getElementById("f_PBueLN1ooN"));;
-;hljs.highlightBlock(document.getElementById("f_MwjogzvQVJ"));;
-;hljs.highlightBlock(document.getElementById("f_3elbuRbTAI"));;
-;hljs.highlightBlock(document.getElementById("f_NbueVbwRQp"));;
-;hljs.highlightBlock(document.getElementById("f_iaXxlkdvm6"));;
-;hljs.highlightBlock(document.getElementById("f_WpxohCr9O3"));;
-;hljs.highlightBlock(document.getElementById("f_57AlXYgy4d"));;
-;hljs.highlightBlock(document.getElementById("f_Lrm7bfBy7p"));;
-;hljs.highlightBlock(document.getElementById("f_Fs2hoobEBH"));;
-;tippy('#f_xyMI4qGpio', {alias: 'executable', arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_oGFgBjR3Ts"));;
-;hljs.highlightBlock(document.getElementById("f_drjFhCa0FH"));;
-;hljs.highlightBlock(document.getElementById("f_y29dYjoTId"));;
-;hljs.highlightBlock(document.getElementById("f_6MoezsrXmp"));;
-;hljs.highlightBlock(document.getElementById("f_etPiJIb38V"));;
-;hljs.highlightBlock(document.getElementById("f_NyEAfYqSgl"));;
-;hljs.highlightBlock(document.getElementById("f_o8CuYlzou1"));;
-;document.getElementById("f_16nrJcM6RQ").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_16nrJcM6RQ").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_XIhEzhFOYM"));;
-;hljs.highlightBlock(document.getElementById("f_jPcacIJMhE"));;
-;hljs.highlightBlock(document.getElementById("f_di8xj2zrtl"));;
-;hljs.highlightBlock(document.getElementById("f_xBKjFy2lfJ"));;
-;hljs.highlightBlock(document.getElementById("f_ytteY9XKlv"));;
-;hljs.highlightBlock(document.getElementById("f_p1UZxTO9Y9"));;
-;hljs.highlightBlock(document.getElementById("f_yyCVLoYnGh"));;
-;hljs.highlightBlock(document.getElementById("f_F1vd60rPmC"));;
-;hljs.highlightBlock(document.getElementById("f_DaswO5LNLm"));;
-;document.getElementById("f_hQS453lGyw").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_hQS453lGyw").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_QNXT5NwFta"));;
-;hljs.highlightBlock(document.getElementById("f_RDLys4uRJ2"));;
-;hljs.highlightBlock(document.getElementById("f_fn9Rw96h2z"));;
-;hljs.highlightBlock(document.getElementById("f_LcRqyLfiHj"));;
-;hljs.highlightBlock(document.getElementById("f_INA2N4v6EB"));;
-;hljs.highlightBlock(document.getElementById("f_Bf6BVF8v76"));;
-;hljs.highlightBlock(document.getElementById("f_zUA9g85ctO"));;
-;hljs.highlightBlock(document.getElementById("f_ZGza5yebdq"));;
-;hljs.highlightBlock(document.getElementById("f_2YBOVe449e"));;
-;hljs.highlightBlock(document.getElementById("f_qVWtZPho0E"));;
-;hljs.highlightBlock(document.getElementById("f_JdkLxI2eUf"));</script>
+<script>;tippy('#f_tad4KTwnbV', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_8d9RooJvir', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_3grXJwy2eF', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_u0IueM5bcn', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_tFxYcvLspz', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_3R60B2tGo4', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_RbH7yMeI9I', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_4Y3zQxsHB5', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_ipVF23q5wq', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_NCHEEaNNH4', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_rxFqeY7oPV', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_bsIFvyRJfc', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_kxJJJlVUSs', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_1KFxLzmcpS', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_0wubMJDcZd', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_vQNF8EhhnM', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_8CRfhyBP7b"));;
+;tippy('#f_UffFS7fxYh', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_swY6lhwevo', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_8EYNuiHrF9', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_epUBk4xFBP', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_YPjKBVFyTa', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'compiler', arrow: 'true', });;
+;tippy('#f_Z3uQ8T91Kk', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_SKuC1AN23x', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'pointer', arrow: 'true', });;
+;tippy('#f_MIdoldkGQZ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_og3PRXblyO', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_0yFIabzP5b', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_jqCXpP5z3v', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_LXLguxMn2L', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_WMRX0g3iTI', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_VJDe5M1Xns', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_TsqI8aZwZZ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_hH6zUNjb7u"));;
+;hljs.highlightBlock(document.getElementById("f_3BpQdE5n4j"));;
+;hljs.highlightBlock(document.getElementById("f_bGqMkoCG5s"));;
+;hljs.highlightBlock(document.getElementById("f_oeRXFkigkM"));;
+;hljs.highlightBlock(document.getElementById("f_yAs38nMxHw"));;
+;hljs.highlightBlock(document.getElementById("f_E30a3McBDS"));;
+;hljs.highlightBlock(document.getElementById("f_HUBZcuM46I"));;
+;hljs.highlightBlock(document.getElementById("f_ZdFsupACcg"));;
+;hljs.highlightBlock(document.getElementById("f_AyVgZrUyp0"));;
+;hljs.highlightBlock(document.getElementById("f_QKdfhby3Ht"));;
+;hljs.highlightBlock(document.getElementById("f_BrGgd5xL0i"));;
+;hljs.highlightBlock(document.getElementById("f_y3dBAdO5a6"));;
+;hljs.highlightBlock(document.getElementById("f_MAUGTi5s3M"));;
+;hljs.highlightBlock(document.getElementById("f_RCHYSMehLf"));;
+;hljs.highlightBlock(document.getElementById("f_zXLOej2gOS"));;
+;hljs.highlightBlock(document.getElementById("f_BoSLFeCtJy"));;
+;tippy('#f_pkliK8c1xb', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'executable', arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_NNiCNfRGvg"));;
+;hljs.highlightBlock(document.getElementById("f_XaHIfL0zE9"));;
+;hljs.highlightBlock(document.getElementById("f_BQJ0Q7knnj"));;
+;hljs.highlightBlock(document.getElementById("f_w3YEHkQ5mg"));;
+;hljs.highlightBlock(document.getElementById("f_oWT1QdjgYl"));;
+;hljs.highlightBlock(document.getElementById("f_pMnYJ2k0qj"));;
+;document.getElementById("f_hdCxKISsOz").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_hdCxKISsOz").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_UNDSQRKm2s"));;
+;hljs.highlightBlock(document.getElementById("f_3kgQ3LSTgV"));;
+;hljs.highlightBlock(document.getElementById("f_DzPGq9V7QE"));;
+;hljs.highlightBlock(document.getElementById("f_GJ2EHw7zyq"));;
+;hljs.highlightBlock(document.getElementById("f_xBheoMGhqb"));;
+;hljs.highlightBlock(document.getElementById("f_wsVU7VaZUs"));;
+;hljs.highlightBlock(document.getElementById("f_aoDoHGgLFe"));;
+;hljs.highlightBlock(document.getElementById("f_HwPcamRX7W"));;
+;hljs.highlightBlock(document.getElementById("f_nwsP1tQ8gD"));;
+;hljs.highlightBlock(document.getElementById("f_ptdmtjyMJd"));;
+;document.getElementById("f_h0BJ2JqX3r").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_h0BJ2JqX3r").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_jDeN8irRLu"));;
+;hljs.highlightBlock(document.getElementById("f_NcYAD4bpXE"));;
+;hljs.highlightBlock(document.getElementById("f_61kr7URKV7"));;
+;hljs.highlightBlock(document.getElementById("f_u7jTYW4Q3j"));;
+;hljs.highlightBlock(document.getElementById("f_ASFQDbT4WL"));;
+;hljs.highlightBlock(document.getElementById("f_Le7Ub1SOdJ"));;
+;hljs.highlightBlock(document.getElementById("f_AbOFvxQAMN"));;
+;hljs.highlightBlock(document.getElementById("f_aK3djzVkPq"));;
+;hljs.highlightBlock(document.getElementById("f_M0ZsLQRtgf"));;
+;hljs.highlightBlock(document.getElementById("f_ixRuUJK0Gm"));;
+;hljs.highlightBlock(document.getElementById("f_q6UPHbXFmt"));;
+;hljs.highlightBlock(document.getElementById("f_JGAGYSQGkL"));;
+;hljs.highlightBlock(document.getElementById("f_nLClyn8REO"));;
+;tippy('#f_lyf8l67wn9', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_zwNG10z9SB', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_A12NlRxA8H"));;
+;hljs.highlightBlock(document.getElementById("f_cYzzlwNQ9d"));;
+;hljs.highlightBlock(document.getElementById("f_UAP0Q2mWvn"));;
+;hljs.highlightBlock(document.getElementById("f_m1n0D4Ihtk"));;
+;tippy('#f_Pj3EtOOfs4', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_E0C7uFol9o', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_dSVaH8rvxr"));;
+;hljs.highlightBlock(document.getElementById("f_2tgSfY33ou"));;
+;hljs.highlightBlock(document.getElementById("f_G7zymkxqFp"));</script>
 <!-- End footer scripts -->
 
 
