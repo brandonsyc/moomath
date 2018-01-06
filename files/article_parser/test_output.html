@@ -26,6 +26,46 @@ top: 20;
 <br>
 <div id="top"></div>
 
+<script>
+var inSidebar = false;
+var lastPXTime = Date.now();
+var delay = 200;
+function lpF() {
+  if (inSidebar) {
+    if (mX < window.innerWidth / 5) {
+      lastPXTime = Date.now();
+    }
+
+    if (Date.now() > lastPXTime + 200) {
+      inSidebar = false;
+      var cN = document.getElementById("sidebar").className;
+      document.getElementById("sidebar").className = cN.replace(" use", "").replace("use", "")
+      lastPXTime = Date.now();
+    }
+  } else {
+    if (mX < window.innerWidth / 10) {
+      if (Date.now() > lastPXTime + 200) {
+        inSidebar = true;
+        document.getElementById("sidebar").className += " use";
+        lastPXTime = Date.now();
+      }
+    } else {
+      lastPXTime = Date.now();
+    }
+  }
+}
+
+var mX = 1000, mY = 0;
+
+function mPL(e) {
+mX = e.pageX;
+mY = e.pageY;
+}
+
+document.addEventListener("mousemove", mPL);
+setInterval(lpF, 20);
+</script>
+
 <div class="container" id="container">
 <div class="sidebar" id="sidebar">
     <h3>Table of Contents</h3>
@@ -36,8 +76,10 @@ Preface
 <li class="t-elem" udderref="d"><b>0.2</b>: Are You Interested?</li></li></ul> <!-- end tree -->
 </div>
 
-<div class="content" id="content">
+<div class="content-c" id="content-c">
 <div class="article">
+<br>
+<br>
 
 <!-- Begin header scripts -->
 <script></script>
@@ -45,16 +87,25 @@ Preface
 <script>;
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>;
+</script>
+<script src="tab-system.js"></script>
+<script>;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>;
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
 <script></script>
 <!-- End header scripts --><h1 id='a' style="padding-top: 80px; margin-top: -80px;">0: Preface</h1>
-<p>This section tries to help you figure out whether this tutorial is right for you.</p><h2 id='b' style="padding-top: 80px; margin-top: -80px;">0.0: Are you Ready?</h2>
+<div class="content"><p>This section tries to help you figure out whether this tutorial is right for you.</p></div><h2 id='b' style="padding-top: 80px; margin-top: -80px;">0.0: Are you Ready?</h2>
 <div class="content">
-<p><b>tl; dr</b>: I expect you to have programmed before in another, <a arrow="true" delay="200" href="javascript:void(0);" id="f_0zekejJM9s" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a> (not <a arrow="true" delay="200" href="javascript:void(0);" id="f_hIKqE8jcWw" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the <a arrow="true" delay="200" href="javascript:void(0);" id="f_bEiroTdzeV" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system. This is Terminal on macOS, Command Prompt on Windows, and various on Linux.&#10;">command line</a> (how to open it on your computer, and the <a arrow="true" delay="200" href="javascript:void(0);" id="f_2QRNrxYIaz" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a> command). Finally, I expect you to
-          understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_eFck04FyjD" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_PKThn4f2KZ" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation: though you don't have to be able to read it quickly!</p>
+<p><b>tl; dr</b>: I expect you to have programmed before in another, <a arrow="true" delay="200" href="javascript:void(0);" id="f_PU3zHYE7vf" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a> (not <a arrow="true" delay="200" href="javascript:void(0);" id="f_eKJ3BwPSce" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the <a arrow="true" delay="200" href="javascript:void(0);" id="f_oWox7jH2Tr" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> (how to open it on your computer, and the <a arrow="true" delay="200" href="javascript:void(0);" id="f_r3uOSwrjrg" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a> command). Finally, I expect you to
+          understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_yqiww7tA29" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_IAAZyDONjw" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation: though you don't have to be able to read it quickly!</p>
 
         
 <p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably object-oriented (OO) and
-          imperative: either a primarily scripting language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_IVbQnm3J0a" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_NNhkVIOH0S" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_Us4lLep0tU" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_2N5boxeusG" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
+          imperative: either a primarily scripting language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_M3NI2nAimL" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_MLLW01Vz9V" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like <a arrow="true" delay="200" href="javascript:void(0);" id="f_qwhiYdnWFZ" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a> or <a arrow="true" delay="200" href="javascript:void(0);" id="f_NWeN0W6eem" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops,
           functions, etc. which are ubiquitous in almost all such programming languages will not be explained beyond features and characteristics specific to C++.</p>
 
         
@@ -68,11 +119,11 @@ Preface
 
         
 <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait and gather more experience. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful,
-          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <a arrow="true" delay="200" href="javascript:void(0);" id="f_U0PKDHxjaE" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with
+          elegant, or appropriate for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like <a arrow="true" delay="200" href="javascript:void(0);" id="f_34EbNfJ8fB" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with
           different conventions, structure, and thinking paradigm.</p>
 
         
-<p>As to more specific requirements, I expect you to know how to navigate folders using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_iRicMRu8BB" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system. This is Terminal on macOS, Command Prompt on Windows, and various on Linux.&#10;">command line</a> on your system (i.e. knowing <a arrow="true" delay="200" href="javascript:void(0);" id="f_JCQQGnxUVg" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_lbCznHJzR6" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_W4v6WZZbyT" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
+<p>As to more specific requirements, I expect you to know how to navigate folders using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_QGADeEWb0W" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a> on your system (i.e. knowing <a arrow="true" delay="200" href="javascript:void(0);" id="f_YgeKGiBrRD" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand <a arrow="true" delay="200" href="javascript:void(0);" id="f_FvjHqQc1gY" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a> and <a arrow="true" delay="200" href="javascript:void(0);" id="f_4I8HLiNTjx" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
       
 </div>
 
@@ -105,7 +156,7 @@ Preface
           Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
 
         
-<p>If you already are an experienced C++ programmer comfortable with types and templates and <span class="cpp inline-code" id="f_32GjiOqZ9j">throw</span> and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
+<p>If you already are an experienced C++ programmer comfortable with types and templates and <span class="cpp inline-code" id="f_LGxdJlKqHR">throw</span> and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
 
       
 </div>
@@ -125,7 +176,7 @@ Preface
         
 <ol type="a">
           <li>want to maximize performance</li>
-          <li>are working with small amounts of processing power and/or <a arrow="true" delay="200" href="javascript:void(0);" id="f_RPviUNYmZa" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a></li>
+          <li>are working with small amounts of processing power and/or <a arrow="true" delay="200" href="javascript:void(0);" id="f_mHrRhvE0Z7" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a></li>
           <li>work with large amounts of data</li>
         </ol>
 
@@ -140,37 +191,72 @@ Preface
 
         
 <p>If you&#8217;re still excited to learn C++, let&#8217;s dive in!</p>
+
+        
+<div class="tab-system" id="f_oCcK4hsq5q" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_6TIzIwSKp4', 'f_oCcK4hsq5q')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_8i6TkboFNi', 'f_oCcK4hsq5q')">Python</button></div><div class="tab-content" id="f_6TIzIwSKp4">
+            <div class="code-cf" id="f_FSudoccG7k">
+              
+#include &lt;iostream&gt; <br />
+ <br />
+int main() { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; "Hello, World!\n"; <br />
+ <br />
+&nbsp;&nbsp;&nbsp;&nbsp;int x = 4; <br />
+ <br />
+&nbsp;&nbsp;&nbsp;&nbsp;if (x &lt;= 5) { <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;std::cout &lt;&lt; "Yay"; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;} <br />
+} <br />
+
+
+            </div>
+          </div>
+          <div class="tab-content" id="f_8i6TkboFNi">
+            <div class="code-cf" id="f_223rHeF6lK">
+              
+print "Hello World!" <br />
+
+
+            </div>
+          </div>
+        </div>
       
 </div>
 
 <!-- Begin footer scripts -->
-<script>;tippy('#f_0zekejJM9s', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_hIKqE8jcWw', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_bEiroTdzeV', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_2QRNrxYIaz', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_eFck04FyjD', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_PKThn4f2KZ', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_IVbQnm3J0a', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_NNhkVIOH0S', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_Us4lLep0tU', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_2N5boxeusG', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_U0PKDHxjaE', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_iRicMRu8BB', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_JCQQGnxUVg', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_lbCznHJzR6', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;tippy('#f_W4v6WZZbyT', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
-;hljs.highlightBlock(document.getElementById("f_32GjiOqZ9j"));;
-;tippy('#f_RPviUNYmZa', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });</script>
+<script>;tippy('#f_PU3zHYE7vf', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_eKJ3BwPSce', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_oWox7jH2Tr', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_r3uOSwrjrg', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_yqiww7tA29', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_IAAZyDONjw', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_M3NI2nAimL', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_MLLW01Vz9V', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_qwhiYdnWFZ', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_NWeN0W6eem', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_34EbNfJ8fB', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_QGADeEWb0W', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_YgeKGiBrRD', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_FvjHqQc1gY', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;tippy('#f_4I8HLiNTjx', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_LGxdJlKqHR"));;
+;tippy('#f_mHrRhvE0Z7', {arrow: 'true', delay: 200, maxwidth: '180px', placement: 'bottom', });;
+;hljs.highlightBlock(document.getElementById("f_FSudoccG7k"));;
+;hljs.highlightBlock(document.getElementById("f_223rHeF6lK"));;
+;document.getElementById("f_oCcK4hsq5q").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_oCcK4hsq5q").getElementsByClassName("tablinks")[0].className+=" active-f";</script>
 <!-- End footer scripts -->
 
 
 </div>
+<br>
+<br>
+<div id="bottom"></div>
 </div>
 </div>
 
 <br>
 <br>
-<div id="bottom"></div>
 
 <script src="https://moomath.com/frame.js"></script>
 <script>

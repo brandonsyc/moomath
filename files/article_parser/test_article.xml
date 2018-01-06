@@ -89,6 +89,19 @@
           should), from what I've seen Rust seems quite a wonderful language with performance benefits comparable to C++. It is relatively new and not yet that mature, but perhaps in the future we’ll see entire operating systems being written in Rust!</p>
 
         <p>If you’re still excited to learn C++, let’s dive in!</p>
+
+        <tab-system>
+          <tab title="C++">
+            <code>
+              <include file="hello_world.cc" />
+            </code>
+          </tab>
+          <tab title="Python">
+            <code>
+              <include file="hello_world.py" />
+            </code>
+          </tab>
+        </tab-system>
       </content>
     </section>
   </section>

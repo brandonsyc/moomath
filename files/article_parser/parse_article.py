@@ -34,25 +34,69 @@ top: 20;
 <br>
 <div id="top"></div>
 
+<script>
+var inSidebar = false;
+var lastPXTime = Date.now();
+var delay = 200;
+function lpF() {
+  if (inSidebar) {
+    if (mX < window.innerWidth / 5) {
+      lastPXTime = Date.now();
+    }
+
+    if (Date.now() > lastPXTime + 200) {
+      inSidebar = false;
+      var cN = document.getElementById("sidebar").className;
+      document.getElementById("sidebar").className = cN.replace(" use", "").replace("use", "")
+      lastPXTime = Date.now();
+    }
+  } else {
+    if (mX < window.innerWidth / 10) {
+      if (Date.now() > lastPXTime + 200) {
+        inSidebar = true;
+        document.getElementById("sidebar").className += " use";
+        lastPXTime = Date.now();
+      }
+    } else {
+      lastPXTime = Date.now();
+    }
+  }
+}
+
+var mX = 1000, mY = 0;
+
+function mPL(e) {
+mX = e.pageX;
+mY = e.pageY;
+}
+
+document.addEventListener("mousemove", mPL);
+setInterval(lpF, 20);
+</script>
+
 <div class="container" id="container">
 <div class="sidebar" id="sidebar">
     <h3>Table of Contents</h3>
     %s
 </div>
 
-<div class="content" id="content">
+<div class="content-c" id="content-c">
 <div class="article">
+<br>
+<br>
 """
 
 document_ending = """
 
 </div>
+<br>
+<br>
+<div id="bottom"></div>
 </div>
 </div>
 
 <br>
 <br>
-<div id="bottom"></div>
 
 <script src="https://moomath.com/frame.js"></script>
 <script>
@@ -116,7 +160,7 @@ def generatePathHeader(path, title):
 
 def contentToHTML(node, article):
     if node.tag == 'desc':
-        return '<p>%s</p>' % node.text
+        return """<div class="content"><p>%s</p></div>""" % node.text
     elif node.tag == 'content':
         return parse_content.parse(node, article)
     elif node.tag == 'title':

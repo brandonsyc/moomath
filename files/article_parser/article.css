@@ -12,13 +12,61 @@
   margin-left: 30px;
 }
 
-ul, ol, p a {
+.tab-content {
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.sidebar {
+  width: 0;
+  transition: width 0.3s ease;
+
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.sidebar {
+  background-color: #eee;
+  transition: width 0.3s ease;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.sidebar.use {
+  width: 20%;
+}
+
+.sidebar.use + .content-c {
+  transition: width 0.3s ease;
+  width: 80%;
+}
+
+.content-c {
+  transition: width 0.15s ease;
+  width: 100%;
+  float: right;
+}
+
+/* Go from zero to full opacity */
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+li a {
 	color: #08b;
 	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
 	font-size: 15px;
 	letter-spacing: 0px;
 	text-decoration: none;
 	transition: 0.5s;
+}
+
+p a {
+  letter-spacing: 0px;
 }
 
 .content {
@@ -30,6 +78,41 @@ ul, ol, p a {
 .inline-code {
   background: #F0F0F0;
   padding: 2px;
+}
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+.tablinks {
+  float: left;
+  cursor: pointer;
+	background-color: #eee;
+	border: none;
+	box-shadow: none;
+	color: #000;
+	padding: 15px;
+	transition: 0.5s;
+  border-bottom: none;
+}
+
+.tablinks.active-f {
+  background-color: #08b;
+  color: #fff;
+  border-bottom: none;
+}
+
+.tab-content {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.bottom {
+  overflow: hidden;
 }
 
 /* HL JS Stuff */
@@ -50,6 +133,11 @@ ul, ol, p a {
 	white-space: nowrap;
   color: #383a42;
   background: #fafafa;
+}
+
+.article p {
+  padding-top: 80px;
+  margin-top: -80px;
 }
 
 .hljs .inline-code {

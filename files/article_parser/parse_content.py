@@ -28,6 +28,9 @@ def generateHLJSScript(attribs, thash):
 def includeJSScriptGen(script_path):
     return """</script>\n<script src="%s"></script>\n<script>""" % script_path
 
+def addTabModule(article):
+    article.addHeaderScript(includeJSScriptGen("tab-system.js"))
+
 def escapeJSScriptGen(contf):
     return """</script>\n%s\n<script>""" % contf
 
@@ -122,6 +125,74 @@ def parseTooltip(ref, article):
 
     attrib["id"] = thash
 
+def parseTabSystem(ref, article):
+    if "tabsystem" not in article.opts:
+        addTabModule(article)
+        article.opts["tabsystem"] = True
+
+    if "max-height" in ref.attrib:
+        if "style" not in ref.attrib:
+            ref.attrib["style"] = ""
+        ref.attrib["style"] += ";max-height: %s%s;" % (height, "" if height[-1] == 'x' else "px")
+    else:
+        if "style" not in ref.attrib:
+            ref.attrib["style"] = ""
+        ref.attrib["style"] += ";max-height: 750px;";
+
+    tabs = []
+    index = 0
+
+    system_hash = randomObjHash()
+
+    for tab in ref.iterfind("tab"):
+        index += 1
+
+        tab.tag = "div"
+        tab.attrib["class"] = "tab-content"
+        tab.attrib["id"] = randomObjHash()
+
+        tabtitle = None
+        if "title" in tab.attrib:
+            tabtitle = tab.attrib["title"]
+
+        if tabtitle is None:
+            tabtitle = str(index)
+
+        tab.attrib.pop("title", None)
+
+        tabs.append([tab.attrib["id"], tabtitle.text if type(tabtitle) == 'Element' else tabtitle])
+        for i in parseContents(tab, article):
+            pass
+
+    button_div = xml.etree.ElementTree.Element("div", {"class" : "tab"})
+
+    for tab in tabs:
+        button = xml.etree.ElementTree.SubElement(button_div, "button", {"class" : "tablinks", "onclick" : "openTabID(event, '%s', '%s')" % (tab[0], system_hash)})
+        button.text = tab[1]
+
+    ref.tag = "div"
+    ref.attrib["class"] = "tab-system"
+    ref.attrib["id"] = system_hash
+
+    if "default" not in ref.attrib:
+        ref.attrib["default"] = "0"
+
+    default_index = ref.attrib["default"]
+
+    article.addFooterScript(""";document.getElementById("%s").getElementsByClassName("tab-content")[%s].style.display="block";document.getElementById("%s").getElementsByClassName("tablinks")[%s].className+=" active-f";""" % (system_hash, default_index, system_hash, default_index))
+    ref.insert(0, button_div)
+    ref.attrib.pop("default", None)
+
+    return XMLtostr(ref)
+
+def parseInlineHTML(ref, article):
+    ref.tag = tagRemove
+    del ref.attrib
+    ref.attrib = {}
+
+    return XMLtostr(ref)
+
+
 def parseVocab(ref, article):
     attrib = ref.attrib
 
@@ -129,6 +200,7 @@ def parseVocab(ref, article):
         attrib["title"] = article.findVocab(ref.text)
 
     parseTooltip(ref, article)
+    return ref
 
 def parseParagraph(node, article):
     for inline_code in itertools.chain(node.iterfind('inline-code'), node.iterfind('inline'), node.iterfind('inl')):
@@ -198,14 +270,15 @@ def parseList(node, article):
         parseParagraph(refc, article)
         refc.tag = "li"
 
-    print attrib, node.tag
-
     return XMLtostr(node)
 
 node_type_dict = {
 "p": parseParagraph,
 "list": parseList,
-"code": parseCode
+"code": parseCode,
+"tab-system": parseTabSystem,
+"inline-html": parseInlineHTML,
+"html": parseInlineHTML
 }
 
 def XMLtostr(node):
