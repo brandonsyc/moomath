@@ -1,0 +1,77 @@
+compiler: A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.
+C++: A popular general-purpose, compiled, object-oriented and imperative programming language, invented by Bjarne Stroustrup in 1979.
+C#: A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.
+Java: A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.
+Python: A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.
+C: A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.
+JS: A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.
+Assembly: A class of low level languages which map very directly to the instructions run by a processor.
+Assembler: A program which converts assembly code to machine code.
+Machine code: The binary instructions run directly by a processor.
+Imperative: A programming paradigm using statements to change a program's state.
+Functional: A programming paradigm treating computation as the result of evaluating statements.
+Declarative: A programming paradigm where the logic of a program is described without description of its implementation.
+Interpreted: A program execution system where an interpreter serves as a relay between the code itself and the processor's instructions.
+Compiled: A program execution system where the result is executed directly by the processor.
+Java Virtual Machine: An environment where Java code is run.
+JVM: Java Virtual Machine; An environment where Java bytecode and other bytecode is run.
+Common Language Infrastructure: An environment where bytecode from languages like C++ (in the case of C++/CLI) and C# are run.
+CLI: Common Language Infrastructure; An environment where bytecode from languages like C++ (in the case of C++/CLI) and C# are run.
+Binary: A number system in base 2, i.e. each digit is either 1 or 0.
+Octal: A number system in base 8, i.e. each digit is one of 0...7.
+Hexadecimal: A number system in base 16, i.e. each digit is one of 0...9, A...F.
+ISO: International Organization for Standardization, an organization which (among many other things) standardizes the C++ language.
+cd: A command in the command line which allows you to navigate folders.
+ls: A command on Unix and Unix-like machines which prints out all the files and folders in the current directory.
+dir: A command on Windows which prints out all the files and folders in the current directory.
+preprocessor: A portion of the C++ compiler which looks at directives, beginning with #, and modifies the outputted source code.
+preprocessor directive: Directions, beginning with #, that the C++ preprocessor uses to modify the outputted source code.
+include: A preprocessor directive telling the compiler to simply insert the contents of the specified file.
+iostream: A C++ header, imported using #include <iostream>, that allows access, among other things, to I/O functions.
+cout: A part of the standard library, found in #include <iostream>, allowing output to the console.
+cin: A part of the standard library, found in #include <iostream>, allowing input through the console to a program.
+binary operator: An operator taking two arguments, like multiplication.
+unary operator: An operator taking a single argument, like unary minus (i.e. the - in -3)
+ternary operator: An operator taking three arguments, testing the first and executing the second if the result was true, executing the third if the result was false.
+CPU: Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.
+GPU: Graphics processing unit, a part of a computer that processes data, and typically consisting of a large number of small threads which operate independently.
+command line: An interface allowing the user to run commands on the computer, provided by the operating system.
+whitespace: Characters like newline, tab, and space that don't print: they show as white on a piece of white paper.
+type: Information representing what kind of data a variable represents.
+32-bit: A computing system where memory addresses are 32 bits or 4 bytes long, allowing up to about 4.3 GB of usable memory.
+64-bit: A computing system where memory addresses are 64 bits or 8 bytes long.
+int: A type representing an integer, defined to be at least 16-bit, and is 32-bit on most 64-bit processors.
+short: A type representing an integer, defined to be at least 16-bit, and is 16-bit on most 64-bit processors.
+char: A type representing a textual character, defined to be and almost always is 8-bit.
+unsigned: A qualifier making an integer type always nonnegative (i.e. always >= 0). Integers are, by default, signed.
+long: A type representing an integer, defined to be at least 32-bit, and is 64-bit on most 64-bit processors.
+long long: A type representing an integer, defined to be at least 64-bit, and is 64-bit on most 64-bit processors.
+scope: A section of code
+one definition rule: The rule that a variable or function with a certain name can only be defined once in a scope.
+PEMDAS: Abbreviation for an order of operations: parentheses, exponentiation, multiplication and division (left to right), addition and subtraction (left to right).
+Increment: Operator to add one to a variable.
+Decrement: Operator to subtract one from a variable.
+cstdint: Header containing information, among other things, about standard integer types of a certain length.
+byte: Group of 8 bits. Can have 2<sup>8</sup> = 256 possible values.
+bit: Single 1 or 0, true or false. The smallest unit of information.
+integer overflow: A property of integers with a set size that causes them to wrap around from their maximum to minimum value.
+integer underflow: A property of integers with a set size that causes them to wrap around from their minimum to maximum value.
+discrete data: Data that can be divided up into an indivisible unit, like number of potatoes.
+continuous data: Data where an indivisible unit is not identifiable, like weight.
+float: A type, usually 32 bits, allowing storage of a signed continuous number.
+double: A type, usually 64 bits, allowing storage of a signed continuous number.
+boolean: A type representing true or false, or a single bit of information.
+cast: An operation allowing conversion between types.
+static_cast: A casting operation converting between numbers using defined methods.
+reinterpret_cast: A casting operation that simply treats the data of a variable with the type information of another.
+switch: A statement which, given an input, jumps to the corresponding case in code.
+ofstream: A class in the standard library, found in #include <fstream>, allowing output to a file from a program.
+ifstream: A class in the standard library, found in #include <fstream>, allowing input from a file to a program.
+RAM: Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD
+pointer: A variable storing the position of another variable in memory.
+object-oriented: A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of "classes."
+object oriented: A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of "classes."
+segmentation fault: An error occurring when a program attempts to access an invalid or disallowed portion of memory.
+seg fault: An error occurring when a program attempts to access an invalid or disallowed portion of memory.
+multithreading: A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.
+executable: A file directly runnable by the computer, requiring no further interpretation.
