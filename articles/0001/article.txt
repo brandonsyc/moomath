@@ -4,7 +4,7 @@ Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a
 
 Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
 
-:: fig :: images/mandelbrot.png :: Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.) :: Figure 1: The Mandelbrot set. ::
+::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
 
 Sure, this fractal is quite pleasing to look at. But as with any object, without some deeper meaning, a lot of beauty is lost. Let's delve into how the Mandelbrot set is generated.
 
@@ -28,30 +28,29 @@ With that out of the way, let's figure out what the Mandelbrot set is about!
 
 Define a function \(f_c(z)=z^2+c\) over the complex numbers. Then the Mandelbrot set is the set of all numbers \(c\) for which the function \(f_c(z)\) does not diverge when iterated from \(z=0\). In other words, \(f_c(f_c(f_c\cdots (z)))\) stays bounded.
 
-Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown:
+Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown
 
-:: fig :: images/complextable1.png :: Iterations after c=(0.2+0.5i) :: Figure 2: The numbers produced by iteration of \(f_c\). ::
+:::fig::images/complextable1.png::Iterations after c=(0.2+0.5i)::Figure 2: The numbers produced by iteration of \(f_c\).::
 
 It seems \(c=0.2+0.5\) does not diverge to infinity; it stays bounded. Thus, it is in the Mandelbrot set. Overlaying a point \(c=0.2+0.5i\) on the original image, we can see that, indeed, the point lies in a black region. (The x and y axes are also indicated.)
-</p>
 
-:: fig :: images/mandelbrot2.png :: Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.) :: Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\). ::
+::fig::images/mandelbrot2.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).::
 
 This repeated calculation is done for every point - or, at least, every pixel in the image - and if the calculation stays bounded to a reasonable number of iterations, we can assume that it probably will stay bounded forever. All the images up to this point have been done with 500 iterations.
 
-But what's so interesting about the Mandelbrot set? The answer lies in its intrinsically fractal nature. For example, suppose we zoom in on the Mandelbrot set, say, on the gray rectangle highlighted here:
+But what's so interesting about the Mandelbrot set? The answer lies in its intrinsically fractal nature. For example, suppose we zoom in on the Mandelbrot set, say, on the gray rectangle highlighted here
 
-:: fig :: images/mandelbrot3.png :: Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.) :: Figure 4: The Mandelbrot set, box around mini-Brot.
+:::fig::images/mandelbrot3.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 4: The Mandelbrot set, box around mini-Brot.::
 
-When we zoom in on that box, we get this image:
+When we zoom in on that box, we get this image
 
-:: fig :: images/mandelbrot4.png :: Mandelbrot Set :: Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).
+:::fig::images/mandelbrot4.png::Mandelbrot Set::Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).::
 
 Wait... what? It's the Mandelbrot Set again! It's just rotated and scaled down. There must be some end to this... let's zoom in on the same spot, but now in this "mini-Brot".
 
-:: fig :: images/mandelbrot5.png :: Mandelbrot Set :: Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot. ::
+::fig::images/mandelbrot5.png::Mandelbrot Set::Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.::
 
-:: fig :: images/mandelbrot6.png :: Mandelbrot Set :: Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail. ::
+:: fig::images/mandelbrot6.png::Mandelbrot Set::Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.::
 
 As we can see, inside of every Mandelbrot set, there's smaller Mandelbrot sets within. (If you're wondering why some parts of the image are gray, gray pixels denote points that go to infinity, but the darker the shade, the slower it diverges.) Cool!
 
@@ -59,21 +58,21 @@ The Mandelbrot set, of course is very popular and famous fractal, but many of it
 
 Remember the numbers produced by the function \(f_c\)? Well, they're complex numbers, and that means they can be graphed! Let's draw lines between them on a coordinate grid to see their movements.
 
-:: fig :: images/mandelbrot7.png :: Mandelbrot Set" :: Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\). ::
+::fig::images/mandelbrot7.png::Mandelbrot Set"::Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).::
 
 We can see that the lines converge towards a certain point, slowly circling around it. This is true for any other point in the main <strong>cardioid</strong>, which is the sideways, heart-shaped object comprising most of the Mandelbrot set's area. Let's try a point outside of the main cardioid, say, \(c=-1.311687+0.062514i\)! (The point \(c\) is indicated with the arrow.)
 
-:: fig :: images/mandelbrot8.png :: Mandelbrot Set :: Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\). ::
+::fig::images/mandelbrot8.png::Mandelbrot Set::Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).::
 
 This point is situated in a much stranger part of the Mandelbrot set, and as you can see, no pattern is clear in its iteration. It is these kinds of points that give the Mandelbrot set, and related fractals, their complexity.
 
 Of course, a natural question is: what happens when you change the function \(f_c(z)\)? Well, let's try it!
 
-:: fig :: images/fractal1.png :: Fractal :: Figure 10: Fractal for \(f_c(z)=z^3+c\).
+::fig::images/fractal1.png::Fractal::Figure 10: Fractal for \(f_c(z)=z^3+c\).::
 
-:: fig :: images/fractal2.png :: Fractal :: Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\). ::
+::fig::images/fractal2.png::Fractal::Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).::
 
-:: fig :: images/fractal3.png :: Fractal :: Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\). ::
+:: fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
 
 Beautiful. They share certain characteristics... but they're all different. In our next article, we examine paths of iteration, fixed points, and other properties of various fractals.
 
@@ -81,7 +80,7 @@ Now, let's see how these images were generated in code. My language of choice wa
 
 First, we define our constants. These are 1. the image's height and width, 2. the bounds on the real axis, 3. the bounds on the imaginary axis, 4. the number of iterations to execute, and 5. the "escape radius," or the magnitude of the complex number where it is treated as if it will go to infinity. For taking a picture of the Mandelbrot set, the following settings are suitable, but you may want to adjust them for greater accuracy. For example, if the fractal boundary is too smooth, increasing the iteration count might help. For most fractals, an escape radius of 2 is too small, so set it to some number like 50 for fractals besides the Mandelbrot set. Changing the real and imaginary boundaries allow us to look at different parts of a fractal, including creating zooms into fractals, which we will consider in another article.
 
-:: code ::
+::code::
 	const int w = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Width, in pixels, of the output image<br>
 	const int h = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Height, in pixels, of the output image<br>
 	<br>
@@ -96,7 +95,7 @@ First, we define our constants. These are 1. the image's height and width, 2. th
 
 Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
 
-:: code ::
+::code::
 	const float colordecrement = 250.0/iterations; &nbsp; &nbsp; &nbsp; &nbsp; // Change in pixel darkness after each iteration<br>
 	const int radiussquared = escaperadius * escaperadius;<br>
 ::

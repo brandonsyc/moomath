@@ -15,9 +15,18 @@ rawFile.onreadystatechange = function () {
 			var out = "<p>";
 			
 			for (var i = 0; i < array.length; i++) {
-				out += "\t" + array[i] + "\n";
-				if (array[i] === "") {
-					out += "</p>\n\n<p>\n";
+				if (array[i].includes("::")) {
+					var pars = array[i].split("::");
+					out += "<figure>\n\t<img src=\"" + pars[1] + "\" alt=\"" + pars[2] + "\">\n\t<figcaption>" + pars[3] + "</figcaption>\n</figure>";
+				} else if (array[i] === "") {
+					if (!array[i - 1].includes("::")) {
+						out += "</p>\n\n";
+					}
+					if (!array[i + 1].includes("::")) {
+						out += "<p>\n";
+					}
+				} else {
+					out += "\t" + array[i] + "\n";
 				}
 			}
 			
