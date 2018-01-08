@@ -1,3 +1,4 @@
-NUMBER 1 - anematode - 31 December 1999 - 0001
-NUMBER 2 - anematode - 31 December 1999 - 0002
-NUMBER 3 - anematode - 31 December 1999 - 0003
+Fractals in the Complex Plane – 18 May, 2017 – anematode - 0001
+The Mandelbrot Set – 31 May, 2017 – anematode - 0002
+Base-Motif Fractals – 6 July, 2017 – anematode - 0003
+The Lévy C curve – 8 July, 2017 – anematode - 0004
