@@ -1,0 +1,11 @@
+#include <iostream>
+
+void writeMilk() {
+  std::cout << "milk";
+}
+
+int main() {
+  writeMilk();
+  writeMilk();
+  writeMilk();
+}

@@ -28,6 +28,12 @@
   height: 100%;
 }
 
+.article h1, h2, h3, h4, h5 {
+  margin: auto;
+	max-width: 1000px;
+	text-align: justify;
+}
+
 .sidebar {
   background-color: #eee;
   transition: width 0.3s ease;

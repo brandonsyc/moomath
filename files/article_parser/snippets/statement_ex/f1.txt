@@ -1,0 +1,7 @@
+<statement_1>;
+<statement_2>;            	// Okay
+
+<statement_1>; <statement_2>; // Okay
+
+<statement_1>
+<statement_2>;            	// Misinterpretation by compiler, likely error

@@ -1,0 +1,24 @@
+#include <iostream>
+
+int f(int a, int b) { // fine
+  return a * b;
+}
+
+int f(int c, int d) { // error
+  return c + d;
+}
+
+int f(int a) { // fine
+  return a * a;
+}
+
+int main() {
+  int c = 5; // fine
+  int c = 9; // error
+
+  c = 9; // fine
+
+  {
+    int c = 9; // fine
+  }
+}

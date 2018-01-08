@@ -1,0 +1,9 @@
+int main() {
+  int c = 5;
+
+  {
+    c = 4;
+  }
+
+  std::cout << c << std::endl;
+}

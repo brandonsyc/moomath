@@ -2,6 +2,7 @@ import xml.etree.ElementTree
 import itertools
 import random
 import string
+import codecs
 from xml.sax.saxutils import escape
 
 nilRef = "javascript:void(0);"
@@ -333,6 +334,13 @@ def parseFigure(node, article):
 
     return XMLtostr(node)
 
+def parseTable(node, article):
+    for row in node.iterfind('tr'):
+        for cell in node.iterfind('th'):
+            parseParagraph(cell, article)
+
+    return XMLtostr(node)
+
 node_type_dict = {
 "p": parseParagraph,
 "list": parseList,
@@ -342,7 +350,8 @@ node_type_dict = {
 "html": parseInlineHTML,
 "figure": parseFigure,
 "text": parseText,
-"txt": parseText
+"txt": parseText,
+"table": parseTable
 }
 
 def XMLtostr(node):
@@ -392,7 +401,7 @@ def parseInclude(node, article):
     if "loc" not in attrib:
         raise AttributeError("No file location specified for include.")
 
-    node.text = escapeTabify(open(attrib["loc"], 'r').read()).replace('\n', newlineInsert)
+    node.text = escapeTabify(codecs.open(attrib["loc"], 'r', 'utf-8').read()).replace('\n', newlineInsert)
     node.tag = tagRemove
     del node.attrib
     node.attrib = {}

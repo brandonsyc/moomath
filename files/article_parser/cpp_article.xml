@@ -526,7 +526,7 @@
 
           <p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and
             <inl lang="python">if __name__ == "__main__"</inl>
-            in Python. If we called our function "main1" instead, nothing will actually be run.</p>
+            <link to="https://stackoverflow.com/questions/419163/what-does-if-name-main-do">in Python</link>. If we called our function "main1" instead, nothing will actually be run.</p>
 
           <p>At the end of third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
 
@@ -667,5 +667,237 @@
         </content>
       </section>
     </section>
+
+    <section>
+      <title>Basic C++ Grammar</title>
+
+      <content>Before we begin, I just wanted to outline the most basic aspects of reading and writing C++. If you know Java or C# this will be almost completely redundant, but Python and JS programmers might find it new.</content>
+
+      <section>
+        <title>Statements</title>
+
+        <content>
+          <p>As a C-family language, C++'s statement separator is the semicolon. Multiple statements can appear on the same line like so. Semicolons are not optional.</p>
+
+          <code>
+            <include file="snippets/statement_ex/f1.txt"/>
+          </code>
+
+          <p>Statements can be split over multiple lines, though, if the newline can be interpreted as plain whitespace. For example,</p>
+
+          <code>
+            <include file="snippets/statement_ex/f2.txt"/>
+          </code>
+
+          <p>compiles fine, but</p>
+
+          <code>
+            <include file="snippets/statement_ex/f3.txt"/>
+          </code>
+
+          <p>does not.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Variable Initialization</title>
+
+        <content>
+          <p>C++ is strongly typed. That is, every function has a specific type it returns, and every variable has a specific type. Initializing and setting a variable is done like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f1.txt"/>
+          </code>
+
+          <p>or, since C++11, using the uniform initialization syntax, like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f2.txt"/>
+          </code>
+
+          <p>For example, initializing an
+            <inl>int a</inl>
+            to 5 can be done like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f3.txt"/>
+          </code>
+
+          <p>Which you choose is mostly a personal preference. I will use the first syntax because it will probably be more familiar to you. We can initialize multiple variables of the same type like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f4.txt"/>
+          </code>
+
+          <p>You can allocate variables without setting their value like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f5.txt"/>
+          </code>
+
+          <p>but this can be dangerous because accessing their values can return junk values. It might also trigger certain compiler warnings. As a rule of thumb, I suggest you set all variables when you initialize them, unless you are in an extremely tight
+            performance area. Even then it is a miniscule benefit at best.</p>
+
+          <p>Variable names are allowed to contain alphanumeric characters, _ (underscore), and $ (dollar sign). They may not start with a number. Names are case-sensitive, so UdDeR is a different variable from udder.</p>
+
+          <p>At any point in code we can reassign a variable, like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f6.txt"/>
+          </code>
+        </content>
+      </section>
+
+      <section>
+        <title>Functions</title>
+        <content>
+        <p>The syntax for a function is like so:</p>
+
+        <code>
+          <include file="snippets/function_ex/f1.txt"/>
+        </code>
+
+        <p>The rules for function naming and variable naming are the same. For example, suppose we want to implement a function called "square" which squares a given <inl>int</inl> and returns an <inl>int</inl>. We could do that like so:</p>
+
+        <code>
+          <include file="snippets/function_ex/f2.txt"/>
+        </code>
+
+        <p>More succinctly, we could write it like so:</p>
+
+        <code>
+          <include file="snippets/function_ex/f3.txt"/>
+        </code>
+
+        <p>Let's try it out!</p>
+
+        <code>
+          <include file="snippets/function_ex/f4.txt"/>
+        </code>
+
+        <p>This program simply calculates 52, 54, and 138.</p>
+
+        <p>If a function returns nothing, the "return type" is called <inl>void</inl>. For example:</p>
+
+        <code>
+          <include file="snippets/function_ex/f5.txt"/>
+        </code>
+
+        <p>will cause an error. Thus,</p>
+
+        <code>
+          <include file="snippets/function_ex/f6.txt"/>
+        </code>
+
+        <p>will print "milkmilkmilk" to the console. <inl>void</inl> is not a normal type, so doing something like</p>
+
+        <code>
+          int milky = writeMilk();
+        </code>
+
+        <p>won’t compile.</p>
+
+      </content>
+    </section>
+
+    <section>
+
+      <title>Scope</title>
+
+<content>
+<p>Various constructs, such as loops (which we’ll learn the syntax for later) and functions, create what is known as a scope. Basically, new scopes are made by any pair of curly braces containing statements. Things inside of a scope cannot leak out of a scope and used by surrounding code unless explicitly done so. Things in “shallower” parent scopes, including the global scope, however, can be used in a scope. For example:</p>
+
+<code>
+  <include file="snippets/scope_ex/f1.txt" />
+</code>
+
+<p>doesn’t compile. This does, however:</p>
+
+<code>
+  <include file="snippets/scope_ex/f2.txt" />
+</code>
+
+<p>Note that the initialization of c needs to be before the function derp.</p>
+
+<p>In a scope, we initialize a variable with the same name as another variable in another scope, and any references to that variable name will resolve to the variable we just declared. For example,</p>
+
+<code>
+  <include file="snippets/scope_ex/f3.txt" />
+</code>
+
+<p>will output 5, but</p>
+
+<code>
+  <include file="snippets/scope_ex/f4.txt" />
+</code>
+
+<p>outputs 4.</p>
+
+<p>When writing code, we typically give each deeper scope a deeper indentation level. Unlike in Python, which uses these indents in lieu of the curly braces, the compiler does not care about your indents, only your human readers.</p>
+
+<p>This scope concept should hopefully be familiar to you, as it is is present in most languages.</p>
+
+</content>
+
+</section>
+
+<section>
+<title>One Definition Rule</title>
+
+<content>
+  <p>You cannot redefine a function with the same name or redefine a variable with the same name in the same scope. For example:</p>
+
+  <code>
+    <include file="snippets/odr_ex/f1.txt" />
+  </code>
+
+  <p>As you might find out the hard way later, this also applies if the source of whatever header file you <inl>#include</inl> redefines this function. The solution to this is namespaces, which we'll talk about later.</p>
+
+  <p>C++'s operators are relatively standard in terms of their mathematical manipulation capabilities. For now you only need to concern yourself with multiplication, addition, subtraction, and division.</p>
+
+  <p>Like in most other C-family languages an expression is evaluated according to <vocab>PEMDAS</vocab> (or, since C++ doesn’t have an exponential operator, PMDAS). For example,</p>
+
+  <code>
+    <include file="snippets/odr_ex/f2.txt" />
+  </code>
+
+<p>is evaluated like <inl>c = (((4 * 8) + (8 / 4)) – 8) * 8</inl>, resulting in 208.</p>
+
+<p>There are quite a few more operators than these four. Four related operators that are probably familiar to you are +=, -=, *=, and /=. These operators can add, subtract, multiply, and divide, respectively, a variable in place. For example:</p>
+
+<code>
+  <include file="snippets/odr_ex/f3.txt" />
+</code>
+
+<p>There are two other operators to remember: increment and decrement operators. They are a bit strange to the uninformed, but here is a brief rundown:</p>
+
+<list enum="number">
+<item>To increment a variable x, or add 1 to it, we write ++x; or x++;</item>
+<item>The return value of ++x; is x after it is incremented, this is called preincrement</item>
+<item>The return value of x++; is x before it is incremented, this is called postincrement</item>
+<item>The same applies to decrements, where the syntax is --x; or x--;</item>
+</list>
+
+<p>A simple demonstration I found <link to="https://stackoverflow.com/questions/1094872/is-there-a-difference-between-x-and-x-in-java">here</link>:</p>
+
+<code>
+  <include file="snippets/odr_ex/f4.txt" />
+</code>
+
+<p>This program outputs:</p>
+
+<code lang="none">6, 6, 5, 6</code>
+
+<p>Note that there are a lot of other ways to write the code in this section from a syntactic point of view, but do exactly the same thing from a processor's point of view. These will be explored in time, but to reduce complexity, I just wanted to mention the most basic syntax, and only use this basic syntax in examples.</p>
+
+<p>Please play around with these concepts yourself! They are incredibly important. If you've used Java or C# before, all this should be rather familiar, except for the fact that no container class is needed here.</p>
+
+<p>Now that you understand basic syntax, let's learn about the fundamental types!</p>
+
+
+</content>
+    </section>
   </section>
+</section>
 </article>
