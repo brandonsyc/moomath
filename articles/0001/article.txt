@@ -3,9 +3,8 @@ Ever since the term was introduced by <a href="https://en.wikipedia.org/wiki/Ben
 Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a href="http://dictionary.com" target="_blank">Dictionary.com</a> defines the word fractal to mean "<i>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or physical properties of the structure, as the perimeter of a curve or the flow rate in a porous medium, behave as if the dimensions of the structure (fractal dimensions) are greater than the spatial dimensions.</i>" This is quite wordy, sure, but to get a better idea of what a fractal is, let's look at some examples.
 
 Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
-</p>
 
-:: fig :: images/mandelbrot.png :: Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.) :: Figure 1: The Mandelbrot set.</figcaption> ::
+:: fig :: images/mandelbrot.png :: Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.) :: Figure 1: The Mandelbrot set. ::
 
 Sure, this fractal is quite pleasing to look at. But as with any object, without some deeper meaning, a lot of beauty is lost. Let's delve into how the Mandelbrot set is generated.
 
@@ -30,7 +29,6 @@ With that out of the way, let's figure out what the Mandelbrot set is about!
 Define a function \(f_c(z)=z^2+c\) over the complex numbers. Then the Mandelbrot set is the set of all numbers \(c\) for which the function \(f_c(z)\) does not diverge when iterated from \(z=0\). In other words, \(f_c(f_c(f_c\cdots (z)))\) stays bounded.
 
 Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown:
-</p>
 
 :: fig :: images/complextable1.png :: Iterations after c=(0.2+0.5i) :: Figure 2: The numbers produced by iteration of \(f_c\). ::
 
