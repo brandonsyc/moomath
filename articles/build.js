@@ -41,10 +41,10 @@ rawFile.onreadystatechange = function () {
 			for (var i = 0; i < array.length; i++) {
 				if (array[i].includes("::fig::")) {
 					var pars = array[i].split("::");
-					out += "<figure>\n\t<img src=\"" + pars[2] + "\" alt=\"" + pars[3] + "\">\n\t<figcaption>" + pars[4] + "</figcaption>\n</figure>\n";
+					out += "<figure><img src=\"" + pars[2] + "\" alt=\"" + pars[3] + "\"><figcaption>" + pars[4] + "</figcaption></figure>";
 				} else if (array[i].includes("::code::")) {
 					setting = "code";
-					out += "<pre class=\"prettyprint\">\n";
+					out += "<pre class=\"prettyprint\">";
 				} else if (array[i] === "::") {
 					if (setting === "code") {
 						out += "</pre>";
@@ -52,13 +52,13 @@ rawFile.onreadystatechange = function () {
 					setting = "";
 				} else if (array[i] === "" && setting === "") {
 					if (!array[i - 1].includes("::")) {
-						out += "</p>\n\n";
+						out += "</p>";
 					}
 					if (!array[i + 1].includes("::")) {
-						out += "<p>\n";
+						out += "<p>";
 					}
 				} else {
-					out += "\t" + array[i] + "\n";
+					out += array[i]+ "\n";
 				}
 			}
 			

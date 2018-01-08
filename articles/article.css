@@ -35,6 +35,9 @@ a {
 	color: #08b;
 	text-decoration: none;
 }
+strong {
+	font-weight: 900;
+}
 .header {
 	margin: 100px auto;
 	max-width: 960px;
