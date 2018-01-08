@@ -18,7 +18,7 @@ rawFile.onreadystatechange = function () {
 				block.appendChild(title);
 				
 				var author = document.createElement("p");
-				author.innerHTML = "by <a href=\"https://github.com/" + sub[1] + "\" target=\"_blank\">" + sub[1] + "</a> &ndash; " + sub[2];
+				author.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
 				block.appendChild(author);
 				
 				var text = document.createElement("p");
@@ -38,7 +38,7 @@ rawFile.onreadystatechange = function () {
 				
 				var more = document.createElement("p");
 				more.classList.add("more");
-				more.innerHTML = "<a href=\"#\">Read More</a>";
+				more.innerHTML = "<a href=\"" + sub[3] + "\">Read More</a>";
 				block.appendChild(more);
 			}
 		}
