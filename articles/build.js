@@ -7,6 +7,29 @@ rawFile.onreadystatechange = function () {
 	if (rawFile.readyState === 4) {
 		if (rawFile.status === 200 || rawFile.status === 0) {
 			var array = rawFile.responseText.split("\n");
+				
+			var rf2 = new XMLHttpRequest();
+			rf2.open("GET", "https://nichodon.github.io/articles/list.txt", false);
+			rf2.onreadystatechange = function () {
+				if (rf2.readyState === 4) {
+					if (rf2.status === 200 || rf2.status === 0) {
+						var sub = rf2.responseText.split("\n")[path - 1].split(" - ");
+						
+						var header = document.createElement("header");
+						header.classList.add("header");
+						document.body.appendChild(header);
+						
+						var h1 = document.createElement("h1");
+						h1.innerHTML = sub[0];
+						header.appendChild(h1);
+						
+						var p = document.createElement("p");
+						p.innerHTML = "by <a href=\"https://github.com/" + sub[1] + "\" target=\"_blank\">" + sub[1] + "</a> &ndash; " + sub[2];
+						header.appendChild(p);
+					}
+				}
+			};
+			rf2.send(null);
 			
 			var article = document.createElement("div");
 			article.classList.add("article");

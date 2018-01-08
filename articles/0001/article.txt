@@ -30,7 +30,7 @@ Define a function \(f_c(z)=z^2+c\) over the complex numbers. Then the Mandelbrot
 
 Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown
 
-:::fig::images/complextable1.png::Iterations after c=(0.2+0.5i)::Figure 2: The numbers produced by iteration of \(f_c\).::
+::fig::images/complextable1.png::Iterations after c=(0.2+0.5i)::Figure 2: The numbers produced by iteration of \(f_c\).::
 
 It seems \(c=0.2+0.5\) does not diverge to infinity; it stays bounded. Thus, it is in the Mandelbrot set. Overlaying a point \(c=0.2+0.5i\) on the original image, we can see that, indeed, the point lies in a black region. (The x and y axes are also indicated.)
 
@@ -96,8 +96,8 @@ const int escaperadius = 2; // Critical radius determining non-boundedness under
 Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
 
 ::code::
-const float colordecrement = 250.0/iterations; &nbsp; &nbsp; &nbsp; &nbsp; // Change in pixel darkness after each iteration<br>
-const int radiussquared = escaperadius * escaperadius;<br>
+const float colordecrement = 250.0/iterations; &nbsp; &nbsp; &nbsp; &nbsp; // Change in pixel darkness after each iteration
+const int radiussquared = escaperadius * escaperadius;
 ::
 
 Hopefully this has been a good introduction to fractals in the complex plane!
