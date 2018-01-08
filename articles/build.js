@@ -7,9 +7,9 @@ rawFile.onreadystatechange = function () {
 	if (rawFile.readyState === 4) {
 		if (rawFile.status === 200 || rawFile.status === 0) {
 			var array = rawFile.responseText.split("\n");
-			console.log(array);
 			
 			var article = document.createElement("div");
+			article.classList.add("article");
 			document.body.appendChild(article);
 			
 			var out = "<p>";
@@ -27,7 +27,7 @@ rawFile.onreadystatechange = function () {
 						out += "</pre>";
 					}
 					setting = "";
-				} else if (array[i] === "") {
+				} else if (array[i] === "" && setting === "") {
 					if (!array[i - 1].includes("::")) {
 						out += "</p>\n\n";
 					}

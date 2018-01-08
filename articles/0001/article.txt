@@ -50,7 +50,7 @@ Wait... what? It's the Mandelbrot Set again! It's just rotated and scaled down. 
 
 ::fig::images/mandelbrot5.png::Mandelbrot Set::Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.::
 
-:: fig::images/mandelbrot6.png::Mandelbrot Set::Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.::
+::fig::images/mandelbrot6.png::Mandelbrot Set::Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.::
 
 As we can see, inside of every Mandelbrot set, there's smaller Mandelbrot sets within. (If you're wondering why some parts of the image are gray, gray pixels denote points that go to infinity, but the darker the shade, the slower it diverges.) Cool!
 
@@ -72,7 +72,7 @@ Of course, a natural question is: what happens when you change the function \(f_
 
 ::fig::images/fractal2.png::Fractal::Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).::
 
-:: fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
+::fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
 
 Beautiful. They share certain characteristics... but they're all different. In our next article, we examine paths of iteration, fixed points, and other properties of various fractals.
 
@@ -81,16 +81,16 @@ Now, let's see how these images were generated in code. My language of choice wa
 First, we define our constants. These are 1. the image's height and width, 2. the bounds on the real axis, 3. the bounds on the imaginary axis, 4. the number of iterations to execute, and 5. the "escape radius," or the magnitude of the complex number where it is treated as if it will go to infinity. For taking a picture of the Mandelbrot set, the following settings are suitable, but you may want to adjust them for greater accuracy. For example, if the fractal boundary is too smooth, increasing the iteration count might help. For most fractals, an escape radius of 2 is too small, so set it to some number like 50 for fractals besides the Mandelbrot set. Changing the real and imaginary boundaries allow us to look at different parts of a fractal, including creating zooms into fractals, which we will consider in another article.
 
 ::code::
-const int w = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Width, in pixels, of the output image<br>
-const int h = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Height, in pixels, of the output image<br>
-<br>
-const float re_min = -2.5;&nbsp; // Real value of the left edge of the image<br>
-const float re_max = 1.5; &nbsp; // Real value of the right edge of the image<br>
-const float im_min = -2; &nbsp;&nbsp; // Imaginary value of the bottom edge of the image<br>
-const float im_max = 2; &nbsp; &nbsp; // Imaginary value of the top edge of the image<br>
-<br>
-const int iterations = 255; // Number of iterations required to assume boundedness under iteration<br>
-const int escaperadius = 2; // Critical radius determining non-boundedness under iteration<br>
+const int w = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Width, in pixels, of the output image
+const int h = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Height, in pixels, of the output image
+
+const float re_min = -2.5;&nbsp; // Real value of the left edge of the image
+const float re_max = 1.5; &nbsp; // Real value of the right edge of the image
+const float im_min = -2; &nbsp;&nbsp; // Imaginary value of the bottom edge of the image
+const float im_max = 2; &nbsp; &nbsp; // Imaginary value of the top edge of the image
+
+const int iterations = 255; // Number of iterations required to assume boundedness under iteration
+const int escaperadius = 2; // Critical radius determining non-boundedness under iteration
 ::
 
 Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
