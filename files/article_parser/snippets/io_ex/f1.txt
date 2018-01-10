@@ -1,0 +1,9 @@
+#include <iostream>
+
+int main() {
+  int s;
+  std::cout << "What integer do you want?\n";
+  std::cin >> s;
+
+  std::cout << "The square of " << s << " is " << s * s << '\n';
+}

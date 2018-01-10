@@ -1,0 +1,10 @@
+#include <iostream>
+#include <string>
+
+int main() {
+  std::string s;
+  std::cout << "What is your name?\n";
+  std::cin >> s;
+
+  std::cout << "I cordially salute you, " << s << "!\n";
+}

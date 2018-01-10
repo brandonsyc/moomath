@@ -1,0 +1,22 @@
+#include <iostream>
+
+void print_number(int a) {
+  switch (a) {
+   case 0: std::cout << "zero";
+   case 1: std::cout << "one";
+   case 2: std::cout << "two";
+   case 3: std::cout << "three";
+   case 4: std::cout << "four";
+   case 5: std::cout << "five";
+   case 6: std::cout << "six";
+   case 7: std::cout << "seven";
+   case 8: std::cout << "eight";
+   case 9: std::cout << "nine";
+
+   default: std::cout << "unknown";
+ }
+}
+
+int main() {
+  print_number(0);
+}

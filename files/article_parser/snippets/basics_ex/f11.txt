@@ -1,0 +1,14 @@
+def gcd(a, b):
+  if a % b == 0:
+    return b
+  else:
+    return gcd(b, a % b)
+
+def lcm(a, b):
+  return b / gcd(a, b) * a
+
+print("Input two integers.")
+x = int(raw_input())
+y = int(raw_input())
+
+print("The lcm of %s and %s is %s." % (x, y, lcm(x, y)))

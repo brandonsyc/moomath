@@ -1,0 +1,3 @@
+for (<initalization>; <condition>; <increment>) {
+  <statement(s)>;
+}

@@ -1,0 +1,26 @@
+#include <iostream>
+
+void how_many_buckets(double c) {
+  c += 0.5;
+  std::cout << "I have " << c << " buckets of milk!\n";
+}
+
+long bucketCount() {
+  return 5400;
+}
+
+int main() {
+  int a = 4;
+  long double c = a;
+
+  // c is now 4.0
+  std::cout << c << '\n';
+
+  bool d = a; // d is now true
+  std::cout << d << '\n';
+
+  a = 0;
+  bool d = a; // d is now false
+
+  how_many_buckets(bucketCount());
+}

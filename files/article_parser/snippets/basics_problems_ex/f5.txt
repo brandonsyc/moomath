@@ -1,0 +1,12 @@
+#include <iostream>
+
+int main() {
+  int x = 0;
+  unsigned int z = 0;
+
+  while (x-- > 0) {
+    z--;
+  }
+
+  std::cout << x << ' ' << z << '\n';
+}

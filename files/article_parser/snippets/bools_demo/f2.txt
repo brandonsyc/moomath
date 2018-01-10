@@ -1,0 +1,18 @@
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  bool a = true;
+  bool b = false;
+
+  bool c = a || b; // true
+  bool d = !a; // false
+  bool e = !b; // true
+  bool f = a && b; // false
+
+  std::cout << std::boolalpha; // prints as true or false
+  std::cout << c << '\n';
+  std::cout << d << '\n';
+  std::cout << e << '\n';
+  std::cout << f << '\n';
+}
