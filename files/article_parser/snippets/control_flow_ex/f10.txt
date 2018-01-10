@@ -1,0 +1,10 @@
+def convert_number(a):
+  if a == 0:
+    return "zero"
+  elif a == 1:
+    return "one"
+  elif a == 2:
+    return "two"
+  # ...
+  else:
+    return "unknown"

@@ -2,6 +2,7 @@ import xml.etree.ElementTree
 import itertools
 import random
 import string
+import codecs
 from xml.sax.saxutils import escape
 
 nilRef = "javascript:void(0);"
@@ -44,6 +45,7 @@ def randomObjHash(length = 10):
 tagRemove = randomObjHash() + randomObjHash()
 newlineInsert = randomObjHash() + randomObjHash()
 tabInsert = randomObjHash() + randomObjHash()
+spaceInsert = randomObjHash() + randomObjHash()
 
 def addTippyModule(article):
     article.addHeaderScript(includeJSScriptGen(tippyFile))
@@ -333,6 +335,13 @@ def parseFigure(node, article):
 
     return XMLtostr(node)
 
+def parseTable(node, article):
+    for row in node.iterfind('tr'):
+        for cell in node.iterfind('th'):
+            parseParagraph(cell, article)
+
+    return XMLtostr(node)
+
 node_type_dict = {
 "p": parseParagraph,
 "list": parseList,
@@ -342,7 +351,8 @@ node_type_dict = {
 "html": parseInlineHTML,
 "figure": parseFigure,
 "text": parseText,
-"txt": parseText
+"txt": parseText,
+"table": parseTable
 }
 
 def XMLtostr(node):
@@ -379,7 +389,7 @@ def escapeTabify(strf):
         if (findex == -1):
             continue
 
-        line = tabInsert * (findex // 2) + line[findex:]
+        line = tabInsert * (findex) + line[findex:]
         p += line + '\n'
     return p
 
@@ -391,8 +401,10 @@ def parseInclude(node, article):
         attrib["loc"] = attrib["file"]
     if "loc" not in attrib:
         raise AttributeError("No file location specified for include.")
-
-    node.text = escapeTabify(open(attrib["loc"], 'r').read()).replace('\n', newlineInsert)
+    if "notabify" in attrib:
+        node.text = codecs.open(attrib["loc"], 'r', 'utf-8').read().replace('\n', newlineInsert).replace(' ', spaceInsert)
+    else:
+        node.text = escapeTabify(codecs.open(attrib["loc"], 'r', 'utf-8').read()).replace('\n', newlineInsert)
     node.tag = tagRemove
     del node.attrib
     node.attrib = {}
@@ -403,4 +415,4 @@ def parseIncludes(node, article):
 
 def parse(node, article):
     parseIncludes(node, article)
-    return '<div class="content">\n%s\n</div>' % ('\n'.join(parseContents(node, article)).replace("<%s>" % tagRemove, '\n').replace("</%s>" % tagRemove, '\n').replace(newlineInsert, ' <br />\n').replace(tabInsert, '&nbsp;&nbsp;&nbsp;&nbsp;'))
+    return '<div class="content">\n%s\n</div>' % ('\n'.join(parseContents(node, article)).replace("<%s>" % tagRemove, '\n').replace("</%s>" % tagRemove, '\n').replace(newlineInsert, ' <br />\n').replace(tabInsert, '&nbsp;&nbsp;').replace(spaceInsert, '&nbsp;'))

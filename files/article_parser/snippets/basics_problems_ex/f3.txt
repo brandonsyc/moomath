@@ -1,0 +1,13 @@
+#include <iostream>
+
+int main() {
+  int x = 5;
+  int y = ++x;
+
+  int sum = 0;
+  for (; y < 2 * x; ++y) {
+    sum += y;
+  }
+
+  std::cout << sum << '\n';
+}

@@ -28,6 +28,45 @@
   height: 100%;
 }
 
+.article h1, h2, h3, h4, h5 {
+  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+  margin: auto;
+	max-width: 1000px;
+	text-align: justify;
+}
+
+.article table {
+  overflow-x: scroll;
+  padding: 10px;
+}
+
+.article tr {
+  overflow-x: scroll;
+}
+
+.article th {
+  color: #333;
+	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	letter-spacing: 0px;
+	margin: 0;
+	overflow-x: auto;
+	padding: 10px;
+	text-align: left;
+}
+
+.article th {
+  font-weight: normal;
+}
+
+.article th.h1 {
+  font-weight: bolder;
+  font-size: 18px;
+}
+
+.article th.h2 {
+  font-weight: bold;
+}
+
 .sidebar {
   background-color: #eee;
   transition: width 0.3s ease;
@@ -73,6 +112,10 @@ li a {
 
 p a {
   letter-spacing: 0px;
+}
+
+.tab-system {
+  padding: 10px;
 }
 
 .content {

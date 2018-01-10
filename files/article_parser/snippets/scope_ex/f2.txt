@@ -1,0 +1,11 @@
+int c = 5;
+
+void derp() {
+  c *= 4;
+}
+
+int main() {
+  derp();
+
+  std::cout << c << "\n";
+}

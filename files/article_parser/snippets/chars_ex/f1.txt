@@ -1,0 +1,3 @@
+char a = 0;
+signed char b = -5;
+unsigned char c = 5;

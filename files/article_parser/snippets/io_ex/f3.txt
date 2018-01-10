@@ -1,0 +1,10 @@
+#include <fstream>
+
+int main() {
+  std::ofstream file;
+  file.open("udder.txt");
+
+  file << "Lorem ipsum dolor sit amet.\nCows are beautiful.";
+
+  file.close();
+}

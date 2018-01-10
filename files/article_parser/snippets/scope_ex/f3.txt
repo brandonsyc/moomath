@@ -1,0 +1,10 @@
+int main() {
+  int c = 5;
+
+  { // Creates a scope
+    int c = 3; // Different variable from the first
+    c = 4;    // Modifies the second c
+  }
+
+  std::cout << c << std::endl; // References first c
+}

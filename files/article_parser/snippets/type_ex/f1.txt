@@ -1,0 +1,2 @@
+int udder_count = 15; // Great!
+bucket_count = 15;    // Error

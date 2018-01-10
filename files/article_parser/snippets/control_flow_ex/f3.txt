@@ -1,0 +1,9 @@
+if (<condition_1>) {
+  <statement(s)>;
+} else if (<condition_2>) {
+  <statement(s)>;
+} else if (<condition_3>) {
+  ...
+} else {
+  <statement(s)>;
+}

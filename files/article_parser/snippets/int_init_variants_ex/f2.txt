@@ -1,0 +1,2 @@
+int a = 0x539;
+long b = 0x7a69;
