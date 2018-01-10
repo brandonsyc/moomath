@@ -1,0 +1,52 @@
+body {
+	margin: 0;
+}
+.first {
+	text-align: center;
+}
+.first h1 {
+	color: #096;
+	font-size: 50px;
+	margin-top: 100px;
+	letter-spacing: 20px;
+}
+.first p {
+	color: #999;
+	font-size: 20px;
+	margin: -25px 0 50px 0;
+}
+.navigate,
+.sticky {
+	border-bottom: 5px solid #096;
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	max-width: 960px;
+	padding: 25px;
+	width: 100%;
+}
+.navigate a,
+.sticky a {
+	color: #000;
+	padding: 0 25px;
+}
+.navigate {
+	border-top: 5px solid #096;
+}
+.sticky {
+	background-color: #fff;
+	position: fixed;
+	left: 50%;
+	opacity: 0;
+	top: 0;
+	transform: translate(-50%, 0);
+	z-index: 1;
+}
+.last {
+	border-top: 5px solid #999;
+	text-align: center;
+	max-width: 960px;
+	margin: auto;
+	padding: 0 25px;
+	width: 100%;
+}

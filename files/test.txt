@@ -1,0 +1,19 @@
+:table:
+a :: b :: c
+d :: a :: c
+g :: e :: e
+::
+:par:
+Hi, im Jaime
+::
+:code:
+Here is my awesome code
+::
+:wid: HELLO
+:raw:
+This is cool, a HELLO widget
+::
+:raw:
+This one has no source
+::
+:fig: COOL STUFF :: source

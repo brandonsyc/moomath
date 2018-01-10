@@ -1,0 +1,45 @@
+* {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-weight: 100;
+	letter-spacing: 1px;
+}
+.article {
+	margin: auto;
+	max-width: 960px;
+}
+figure {
+	margin: 50px 0;
+	text-align: center;
+}
+img {
+	border: 1px solid #000;
+	margin: 25px 0;
+	max-width: 958px;
+}
+p {
+	font-size: 15px;
+	line-height: 30px;
+}
+pre {
+	background-color: #eee;
+	border: none !important;
+	padding: 25px !important;
+	max-width: 910px;
+}
+pre span {
+	font-family: "Ludica Console", Monaco, monospace !important;
+	font-size: 15px;
+	letter-spacing: 0px !important;
+}
+a {
+	color: #08b;
+	text-decoration: none;
+}
+strong {
+	font-weight: 900;
+}
+.header {
+	margin: 100px auto;
+	max-width: 960px;
+	text-align: center;
+}
