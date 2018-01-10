@@ -1,0 +1,122 @@
+A Base-Motif Fractal is a self-similar shape, or fractal, determined by two shapes: a base curve, and a motif. The base curve is not a "curve" in the ordinary sense of a curve; in fact, it is composed of straight lines. To produce the associated fractal, we translate, rotate, and scale the motif, also composed of straight lines, and replace each of the lines in the base curve with a transformed, but geometrically similar, motif. We do the same thing with the resulting curve, again and again, to infinity. Let's see this process in action on an example base curve and motif.
+
+::fig::images/cesaro1.png::A Base-Motif Fractal::Figure 1: An example of a Base-Motif Fractal.::
+
+::fig::images/cesaro2a.png::A Base-Motif Fractal::Figure 2a: An example base curve and motif.::
+
+Here is an example of a base curve and motif. Each item is a series of vectors, or directional line segments, in a sequence. We can effectively treat the base curve and motif like a list of points, telling us what the next point to go to is. For example, the base curve is \((0, 0), (0, 1), (1, 1), (1, 0), (0, 0)\), and the motif is \((0, 0), (0.5, 0.5), (1, 0)\).
+
+Our first step is replacing all the segments in the base curve with the motif. In the following figure, the base curve is highlighted in red, and the new curve is drawn in black.
+
+::fig::images/cesaro2b.png::A Base-Motif Fractal::Figure 2b: One step in the fractal generating sequence.::
+
+We do the same thing with the resulting curve:
+
+::fig::images/cesaro2c.png::A Base-Motif Fractal::Figure 2c: The second step in the fractal generating sequence.::
+
+We can continue this process out to infinity:
+
+<iframe src="https://www.youtube.com/embed/eTjeIGTQpdE?modestbranding=1" allowfullscreen></iframe>
+
+Note that at every odd step, all line segments are diagonal, relative to the lines of the coordinate plane, whereas at every even step, all line segments are parallel to the coordinate plane. At the end of all that, we get a very interesting curve.
+
+::fig::images/cesaro2d.png::A Base-Motif Fractal::Figure 2d: The finished fractal.::
+
+Let's try a different motif, but the same base curve. In particular, let's try one with self-intersections, like this one:
+
+::fig::images/cesaro3a.png::A Base-Motif Fractal::Figure 3a: A new motif.::
+
+We proceed with the same base curve as before, but add our new motif instead:</p>
+
+::fig::images/cesaro3b.png::A Base-Motif Fractal::Figure 3b: The first step of the generating sequence.::
+
+Here is what it looks like when done to infinity:</p>
+
+::fig::images/cesaro3c.png::A Base-Motif Fractal::Figure 3c: The generated fractal.::
+
+At each step, the number of lines in the curve is multiplied by the number of lines in the motif, so the growth in complexity is exponential. Let's try one more fractal, but with a different base curve, like so:
+
+::fig::images/cesaro4a.png::A Base-Motif Fractal::Figure 4a: A new base curve and motif.::
+
+There will be a lot of self intersection in this fractal. Here is what it looks like after one iteration:
+
+::fig::images/cesaro4b.png::A Base-Motif Fractal::Figure 4b: The first step of the generating sequence.::
+
+And here is what it looks like when completed:
+
+::fig::images/cesaro4c.png::A Base-Motif Fractal::Figure 4c: The completed fractal.::
+  
+There are a lot of interesting things about these curves. For example, consider the perimeter of our first shape, the one depicted in Figure 2<sub>d</sub>:
+
+::fig::images/cesaro2d.png::A Base-Motif Fractal::Figure 2d: The finished fractal.::
+
+If we put this on the coordinate grid, we can get the perimeter, like so:
+
+::fig::images/cesaro5.png::A Base-Motif Fractal::Figure 5: The perimeter of the fractal, outlined in orange.::
+
+It is, in fact, an octagon, with 4 sides of length 1 and 4 sides of length \(\sqrt{2}\), which seems to give us a perimeter of \(4+4\sqrt{2}\). Consider, however, the perimeter at each step of the generating process:
+
+::fig::images/cesaro6.png::A Base-Motif Fractal::Figure 6: The perimeter of the curve at each of its generating steps.::
+
+In general, the perimeter of the shape at step s is
+
+$$
+f(s) = \left\{\begin{aligned}
+&12-2^{3-s/2} &&: s \text{ is even}\\
+&8\sqrt{2}-2^{3-s/2} &&: s \text{ is odd}
+\end{aligned}
+\right.$$
+
+The problem is that the limit of \(f(s)\) as \(s\to\infty\), where \(s\) is a positive integer, is not defined. In particular,
+
+$$\lim_{s\to\infty,\,s\in\mathbb{Z}}f(2s)=12,\text{ whereas }\lim_{s\to\infty,\,s\in\mathbb{Z}}f(2s+1)=8\sqrt{2}.$$
+
+So now we have \(3\) different perimeters: \(4+4\sqrt{2}\approx 9.657, 12,\) and \(8\sqrt{2}\approx 11.314\). Which one is correct? This is part of the weirdness of fractals; in this example, throughout the generating sequence, the perimeter approaches one of two values, but the finished fractal has a completely different perimeter.
+
+We'll explore these fractals in much more depth later, but for now, here is a widget which you can use to make fractals like this for yourself!
+
+<canvas id="base-motif" width="1024" height="512"></canvas>
+
+<div class="tbr">
+  <div class="fl">
+<div class="warn2">
+  <p>&nbsp;</p>
+</div>
+<input type="text" id="baseinput" oninput="updateBM()" value="(-0.25,0), (0.25,0)">
+<br><br>
+<button type="button" onclick="resetBZoom()">Reset Zoom</button>
+  </div>
+  <div class="fl fr">
+<div class="warn2">
+  <p id="warningP">&nbsp;</p>
+</div>
+<input type="text" id="motifinput" oninput="updateBM()" value="(0,0), (0.5,0.5), (1,0)">
+<br><br>
+<button type="button" onclick="resetMZoom()">Reset Zoom</button>
+  </div>
+</div>
+
+<div class="toolbar">
+  <label for="iterations">Iterations</label>
+  <input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
+  <label for="color">Fractal Color </label>
+  <input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
+  <input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
+  <label for="drawGrid">Draw Grid</label>
+  <input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
+  <label for="drawAxes">Draw Axes</label>
+</div>
+
+<div class="cdf">
+  <button type="button" onclick="drawFractal()">Draw Fractal</button>
+  <button type="button" onclick="resetFZoom()">Reset Zoom</button>
+  <button type="button" onclick="stopDrawing()">Stop Drawing</button>
+</div>
+
+<div class="warning">
+  <p id="progress">hi</p>
+</div>
+
+<div style="height: 1024px;">
+<canvas id="cesaro" width="1024" height="1024"></canvas>
+</div>

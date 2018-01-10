@@ -1,0 +1,4 @@
+int a = 0;
+
+double c = (double) a; // C-style
+double d = double(a);  // functional

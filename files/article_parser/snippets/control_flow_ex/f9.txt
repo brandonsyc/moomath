@@ -1,0 +1,13 @@
+int main() {
+   int x = -1;
+
+   std::cout << "Enter an integer:\n"
+   std::cin >> x;
+
+   int sum = 0;
+   for (int i = 1; i <= x; ++i) {
+      sum += i;
+   }
+
+   std::cout << "The sum of integers 1 ... " << x << " is " << sum << ".\n";
+}

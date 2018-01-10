@@ -1,0 +1,8 @@
+#include <iostream>
+
+int main() {
+  char c = 'a';
+  c += 1;
+
+  std::cout << c << '\n';
+}

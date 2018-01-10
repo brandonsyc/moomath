@@ -1,0 +1,36 @@
+#include <iostream>
+#include <iomanip>
+
+int main() {
+  std::cout << std::setprecision(100);
+
+  float a = 0.1;
+  std::cout << "a = " << a << '\n';
+
+  float b = 0.2;
+  std::cout << "b = " << b << '\n';
+
+  b += a;
+
+  std::cout << "a + b = " << b << '\n';
+
+  double j = 0.1;
+  std::cout << "j = " << j << '\n';
+
+  double k = 0.2;
+  std::cout << "k = " << k << '\n';
+
+  k += j;
+
+  std::cout << "j + k = " << k << '\n';
+
+  long double x = 0.1;
+  std::cout << "x = " << x << '\n';
+
+  long double y = 0.2;
+  std::cout << "y = " << y << '\n';
+
+  y += x;
+
+  std::cout << "x + y = " << y << '\n';
+}

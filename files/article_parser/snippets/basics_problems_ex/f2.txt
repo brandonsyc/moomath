@@ -1,0 +1,6 @@
+#include <iostream>
+
+int main() {
+  char c = 64;
+  std::cout << c << '\n'; // Here
+}

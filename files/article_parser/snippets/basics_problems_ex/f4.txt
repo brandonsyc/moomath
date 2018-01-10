@@ -1,0 +1,12 @@
+#include <iostream>
+
+int main() {
+  x = 0;
+  std::cout << "How many derps?\n";
+  std::cin >> x;
+  int i = 0;
+
+  while (i < x)
+    std::cout << "Derp!\n";
+    i++;
+}

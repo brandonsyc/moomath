@@ -1,0 +1,4 @@
+int square(int a) {
+  int a_squared = a * a;
+  return a_squared;
+}

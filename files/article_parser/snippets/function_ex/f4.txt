@@ -1,0 +1,15 @@
+#include <iostream>
+
+int square(int a) {
+  return a * a;
+}
+
+int raise_to_8th(int a) {
+  return square(square(square(a)));
+}
+
+int main() {
+  std::cout << "5^2 = " << square(5) << "\n";
+  std::cout << "5^4 = " << square(square(5)) << "\n";
+  std::cout << "13^8 = " << raise_to_8th(13) << "\n";
+}

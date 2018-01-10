@@ -1,0 +1,14 @@
+#include <fstream>
+#include <cstdint>
+
+int main() {
+  std::ofstream file;
+  file.open("udder.bin", std::ios::binary);
+
+  uint8_t a = 0xff;
+  uint8_t b = 0xea;
+
+  file << a << b;
+
+  file.close();
+}
