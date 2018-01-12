@@ -1,0 +1,10 @@
+#include <iostream>
+
+int main() {
+  long x = 0;
+
+  std::cout << "Please enter an integer to be cubed.";
+  std::cin >> x;
+
+  std::cout << "The cube of " << x << " is " << x * x * x << '\n';
+}

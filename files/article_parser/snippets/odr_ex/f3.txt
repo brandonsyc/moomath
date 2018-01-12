@@ -1,0 +1,21 @@
+#include <iostream>
+int main() {
+  int a = -5;
+  a *= 2; // a is now -10
+
+  std::cout << a << "\n";
+
+  int b = 7;
+  a += 7; // a is now -3
+
+  std::cout << a << "\n";
+
+  b = 5;
+  a -= b; // a is now -8
+
+  std::cout << a << "\n";
+
+  a /= -4; // a is now 2
+
+  std::cout << a << "\n";
+}

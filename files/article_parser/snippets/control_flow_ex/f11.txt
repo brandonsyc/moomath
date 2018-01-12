@@ -1,0 +1,3 @@
+if (0 <= a < 10):
+  return ["zero", "one", "two", "three", ... , "nine"][a]
+return "unknown"

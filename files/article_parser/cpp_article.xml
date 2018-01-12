@@ -429,8 +429,8 @@
           </code>
 
           <p>Save this to a file, say,
-            <inl lang="none">hello.cc</inl>. Go to the command line, navigate to the directory containing
-            <inl lang="none">hello.cc</inl>
+            <code lang="none">hello.cc</code>. Go to the command line, navigate to the directory containing
+            <code lang="none">hello.cc</code>
             and run the following command:</p>
 
           <code lang="none">g++ -o hello hello.cc</code>
@@ -444,124 +444,1546 @@
           <figure>
             <image file="images/executable_illustration_1.png"/>
 
-            <figcaption>The executable and the source file, chilling.</figcaption>
+            <figcaption>The executable and the source file, chilling out.</figcaption>
           </figure>
 
-          <p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running <inl lang="none">./hello</inl>. Either way, you should get something like this:</p>
+          <p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running
+            <inl lang="none">./hello</inl>. Either way, you should get something like this:</p>
 
           <figure>
             <image file="images/hello_world_output1.png"/>
 
-            <figcaption>The result of executing the <inl lang="none">hello</inl> executable.</figcaption>
+            <figcaption>The result of executing the
+              <code lang="none">hello</code>
+              executable.</figcaption>
           </figure>
 
-<p>As you can see, the executable ran and something rather boring happened: "Hello, World!" was printed to the console. All that manure for what in Python 2 we could have done as just print "Hello, World!"? Man!</p>
+          <p>As you can see, the executable ran and something rather boring happened: "Hello, World!" was printed to the console. All that manure for what in Python 2 we could have done as just print "Hello, World!"? Man!</p>
 
-<tab-system>
-<tab title="C++">
-  <code>
-  <include file="snippets/hello_world/prog.cc" />
-</code>
-</tab>
-<tab title="Python 2">
-  <code lang="python">
-  <include file="snippets/hello_world/prog.py2" />
-</code>
-</tab>
-<tab title="Python 3">
-  <code lang="python">
-  <include file="snippets/hello_world/prog.py3" />
-</code>
-</tab>
-<tab title="Java">
-  <code lang="java">
-  <include file="snippets/hello_world/prog.java" />
-</code>
-</tab>
-<tab title="JS">
-  <code lang="javascript">
-  <include file="snippets/hello_world/prog.js" />
-</code>
-</tab>
-</tab-system>
-
-</content>
-</section>
-
-<section>
-  <title>How it Works</title>
-
-<content>
-
-  <p>Let's dissect this and figure out precisely what is going on here. First, let's discuss the C++ code.</p>
-
-<p>Loosely, the first line <inl>#include &lt;iostream&gt;</inl> tells the C++ compiler that we want the source code of the file "iostream" to be inserted here. The preprocessor sees this instruction, called a preprocessing directive, and just replaces it with the contents of "iostream." Note that we call this preprocessing because all this happens before the code is actually examined for errors and syntax and such.</p>
-
-<p>Where is this magical iostream file coming from? Well, iostream is part of the C++ Standard Library, a C++ library shipped with all standards-compliant compilers. It's designed to make programming a lot easier for us developers by providing efficient and/or elegant implementations for common tasks.</p>
-
-<p>To see what the code looks like after preprocessing, you can run the command:</p>
-
-<code lang="none">g++ -E hello.cc</code>
-
-<p>The <inl lang="none">–E></inl> compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also <inl>#include</inl>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
-
-<p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called <inl>std::cout</inl>. This object can be given things to write to the console.</p>
-
-<p>In the naming hierarchy, where does this object live, you might ask? Well, it lives in the namespace, or group of names, "std" (for standard, not for...) and is called cout. I like to think of namespaces as folders. If you keep things in folders all nicely organized, it's harder to accidentally reference a file with the same name, but in different locations. In the same way we keep our variables and functions in namespaces so they don't get mixed up.</p>
-
-<p>The third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
-
-<p>Lines four and five are a block comment. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like.</p>
-
-<tab-system>
-<tab title="C++">
-  <code>
-  <include file="snippets/comments_demonstration/prog.cc" />
-</code>
-</tab>
-<tab title="Python">
-  <code lang="python">
-  <include file="snippets/comments_demonstration/prog.py" />
-</code>
-</tab>
-<tab title="Java">
-  <code lang="java">
-  <include file="snippets/comments_demonstration/prog.cc" />
-</code>
-</tab>
-<tab title="JS">
-  <code lang="javascript">
-  <include file="snippets/comments_demonstration/prog.cc" />
-</code>
-</tab>
-</tab-system>
-
-<p>The sixth line defines a function. Oh come on! We need a function for the most basic of programs? Well, this function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
-
-<p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and <inl lang="python">if __name__ == "__main__"</inl> in Python. If we called our function "main1" instead, nothing will actually be run.</p>
-
-<p>The seventh line is probably the strangest line of the program to foreigners. What <inl>&lt;&lt;</inl> is doing is piping the string "Hello, World\n" to std::cout. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's <inl lang="java">System.out.println</inl>, Python's <inl lang="python">print</inl>, C's <inl lang="c">printf</inl> and JS's <inl lang="javascript">console.log</inl>, all of which are framed as a function.</p>
-
-<p>To be more precise, <inl>&lt;&lt;</inl> is a binary operator (an operator taking two arguments), which passes the string to <inl>std::cout</inl> for <inl>std::cout</inl> to handle. Furthermore, this operator returns std::cout again, and since operators are evaluated from left to right, we can do something like:</p>
-
-<code>
-  <include file="snippets/merry_christmas_orig.cc" />
-</code>
-
-and it will write out "Merry Christmas to you!", because it is evaluated as
-
-<code>
-  <include file="snippets/merry_christmas_parsed_as.cc" />
-</code>
-
-<p>The seventh line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
-
-<p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The standard declares that if the end of main is reached, the function implicitly returns 0. Convenient!</p>
-
-<p>Well now that we understand (hopefully) what the code does, how does the computer?</p>
+          <tab-system>
+            <tab title="C++">
+              <code>
+                <include file="snippets/hello_world/prog.cc"/>
+              </code>
+            </tab>
+            <tab title="Python 2">
+              <code lang="python">
+                <include file="snippets/hello_world/prog.py2"/>
+              </code>
+            </tab>
+            <tab title="Python 3">
+              <code lang="python3">
+                <include file="snippets/hello_world/prog.py3"/>
+              </code>
+            </tab>
+            <tab title="Java">
+              <code lang="java">
+                <include file="snippets/hello_world/prog.java"/>
+              </code>
+            </tab>
+            <tab title="JS">
+              <code lang="javascript">
+                <include file="snippets/hello_world/prog.js"/>
+              </code>
+            </tab>
+          </tab-system>
 
         </content>
       </section>
+
+      <section>
+        <title>How it Works</title>
+
+        <content>
+
+          <p>Let's dissect this and figure out precisely what is going on here. First, let's discuss the C++ code.</p>
+
+          <p>Loosely, the first line
+            <inl>#include &lt;iostream&gt;</inl>
+            tells the C++ compiler that we want the source code of the file "iostream" to be inserted here. The preprocessor sees this instruction, called a preprocessing directive, and just replaces it with the contents of "iostream." Note that we call this
+            preprocessing because all this happens before the code is actually examined for errors and syntax and such.</p>
+
+          <p>Where is this magical iostream file coming from? Well, iostream is part of the C++ Standard Library, a C++ library shipped with all standards-compliant compilers. It's designed to make programming a lot easier for us developers by providing
+            efficient and/or elegant implementations for common tasks.</p>
+
+          <p>To see what the code looks like after preprocessing, you can run the command:</p>
+
+          <code lang="none">g++ -E hello.cc</code>
+
+          <p>The
+            <inl lang="none">–E</inl>
+            compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also
+            <inl>#include</inl>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
+
+          <p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called
+            <inl>std::cout</inl>. This object can be given things to write to the console.</p>
+
+          <p>In the naming hierarchy, where does this object live, you might ask? Well, it lives in the namespace, or group of names, "std" (for standard, not for...) and is called cout. I like to think of namespaces as folders. If you keep things in folders
+            all nicely organized, it's harder to accidentally reference a file with the same name, but in different locations. In the same way we keep our variables and functions in namespaces so they don't get mixed up.</p>
+
+          <p>The third line defines a function. This function, like any other function in C++ and other strongly typed languages like Java or C, has a return type, specifying what type of value it is returning. In this case, the return type is "int." An int is
+            a representation of an integer. The function's name is "main," and it takes no arguments. The body of the function is enclosed in curly braces.</p>
+
+          <p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and
+            <inl lang="python">if __name__ == "__main__"</inl>
+            <link to="https://stackoverflow.com/questions/419163/what-does-if-name-main-do">in Python</link>. If we called our function "main1" instead, nothing will actually be run.</p>
+
+          <p>At the end of third line is a comment. Like Java, C#, and JS a line comment in C++ begins with two forward slashes and ends at the end of the line. Note that forward slashes in strings do not start comments.</p>
+
+          <p>We can also write block comments. A block comment is a comment that can span one or multiple lines, starting at /* and ending at */, just like Java, C#, and JS. Note that these block comments do not nest! They can be put anywhere you'd like,
+            including in the middle of statements (but I don't recommend it).</p>
+
+          <tab-system>
+            <tab title="C++">
+              <code>
+                <include file="snippets/comments_demonstration/prog.cc"/>
+              </code>
+            </tab>
+            <tab title="Python">
+              <code lang="python">
+                <include file="snippets/comments_demonstration/prog.py"/>
+              </code>
+            </tab>
+            <tab title="Java">
+              <code lang="java">
+                <include file="snippets/comments_demonstration/prog.cc"/>
+              </code>
+            </tab>
+            <tab title="JS">
+              <code lang="javascript">
+                <include file="snippets/comments_demonstration/prog.cc"/>
+              </code>
+            </tab>
+          </tab-system>
+
+          <p>The fourth line is probably the strangest line of the program to foreigners. What
+            <inl>&lt;&lt;</inl>
+            is doing is streaming the string "Hello, World\n" to
+            <inl>std::cout</inl>. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's
+            <inl lang="java">System.out.println</inl>, Python's
+            <inl lang="python">print</inl>, C's
+            <inl lang="c">printf</inl>
+            and JS's
+            <inl lang="javascript">console.log</inl>, all of which are framed as a function.</p>
+
+          <p>To be more precise,
+            <inl>&lt;&lt;</inl>
+            is a binary operator (an operator taking two arguments), which passes the string to
+            <inl>std::cout</inl>
+            for
+            <inl>std::cout</inl>
+            to handle. Furthermore, this operator returns
+            <inl>std::cout</inl>
+            again, and since operators are evaluated from left to right, we can do something like:</p>
+
+          <code>
+            <include file="snippets/merry_christmas_orig.cc"/>
+          </code>
+
+          <p>and it will write out "Merry Christmas to you!", because it is evaluated as</p>
+
+          <code>
+            <include file="snippets/merry_christmas_parsed_as.cc"/>
+          </code>
+
+          <p>The fourth line ends in a semicolon. Just like C, Java, C# and JS, a semicolon is the only statement separator in C++. (Somewhat little known fact: a semicolon is also a valid statement separator in Python.)</p>
+
+          <p>You might notice that the function main has no return statement. Normally, if main returns 0, it signifies the program ran without errors; another value (often -1) signifies an error occurred. The C++ standard declares that if the end of main is
+            reached, the function implicitly returns 0. Convenient!</p>
+
+          <p>Well now that we understand (hopefully) what the code does, how does the computer?</p>
+        </content>
+      </section>
+
+      <section>
+        <title>The Compiler</title>
+
+        <content>
+          <p>The workings of a compiler are wonderful but mysterious. Personally, I have no clue how they work, so I treat them as sort of a black box. I feed my laboriously written source code into and blithely watch as worthless assembly comes out ("garbage
+            in, garbage out").</p>
+
+          <p>Jokes aside, a compiler is the heart and soul of a C++ environment. Without it, the computer has no idea what you want it to do. Fundamentally, the compiler, given source code, converts the code to assembly. Assembly is not exactly a single
+            language, but rather a class of language that maps extremely closely to what the computer's CPU can do. If you want to see the assembly output of a C++ program, compile like so:</p>
+
+          <code lang="none">g++ -S hello.cc</code>
+
+          <p>This will write the assembly output of the compiler to a file called
+            <code lang="none">hello.s</code>.</p>
+
+          <p>The file's content looks really complicated, but every operation is extremely simple. Move this chunk of memory here, do this operation here; it's very basic, so basic that a programmer cannot really represent high-level concepts in it. It makes
+            me slightly sick to think that people used to have to write large programs in this. Thankfully, most people don't have to experience writing assembly anymore.</p>
+
+          <p>We're not done yet, though, but we're close. The computer must convert the assembly into machine code. Machine code simply consists of a long hexadecimal sequence telling the
+            <vocab>CPU</vocab>
+            exactly what to do and is completely unreadable to the common human. The conversion from assembly to machine code is not done by the compiler itself, but by a vendor-provided
+            <vocab>assembler</vocab>.</p>
+
+          <p>Thankfully, we don't need to handle the assembly intermediate step. Without
+            <inl lang="none">–S</inl>, the compiler will just output machine code that we can use immediately.</p>
+
+          <p>Well that was long. I sincerely hope you haven't seen a hello world example/explanation that long before. Perhaps it was excessive, but I wanted to show you exactly what is going on so you don't get confused later when I talk about compiling, and
+            also get you to appreciate how much fluff languages like Python abstract away for you. I won't even go close to this much into detail in the future, but a lot of people seem to get confused about the role of a compiler and how to even compile and
+            execute a C++ file, so I thought this would be helpful for uninformed individuals. I'm sure some or maybe even most of it was redundant information to you.</p>
+
+          <p>If you want to play around with this example, you can download it
+            <link to="examples/example1.zip" download="">here</link>. To compile
+            <code lang="none">hello.cc</code>, just run
+            <inl lang="none">make</inl>. To output assembly to
+            <code lang="none">hello.s</code>, run
+            <inl lang="none">make asm</inl>. Finally, to print out preprocessor output, do
+            <inl lang="none">make pre</inl>. Enjoy!</p>
+        </content>
+      </section>
+
+      <section>
+
+        <title>Summary</title>
+
+        <content>
+          <p>We've just looked at a very basic program. You've learned the role of the function main (the function that’s actually run) as well as learned what printing looks like.</p>
+
+          <p>C++ is a compiled language. Thus, its source code is turned into machine code by a
+            <vocab>compiler</vocab>
+            and
+            <vocab>assembler</vocab>. To compile your program, run in a shell:</p>
+
+          <code lang="none">g++ -o &lt;machine code output file name&gt; &lt;path to source&gt;</code>
+
+          <p>For example, to compile
+            <code lang="none">udder.cc</code>
+            to
+            <code lang="none">milk</code>, we do:</p>
+
+          <code lang="none">g++ -o milk udder.cc</code>
+
+          <p>As an aside, I suggest you compile to
+            <code lang="none">milk.exe</code>
+            on Windows.</p>
+
+          <p>We can run
+            <code lang="none">milk</code>/<code lang="none">milk.exe</code>
+            in the command line by doing
+            <inl lang="none">./milk</inl>. We can also open it as you would normally open a file in the system file viewer (Explorer, Finder, etc.), which should open up a command line interface and run the program immediately.</p>
+        </content>
+      </section>
+    </section>
+
+    <section>
+      <title>Basic C++ Grammar</title>
+
+      <content>Before we begin, I just wanted to outline the most basic aspects of reading and writing C++. If you know Java or C# this will be almost completely redundant, but Python and JS programmers might find it new.</content>
+
+      <section>
+        <title>Statements</title>
+
+        <content>
+          <p>As a C-family language, C++'s statement separator is the semicolon. Multiple statements can appear on the same line like so. Semicolons are not optional.</p>
+
+          <code>
+            <include file="snippets/statement_ex/f1.txt"/>
+          </code>
+
+          <p>Statements can be split over multiple lines, though, if the newline can be interpreted as plain whitespace. For example,</p>
+
+          <code>
+            <include file="snippets/statement_ex/f2.txt"/>
+          </code>
+
+          <p>compiles fine, but</p>
+
+          <code>
+            <include file="snippets/statement_ex/f3.txt"/>
+          </code>
+
+          <p>does not.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Variable Initialization</title>
+
+        <content>
+          <p>C++ is strongly typed. That is, every function has a specific type it returns, and every variable has a specific type. Initializing and setting a variable is done like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f1.txt"/>
+          </code>
+
+          <p>or, since C++11, using the uniform initialization syntax, like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f2.txt"/>
+          </code>
+
+          <p>For example, initializing an
+            <inl>int a</inl>
+            to 5 can be done like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f3.txt"/>
+          </code>
+
+          <p>Which you choose is mostly a personal preference. I will use the first syntax because it will probably be more familiar to you. We can initialize multiple variables of the same type like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f4.txt"/>
+          </code>
+
+          <p>You can allocate variables without setting their value like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f5.txt"/>
+          </code>
+
+          <p>but this can be dangerous because accessing their values can return junk values. It might also trigger certain compiler warnings. As a rule of thumb, I suggest you set all variables when you initialize them, unless you are in an extremely tight
+            performance area. Even then it is a miniscule benefit at best.</p>
+
+          <p>Variable names are allowed to contain alphanumeric characters, _ (underscore), and $ (dollar sign). They may not start with a number. Names are case-sensitive, so UdDeR is a different variable from udder.</p>
+
+          <p>At any point in code we can reassign a variable, like so:</p>
+
+          <code>
+            <include file="snippets/initialization_ex/f6.txt"/>
+          </code>
+        </content>
+      </section>
+
+      <section>
+        <title>Functions</title>
+        <content>
+          <p>The syntax for a function is like so:</p>
+
+          <code>
+            <include file="snippets/function_ex/f1.txt"/>
+          </code>
+
+          <p>The rules for function naming and variable naming are the same. For example, suppose we want to implement a function called "square" which squares a given
+            <inl>int</inl>
+            and returns an
+            <inl>int</inl>. We could do that like so:</p>
+
+          <code>
+            <include file="snippets/function_ex/f2.txt"/>
+          </code>
+
+          <p>More succinctly, we could write it like so:</p>
+
+          <code>
+            <include file="snippets/function_ex/f3.txt"/>
+          </code>
+
+          <p>Let's try it out!</p>
+
+          <code>
+            <include file="snippets/function_ex/f4.txt"/>
+          </code>
+
+          <p>This program simply calculates 52, 54, and 138.</p>
+
+          <p>If a function returns nothing, the "return type" is called
+            <inl>void</inl>. For example:</p>
+
+          <code>
+            <include file="snippets/function_ex/f5.txt"/>
+          </code>
+
+          <p>will cause an error. Thus,</p>
+
+          <code>
+            <include file="snippets/function_ex/f6.txt"/>
+          </code>
+
+          <p>will print "milkmilkmilk" to the console.
+            <inl>void</inl>
+            is not a normal type, so doing something like</p>
+
+          <code>
+            int milky = writeMilk();
+          </code>
+
+          <p>won’t compile.</p>
+
+        </content>
+      </section>
+
+      <section>
+
+        <title>Scope</title>
+
+        <content>
+          <p>Various constructs, such as loops (which we’ll learn the syntax for later) and functions, create what is known as a scope. Basically, new scopes are made by any pair of curly braces containing statements. Things inside of a scope cannot leak out
+            of a scope and used by surrounding code unless explicitly done so. Things in “shallower” parent scopes, including the global scope, however, can be used in a scope. For example:</p>
+
+          <code>
+            <include file="snippets/scope_ex/f1.txt"/>
+          </code>
+
+          <p>doesn’t compile. This does, however:</p>
+
+          <code>
+            <include file="snippets/scope_ex/f2.txt"/>
+          </code>
+
+          <p>Note that the initialization of c needs to be before the function derp.</p>
+
+          <p>In a scope, we initialize a variable with the same name as another variable in another scope, and any references to that variable name will resolve to the variable we just declared. For example,</p>
+
+          <code>
+            <include file="snippets/scope_ex/f3.txt"/>
+          </code>
+
+          <p>will output 5, but</p>
+
+          <code>
+            <include file="snippets/scope_ex/f4.txt"/>
+          </code>
+
+          <p>outputs 4.</p>
+
+          <p>When writing code, we typically give each deeper scope a deeper indentation level. Unlike in Python, which uses these indents in lieu of the curly braces, the compiler does not care about your indents, only your human readers.</p>
+
+          <p>This scope concept should hopefully be familiar to you, as it is is present in most languages.</p>
+
+        </content>
+
+      </section>
+
+      <section>
+        <title>One Definition Rule</title>
+
+        <content>
+          <p>You cannot redefine a function with the same name or redefine a variable with the same name in the same scope. For example:</p>
+
+          <code>
+            <include file="snippets/odr_ex/f1.txt"/>
+          </code>
+
+          <p>As you might find out the hard way later, this also applies if the source of whatever header file you
+            <inl>#include</inl>
+            redefines this function. The solution to this is namespaces, which we'll talk about later.</p>
+
+          <p>C++'s operators are relatively standard in terms of their mathematical manipulation capabilities. For now you only need to concern yourself with multiplication, addition, subtraction, and division.</p>
+
+          <p>Like in most other C-family languages an expression is evaluated according to
+            <vocab>PEMDAS</vocab>
+            (or, since C++ doesn’t have an exponential operator, PMDAS). For example,</p>
+
+          <code>
+            <include file="snippets/odr_ex/f2.txt"/>
+          </code>
+
+          <p>is evaluated like
+            <inl>c = (((4 * 8) + (8 / 4)) – 8) * 8</inl>, resulting in 208.</p>
+
+          <p>There are quite a few more operators than these four. Four related operators that are probably familiar to you are +=, -=, *=, and /=. These operators can add, subtract, multiply, and divide, respectively, a variable in place. For example:</p>
+
+          <code>
+            <include file="snippets/odr_ex/f3.txt"/>
+          </code>
+
+          <p>There are two other operators to remember: increment and decrement operators. They are a bit strange to the uninformed, but here is a brief rundown:</p>
+
+          <list enum="number">
+            <item>To increment a variable x, or add 1 to it, we write ++x; or x++;</item>
+            <item>The return value of ++x; is x after it is incremented, this is called preincrement</item>
+            <item>The return value of x++; is x before it is incremented, this is called postincrement</item>
+            <item>The same applies to decrements, where the syntax is --x; or x--;</item>
+          </list>
+
+          <p>A simple demonstration I found
+            <link to="https://stackoverflow.com/questions/1094872/is-there-a-difference-between-x-and-x-in-java">here</link>:</p>
+
+          <code>
+            <include file="snippets/odr_ex/f4.txt"/>
+          </code>
+
+          <p>This program outputs:</p>
+
+          <code lang="none">6, 6, 5, 6</code>
+
+          <p>Note that there are a lot of other ways to write the code in this section from a syntactic point of view, but do exactly the same thing from a processor's point of view. These will be explored in time, but to reduce complexity, I just wanted to
+            mention the most basic syntax, and only use this basic syntax in examples.</p>
+
+          <p>Please play around with these concepts yourself! They are incredibly important. If you've used Java or C# before, all this should be rather familiar, except for the fact that no container class is needed here.</p>
+
+          <p>Now that you understand basic syntax, let's learn about the fundamental types!</p>
+
+        </content>
+      </section>
+    </section>
+
+    <section>
+      <title>C++ Fundamental Types</title>
+
+      <content>
+        <p>If you only have experience in a dynamically typed language like Python or JS, C++ types might seem unnecessarily restrictive, but they are extremely important.</p>
+
+        <p>Every variable we make has a type. For example:</p>
+
+        <code>
+          <include file="snippets/type_ex/f1.txt"/>
+        </code>
+
+        <p>This shouldn't be strange at all to Java and C# programmers, but it may seem strange to a Python or JS programmer. What's that silly
+          <inl>int</inl>
+          doing there? Obviously 15's an integer, so it's quite redundant, no?</p>
+
+        <p>Not really. An
+          <inl>int</inl>
+          is an integer, true, but it's much more specific than that.</p>
+      </content>
+
+      <section>
+        <title>Integer Types</title>
+
+        <content>
+          <p>If you try to do this:</p>
+
+          <code>int udder_diameter = 1000000000000000;</code>
+
+          <p>The compiler gives you a warning:</p>
+
+          <figure>
+            <image file="images/implicit_conversion_reduce_size.png"/>
+            <figcaption>Too big!</figcaption>
+          </figure>
+
+          <p>What is this "long to int" complaint? Well, an
+            <inl>int</inl>
+            is an integer that has a set size. On a 64-bit architecture, it's usually 32 bits, or 4 bytes. This gives it a range of -231 to 231 – 1, or -2,147,483,648 to 2,147,483,647.</p>
+
+          <p>"Why restrict it like this?" a Python programmer might angrily say. The simple reason is that operations on ints map very well to the operations a
+            <vocab>CPU</vocab>
+            can do in hardware. Good modern CPUs can multiply two ints extremely quickly, often in less than a nanosecond.</p>
+
+          <p>In any case, 1000000000000000 is far too big for an int. It makes an attempt to convert it to an int, but as you can see from the result, it was not successful.</p>
+
+          <p>So what if we do want a nice, large udder_diameter? Well, we can use
+            <inl>long</inl>! long is a type like int, but has 64 bits (if we're on a 64-bit computers). This gives a range of -2<sup>63</sup>
+            to 2<sup>63</sup>
+            – 1, or between about -9 quintillion to 9 quintillion. That's great!</p>
+
+          <p>C++ defines the base integer type
+            <inl>int</inl>, and four modifiers on int:
+            <inl>short</inl>,
+            <inl>long</inl>,
+            <inl>signed</inl>, and
+            <inl>unsigned</inl>.</p>
+
+          <p>Any integer can be declared signed or unsigned.
+            <inl>signed</inl>
+            makes obvious sense: it can have negative or positive value.
+            <inl>unsigned</inl>'s a little more confusing, but it does what it says: the integer cannot be negative. If you don't know how signed and unsigned integers work, especially if you're coming from Java and haven't had experience with unsigned types
+            before, I suggest you quickly read about it. It is not that complex of a concept.</p>
+
+          <p>Here's a table listing all the basic types, their aliases and their properties:</p>
+
+          <table>
+            <tr>
+              <th colspan="2" class="h1">Type</th>
+              <th colspan="3" class="h1">Properties according to Standard</th>
+              <th colspan="3" class="h1">Properties on most 64-bit architectures</th>
+            </tr>
+            <tr>
+              <th class="h2">Easy Name</th>
+              <th class="h2">Equivalent to</th>
+              <th class="h2">Size (bits)</th>
+              <th class="h2">Min</th>
+              <th class="h2">Max</th>
+              <th class="h2">Size (bits)</th>
+              <th class="h2">Min</th>
+              <th class="h2">Max</th>
+            </tr>
+
+            <tr>
+              <th>short</th>
+              <th>signed short, signed short int, short int</th>
+              <th>
+                >= 16</th>
+              <th>-2<sup>15</sup>
+              </th>
+              <th>2<sup>15</sup>
+                - 1</th>
+              <th>16</th>
+              <th>-2<sup>15</sup>
+              </th>
+              <th>2<sup>15</sup>
+                - 1</th>
+            </tr>
+
+            <tr>
+              <th>unsigned short</th>
+              <th>unsigned short int</th>
+              <th>
+                >= 16</th>
+              <th>
+                0</th>
+              <th>
+                2<sup>16</sup>
+                - 1</th>
+              <th>
+                16</th>
+              <th>
+                0</th>
+              <th>
+                2<sup>16</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>int</th>
+              <th>signed int, signed</th>
+              <th>>= 16</th>
+              <th>-2<sup>15</sup>
+              </th>
+              <th>2<sup>15</sup>
+                - 1</th>
+              <th>32</th>
+              <th>-2<sup>31</sup>
+              </th>
+              <th>2<sup>31</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>unsigned int</th>
+              <th>unsigned</th>
+              <th>>= 16</th>
+              <th>0</th>
+              <th>2<sup>16</sup>
+                - 1</th>
+              <th>32</th>
+              <th>0</th>
+              <th>2<sup>32</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>long</th>
+              <th>signed long, signed long int, long int</th>
+              <th>>= 32</th>
+              <th>-2<sup>31</sup>
+              </th>
+              <th>2<sup>31</sup>
+                - 1</th>
+              <th>64</th>
+              <th>-2<sup>63</sup>
+              </th>
+              <th>2<sup>63</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>unsigned long</th>
+              <th>unsigned long int</th>
+              <th>>= 32</th>
+              <th>0</th>
+              <th>2<sup>32</sup>
+              </th>
+              <th>64</th>
+              <th>0</th>
+              <th>2<sup>64</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>long long</th>
+              <th>signed long long, signed long long int, long long int</th>
+              <th>>= 64</th>
+              <th>-2<sup>63</sup>
+              </th>
+              <th>2<sup>63</sup>
+                - 1</th>
+              <th>64</th>
+              <th>-2<sup>63</sup>
+              </th>
+              <th>2<sup>63</sup>
+                - 1</th>
+            </tr>
+            <tr>
+              <th>unsigned long long</th>
+              <th>unsigned long long int</th>
+              <th>>= 64</th>
+              <th>0</th>
+              <th>2<sup>64</sup>
+                - 1</th>
+              <th>64</th>
+              <th>0</th>
+              <th>2<sup>64</sup>
+                - 1</th>
+            </tr>
+
+          </table>
+
+          <p>Man, that's a lot of types! Thankfully, most of them are pretty rare. In my own experience,
+            <inl>short</inl>
+            is pretty rare. The
+            <inl>signed</inl>
+            qualifier is even rarer. I suggest you remember int and long, which are the most common, and the rest of the types will come naturally.</p>
+
+          <p>You might notice that I said that an integer is 32-bits most of the time, and that a long is 64-bits most of the time. Though this is true on most modern computers, the C++ standard unfortunately doesn't specify this. It only says that an int is
+            at least 16 bits, and that a long is at least 32 bits. On 32-bit systems, these smaller sizes are often taken. If you're wondering why a lot of software is 64-bit only, here's a common cause.</p>
+
+          <p>If you need maximum portability, use the types
+            <inl>int8_t</inl>,
+            <inl>int16_t</inl>,
+            <inl>int32_t</inl>, and
+            <inl>int64_t</inl>
+            for signed 8-bit, 16-bit, 32-bit, and 64-bit integers, respectively, and
+            <inl>uint8_t</inl>,
+            <inl>uint16_t</inl>,
+            <inl>uint32_t</inl>, and
+            <inl>uint64_t</inl>, for the unsigned counterparts, respectively. There are a couple other ones as well, which I won't be getting into, but you can see them
+            <link to="http://en.cppreference.com/w/cpp/header/cstdint">here</link>. Note that to use these types, you first need to
+            <inl>#include &lt;cstdint&gt;</inl>, which contains the information for these types. These types are simply aliases for the appropriately-sized integer types, regardless of the system.</p>
+
+          <p>But at least for now, I'll be assuming you're on 64-bit. Try not to get too bogged down in details here anyway: knowledge will come in time.</p>
+
+          <p>As you'll learn about later, if you need to know the size of a type, you can use the
+            <inl>sizeof</inl>
+            operator, which will return the size of a type at compile time. To get the minimums and maximums for each type easily, use
+            <inl>std::numeric_limits</inl>
+            from
+            <inl>#include &lt;limits&gt;</inl>
+            as shown in the example here:</p>
+
+          <code>
+            <include file="snippets/type_ex/f2.txt"/>
+          </code>
+
+          <p>Output on my computer:</p>
+
+          <code lang="none">
+            <include file="snippets/type_ex/f3.txt"/>
+          </code>
+
+          <p>Notice that long and long long are the same size on my computer, because it is 64-bit. Personally, the whole plethora of integer types took a little getting used to when coming from Python. If you ever forget some of the types or their meaning,
+            that's fine! Just refer to a table like this one. Keep in mind that most of them are uncommon.</p>
+
+          <p>Also note that using a smaller type does not always mean that it will be faster! Typically int is the fastest integer type on a system, even though it consumes more memory.</p>
+
+          <p>There are multiple ways of actually declaring an integer (of any type). There is the obvious way of:</p>
+
+          <code>
+            <include file="snippets/int_init_variants_ex/f1.txt"/>
+          </code>
+
+          <p>where integers are defined according to their base-10 value. This is the clearest way in most instances.</p>
+
+          <p>Occasionally, you'll want to be able to input values in hexadecimal, particularly for low-level byte and bit manipulation. 1337<sub>10</sub>
+            is 539<sub>16</sub>, and 31337<sub>10</sub>
+            is 7A69<sub>16</sub>, so we can write:</p>
+
+          <code>
+            <include file="snippets/int_init_variants_ex/f2.txt"/>
+          </code>
+
+          <p>these two variables are completely indistinguishable from the first two. If we want to use octal, we start the integer with "0":</p>
+
+          <code>
+            <include file="snippets/int_init_variants_ex/f3.txt"/>
+          </code>
+
+          <p>If you are sick of writing out things like:</p>
+
+          <code>long c = 40000000; // 40 million, did I get that right?</code>
+
+          <p>then you can use exponential notation like so:</p>
+
+          <code>
+            <include file="snippets/int_init_variants_ex/f4.txt"/>
+          </code>
+
+          <p>The octal syntax may be a source of bugs for those who expect 025 to resolve to 25<sub>10</sub>. I wanted to mention it anyway for the sake of completeness. There are a couple other ways todefineintegersinothercircumstances,suchasdefininganinteger as a certain type while inside an expression by adding a suffix, but I don't think they are worth mentioning for now.</p>
+        </content>
+      </section>
+
+      <section>
+        <title>Character Types</title>
+
+        <content>
+          <p>To represent a textual character, we use a
+            <inl>char</inl>
+            or one of its related types. char is sort of an unusual type, and there are two direct variants:</p>
+
+          <list enum="number">
+            <item>
+              <inl>char</inl>: a general character type (8-bit)</item>
+            <item>
+              <inl>signed char</inl>: signed integer (almost always 8-bit, allowing -128 to 127)</item>
+            <item>
+              <inl>unsigned char</inl>: unsigned integer (almost always 8-bit, allowing 0 to 255)</item>
+          </list>
+
+          <p>It is implementation-defined whether an unmodified "char" is signed or not, so it's not the safest operation to convert (cast) it to a normal integer without any checks. In cases where you specific behavior for 8-bit integers, use explicitly
+            <inl>signed</inl>
+            or
+            <inl>unsigned</inl>
+            char.</p>
+
+          <p>As with the integers, you can initialize chars like so:</p>
+
+          <code>
+            <include file="snippets/chars_ex/f1.txt"/>
+          </code>
+
+          <p>All the usual integer literal syntax (e.g. hexadecimal) works as well. You normally use a plain
+            <inl>char</inl>, however, in a text context. For example:</p>
+
+          <code>
+            <include file="snippets/chars_ex/f2.txt"/>
+          </code>
+
+          <p>If you do something like</p>
+
+          <code>std::cout &lt;&lt; a &lt;&lt; b &lt;&lt; c;</code>
+
+          <p>it will output "ab" and a newline, as expected. Anywhere a code, a char can be defined with something similar to string syntax:</p>
+
+          <code>'&lt;character&gt;'</code>
+
+          <p>Note that "" and '' are different, unlike Python and JS. "" is for strings, and can have multiple characters or just one character. '' is for single characters: using '' where a "" is needed will produce a compiler warning and do stuff you don’t
+            want.</p>
+
+          <p>You can still do some math with plain chars. For example:</p>
+
+          <code>
+            <include file="snippets/chars_ex/f3.txt"/>
+          </code>
+
+          <p>outputs "b". Chars can theoretically encode 256 different characters, but many of them just stick to standard ASCII. If you want to store larger character sets, you can use the character types
+            <inl>wchar_t</inl>,
+            <inl>char16_t</inl>, and
+            <inl>char32_t</inl>, for the maximum system supported character set, UTF-16, and UTF-32, respectively.</p>
+
+          <p>The signed and unsigned chars are, for all intents and purposes, just integers, but since they are (almost universally) exactly one byte in size they are especially useful for byte/bit-level memory fun.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Integer Overflow</title>
+
+        <content>
+          <p>Consider the following program:</p>
+
+          <code>
+            <include file="snippets/chars_ex/f1.txt"/>
+          </code>
+
+          <p>If you run the above program, you’ll get an output of:</p>
+
+          <code lang="none">
+            <include file="snippets/chars_ex/f2.txt"/>
+          </code>
+
+          <p>Well, the second and third lines of output make sense. But the first and fourth lines are quite puzzling to the Python programmer. To see what’s going on, let’s first look in the case of our
+            <inl>unsigned int a</inl>
+            friend.</p>
+
+          <p>Because an unsigned int is represented as 32 bits, the value of 0 is represented like so:</p>
+
+          <code lang="none">00000000 00000000 00000000 00000000</code>
+
+          <p>When we subtract one, what happens? Well, assuming smallest bits are on the right, we first subtract 1 from the rightmost zero, making it 1. But it carries to the next zero. It cascades down the line, changing every zero to a 1.</p>
+
+          <code lang="none">11111111 11111111 11111111 11111111</code>
+
+          <p>What happens after the last carry? Well, there’s nothing left to modify, so it’s just discarded. At this point the value of the number is 2<sup>32</sup>
+            + 2<sup>31</sup>
+            + ... + 2<sup>1</sup>
+            + 2<sup>0</sup>
+            = 4,294,967,295. This is called integer underflow, because it jumped from the minimum value of the type (0) to the maximum value just by subtracting 1; it flowed under the value it was supposed to. Gnarly!</p>
+
+          <p>In some cases, you’ll want this behavior. In other cases, you will not. Python avoids this problem by just using arbitrary size integers by default.</p>
+
+          <p>Signed integers can do this, too. In our example, when our friend
+            <inl>short p</inl>
+            is incremented from 32767, its maximum value, it overflows and becomes its minimum value, -32768.</p>
+
+          <p>If you’re curious, instances of char and its derived types can overflow as well.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Floating-Point Numbers</title>
+        <content>
+
+          <p>Floating-point numbers, very loosely, allow us to store continuous data. They are used by most languages, including C, Python, Java and C#, as their built-in implementation for numbers that are not necessarily integers, because operations on them
+            can be implemented very efficiently.</p>
+
+          <p>I won’t go into precisely how floating-point numbers work at a binary level, but here’s a brief rundown:</p>
+
+          <list enum="number">
+            <item>Floating-point numbers store smaller numbers more precisely than larger numbers</item>
+            <item>Their upper limit is “infinity” and lower limit is "-infinity"</item>
+            <item>They are signed</item>
+          </list>
+
+          <p>There are three types of floating-point numbers in C++:
+            <inl>float</inl>,
+            <inl>double</inl>, and
+            <inl>long double</inl>. float is a 32 bit "single precision" number. double is a 64 bit "double precision" number. Finally, long double is a weird type which might be the same precision as double, but on many architectures is an 80 bit "extended
+            precision" number or occasionally a 128 bit "quadruple precision" number.</p>
+
+          <p>Here’s an example of the relative precision between the types:</p>
+
+          <code>
+            <include file="snippets/floats_demo/f1.txt"/>
+          </code>
+
+          <p>The classic example of floating-point weirdness is that 0.1 + 0.2 &#x2260;
+            <!-- Not equals -->
+            0.3. This program, which in a perfect world might output</p>
+
+          <code lang="none">
+            <include file="snippets/floats_demo/f2.txt"/>
+          </code>
+
+          <p>actually outputs, on my machine:</p>
+
+          <code lang="none">
+            <include file="snippets/floats_demo/f3.txt"/>
+          </code>
+
+          <p>As you can see, there’s a small amount of error between the true value of each number and the value it should have. This error decreases the more precision you give it. If you are wondering,
+            <inl>#include &lt;iomanip&gt;</inl>
+            is just to make
+            <inl>std::setprecision</inl>
+            available, which allows us to print our floating-point numbers in all their glory rather than having them truncated as by default.</p>
+
+          <p>Apart from these unfortunate precision considerations, floating-point numbers are quite easy to understand. They have all the same PMDAS operations as the integers and are defined rather easily:</p>
+
+          <code>
+            <include file="snippets/floats_demo/f4.txt"/>
+          </code>
+
+          <p>This program outputs, on my computer:</p>
+
+          <code lang="none">
+            <include file="snippets/floats_demo/f5.txt"/>
+          </code>
+
+          <p>You can see a little bit of floating-point weirdness here. 0 / 0 returns nan, which is a value returned by expressions that cannot be defined consistently. 1 / 0 returns inf, which is also a value (it is the maximum value of double). There is also
+            -inf, which is equal to -1 / 0, and also -0, a signed zero that is equal to the normal +0 but slightly different. Thankfully, almost all of these operations and signals are handled very efficiently in hardware – with the exception of a class of
+            floating-point numbers known as denormal numbers, but that is beyond the scope of this article – so you can use them for extremely fast calculations.</p>
+
+          <p>The maximum value of a float is about 3.40e38. The maximum value of a double is about 1.80e308. The minimums are of the same magnitude. As you can see, these give you a huge variety in magnitude.</p>
+
+          <p>Floating-point can seem like quite a mess to a learning programmer. Most of the time, you’ll be using floating-point in a context where the coarseness of larger values doesn’t really matter. And in time, you’ll be using doubles and floats as
+            adeptly as ints!</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>The Boolean</title>
+
+        <content>
+          <p>A boolean, denoted by
+            <inl>bool</inl>, is simply a variable that stores true or false. It is probably the simplest of the types here, so I decided to end with it.</p>
+
+          <p>There are two values of a boolean: true and false. Whoa.</p>
+
+          <code>
+            <include file="snippets/bools_demo/f1.txt"/>
+          </code>
+
+          <p>There are also a couple of operators on booleans.
+            <inl>!(bool)</inl>
+            negates the boolean, the same as
+            <inl lang="python">not</inl>
+            in Python,
+            <inl>bool &amp;&amp; bool</inl>
+            does a logical AND, the same as Python’s
+            <inl lang="python">and</inl>, and
+            <inl>bool || bool</inl>
+            does a logical OR, the same as Python’s
+            <inl lang="python">or</inl>. There are others, but here’s a basic example:</p>
+
+          <code>
+            <include file="snippets/bools_demo/f2.txt"/>
+          </code>
+
+          <p>Here I made cout print booleans as "true" or "false," because normally they are printed as 1 or 0. Anyway, this should print</p>
+
+          <code>
+            <include file="snippets/bools_demo/f3.txt"/>
+          </code>
+
+          <p>Booleans are fun and easy!</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Strings</title>
+
+        <content>
+          <p>Through a
+            <inl>std::string</inl>
+            is definitely not a primitive type, I just want to briefly explain it because it is very helpful in a lot of our examples.</p>
+
+          <p>
+            <inl>std::string</inl>
+            is, well, a string, capable of storing text. To use it, we can
+            <inl>#include &lt;string&gt;</inl>. Note that
+            <inl>&lt;string&gt;</inl>
+            is actually already included by
+            <inl>&lt;iostream&gt;</inl>, so we don't have to include it in this case, but it doesn't change anything. (Worried this might violate the one definition rule? Don't fret! Include guards are on your side; we'll learn about them later.)</p>
+
+          <code>
+            <include file="snippets/string_demo/f1.txt"/>
+          </code>
+
+          <p>std::string is rather easy to use, so I won't go deeper into it or its implementation until we get to examining the Standard Library in more detail.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Converting Between Types</title>
+
+        <section>
+          <title>Implicit Conversion</title>
+
+          <content>
+            <p>Often we'll want to convert between types. Thankfully, with the fundamental types, this is very easy.</p>
+
+            <code>
+              <include file="snippets/conversion_ex/f1.txt"/>
+            </code>
+
+            <p>As you can see, a lot of casting is done implicitly, even when calling functions. This program prints out</p>
+
+            <code>
+              <include file="snippets/conversion_ex/f2.txt"/>
+            </code>
+          </content>
+        </section>
+
+        <section>
+          <title>Explicit Conversion</title>
+
+          <content>
+            <p>This is all fine and dandy, but occasionally we'll have to explicitly cast things out. There are six (count them, six!) distinct ways to cast types:
+              <inl>static_cast</inl>,
+              <inl>const_cast</inl>,
+              <inl>dynamic_cast</inl>,
+              <inl>reinterpret_cast</inl>, a C-style cast, and a functional-style cast.The last two are equivalent in meaning but slightly different in syntax.</p>
+
+            <p>Don't be scared! You'll learn the relevant ones in time.</p>
+
+            <p>
+              <inl>dynamic_cast</inl>
+              is used in the context of classes, so I will ignore it for now.
+              <inl>const_cast</inl>
+              requires understanding of the
+              <inl>const</inl>
+              qualifier, so I will also skip it.</p>
+
+            <p>
+              <inl>static_cast</inl>
+              simply tells the compiler to convert the type through a variety of defined methods, which are already defined for fundamental types and can be defined for user-defined classes, as we'll learn later. The syntax is like so:</p>
+
+            <code>
+              <include file="snippets/conversion_ex/f3.txt"/>
+            </code>
+
+            <p>As I hope you can gather, it is unnecessary in this case. The casting is implicit and we can remove the static_cast. There are some cases where it is necessary, however, which we'll see later.</p>
+
+            <p>
+              <inl>reinterpret_cast</inl>
+              is even simpler than static_cast, but much more dangerous and often leads to strange behavior. Effectively, it tells the compiler to just treat the bits of the original variable in the context of the new type. For some context on when to use
+              reinterpret_cast, you can check out
+              <link to="https://stackoverflow.com/questions/573294/when-to-use-reinterpret-cast">this</link>, but it contains references far beyond what we've talked about now.</p>
+
+            <p>A C-style cast and functional cast look like this:</p>
+
+            <code>
+              <include file="snippets/conversion_ex/f4.txt"/>
+            </code>
+
+            <p>Java and C# programmers are most likely familiar with the first casting method, while Python programmers might find the second one more familiar. Though they have syntactic differences, they are functionally the same. I highly suggest you never
+              use these casting methods, because they are rather complicated, even though they look simple. They are included for C compatibility. For information on exactly what these casts do, consult
+              <link to="http://en.cppreference.com/w/cpp/language/explicit_cast">the reference</link>. In short, it first tries const_cast, then a strange modified static_cast, then const_cast([modified] static_cast()), then reinterpret_cast, then finally
+              const_cast(reinterpret_cast()). Don't worry yourself with this: it's easier to just not use it. There is no real equivalent to C#'s
+              <inl lang="cs">as</inl>
+              for type conversion, but most type conversions are checked at compile-time. To emulate this behavior, we could use RTTI (Runtime Type Information), which we'll talk about later.</p>
+
+          </content>
+        </section>
+      </section>
+    </section>
+
+    <section>
+      <title>C++ Control Flow</title>
+
+      <desc>Like any other language, C++ allows us more control over the flow of our program than just sequential line order. Let's first talk about the if statement.</desc>
+
+      <section>
+        <title>If Statement</title>
+
+        <content>
+          <p>The most basic if statement syntax is as follows:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f1.txt"/>
+          </code>
+
+          <p>This is equivalent to the if statement in Java, C#, Python, and JS. We can do an if-else like so:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f2.txt"/>
+          </code>
+
+          <p>Finally, we have an if - else if - else. else if is the same as elif in Python:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f3.txt"/>
+          </code>
+
+          <p>This idea, if not the syntax, should be familiar to you. If there is only one line in a part of the if-statement, the curly braces are optional:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f4.txt"/>
+          </code>
+
+          <p>but this is discouraged by some. Java and C# do this as well, but if you're coming from Python you might want to avoid it as it may give the false impression that curly braces are optional.</p>
+        </content>
+      </section>
+
+      <section>
+        <title>Loops</title>
+
+        <content>
+          <p>The three loop types are while, do... while, and for.</p>
+
+          <p>You've almost certainly learned what a while loop is. The syntax is rather simple:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f5.txt"/>
+          </code>
+
+          <p>It is equivalent to the while loop in Java, C#, and JS, and functionally equivalent to the while loop in Python. Note that unlike Python, the parentheses are not optional. The loop simply executes the statements in order. At the end of the loop,
+            it checks whether the condition is true. If it is, it goes back to the beginning of the loop. Otherwise, it exits out of the loop. If the condition is not true to start with, nothing in the loop is executed.</p>
+
+          <p>There are a few more things we can do with a while loop. If we want to exit out of the loop prematurely, we can use
+            <inl>break</inl>. If we want to skip the rest of the iteration of the loop, we can use
+            <inl>continue</inl>. Remember that even if we use continue, the condition is still checked for whether execution should jump back to the start or continue. These keywords should be familiar to you if you're coming from Java, C#, Python or JS.</p>
+
+          <p>The next type of loop is the do... while loop. It is very similar to the while loop, but it guarantees the contents of the loop are executed at least once. Here is the syntax:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f6.txt"/>
+          </code>
+
+          <p>There is no such loop in Python, so this may look a little strange to Python users. What this is doing is executing the statements, then checking whether the condition is met. If it is, it goes back to the start of the loop. Otherwise, it
+            continues. Effectively, it is a while loop that guarantees the contents will be executed at least once.</p>
+
+          <p>The last type of loop is the for loop. The syntax is like so:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f7.txt"/>
+          </code>
+
+          <p>This is the same as the Java, C# and JS for loops, but not the Python for loop. To see how this loop works, let's transform it into a while loop:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f8.txt"/>
+          </code>
+
+          <p>Recall that { } creates a scope. &lt;initalization&gt; is run once, then the while loop is run.</p>
+
+          <p>The most common use case is to iterate through something. For example, the following program prints out the sum of all numbers between 1 and x, inclusive:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f9.txt"/>
+          </code>
+
+          <p>In Python, we'd use xrange (Python 2) or range (3). There is another way to use the for loop in C++, introduced in C++11, but we won't talk about that yet.</p>
+
+          <p>If the body of the for or while loop is only one line, we can omit the curly braces like in the if statement.</p>
+
+        </content>
+      </section>
+
+      <section>
+        <title>Switch Statement</title>
+        <content>
+          <p>The last type of control flow we'll talk about is the
+            <inl>switch</inl>
+            statement. In Python we might do something like this:</p>
+
+          <code lang="python">
+            <include file="snippets/control_flow_ex/f10.txt"/>
+          </code>
+
+          <p>This is fine, but might be a little verbose. Alternatively, we might be able to do something like</p>
+
+          <code lang="python">
+            <include file="snippets/control_flow_ex/f11.txt"/>
+          </code>
+
+          <p>but we have improved brevity at the expense performance: the list is built every time the function runs.</p>
+
+          <p>In C++, we can use a switch statement. A switch statement takes an expression, then jumps to the case where it should be handled. In this case, we might do something like:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f12.txt"/>
+          </code>
+
+          <p>This syntax may seem a little strange at first, but you can think of it as a glorified if-statement. Whatever the result of the expression in the switch statement is, the code execution jumps to that point. There is a slight problem, though.
+            Consider the following program:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f13.txt"/>
+          </code>
+
+          <p>Though one might expect the program to print "zero," it actually prints "onetwothreefourfivesixseveneightnineunknown"! What's going on here?</p>
+
+          <p>This occurs because though execution jumps to a certain point in the switch statement, it will "fall through" and continue to execute beyond that case. In our case, it jumps to case 0, then executes cases 0 through 9. This problem didn't occur before because a return statement exits the function, and
+            consequently, the switch statement, before any other cases are run. We can fix our program like so:</p>
+
+          <code>
+            <include file="snippets/control_flow_ex/f14.txt"/>
+          </code>
+
+          <p>It's more verbose now, but it works.</p>
+
+          <p>This switch statement is syntactically the same as the switch statement in Java and C#. Unlike C#, however, and as we saw, C++ allows execution to continue through in the absence of a break and execute multiple cases. This can be a good thing or a
+            bad thing.</p>
+
+          <p>C++ also provides a
+            <inl>goto</inl>
+            statement, but its usage is often discouraged in C++ code and at least requires much consideration, so I won't talk about it here.</p>
+        </content>
+      </section>
+    </section>
+
+    <section>
+      <title>C++ I/O</title>
+
+      <desc>For a language to be useful, it needs to have input and output capabilities. Most C++ features of this type are in
+        <inl>#include &lt;iostream&gt;</inl>
+        and
+        <inl>#include &lt;fstream&gt;</inl>
+        for console and file I/O, respectively.</desc>
+
+      <section>
+
+        <title>Input</title>
+        <content>
+          <p>C++ has a variety of input methods. One commonly used one is
+            <inl>std::cin</inl>, defined in
+            <inl>#include &lt;iostream&gt;</inl>. Like its partner
+            <inl>std::cout</inl>,
+            <inl>std::cin</inl>
+            is framed as a stream, and we can pipe input out of this stream.</p>
+
+          <code>
+            <include file="snippets/io_ex/f1.txt"/>
+          </code>
+
+          <p>Here's a very basic program that reads in an integer, then prints its square. When we get to
+            <inl>std::cin >> s</inl>, execution of the rest of the program just waits until we enter our integer and hit enter. Then, the stuff is computed.</p>
+
+          <p>
+            <inl>std::cin</inl>
+            has pretty intuitive input methods. For example, we can read in a
+            <inl>std::string</inl>
+            like so:</p>
+
+          <code>
+            <include file="snippets/io_ex/f2.txt"/>
+          </code>
+        </content>
+      </section>
+
+      <section>
+
+        <title>Output</title>
+
+        <content>
+
+          <p>We already saw
+            <inl>std::cout</inl>, which is a simple output stream. Some review:</p>
+
+          <list enum="lowercase">
+            <item>Unlike many languages, printing is framed as piping to std::cout, not a function</item>
+            <item>We need to
+              <inl>#include &lt;iostream&gt;</inl>
+              for std::cout to be defined</item>
+            <item>The piping operator is &lt;&lt;</item>
+            <item>It can print each supported type without special syntax</item>
+            <item>It does not implicitly print new lines like Python</item>
+            <item>We can chain &lt;&lt; operations like so:</item>
+          </list>
+
+          <code>std::cout &lt;&lt; 3 &lt;&lt; "derp" &lt;&lt; 4.5 &lt;&lt; '\n';</code>
+
+          <p>There are a couple output streams like this, notably
+            <inl>std::clog</inl>
+            and
+            <inl>std::cerr</inl>. clog and cerr are almost identical for most purposes (more precisely, cerr is buffered whereas clog is not). You can use them to print errors and such for debugging purposes, because when run their output can be redirected to a
+            file separate from cout. These streams are both defined in
+            <inl>#include &lt;iostream&gt;</inl>.</p>
+
+          <p>For C compatibility, there is also a function called
+            <inl>printf</inl>, but its usage is discouraged and outside the scope of this document.</p>
+
+          <p>To output to a file, we can use std::ofstream, defined in
+            <inl>#include &lt;fstream&gt;</inl>. We first create our file object, then open a file by its path. While the file is open we can write all of our stuff to it. Once we're happy, we close the file.</p>
+
+          <code>
+            <include file="snippets/io_ex/f3.txt"/>
+          </code>
+
+          <p>This writes</p>
+
+          <code>Lorem ipsum dolor sit amet.<br/>Cows are beautiful.</code>
+
+          <p>to
+            <code lang="none">udder.txt</code>. The actual path of
+            <code lang="none">udder.txt</code>
+            is relative to where the program was executed (i.e. what folder you are in while in the terminal). If you want an absolute path, specify it according to your OS's conventions.</p>
+
+          <p>There are a variety of output formats we can use. The default is just plain text, but we can output as binary, for example:</p>
+
+          <code>
+            <include file="snippets/io_ex/f4.txt"/>
+          </code>
+
+          <p>Recall that
+            <inl>uint8_t</inl>, defined in
+            <inl>#include &lt;cstdint&gt;</inl>, is an unsigned 8-bit integer. We are using the hexadecimal notation here. At the end of this operation
+            <code lang="none">udder.bin</code>
+            will simply be</p>
+
+          <code lang="none">FFEA</code>
+
+          <p>when represented in hexadecimal.</p>
+
+          <p>There are a variety of output formatting modifiers to opening a file, and these will be explored in time. The key thing to remember about these kinds of things is: when in doubt, look it up!</p>
+        </content>
+      </section>
+    </section>
+
+    <section>
+      <title>Examples</title>
+
+      <content>
+        <p>Now that we understand the most basic elements of C++, let's look at some example pieces of code!</p>
+
+        <p>1. Calculate the cube of an inputted integer.</p>
+
+        <tab-system>
+          <tab title="C++">
+            <code>
+              <include file="snippets/basics_ex/f1.txt"/>
+            </code>
+          </tab>
+
+          <tab title="Python 2">
+            <code lang="python">
+              <include file="snippets/basics_ex/f4.txt"/>
+            </code>
+          </tab>
+
+          <tab title="Python 3">
+            <code lang="python3">
+              <include file="snippets/basics_ex/f5.txt"/>
+            </code>
+          </tab>
+
+          <tab title="Java">
+            <code lang="java">
+              <include file="snippets/basics_ex/f6.txt"/>
+            </code>
+          </tab>
+        </tab-system>
+
+        <p>2. Calculate the sum of primes between 2 and a million. Note that like Python, JS, C++, and C#, % is the modulo operator. We are also using the sqrt function, found in
+          <inl>#include &lt;cmath&gt;</inl>.</p>
+
+        <tab-system>
+          <tab title="C++">
+            <code>
+              <include file="snippets/basics_ex/f2.txt"/>
+            </code>
+          </tab>
+          <tab title="Python 2">
+            <code lang="python">
+              <include file="snippets/basics_ex/f7.txt"/>
+            </code>
+          </tab>
+          <tab title="Python 3">
+            <code lang="python3">
+              <include file="snippets/basics_ex/f8.txt"/>
+            </code>
+          </tab>
+          <tab title="Java">
+            <code lang="java">
+              <include file="snippets/basics_ex/f9.txt"/>
+            </code>
+          </tab>
+        </tab-system>
+
+        <p>This outputs, in around 0.1 seconds on my computer:</p>
+
+        <code lang="none">The sum of the 78498 primes between 2 and 1000000 is 37550402023.</code>
+
+        <p>Some quick perf tests on this microbenchmark, averaged out of 5 tests:</p>
+
+        <table>
+          <tr>
+            <th>Language</th>
+            <th>Execution Time (ms)</th>
+          </tr>
+          <tr>
+            <th>C++</th>
+            <th>109</th>
+          </tr>
+          <tr>
+            <th>Python</th>
+            <th>2761</th>
+          </tr>
+          <tr>
+            <th>Java</th>
+            <th>370</th>
+          </tr>
+        </table>
+
+        <p>3. Find the least common multiple of two inputted numbers with a recursive Euclidean algorithm.</p>
+
+        <tab-system>
+          <tab title="C++">
+            <code>
+              <include file="snippets/basics_ex/f3.txt"/>
+            </code>
+          </tab>
+          <tab title="Python 2">
+            <code lang="python">
+              <include file="snippets/basics_ex/f10.txt"/>
+            </code>
+          </tab>
+          <tab title="Python 3">
+            <code lang="python3">
+              <include file="snippets/basics_ex/f11.txt"/>
+            </code>
+          </tab>
+          <tab title="Java">
+            <code lang="java">
+              <include file="snippets/basics_ex/f12.txt"/>
+            </code>
+          </tab>
+        </tab-system>
+
+        <p>Recursion in C++ is just like recursion in the other languages here.</p>
+      </content>
+    </section>
+
+    <section>
+      <title>Practice Problems and Tips</title>
+
+      <section>
+        <title>Tips</title>
+
+        <content>
+          <p>Like with any new language, learning C++ takes time. It needs a very different thinking paradigm, especially compared to Python and JS. Don't be frustrated if it's difficult at first.</p>
+
+          <p>To Java and C# programmers, the only fundamentally, conceptually new ideas will probably be small: the abstraction of I/O as a stream and the usage of unsigned integers. There's very little syntax differences, besides small name changes.</p>
+
+          <p>To Python programmers: you might have a little more work to do. Here's a few things to focus on, in roughly decreasing order of mental importance:</p>
+
+          <list enum="number">
+            <item>Variables and functions are typed</item>
+            <item>For loops are structurally different now</item>
+            <item>Statements are separated by semicolons</item>
+            <item>Scopes are made with curly braces</item>
+            <item>elif is now else if</item>
+          </list>
+
+          <p>To JS programmers: Most of the syntax should be familiar, but the typing of variables may be foreign, as well as the streaming rather than
+            <inl lang="javascript">console.log</inl>.</p>
+
+          <p>You'll probably need some practice, so here's some problems for you to tackle!</p>
+        </content>
+      </section>
+
+      <section>
+        <title>Problems</title>
+
+        <content>
+          <p>Here are a couple of problems, most of which focus on features more C++-specific. If asked to do these problems in your most comfortable language, you would be expected to have few issues completing them.</p>
+
+          <p><b>Problem 1</b>: Print the following string to the console, with or without a trailing newline:</p>
+
+          <code lang="none">
+            <include file="snippets/basics_problems_ex/f1.txt" notabify="true"/>
+          </code>
+
+          <p>This is just to get you reacquainted with escape
+          characters. Note that the only necessary ones here are \n and \\.</p>
+
+          <p><b>Problem 2: </b>Write a program which, given a number in the range of int, outputs true if the number is negative and false if the number if nonnegative.</p>
+          <p><b>Problem 3: </b>Write a program which, given a number in the range of unsigned long, outputs true if the number is a triangular number. Note that the modulo operator is %.</p>
+          <p><b>Problem 4: </b>Write a program which, given three coefficients of a quadratic equation a, b, c, outputs the roots of the equation ax<sup>2</sup> + bx + c. Note that <inl>std::sqrt</inl> lives in <inl>#include &lt;cmath&gt;</inl>.</p>
+        <p><b>Problem 5: </b>Write your own implementation of % (modulo), but for doubles. You could use repeated subtraction, or more efficient methods. Please don't use the built-in <inl>std::fmod</inl>.</p>
+         <p><b>Problem 6: </b>Write a program which, given a number and two temperature units ("K", "C", or "F") convert the number from the temperature unit of the first to the unit of the second.</p>
+          <p><b>Problem 7: </b>Documentation practice! Given a
+          std::string through std::cin, output its length.</p>
+          <p><b>Problem 8: </b>Casting practice! The following code: </p>
+
+          <code>
+            <include file="snippets/basics_problems_ex/f2.txt" />
+          </code>
+
+          <p>outputs "@". Change the line indicated so that it prints out c as an integer. I suggest you use static_cast.</p>
+          <p><b>Problem 9: </b>Write a function which, given two booleans, outputs the result of them XORed. Don't use the built-in operator ^ .</p>
+          <p><b>Problem 10: </b>Write a program calculating the sum of squares of odd numbers between 1
+          and 21, inclusive.</p>
+          <p><b>Problem 11: </b>What will the following program output?</p>
+
+          <code>
+            <include file="snippets/basics_problems_ex/f3.txt" />
+          </code>
+
+          <p><b>Problem 12: </b>What are the two errors in the following program? Note that one is syntactic and one is in meaning. If we only fixed the first error and compiled the program, what would happen when we executed it?</p>
+
+          <code>
+            <include file="snippets/basics_problems_ex/f4.txt" />
+          </code>
+
+          <p><b>Problem 13: </b>What will the following program output, assuming an int is 32-bits? </p>
+
+          <code>
+            <include file="snippets/basics_problems_ex/f5.txt" />
+          </code>
+        </content>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <title>The C++ Memory Model</title>
+    <desc>Every object that's not optimized away by the compiler is stored in memory somewhere. When we're programming in languages like Java, C# and Python, we rarely have to care about this fact until we need to consider performance considerations. That's because those languages separate us from the happenings at the memory level.</desc>
+
+    <section>
+      <title>Memory</title>
+    </section>
+
+    <section>
+      <title>L-values and R-values</title>
+    </section>
+
+    <section>
+      <title>Pointers</title>
+    </section>
+
+    <section>
+      <title>Arrays</title>
+    </section>
+
+    <section>
+      <title>References</title>
     </section>
   </section>
 </article>

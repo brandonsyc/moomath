@@ -1,0 +1,7 @@
+{
+   <initalization>;
+   while (<condition>) {
+       <statement(s)>;
+       <increment>;
+   }
+}

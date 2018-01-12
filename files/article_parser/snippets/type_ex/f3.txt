@@ -1,0 +1,24 @@
+Size of short: 2
+Size of unsigned short: 2
+Size of int: 4
+Size of unsigned int: 4
+Size of long: 8
+Size of unsigned long: 8
+Size of long long: 8
+Size of unsigned long long: 8
+Minimum of short: -32768
+Maximum of short: 32767
+Minimum of unsigned short: 0
+Maximum of unsigned short: 65535
+Minimum of int: -2147483648
+Maximum of int: 2147483647
+Minimum of unsigned int: 0
+Maximum of unsigned int: 4294967295
+Minimum of long: -9223372036854775808
+Maximum of long: 9223372036854775807
+Minimum of unsigned long: 0
+Maximum of unsigned long: 18446744073709551615
+Minimum of long long: -9223372036854775808
+Maximum of long long: 9223372036854775807
+Minimum of unsigned long long: 0
+Maximum of unsigned long long: 18446744073709551615

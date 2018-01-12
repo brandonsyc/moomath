@@ -1,0 +1,10 @@
+import java.util.Scanner;
+
+public class CubeInteger {
+  public static void main(String[] args) {
+    Scanner inputStream = new Scanner(System.in);
+    int a = inputStream.nextInt();
+
+    System.out.println(String.format("The cube of %d is %d.", a, a * a * a));
+  }
+}

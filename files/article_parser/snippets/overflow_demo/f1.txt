@@ -1,0 +1,22 @@
+#include <iostream>
+int main() {
+  unsigned int a = 0;
+  a -= 1;
+
+  // a underflows, becomes maximum for int
+  std::cout << a << '\n';
+
+  int b = 0;
+  b -= 1;
+
+  // b doesn't underflow here
+  std::cout << b << '\n';
+
+  short p = 32766;
+  p += 1;
+  std::cout << p << '\n';
+  p += 1;
+
+  // p overflows!
+  std::cout << p << '\n';
+}

@@ -1,0 +1,3 @@
+print "Please enter an integer to be cubed."
+a = int(raw_input())
+print "The cube of %s is %s." % (a, a * a * a)

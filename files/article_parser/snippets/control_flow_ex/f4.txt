@@ -1,0 +1,8 @@
+if (<condition_1>)
+  <statement>;
+else if (<condition_2>)
+  <statement>;
+else if (<condition_3>)
+  ...
+else
+  <statement>;
