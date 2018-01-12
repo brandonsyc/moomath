@@ -1,6 +1,6 @@
-::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
-
 The Mandelbrot set; one of the most famous fractals (and, really, mathematical objects) of all time. It's striking, really, in how complex it is (pun not intended), yet how simple the rules are. Let's delve deeper into the Mandelbrot set and, hopefully, learn something new. If you're new to the ideas of fractals in the complex plane, you can see my intro <a href="../0001/">here</a>.
+
+::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
 
 First, let's precisely define the Mandelbrot set. Define a function \(f_c(z)=z^2+c\). The Mandelbrot set is the set of all complex numbers \(c\) such that when the function is iterated, starting at \(c\), the resulting sequence's magnitude does not diverge to infinity.
 

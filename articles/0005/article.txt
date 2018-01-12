@@ -1,0 +1,259 @@
+::fig::https://imgs.xkcd.com/comics/goto.png::Okay, acutally some tags shouldn't be closed :/::<a href="https://xkcd.com/292/">https://xkcd.com/292/</a>::
+
+<h2>Introduction</h2>
+
+Is the <b>goto</b> statement harmful in C/C++?
+
+Whenever usage of <b>goto</b> in C or C++ arises in discussion, people are heatedly split upon whether its use is ever merited. Despite numerous efforts against its usage, most famously Dijkstra's essay "<a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf">Go To Statement Considered Harmful</a>", the goto statement enjoys use, even widespread use, in large codebases, notably <a href="http://koblents.com/Ches/Links/Month-Mar-2013/20-Using-Goto-in-Linux-Kernel-Code/">in the Linux kernel</a>. In this article I seek to present some information and research about both sides of the argument, hopefully for your own pleasure and code’s benefit.
+
+<h2>Spaghetti Code</h2>
+
+Those who deride goto usage argue that it can create so-called "spaghetti" code, in which the program flow is rather unclear to the human reader, as it can jump around from place to place in rather unexpected ways. Consider the following code for
+example:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex1">
+
+</code>
+</pre>
+</div>
+
+For reference, this sample function returns the number 85.
+
+Carefully consider the path of execution for a moment. You will notice that it jumps around in rather chaotic ways. At the first if statement, it could go to loop2 sometimes, what is effectively just skipping adding 2x to y, or it could not skip.
+
+When the execution reaches “goto loop1,” it goes back, like a loop would, and does the same, until the exit condition is met and the code jumps to exit.
+
+This is extremely confusing code, and the lack of indentation also hides the fact that there is really just a loop embedded in all the goto statements. We could rewrite this example like so:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex2">
+
+</code>
+</pre>
+</div>
+
+What’s going on here is much, much clearer, and we can follow the code along as we read. So clearly, using goto in this case is confusing and an equivalent concept can and should be implemented cleanly using other constructs. If you're just starting
+programming, it's thus probably a good idea to abstain from using goto so that you understand the power for, while, and do/while already gives you.
+
+Of course, if one abstains from goto or uses a language without goto statements or equivalent does not mean that its compiled version will have no gotos. Gotos -- or, more precisely, jump instructions &ndash; are a critical element of assembly.
+
+Take a look at the compiled version of the each of the codes (Intel x86 Assembly syntax).
+
+<div class="container">
+<div class="fixed">
+<p><a href="#ex1">Using goto</a> (<a href="https://gcc.gnu.org/">GCC</a>, no optimizations)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex3">
+
+</code>
+</pre>
+</div>
+</div>
+
+<div class="flex-item">
+<p><a href="#ex2">Using do/while</a>, (GCC, no optimizations)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex4">
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+
+The assemblies are almost identical. Notice that whenever the two differ, it is always because the compiled goto has some operation which has no effect.
+
+Notice that in this case, the compiled no-goto code, even without optimizations, is simpler and than the code written with gotos. In particular, the code with gotos has several no-ops (non-operations, an instruction which literally does nothing). Their presence is likely because GCC is written for, well, normal code. Let’s see what happens when we try turning on optimizations, though.
+
+<div class="container">
+<div class="fixed">
+<p><a href="#ex1">Using goto</a> (gcc -O3)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex5">
+
+</code>
+</pre>
+</div>
+</div>
+
+<div class="flex-item">
+<p><a href="#ex2">Using do/while</a> (gcc -O3)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex6">
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+
+Here you can see modern optimization capability at work! GCC correctly detected that the function was constant, so all it does is return 85. But to force the compiler to translate the algorithm rather than pre-computing it, we can declare the integers volatile:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex7">
+
+</code>
+</pre>
+</div>
+
+This gives us the following assembly:
+
+<div class="container">
+<div class="fixed">
+<p><a href="#ex1">Using goto</a> (gcc -O3)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex8">
+
+</code>
+</pre>
+</div>
+</div>
+
+<div class="flex-item">
+<p><a href="#ex2">Using do/while</a> (gcc -O3)</p>
+<div class="code">
+<pre>
+<code class="x86" id="ex9">
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+
+We get assembly that is functionally identical. This shows the high degree of parallelism between the code without goto and the code with goto; they implement the same algorithm, just in a different format, and this is expressed in the resulting assembly once the code has been distilled through optimization. The only difference to us coders is the readability; clearly, we shouldn't use goto here.
+
+<h2>Initialization Handling in C</h2>
+
+When we see goto in the wild, however, nasty "spaghetti code" like this is rarely the use case. A common programming idiom in C, for example, when recovering from errors, goes something like this:
+
+<div class="code">
+<pre>
+<code class="c" id="ex10">
+
+</code>
+</pre>
+</div>
+
+There is no easy way to do this using other constructs in C, apart from nested if-statements or other strange constructs, all of which damage clarity:
+
+<div class="code">
+<pre>
+<code class="c" id="ex11">
+
+</code>
+</pre>
+</div>
+
+<div class="code">
+<pre>
+<code class="c" id="ex12">
+
+</code>
+</pre>
+</div>
+
+In C++, however, this construct is superseded with the rather elegant notion of RAII (Resource Acquisition is Initialization), where we would wrap the initialization and de-initialization into a class which, when created, properly initializes, and also has implemented a delete operator that deinitializes. This way, if an exception is thrown while initializing, the stack unwinds and all created resources are deleted/de-initialized properly. For more information on RAII, you can consult some of the following references:
+
+<a href="http://en.cppreference.com/w/cpp/language/raii">RAII on C++ Reference</a>
+
+<a href="https://www.hackcraft.net/raii/">RAII on Hackcraft</a>
+
+<a href="https://en.wikibooks.org/wiki/More_C%2B%2B_Idioms/Resource_Acquisition_Is_Initialization">RAII on Wikibooks</a>
+
+In Java, we'd use a try/catch/finally to emulate this behavior.
+
+<h2>Escaping from Nested Loops</h2>
+
+By far the most common use case of goto outside of C is to escape from a nested loop. For example, consider the following function:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex13">
+
+</code>
+</pre>
+</div>
+
+If we were adamant in getting rid of that pesky goto, we have two main choices. The first strategy is to factor out the for loops into a separate function and use goto’s big brother: return. This could be in the form of returning an <a href="http://en.cppreference.com/w/cpp/utility/pair">std::pair</a>:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex14">
+
+</code>
+</pre>
+</div>
+<p>or by passing a pointer/l-value to x and y.</p>
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex15">
+
+</code>
+</pre>
+</div>
+
+The first is more expressive, but the second is (slightly) faster. Note that to help the compiler, we can declare these functions <a href="http://en.cppreference.com/w/cpp/language/inline">inline</a>. Personally, I think the goto is easier to follow and understand than both of these, but that is a matter of personal preference.
+
+The second strategy is to use a boolean to keep track of whether you need to break out of the outer loop, like so:
+
+<div class="code">
+<pre>
+<code class="cpp" id="ex16">
+
+</code>
+</pre>
+</div>
+
+This is how I was told to do it, and it seemed perfectly natural for a while: we should only use goto’s more expressive brothers "break", "continue", and "return." Looking at this now, though, it seems rather inelegant. Also, the code might be (slightly) slower, because every time the loop runs, found is checked as true or false. Looking at the corresponding assembly for the loop:
+
+<div class="code">
+<p>(GCC, no optimizations)</p>
+<pre>
+<code class="x86" id="ex17">
+
+</code>
+</pre>
+</div>
+
+As you can see, the conditional break makes it into the code. Even at optimization level –O1, however, the code generated is identical to the code with the goto; the boolean isn’t even allocated memory. Thus, our code’s speed is not really a concern here, but its readability. This may be the most eloquent solution for those who reject goto.</p>
+
+<h3>Escaping in Java</h3>
+
+In languages that and can't undergo this kind of optimization, however, such as Java, this can be more of a problem. If this code were translated and compiled in Java, the boolean would indeed be checked every time the loop runs. Thankfully, Java provides an alternative:
+
+<div class="code">
+<pre>
+<code class="java" id="ex18">
+
+</code>
+</pre>
+</div>
+
+This Java code breaks directly to the outer loop from the inner one, exhibiting both the convenience of a goto and the expressiveness and safety of a break. This is quite brilliant design.
+
+<h2>Summary</h2>
+
+Goto statements can be misused, though, and often are. It is not the most beautiful construct by any means, and it should definitely be used only very sparingly, if at all. As a stylistic choice, I think goto should not be allowed to go into a deeper block level statement and should not go backwards in code; those are reserved for if-statements and loops, respectively, which express the concept better. Gotos for initialization handling are much more common in C than in C++, since only the latter provides the RAII construct, which is demonstrably superior.</p>
+
+Goto statements can often appear in machine generated C/C++ code, as they are a more natural representation of loops for a computer: for, while, and do/while are really just - someone’s going to murder me for this - syntactic sugar over goto statements. Loops are now so ubiquitous that there’s no practical reason to think of them like this, but it is interesting to think about, anyway.
+
+But for any novice programmers reading this: don’t get into the habit of using goto, especially when there are more expressive alternatives! The fear of goto pervasive in both C/C++ classes and academia is often quite off-putting to students, but hopefully an explanation for why that fear exists is useful.
+
+<h2>Further Reading</h2>
+
+Comprehensive goto documentation for C++ <a href="http://en.cppreference.com/w/cpp/language/goto">http://en.cppreference.com/w/cpp/language/goto</a>
+
+Djikstra’s influential article "Go To Statement Considered Harmful" (1968): <a href="https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf">https://homepages.cwi.nl/~storm/teaching/reader/Dijkstra68.pdf</a>
+
+An interesting goto statement example which sort of goes against my aforementioned “stylistic choice”: <a href="https://stackoverflow.com/a/245759">https://stackoverflow.com/a/24575</a></p>
