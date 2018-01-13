@@ -35,7 +35,7 @@ function update(x) {
 						var text = document.createElement("p");
 
 						var rf2 = new XMLHttpRequest();
-						rf2.open("GET", "https://nichodon.github.io/articles/" + sub[3] + "/article.txt", false);
+						rf2.open("GET", "https://nichodon.github.io/programs/" + sub[3] + "/blurb.txt", false);
 						rf2.onreadystatechange = function () {
 							if (rf2.readyState === 4) {
 								if (rf2.status === 200 || rf2.status === 0) {
