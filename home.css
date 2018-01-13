@@ -25,6 +25,7 @@ html {
 }
 .list {
 	display: flex;
+	margin: 20px;
 }
 .list a {
 	border-left: 1px solid #666;
@@ -39,4 +40,9 @@ html {
 }
 .list a:last-child {
 	border-right: none;
+}
+p {
+	color: #fff;
+	max-width: 480px;
+	text-align: center;
 }
