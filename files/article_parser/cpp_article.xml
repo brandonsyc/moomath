@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <article>
-  <title>C++ Tutorial</title>
+  <title>Learning C++</title>
   <author>Timothy Herchen</author>
 
   <section>
@@ -81,7 +81,7 @@
           with that complexity and power comes the power to mess up in unobvious ways. This, combined with the fact that most of these tutorials attempt to teach from the most basic grounds of programming up, makes fully teaching the language difficult. Once
           you have learned it, however, you can see the beauties of its design.</p>
 
-        <p>I don’t know and do not profess to know all of C++’s features; this takes many years of learning and usage. I do profess, however, the understanding of how it works and how to write mediocre-quality code in it. I write this now rather than later
+        <p>I don’t know and do not profess to know all of C++’s features; this takes <link to="http://norvig.com/21-days.html">many years</link> of learning and usage. I do profess, however, the understanding of how it works and how to write mediocre-quality code in it. I write this now rather than later
           because this gives me a unique perspective on the language: unlike a newbie, I’m not completely clueless, but unlike a seasoned developer, I do not explain concepts to a beginner in a way that takes an unnecessarily high-level view of a subject.
           Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
 
@@ -1598,7 +1598,7 @@
             <include file="snippets/control_flow_ex/f9.txt"/>
           </code>
 
-          <p>In Python, we'd use xrange (Python 2) or range (3). There is another way to use the for loop in C++, introduced in C++11, but we won't talk about that yet.</p>
+          <p>In Python, we'd use <inl lang="python">xrange</inl> (Python 2) or <inl lang="python">range</inl> (3). There is another way to use the for loop in C++, introduced in C++11, but we won't talk about that yet.</p>
 
           <p>If the body of the for or while loop is only one line, we can omit the curly braces like in the if statement.</p>
 
@@ -1727,9 +1727,9 @@
             <inl>#include &lt;iostream&gt;</inl>.</p>
 
           <p>For C compatibility, there is also a function called
-            <inl>printf</inl>, but its usage is discouraged and outside the scope of this document.</p>
+            <inl>printf</inl>, but its usage is somewhat discouraged in purely C++ code and outside the scope of this document.</p>
 
-          <p>To output to a file, we can use std::ofstream, defined in
+          <p>To output to a file, we can use <inl>std::ofstream</inl>, defined in
             <inl>#include &lt;fstream&gt;</inl>. We first create our file object, then open a file by its path. While the file is open we can write all of our stuff to it. Once we're happy, we close the file.</p>
 
           <code>
@@ -1745,7 +1745,7 @@
             <code lang="none">udder.txt</code>
             is relative to where the program was executed (i.e. what folder you are in while in the terminal). If you want an absolute path, specify it according to your OS's conventions.</p>
 
-          <p>There are a variety of output formats we can use. The default is just plain text, but we can output as binary, for example:</p>
+          <p>Similarly to <inl>std::cout</inl> and <inl>printf</inl>, here is a function called <inl>fprintf</inl> for C compatibility, but it is outside the scope of this document. There are a variety of output formats we can use. The default is just plain text, but we can output as <vocab>binary</vocab>, for example:</p>
 
           <code>
             <include file="snippets/io_ex/f4.txt"/>
@@ -1753,7 +1753,7 @@
 
           <p>Recall that
             <inl>uint8_t</inl>, defined in
-            <inl>#include &lt;cstdint&gt;</inl>, is an unsigned 8-bit integer. We are using the hexadecimal notation here. At the end of this operation
+            <inl>#include &lt;cstdint&gt;</inl>, is an unsigned 8-bit integer. We are using the <vocab>hexadecimal</vocab> notation here. At the end of this operation
             <code lang="none">udder.bin</code>
             will simply be</p>
 
@@ -1936,7 +1936,7 @@
             <include file="snippets/basics_problems_ex/f2.txt" />
           </code>
 
-          <p>outputs "@". Change the line indicated so that it prints out c as an integer. I suggest you use static_cast.</p>
+          <p>outputs "@". Change the line indicated so that it prints out c as an integer. I suggest you use <inl>static_cast</inl>.</p>
           <p><b>Problem 9: </b>Write a function which, given two booleans, outputs the result of them XORed. Don't use the built-in operator ^ .</p>
           <p><b>Problem 10: </b>Write a program calculating the sum of squares of odd numbers between 1
           and 21, inclusive.</p>
@@ -1964,10 +1964,67 @@
 
   <section>
     <title>The C++ Memory Model</title>
-    <desc>Every object that's not optimized away by the compiler is stored in memory somewhere. When we're programming in languages like Java, C# and Python, we rarely have to care about this fact until we need to consider performance considerations. That's because those languages separate us from the happenings at the memory level.</desc>
+    <desc>Every object in a program, if it's not optimized away, is stored in memory somewhere. When we're programming in languages like Java, C# and Python, we rarely have to care about this fact until we need to consider performance considerations. That's because those languages separate us from the happenings at the memory level.</desc>
 
     <section>
       <title>Memory</title>
+
+      <content>
+
+      <p>Some assumptions here: a byte on your computer is 8 bits, and it is 64-bit.</p>
+
+<p>When writing a typical program, most (but not all) of our variables are stored in <vocab>RAM</vocab>, or random access memory. If you've built a PC or checked out a computer's specifications before, you've probably seen this. We can store plenty of stuff in RAM, depending on how much your system has, and the amount we can store with new computers keeps growing with improvements in technology.</p>
+
+<p>At its most fundamental level, RAM is nothing but a sequence of bits. It is the program that interprets these bits and bytes, not the content itself.</p>
+
+<p>What is the mapping from software (our C++ code) to hardware (the RAM)? Well, a variable's address is always aligned on a byte, including variables that are smaller than a byte, such as a boolean. For example, an adjacent integer, boolean, and double might be stored like this, if it was little endian:</p>
+
+<table>
+  <tr>
+    <th>Address</th>
+    <th>0x7fff5ae82afc</th>
+    <th>0x7fff5ae82afd</th>
+    <th>0x7fff5ae82afe</th>
+    <th>0x7fff5ae82aff</th>
+    <th>0x7fff5ae82b00</th>
+    <th>0x7fff5ae82b01</th>
+    <th>0x7fff5ae82b02</th>
+    <th>0x7fff5ae82b03</th>
+    <th>0x7fff5ae82b04</th>
+    <th>0x7fff5ae82b05</th>
+    <th>0x7fff5ae82b06</th>
+    <th>0x7fff5ae82b07</th>
+    <th>0x7fff5ae82b08</th>
+  </tr>
+
+  <tr>
+    <th>Type</th>
+    <th colspan="4">int (4 bytes)</th>
+    <th>bool (1 byte)</th>
+    <th colspan="8">double (8 bytes)</th>
+  </tr>
+
+  <tr>
+    <th>Bytes</th>
+<th>00111001</th>
+<th>00000101</th>
+<th>00000000</th>
+<th>00000000</th>
+<th>00000001</th>
+<th>00011000</th>
+<th>00101101</th>
+<th>01000100</th>
+<th>01010100</th>
+<th>11111011</th>
+<th>00100001</th>
+<th>00001001</th>
+<th>01000000</th>
+
+  </tr>
+</table>
+
+<p>For reference the int has value 1337, the bool has value true, and the double has an approximation of pi as its value. As you can see, a boolean is smaller than a byte in content (it only needs 1/8 a byte), but it takes up a whole byte.</p>
+</content>
     </section>
 
     <section>

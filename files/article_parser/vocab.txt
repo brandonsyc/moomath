@@ -75,3 +75,5 @@ segmentation fault: An error occurring when a program attempts to access an inva
 seg fault: An error occurring when a program attempts to access an invalid or disallowed portion of memory.
 multithreading: A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.
 executable: A file directly runnable by the computer, requiring no further interpretation.
+optimization: The ability of a compiler to transform code into more efficient, but functionally identical code.
+endianness: What order bytes and bits in memory are represented. If the smallest valued byte is first, it is little-endian. If the largest valued byte is first, it is big-endian.
