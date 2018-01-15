@@ -160,28 +160,28 @@ The C++ Memory Model
 <div class="content">
 <p>
           <b>tl; dr</b>: I expect you to have programmed before in another,
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_4nRedx4wrM" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_VqO1SFbd1E" maxwidth="180px" placement="bottom" title="A programming paradigm using statements to change a program's state.&#10;">imperative</a>
           (not
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_xZfG78EF3d" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_j8gwc8X5DL" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_cZOCMYgTPY" maxwidth="180px" placement="bottom" title="A programming paradigm treating computation as the result of evaluating statements.&#10;">functional</a>) language. I also expect you to know the very basics of the
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_HwYQnBLARc" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
           (how to open it on your computer, and the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_QW600OKuxs" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Xi3Vy0zm56" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
           command). Finally, I expect you to understand
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_mwdoFpFa5s" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_SwrI0KBg9D" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
           and
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_REcde2YW2Q" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_8CIz7QVKN8" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>
           notation: though you don't have to be able to read it quickly!</p>
 
         
 <p>Unfortunately, I am not good at explaining the basic ideas of programming to people. This document is written on the assumption that you have had significant experience programming in another language, preferably
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_koKJZpl1wz" maxwidth="180px" placement="bottom" title="A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of &quot;classes.&quot;&#10;">object-oriented</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_vV2Jw0ROuQ" maxwidth="180px" placement="bottom" title="A programming paradigm including the concept of objects, which have data and functions that can be applied to them. This is often in the form of &quot;classes.&quot;&#10;">object-oriented</a>
           (OO) and imperative: either a primarily scripting language like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_dKSSg5w7VW" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_5GpiffZrHl" maxwidth="180px" placement="bottom" title="A popular general-purpose (but first intended for Web use), interpreted, and multi-paradigm language, invented by Brendan Eich in 1995.&#10;">JS</a>
           or
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_im4mguiqph" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_xYkuTiSCcM" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_BmFb6ra7k0" maxwidth="180px" placement="bottom" title="A popular general-purpose, interpreted, object-oriented and imperative programming language, invented by Guido Van Rossum in 1991.&#10;">Python</a>, or a more heavyweight language like
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_0BaEV08y78" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by James Gosling in 1994.&#10;">Java</a>
           or
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_mNA5E6tcKw" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops, functions, etc. which are ubiquitous in almost all such programming languages will not be explained
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_vvGKy8AKMf" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled to bytecode, object-oriented and imperative programming language, invented by Microsoft in 2000.&#10;">C#</a>. Though syntax and differences to other languages will be explained to the best of my ability, things like for-loops, while loops, functions, etc. which are ubiquitous in almost all such programming languages will not be explained
           beyond features and characteristics specific to C++.</p>
 
         
@@ -197,16 +197,16 @@ The C++ Memory Model
         
 <p>If, before starting off on learning C++, you believe that all you need to learn is the syntax, I suggest you wait. A language may have certain syntax or "looks," but syntax is only a part of what makes a language useful, elegant, or appropriate
           for a task. Programming in C++ is very different from programming in other object-oriented languages like Java, or even deeply related languages like
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_oK8egG1A5h" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with different conventions, structure, and thinking paradigm.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_7crnHevmHR" maxwidth="180px" placement="bottom" title="A popular general-purpose, compiled and imperative programming language, invented by Dennis Ritchie in 1969.&#10;">C</a>. A language comes shipped not just with a different appearance, but with different conventions, structure, and thinking paradigm.</p>
 
         
 <p>As to more specific requirements, I expect you to know how to navigate folders using the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_6q5zsV94DL" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_qP0QlcFY44" maxwidth="180px" placement="bottom" title="An interface allowing the user to run commands on the computer, provided by the operating system.&#10;">command line</a>
           on your system (i.e. knowing
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_32fVuBQ7Zk" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_buvSGk7Wyf" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_2oDnRq0HY8" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>), as well as understand
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Yv8pDE83fa" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>
           and
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_M7nHCpaH0V" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_FPkhnOGgzr" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a>. Both of these are relatively easy to pick up.</p>
       
 </div>
 
@@ -235,13 +235,13 @@ The C++ Memory Model
           you have learned it, however, you can see the beauties of its design.</p>
 
         
-<p>I don&#8217;t know and do not profess to know all of C++&#8217;s features; this takes many years of learning and usage. I do profess, however, the understanding of how it works and how to write mediocre-quality code in it. I write this now rather than later
+<p>I don&#8217;t know and do not profess to know all of C++&#8217;s features; this takes <a href="http://norvig.com/21-days.html" target="_blank">many years</a> of learning and usage. I do profess, however, the understanding of how it works and how to write mediocre-quality code in it. I write this now rather than later
           because this gives me a unique perspective on the language: unlike a newbie, I&#8217;m not completely clueless, but unlike a seasoned developer, I do not explain concepts to a beginner in a way that takes an unnecessarily high-level view of a subject.
           Unfortunately, this means that this document will not be comprehensive in covering every feature of the language.</p>
 
         
 <p>If you already are an experienced C++ programmer comfortable with types and templates and
-          <span class="cpp inline-code" id="f_a8s0aph0rr">throw</span>
+          <span class="cpp inline-code" id="f_L1IE8vGw5o">throw</span>
           and such things, this is not for you. In fact, you&#8217;re probably already a better programmer than I am.</p>
 
       
@@ -266,7 +266,7 @@ The C++ Memory Model
 <ol type="a">
           <li>want to maximize performance</li>
           <li>are working with small amounts of processing power and/or
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_ehj2xoRzhp" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_WocystbNRg" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a>
           </li>
           <li>work with large amounts of data</li>
         </ol>
@@ -298,11 +298,11 @@ The C++ Memory Model
             <b>General-purpose</b>: C++ is meant for a wide variety of uses. You&#8217;ll see C++ code being used in a variety of places, from spaceships to video games to common desktop applications.</li>
           <li>
             <b>Strongly typed</b>: Unlike Python and JS, but like Java, C and C#, every variable has a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_lZ626LMwo5" maxwidth="180px" placement="bottom" title="Information representing what kind of data a variable represents.&#10;">type</a>. This type is set and cannot be later changed.</li>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_d06aFXbgVQ" maxwidth="180px" placement="bottom" title="Information representing what kind of data a variable represents.&#10;">type</a>. This type is set and cannot be later changed.</li>
           <li>
             <b>Compiled</b>: A computer is not that smart; it&#8217;s just extremely fast. C++ code, which a programmer can read (<a href="http://ioccc.org/" target="_blank">hopefully</a>
             :P), is translated by a compiler into
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_xsmGi7Tu96" maxwidth="180px" placement="bottom" title="The binary instructions run directly by a processor.&#10;">machine code</a>. This contrasts with a language like Python, Java or C# in which the code is, to some degree, interpreted: where another native-level program reads the code, figures out what to do, and then executes it on the processor.
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_ZMIo69dGUm" maxwidth="180px" placement="bottom" title="The binary instructions run directly by a processor.&#10;">machine code</a>. This contrasts with a language like Python, Java or C# in which the code is, to some degree, interpreted: where another native-level program reads the code, figures out what to do, and then executes it on the processor.
             Because of this intermediate step, well-written C++ code is inherently faster than the equivalent
             <i>interpreted</i>
             Python and Java code, with few exceptions. I know Java can be compiled as well, so please don't hate on me for saying this.</li>
@@ -327,7 +327,7 @@ The C++ Memory Model
         </p></div><h3 id='h' style="padding-top: 80px; margin-top: -80px;">1.1.0: Why not C?</h3>
 <div class="content">
 <p>C is a wonderful language, and there are some systems where it is definitely better to use than C++. Even though C++ is not inherently slower than C like
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_rNwdrSVDqj" maxwidth="180px" placement="bottom" title="A program execution system where an interpreter serves as a relay between the code itself and the processor's instructions.&#10;">interpreted</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_rzlDGmhKbm" maxwidth="180px" placement="bottom" title="A program execution system where an interpreter serves as a relay between the code itself and the processor's instructions.&#10;">interpreted</a>
             languages are, keeping C++&#8217;s speed at par with C in practice necessitates restricting some of C++&#8217;s language features: not all, but some. These features are those that cannot be implemented by the compiler without some significant overhead. As such,
             C is often the language of choice for small systems.</p>
 
@@ -335,7 +335,7 @@ The C++ Memory Model
 <p>C&#8217;s concepts, however, are almost completely low-level. This is not a bad thing, but can make programming higher-level libraries more difficult. C++ has the low-level capabilities of C, but combines it with higher-level ideas, such as classes and
             templates and so forth. While this may have some (usually small) overhead, expressing yourself in C++, especially when solving a complex problem or writing in large codebases, is usually easier than expressing yourself in C. Furthermore, it&#8217;s harder
             to mess up something critical in C++, because
-            <a alias="compiler" arrow="true" delay="200" href="javascript:void(0);" id="f_UVaxGW5ntt" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compilers</a>
+            <a alias="compiler" arrow="true" delay="200" href="javascript:void(0);" id="f_em1xu6C1My" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compilers</a>
             can do stricter compile-time checking and warn you of possible errors.
           </p>
 
@@ -349,9 +349,9 @@ The C++ Memory Model
 
           
 <p>Using Java has some performance costs, though. The usage of the
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_CJgk4BZ7bA" maxwidth="180px" placement="bottom" title="An environment where Java code is run.&#10;">Java Virtual Machine</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_C5Ra2W9b0e" maxwidth="180px" placement="bottom" title="An environment where Java code is run.&#10;">Java Virtual Machine</a>
             (JVM), which adds an intermediate layer, means that there is an inherent performance loss. Memory usage is also much higher than equivalent native-level programs. Accessing memory can be slow, and there is no concept of
-            <a alias="pointer" arrow="true" delay="200" href="javascript:void(0);" id="f_fFhtMjwV8h" maxwidth="180px" placement="bottom" title="A variable storing the position of another variable in memory.&#10;">pointers</a>
+            <a alias="pointer" arrow="true" delay="200" href="javascript:void(0);" id="f_h2DquoiUcv" maxwidth="180px" placement="bottom" title="A variable storing the position of another variable in memory.&#10;">pointers</a>
             like in C or C++, making certain algorithms much slower than their C/C++ counterparts. If you need to write code with native speed to be used in Java programs, you need to use interfaces like the Java Native Interface (JNI). I was attempting to use
             this, in fact, for our robotics team, but found it incredibly difficult to use. Furthermore, simply using the JNI incurs performance issues during transfer of control between JVM and JNI. Java is also quite verbose compared to most other languages.
             Personally, I wish they would add operator overloading to the language, but perhaps that is a silly idea.</p>
@@ -392,7 +392,7 @@ The C++ Memory Model
 
           
 <p>If you&#8217;re attempting to find an error in a larger program, you might have a hard time if it&#8217;s not found at compile-time. In the worst case scenario you just get a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_jYFQsfZfzz" maxwidth="180px" placement="bottom" title="An error occurring when a program attempts to access an invalid or disallowed portion of memory.&#10;">segmentation fault</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_zURM9uhaq4" maxwidth="180px" placement="bottom" title="An error occurring when a program attempts to access an invalid or disallowed portion of memory.&#10;">segmentation fault</a>
             or some other, more obscure error, and have no clue where it came from. Thankfully, tools like
             <a href="http://valgrind.org/" target="_blank">Valgrind</a>
             and
@@ -424,14 +424,14 @@ The C++ Memory Model
           <a href="https://en.wikipedia.org/wiki/Moore%27s_law#Near-term_limits" target="_blank">are slowing</a>, and programmers must take advantage of the growth of the number of cores in a processor. Python, unfortunately, suffers from the
           <a href="https://en.wikipedia.org/wiki/Global_interpreter_lock" target="_blank">Global Interpreter Lock</a>
           (GIL) which makes
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_XRQ2HnpdYG" maxwidth="180px" placement="bottom" title="A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.&#10;">multithreading</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_D9RLRCo5dl" maxwidth="180px" placement="bottom" title="A programming technique taking advantage of computations happening on the computer simultaneously for improved speed.&#10;">multithreading</a>
           much more difficult. Threading used to be a similarly sore spot for C++, as it had no built-in thread concept like Java does, but C++11 brought with it std::thread, a standardized threading system portable across all supported computers. There also
           exist portable frameworks like
           <a href="http://www.openmp.org/" target="_blank">OpenMP</a>
           and
           <a href="https://www.khronos.org/opencl/" target="_blank">OpenCL</a>
           that allow C or C++ programmers to take advantage of multiple cores and/or multiple
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_fytnh40Cib" maxwidth="180px" placement="bottom" title="Graphics processing unit, a part of a computer that processes data, and typically consisting of a large number of small threads which operate independently.&#10;">GPU</a>s with easier code. Java interfaces to these frameworks are currently lacking in performance.</p>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_OdKO9GlK59" maxwidth="180px" placement="bottom" title="Graphics processing unit, a part of a computer that processes data, and typically consisting of a large number of small threads which operate independently.&#10;">GPU</a>s with easier code. Java interfaces to these frameworks are currently lacking in performance.</p>
 
         
 <p>In terms of popularity (which I personally think is a poor index), C++ is consistently
@@ -447,7 +447,7 @@ The C++ Memory Model
           <a href="https://en.wikipedia.org/wiki/Bjarne_Stroustrup" target="_blank">Bjarne Stroustrup</a>
           in 1979. He applied the concept of classes, inspired by
           <a href="https://en.wikipedia.org/wiki/Simula" target="_blank">Simula</a>, to the already extant C. Throughout the years, C++ developed as a language and was eventually standardized by
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_sEaYVr4dZS" maxwidth="180px" placement="bottom" title="International Organization for Standardization, an organization which (among many other things) standardizes the C++ language.&#10;">ISO</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Oq6kJp14KU" maxwidth="180px" placement="bottom" title="International Organization for Standardization, an organization which (among many other things) standardizes the C++ language.&#10;">ISO</a>
           in 1998. A committee of representatives from various companies in the programming industry, as well as some independent members, continually work on the language definition, expanding it and taking suggestions from the public. Every five years or so
           ISO ratifies a new standard. After the initial standardization, there have been four official standards: C++03, C++11, C++14, and C++17. All of these add new features from the language, some much more significant than others. Small errors or
           mis-features are occasionally removed, but conservatively so as to maintain backwards-compatibility. Given this committee process, C++ is not owned in whole or in part by any company or person.</p>
@@ -463,7 +463,7 @@ The C++ Memory Model
 <h2 id='o' style="padding-top: 80px; margin-top: -80px;">2.0: Setting Up a C++ Environment</h2>
 <div class="content">
 <p>Before you start learning C++, you need to have an environment. For this tutorial you&#8217;ll need to have a C++
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_i0jmBvVZjz" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>, preferably one that can handle C++11 and a text editor. The most reputable C++ compilers are probably
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_3dMXMvFwwn" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>, preferably one that can handle C++11 and a text editor. The most reputable C++ compilers are probably
           <a href="https://clang.llvm.org/" target="_blank">Clang</a>,
           <a href="https://gcc.gnu.org/projects/cxx-status.html" target="_blank">GCC</a>, and the
           <a href="https://software.intel.com/en-us/c-compilers" target="_blank">Intel compiler</a>. A text editor that&#8217;s not Notepad or TextEdit or whatever is quite important; syntax highlighting is strongly recommended. For free text editors, you can try
@@ -480,10 +480,10 @@ The C++ Memory Model
 
         
 <p>As stated in Are You Ready?, you will need a basic understanding of the command line on your computer. This is Terminal on macOS, and Command Prompt on Windows. I suggest you learn the
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_3S8IVMOm6j" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_n0maAmwSv5" maxwidth="180px" placement="bottom" title="A command in the command line which allows you to navigate folders.&#10;">cd</a>
           command, as well as
-          <a arrow="true" delay="200" href="javascript:void(0);" id="f_27ul22U6PV" maxwidth="180px" placement="bottom" title="A command on Unix and Unix-like machines which prints out all the files and folders in the current directory.&#10;">ls</a>
-          (<a arrow="true" delay="200" href="javascript:void(0);" id="f_yecPEEsTg0" maxwidth="180px" placement="bottom" title="A command on Windows which prints out all the files and folders in the current directory.&#10;">dir</a>
+          <a arrow="true" delay="200" href="javascript:void(0);" id="f_Xqm11q3Twy" maxwidth="180px" placement="bottom" title="A command on Unix and Unix-like machines which prints out all the files and folders in the current directory.&#10;">ls</a>
+          (<a arrow="true" delay="200" href="javascript:void(0);" id="f_sZ59rWZfCF" maxwidth="180px" placement="bottom" title="A command on Windows which prints out all the files and folders in the current directory.&#10;">dir</a>
           on Windows).</p>
       
 </div><h3 id='p' style="padding-top: 80px; margin-top: -80px;">2.0.0: macOS</h3>
@@ -491,15 +491,15 @@ The C++ Memory Model
 <p>XCode command-line tools come with the Clang compiler, as well as GNU Make. In Terminal, enter in the following command:</p>
 
           
-<div class="code-cf nohighlight" id="f_iKKTvcwjns" lang="none">xcode-select --install</div>
+<div class="code-cf nohighlight" id="f_NrZjH9iQrL" lang="none">xcode-select --install</div>
 
           
 <p>This will install XCode's tools. You may have already done this, considering it also contains important development tools such as Git, Subversion, etc. To test out your Clang installation, try running the command
-            <span class=" nohighlight inline-code" id="f_2CaJf1h39o">g++ -v</span>
+            <span class=" nohighlight inline-code" id="f_YyEeDDZeia">g++ -v</span>
             in Terminal. It should print out something along the lines of:</p>
 
           
-<div class="code-cf nohighlight" id="f_pizeskbBpx" lang="none">
+<div class="code-cf nohighlight" id="f_dlDQWRqmxB" lang="none">
             
 Configured with: --prefix=/Library/Developer/CommandLineTools/usr --with-gxx-include-dir=/usr/include/c++/4.2.1 <br />
 Apple LLVM version 9.0.0 (clang-900.0.37) <br />
@@ -516,11 +516,11 @@ InstalledDir: /Library/Developer/CommandLineTools/usr/bin <br />
 
           
 <p>To check your make installation you can run
-            <span class=" nohighlight inline-code" id="f_IquzYn5BXS">make &#8211;v</span>
+            <span class=" nohighlight inline-code" id="f_9rU1DmqwS3">make &#8211;v</span>
             which should print out something like:</p>
 
           
-<div class="code-cf nohighlight" id="f_An5WOtxmbD" lang="none">
+<div class="code-cf nohighlight" id="f_gacgaHQ2df" lang="none">
             
 GNU Make 3.81 <br />
 Copyright (C) 2006  Free Software Foundation, Inc. <br />
@@ -539,40 +539,40 @@ This program built for i386-apple-darwin11.3.0 <br />
 <p>Unfortunately, it is somewhat of a hassle to install a C++ compiler on Windows. For GCC, you need to install a GNU development interface to Windows like MinGW.
             <a href="http://preshing.com/20141108/how-to-install-the-latest-gcc-on-windows/" target="_blank">This website</a>
             provides a good tutorial to do this. Don&#8217;t fret! You only have to do this once; or you could switch to Unix. ;) You can check your installation with
-            <span class=" nohighlight inline-code" id="f_cC7YTOFGJf">g++ -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_OWt1yk3XRm">g++ -v</span>.</p>
 
           
 <p>Installing GNU Make is similarly done through MinGW. You can check your installation with
-            <span class=" nohighlight inline-code" id="f_kkUDjKCgYx">make -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_IzJ4qIexEe">make -v</span>.</p>
         
 </div>
 
 <h3 id='r' style="padding-top: 80px; margin-top: -80px;">2.0.2: Linux</h3>
 <div class="content">
 <p>First, test whether GCC is already installed with
-            <span class=" nohighlight inline-code" id="f_UKYNkwNCyP">g++ -v</span>. If not, to install GCC on Linux you can run:</p>
+            <span class=" nohighlight inline-code" id="f_7HjiPLNLsl">g++ -v</span>. If not, to install GCC on Linux you can run:</p>
 
           
-<div class="code-cf nohighlight" id="f_zfgbwmWq32" lang="none">
+<div class="code-cf nohighlight" id="f_HZkLAOWLlt" lang="none">
             sudo apt-get install gcc
           </div>
 
           
 <p>Note that you will likely have to enter in your password for the installation to work. You can check your installation with
-            <span class=" nohighlight inline-code" id="f_DtqKCKERun">g++ -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_kIIrWnDJGj">g++ -v</span>.</p>
 
           
 <p>Check if GNU Make is already installed with
-            <span class=" nohighlight inline-code" id="f_XTGijLTmJ6">make &#8211;v</span>. To install make, run:</p>
+            <span class=" nohighlight inline-code" id="f_4axWWbQmIW">make &#8211;v</span>. To install make, run:</p>
 
           
-<div class="code-cf nohighlight" id="f_xsroQQLZSN" lang="none">
+<div class="code-cf nohighlight" id="f_5are8hetzy" lang="none">
             sudo apt-get install make
           </div>
 
           
 <p>You can check your installation with
-            <span class=" nohighlight inline-code" id="f_lQ3kgIMsOO">make -v</span>.</p>
+            <span class=" nohighlight inline-code" id="f_bOxjI2oetW">make -v</span>.</p>
         
 </div>
 
@@ -584,7 +584,7 @@ This program built for i386-apple-darwin11.3.0 <br />
 <p>In your text editor, type in or copy-paste the following code:</p>
 
           
-<div class="code-cf cpp" id="f_GAIfjGNA0i">
+<div class="code-cf cpp" id="f_yvF4V1GtOy">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -602,13 +602,13 @@ int main() { // Hello World program <br />
             and run the following command:</p>
 
           
-<div class="code-cf nohighlight" id="f_pVzvMkCGxg" lang="none">g++ -o hello hello.cc</div>
+<div class="code-cf nohighlight" id="f_czzXw58M4s" lang="none">g++ -o hello hello.cc</div>
 
           
 <p>Note that g++ is simply an alias for the C++ compiler. This should create an
-            <a alias="executable" arrow="true" delay="200" href="javascript:void(0);" id="f_55wVeNFLbc" maxwidth="180px" placement="bottom" title="A file directly runnable by the computer, requiring no further interpretation.&#10;">executable file</a>
+            <a alias="executable" arrow="true" delay="200" href="javascript:void(0);" id="f_UVSsaSEkjW" maxwidth="180px" placement="bottom" title="A file directly runnable by the computer, requiring no further interpretation.&#10;">executable file</a>
             called
-            <span class=" nohighlight inline-code" id="f_GILnbkEAWB">hello</span>
+            <span class=" nohighlight inline-code" id="f_5r5L6FYmEE">hello</span>
             in the same folder.</p>
 
           
@@ -620,7 +620,7 @@ int main() { // Hello World program <br />
 
           
 <p>You can either open it normally (in Finder, Windows Explorer, etc.) or run it from the command line by running
-            <span class=" nohighlight inline-code" id="f_JFQsYv0xMe">./hello</span>. Either way, you should get something like this:</p>
+            <span class=" nohighlight inline-code" id="f_lxyOKkYjc2">./hello</span>. Either way, you should get something like this:</p>
 
           
 <figure>
@@ -635,9 +635,9 @@ int main() { // Hello World program <br />
 <p>As you can see, the executable ran and something rather boring happened: "Hello, World!" was printed to the console. All that manure for what in Python 2 we could have done as just print "Hello, World!"? Man!</p>
 
           
-<div class="tab-system" id="f_wT15DbBP1M" style=";max-height: 750px;">
-            <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_7XSf7ql44t', 'f_wT15DbBP1M')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_FFe2wjhiZ2', 'f_wT15DbBP1M')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_vmxRJg4eMS', 'f_wT15DbBP1M')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_TwxybhfDtL', 'f_wT15DbBP1M')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_Mjnmce2bBn', 'f_wT15DbBP1M')">JS</button></div><div class="tab-content" id="f_7XSf7ql44t">
-              <div class="code-cf cpp" id="f_lqLffENBG8">
+<div class="tab-system" id="f_Gn3tjnaAtA" style=";max-height: 750px;">
+            <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_sWL1TWlAnh', 'f_Gn3tjnaAtA')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_MspYQMLbVa', 'f_Gn3tjnaAtA')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_AlO7fAj5Ln', 'f_Gn3tjnaAtA')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_1xJCCRz4R7', 'f_Gn3tjnaAtA')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_tpPN2KsSzg', 'f_Gn3tjnaAtA')">JS</button></div><div class="tab-content" id="f_sWL1TWlAnh">
+              <div class="code-cf cpp" id="f_oIDqfLjTdM">
                 
 #include &lt;iostream&gt; <br />
  <br />
@@ -648,24 +648,24 @@ int main() { <br />
 
               </div>
             </div>
-            <div class="tab-content" id="f_FFe2wjhiZ2">
-              <div class="code-cf python" id="f_A5NR3MwRRR" lang="python">
+            <div class="tab-content" id="f_MspYQMLbVa">
+              <div class="code-cf python" id="f_ERMbfxkO8r" lang="python">
                 
 print "Hello, World!" <br />
 
 
               </div>
             </div>
-            <div class="tab-content" id="f_vmxRJg4eMS">
-              <div class="code-cf python3" id="f_wAtIBAzCC2" lang="python3">
+            <div class="tab-content" id="f_AlO7fAj5Ln">
+              <div class="code-cf python3" id="f_7yKvZZUeJX" lang="python3">
                 
 print("Hello, World!") <br />
 
 
               </div>
             </div>
-            <div class="tab-content" id="f_TwxybhfDtL">
-              <div class="code-cf java" id="f_KN98mv7B4m" lang="java">
+            <div class="tab-content" id="f_1xJCCRz4R7">
+              <div class="code-cf java" id="f_FnsmXAkISk" lang="java">
                 
 public class HelloWorld { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;public static void main(String[] args) { <br />
@@ -676,8 +676,8 @@ public class HelloWorld { <br />
 
               </div>
             </div>
-            <div class="tab-content" id="f_Mjnmce2bBn">
-              <div class="code-cf javascript" id="f_6hcFmYB0Xj" lang="javascript">
+            <div class="tab-content" id="f_tpPN2KsSzg">
+              <div class="code-cf javascript" id="f_WzXVV9eh0X" lang="javascript">
                 
 console.log("Hello, World!"); <br />
 
@@ -695,7 +695,7 @@ console.log("Hello, World!"); <br />
 
           
 <p>Loosely, the first line
-            <span class="cpp inline-code" id="f_t4ykSON3nF">#include &lt;iostream&gt;</span>
+            <span class="cpp inline-code" id="f_Hwk4brgGFC">#include &lt;iostream&gt;</span>
             tells the C++ compiler that we want the source code of the file "iostream" to be inserted here. The preprocessor sees this instruction, called a preprocessing directive, and just replaces it with the contents of "iostream." Note that we call this
             preprocessing because all this happens before the code is actually examined for errors and syntax and such.</p>
 
@@ -707,17 +707,17 @@ console.log("Hello, World!"); <br />
 <p>To see what the code looks like after preprocessing, you can run the command:</p>
 
           
-<div class="code-cf nohighlight" id="f_5ea4ArwJm1" lang="none">g++ -E hello.cc</div>
+<div class="code-cf nohighlight" id="f_fWeh1f5pje" lang="none">g++ -E hello.cc</div>
 
           
 <p>The
-            <span class=" nohighlight inline-code" id="f_D8PbI97SOE">&#8211;E</span>
+            <span class=" nohighlight inline-code" id="f_hqej2xloqs">&#8211;E</span>
             compiler flag tells it to stop compiling and spit out the result of the preprocessor to the console. But brace yourself, because iostream is a pretty large file. iostream also
-            <span class="cpp inline-code" id="f_oEw9GYPPjT">#include</span>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
+            <span class="cpp inline-code" id="f_uyVVsfWzdO">#include</span>s other files. On my laptop, the result of the preprocessor is 39074 lines long!</p>
 
           
 <p>Thankfully, you don't have to understand its contents. I don't understand it, either. What iostream does, however, is define (among other things) an object called
-            <span class="cpp inline-code" id="f_wZlj9ufmLr">std::cout</span>. This object can be given things to write to the console.</p>
+            <span class="cpp inline-code" id="f_XSM50AzHeA">std::cout</span>. This object can be given things to write to the console.</p>
 
           
 <p>In the naming hierarchy, where does this object live, you might ask? Well, it lives in the namespace, or group of names, "std" (for standard, not for...) and is called cout. I like to think of namespaces as folders. If you keep things in folders
@@ -729,7 +729,7 @@ console.log("Hello, World!"); <br />
 
           
 <p>"main" is no ordinary function. Whatever is in it will be what is actually run when you execute a program. This is very similar to main in a Java class (or Main in C#), as well as main in C and
-            <span class=" python inline-code" id="f_LvrWZmvv3J">if __name__ == "__main__"</span>
+            <span class=" python inline-code" id="f_jYp0AgsGTd">if __name__ == "__main__"</span>
             <a href="https://stackoverflow.com/questions/419163/what-does-if-name-main-do" target="_blank">in Python</a>. If we called our function "main1" instead, nothing will actually be run.</p>
 
           
@@ -740,9 +740,9 @@ console.log("Hello, World!"); <br />
             including in the middle of statements (but I don't recommend it).</p>
 
           
-<div class="tab-system" id="f_IEmDmSmADW" style=";max-height: 750px;">
-            <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_caThuSr8pZ', 'f_IEmDmSmADW')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_1gnszmb4nf', 'f_IEmDmSmADW')">Python</button><button class="tablinks" onclick="openTabID(event, 'f_ywI11WDfDZ', 'f_IEmDmSmADW')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_cuOyBoMtJA', 'f_IEmDmSmADW')">JS</button></div><div class="tab-content" id="f_caThuSr8pZ">
-              <div class="code-cf cpp" id="f_H42TdGVPP8">
+<div class="tab-system" id="f_5j16FgbjpR" style=";max-height: 750px;">
+            <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_JOhhEXarxp', 'f_5j16FgbjpR')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_Oir85o6KVT', 'f_5j16FgbjpR')">Python</button><button class="tablinks" onclick="openTabID(event, 'f_QY5pf6u8Q9', 'f_5j16FgbjpR')">Java</button><button class="tablinks" onclick="openTabID(event, 'f_oiDUgYlHsp', 'f_5j16FgbjpR')">JS</button></div><div class="tab-content" id="f_JOhhEXarxp">
+              <div class="code-cf cpp" id="f_epCv8uhAJX">
                 
 // line comment <br />
 /* Succulent <br />
@@ -754,8 +754,8 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
               </div>
             </div>
-            <div class="tab-content" id="f_1gnszmb4nf">
-              <div class="code-cf python" id="f_UZYOzAPKmg" lang="python">
+            <div class="tab-content" id="f_Oir85o6KVT">
+              <div class="code-cf python" id="f_WVrz6egVwn" lang="python">
                 
 # line comment <br />
 """Succulent <br />
@@ -767,8 +767,8 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
               </div>
             </div>
-            <div class="tab-content" id="f_ywI11WDfDZ">
-              <div class="code-cf java" id="f_ZrBQSRnfxu" lang="java">
+            <div class="tab-content" id="f_QY5pf6u8Q9">
+              <div class="code-cf java" id="f_DBPlxvKjct" lang="java">
                 
 // line comment <br />
 /* Succulent <br />
@@ -780,8 +780,8 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
               </div>
             </div>
-            <div class="tab-content" id="f_cuOyBoMtJA">
-              <div class="code-cf javascript" id="f_aM5rUFdlMF" lang="javascript">
+            <div class="tab-content" id="f_oiDUgYlHsp">
+              <div class="code-cf javascript" id="f_lL95B5CZri" lang="javascript">
                 
 // line comment <br />
 /* Succulent <br />
@@ -797,28 +797,28 @@ I AM A /* foo bar */ STATEMENT; // Parsed as "I AM A STATEMENT" <br />
 
           
 <p>The fourth line is probably the strangest line of the program to foreigners. What
-            <span class="cpp inline-code" id="f_Ody2JjZEiB">&lt;&lt;</span>
+            <span class="cpp inline-code" id="f_cVBwdvQxXz">&lt;&lt;</span>
             is doing is streaming the string "Hello, World\n" to
-            <span class="cpp inline-code" id="f_3tzK9FSHai">std::cout</span>. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's
-            <span class=" java inline-code" id="f_BoMXLoAP4u">System.out.println</span>, Python's
-            <span class=" python inline-code" id="f_8Xbpv1IJDc">print</span>, C's
-            <span class=" c inline-code" id="f_UJuzmjCKl8">printf</span>
+            <span class="cpp inline-code" id="f_LOwvdTQF8P">std::cout</span>. I think of it like you are pouring out the string. This syntax contrasts with a lot of other languages' console output methods, such as Java's
+            <span class=" java inline-code" id="f_mIgMML55wz">System.out.println</span>, Python's
+            <span class=" python inline-code" id="f_Vh6yDSJEaO">print</span>, C's
+            <span class=" c inline-code" id="f_PdPCgST78o">printf</span>
             and JS's
-            <span class=" javascript inline-code" id="f_c1ZabcUe6x">console.log</span>, all of which are framed as a function.</p>
+            <span class=" javascript inline-code" id="f_dYDPDUpJsL">console.log</span>, all of which are framed as a function.</p>
 
           
 <p>To be more precise,
-            <span class="cpp inline-code" id="f_rFMHEdybPJ">&lt;&lt;</span>
+            <span class="cpp inline-code" id="f_7P2Po5RFk8">&lt;&lt;</span>
             is a binary operator (an operator taking two arguments), which passes the string to
-            <span class="cpp inline-code" id="f_RWqWHoxBgs">std::cout</span>
+            <span class="cpp inline-code" id="f_X0xM1bTMjr">std::cout</span>
             for
-            <span class="cpp inline-code" id="f_5wsRGbQKN6">std::cout</span>
+            <span class="cpp inline-code" id="f_y2homHionR">std::cout</span>
             to handle. Furthermore, this operator returns
-            <span class="cpp inline-code" id="f_PJ188tEw2y">std::cout</span>
+            <span class="cpp inline-code" id="f_1OYgB4akNb">std::cout</span>
             again, and since operators are evaluated from left to right, we can do something like:</p>
 
           
-<div class="code-cf cpp" id="f_3sPolOc0zL">
+<div class="code-cf cpp" id="f_3eSl6nkyZG">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -833,7 +833,7 @@ int main() { <br />
 <p>and it will write out "Merry Christmas to you!", because it is evaluated as</p>
 
           
-<div class="code-cf cpp" id="f_xCgKFhNTsQ">
+<div class="code-cf cpp" id="f_DIeicBDv5M">
             
 (((std::cout &lt;&lt; "Merry ") &lt;&lt; "Christmas ") &lt;&lt; "to ") &lt;&lt; "you!\n"; <br />
 
@@ -862,7 +862,7 @@ int main() { <br />
             language, but rather a class of language that maps extremely closely to what the computer's CPU can do. If you want to see the assembly output of a C++ program, compile like so:</p>
 
           
-<div class="code-cf nohighlight" id="f_2FsehKp1fs" lang="none">g++ -S hello.cc</div>
+<div class="code-cf nohighlight" id="f_ntKMgeEBfe" lang="none">g++ -S hello.cc</div>
 
           
 <p>This will write the assembly output of the compiler to a file called
@@ -874,13 +874,13 @@ int main() { <br />
 
           
 <p>We're not done yet, though, but we're close. The computer must convert the assembly into machine code. Machine code simply consists of a long hexadecimal sequence telling the
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_AmUsJe6Frx" maxwidth="180px" placement="bottom" title="Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.&#10;">CPU</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_5HjRgYKAqD" maxwidth="180px" placement="bottom" title="Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.&#10;">CPU</a>
             exactly what to do and is completely unreadable to the common human. The conversion from assembly to machine code is not done by the compiler itself, but by a vendor-provided
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_VVsh0F9fhk" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>.</p>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_1tf0OC7bMS" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>.</p>
 
           
 <p>Thankfully, we don't need to handle the assembly intermediate step. Without
-            <span class=" nohighlight inline-code" id="f_RT8An0PNNE">&#8211;S</span>, the compiler will just output machine code that we can use immediately.</p>
+            <span class=" nohighlight inline-code" id="f_TcCJ84MtyX">&#8211;S</span>, the compiler will just output machine code that we can use immediately.</p>
 
           
 <p>Well that was long. I sincerely hope you haven't seen a hello world example/explanation that long before. Perhaps it was excessive, but I wanted to show you exactly what is going on so you don't get confused later when I talk about compiling, and
@@ -891,10 +891,10 @@ int main() { <br />
 <p>If you want to play around with this example, you can download it
             <a download="" href="examples/example1.zip" target="_blank">here</a>. To compile
             <code lang="none">hello.cc</code>, just run
-            <span class=" nohighlight inline-code" id="f_us6lGf64jF">make</span>. To output assembly to
+            <span class=" nohighlight inline-code" id="f_opjrNmtPGt">make</span>. To output assembly to
             <code lang="none">hello.s</code>, run
-            <span class=" nohighlight inline-code" id="f_zEK1BuEG0g">make asm</span>. Finally, to print out preprocessor output, do
-            <span class=" nohighlight inline-code" id="f_4tA9vWTa21">make pre</span>. Enjoy!</p>
+            <span class=" nohighlight inline-code" id="f_Roao2FwiBJ">make asm</span>. Finally, to print out preprocessor output, do
+            <span class=" nohighlight inline-code" id="f_aTWAreZp0T">make pre</span>. Enjoy!</p>
         
 </div>
 
@@ -904,12 +904,12 @@ int main() { <br />
 
           
 <p>C++ is a compiled language. Thus, its source code is turned into machine code by a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_E32p4zHA2O" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_mkUg5sp3Lc" maxwidth="180px" placement="bottom" title="A software that converts code in a high level language, like C++, to low level code that can be run by the computer directly.&#10;">compiler</a>
             and
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_uRKrcyXvKL" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>. To compile your program, run in a shell:</p>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_kZp88QK5ym" maxwidth="180px" placement="bottom" title="A program which converts assembly code to machine code.&#10;">assembler</a>. To compile your program, run in a shell:</p>
 
           
-<div class="code-cf nohighlight" id="f_pWstupzRaM" lang="none">g++ -o &lt;machine code output file name&gt; &lt;path to source&gt;</div>
+<div class="code-cf nohighlight" id="f_2wcYJ2tbLN" lang="none">g++ -o &lt;machine code output file name&gt; &lt;path to source&gt;</div>
 
           
 <p>For example, to compile
@@ -918,7 +918,7 @@ int main() { <br />
             <code lang="none">milk</code>, we do:</p>
 
           
-<div class="code-cf nohighlight" id="f_kNHruwEL37" lang="none">g++ -o milk udder.cc</div>
+<div class="code-cf nohighlight" id="f_yukTW49Gtj" lang="none">g++ -o milk udder.cc</div>
 
           
 <p>As an aside, I suggest you compile to
@@ -929,7 +929,7 @@ int main() { <br />
 <p>We can run
             <code lang="none">milk</code>/<code lang="none">milk.exe</code>
             in the command line by doing
-            <span class=" nohighlight inline-code" id="f_hWgl3vaMt0">./milk</span>. We can also open it as you would normally open a file in the system file viewer (Explorer, Finder, etc.), which should open up a command line interface and run the program immediately.</p>
+            <span class=" nohighlight inline-code" id="f_YQ2BkRaF68">./milk</span>. We can also open it as you would normally open a file in the system file viewer (Explorer, Finder, etc.), which should open up a command line interface and run the program immediately.</p>
         
 </div>
 
@@ -941,7 +941,7 @@ int main() { <br />
 <p>As a C-family language, C++'s statement separator is the semicolon. Multiple statements can appear on the same line like so. Semicolons are not optional.</p>
 
           
-<div class="code-cf cpp" id="f_rGeI6IKAtk">
+<div class="code-cf cpp" id="f_V2GehpVCSb">
             
 &lt;statement_1&gt;; <br />
 &lt;statement_2&gt;;            	// Okay <br />
@@ -958,7 +958,7 @@ int main() { <br />
 <p>Statements can be split over multiple lines, though, if the newline can be interpreted as plain whitespace. For example,</p>
 
           
-<div class="code-cf cpp" id="f_jSdKZR9q8m">
+<div class="code-cf cpp" id="f_EM81nv56NM">
             
 int main() <br />
 { <br />
@@ -974,7 +974,7 @@ int main() <br />
 <p>compiles fine, but</p>
 
           
-<div class="code-cf cpp" id="f_hrfO1DDteG">
+<div class="code-cf cpp" id="f_sYeGPP8ZHP">
             
 int main() <br />
 { <br />
@@ -997,7 +997,7 @@ int main() <br />
 <p>C++ is strongly typed. That is, every function has a specific type it returns, and every variable has a specific type. Initializing and setting a variable is done like so:</p>
 
           
-<div class="code-cf cpp" id="f_e2P0S7flAY">
+<div class="code-cf cpp" id="f_q5iBGST0dc">
             
 &lt;type&gt; &lt;name&gt; = &lt;value&gt;; <br />
 
@@ -1008,7 +1008,7 @@ int main() <br />
 <p>or, since C++11, using the uniform initialization syntax, like so:</p>
 
           
-<div class="code-cf cpp" id="f_9Ph45aUybA">
+<div class="code-cf cpp" id="f_5HDwaAl4pQ">
             
 &lt;type&gt; &lt;name&gt;{&lt;value&gt;}; <br />
 
@@ -1017,11 +1017,11 @@ int main() <br />
 
           
 <p>For example, initializing an
-            <span class="cpp inline-code" id="f_nVVnjQgrKT">int a</span>
+            <span class="cpp inline-code" id="f_kNTCzBYE42">int a</span>
             to 5 can be done like so:</p>
 
           
-<div class="code-cf cpp" id="f_42S9mAYuVf">
+<div class="code-cf cpp" id="f_3R0hOxKDqI">
             
 int a = 5; <br />
 int a{5};  // Or this <br />
@@ -1033,7 +1033,7 @@ int a{5};  // Or this <br />
 <p>Which you choose is mostly a personal preference. I will use the first syntax because it will probably be more familiar to you. We can initialize multiple variables of the same type like so:</p>
 
           
-<div class="code-cf cpp" id="f_tFvdTw8dML">
+<div class="code-cf cpp" id="f_Yr3JWBuFdC">
             
 &lt;type&gt; &lt;name_1&gt;, &lt;name_2&gt;, ... ; <br />
 int a = 0, b = 5; <br />
@@ -1046,7 +1046,7 @@ int a{0}, b{5}; <br />
 <p>You can allocate variables without setting their value like so:</p>
 
           
-<div class="code-cf cpp" id="f_ZhgU4TvAs2">
+<div class="code-cf cpp" id="f_KYOMRLGzgf">
             
 int a; <br />
 int a, b; <br />
@@ -1065,7 +1065,7 @@ int a, b; <br />
 <p>At any point in code we can reassign a variable, like so:</p>
 
           
-<div class="code-cf cpp" id="f_7I7x6vVivM">
+<div class="code-cf cpp" id="f_bCwv2GGDia">
             
 int a = 5; <br />
 std::cout &lt;&lt; a &lt;&lt; " udders\n"; // prints 5 udders <br />
@@ -1081,7 +1081,7 @@ a = 3; // a is now 3 <br />
 <p>The syntax for a function is like so:</p>
 
           
-<div class="code-cf cpp" id="f_oo9eJ0iar0">
+<div class="code-cf cpp" id="f_KsV2rDvsNJ">
             
 &lt;return_type&gt; &lt;function_name&gt;(&lt;arguments&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;function_body&gt; <br />
@@ -1092,12 +1092,12 @@ a = 3; // a is now 3 <br />
 
           
 <p>The rules for function naming and variable naming are the same. For example, suppose we want to implement a function called "square" which squares a given
-            <span class="cpp inline-code" id="f_9xXst8XpoJ">int</span>
+            <span class="cpp inline-code" id="f_1Md5wcLEpX">int</span>
             and returns an
-            <span class="cpp inline-code" id="f_dig6OXojgV">int</span>. We could do that like so:</p>
+            <span class="cpp inline-code" id="f_41qH70YxKC">int</span>. We could do that like so:</p>
 
           
-<div class="code-cf cpp" id="f_RCHXGv0NH9">
+<div class="code-cf cpp" id="f_grst3fAT2N">
             
 int square(int a) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;int a_squared = a * a; <br />
@@ -1111,7 +1111,7 @@ int square(int a) { <br />
 <p>More succinctly, we could write it like so:</p>
 
           
-<div class="code-cf cpp" id="f_hWahv19lJO">
+<div class="code-cf cpp" id="f_MNLCVezABU">
             
 int square(int a) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;return a * a; <br />
@@ -1124,7 +1124,7 @@ int square(int a) { <br />
 <p>Let's try it out!</p>
 
           
-<div class="code-cf cpp" id="f_PNj2yyoDkP">
+<div class="code-cf cpp" id="f_byT8WBBwI4">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -1150,10 +1150,10 @@ int main() { <br />
 
           
 <p>If a function returns nothing, the "return type" is called
-            <span class="cpp inline-code" id="f_g6xEi7k4RY">void</span>. For example:</p>
+            <span class="cpp inline-code" id="f_jozxgmRQmJ">void</span>. For example:</p>
 
           
-<div class="code-cf cpp" id="f_m9zdvFhhvN">
+<div class="code-cf cpp" id="f_wkiA2dcK2z">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -1174,7 +1174,7 @@ int main() { <br />
 <p>will cause an error. Thus,</p>
 
           
-<div class="code-cf cpp" id="f_G3MQkffjD3">
+<div class="code-cf cpp" id="f_54r6FDynmG">
             
 int main() { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;void c; <br />
@@ -1185,11 +1185,11 @@ int main() { <br />
 
           
 <p>will print "milkmilkmilk" to the console.
-            <span class="cpp inline-code" id="f_EV2cSdfFeo">void</span>
+            <span class="cpp inline-code" id="f_FsxvvbwThx">void</span>
             is not a normal type, so doing something like</p>
 
           
-<div class="code-cf cpp" id="f_9PxyINiLsl">
+<div class="code-cf cpp" id="f_TvDQrLFu4J">
             int milky = writeMilk();
           </div>
 
@@ -1205,7 +1205,7 @@ int main() { <br />
             of a scope and used by surrounding code unless explicitly done so. Things in &#8220;shallower&#8221; parent scopes, including the global scope, however, can be used in a scope. For example:</p>
 
           
-<div class="code-cf cpp" id="f_O5VtCsU51K">
+<div class="code-cf cpp" id="f_GftMWbhGDg">
             
 void derp() { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;c *= 4; <br />
@@ -1226,7 +1226,7 @@ int main() { <br />
 <p>doesn&#8217;t compile. This does, however:</p>
 
           
-<div class="code-cf cpp" id="f_4Ihnk2oOEU">
+<div class="code-cf cpp" id="f_eACe4DmuiG">
             
 int c = 5; <br />
  <br />
@@ -1250,7 +1250,7 @@ int main() { <br />
 <p>In a scope, we initialize a variable with the same name as another variable in another scope, and any references to that variable name will resolve to the variable we just declared. For example,</p>
 
           
-<div class="code-cf cpp" id="f_i6cAhQcAfU">
+<div class="code-cf cpp" id="f_LFhp6rdTCE">
             
 int main() { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;int c = 5; <br />
@@ -1270,7 +1270,7 @@ int main() { <br />
 <p>will output 5, but</p>
 
           
-<div class="code-cf cpp" id="f_PT1zDbKnXd">
+<div class="code-cf cpp" id="f_N0btIdtZEl">
             
 int main() { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;int c = 5; <br />
@@ -1302,7 +1302,7 @@ int main() { <br />
 <p>You cannot redefine a function with the same name or redefine a variable with the same name in the same scope. For example:</p>
 
           
-<div class="code-cf cpp" id="f_L6yvZalCHg">
+<div class="code-cf cpp" id="f_FIlybHHSsr">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -1334,7 +1334,7 @@ int main() { <br />
 
           
 <p>As you might find out the hard way later, this also applies if the source of whatever header file you
-            <span class="cpp inline-code" id="f_XBqWDzRGXx">#include</span>
+            <span class="cpp inline-code" id="f_KLCFMoGTaC">#include</span>
             redefines this function. The solution to this is namespaces, which we'll talk about later.</p>
 
           
@@ -1342,11 +1342,11 @@ int main() { <br />
 
           
 <p>Like in most other C-family languages an expression is evaluated according to
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_tUlNZt06TZ" maxwidth="180px" placement="bottom" title="Abbreviation for an order of operations: parentheses, exponentiation, multiplication and division (left to right), addition and subtraction (left to right).&#10;">PEMDAS</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_BW8IDwNgTs" maxwidth="180px" placement="bottom" title="Abbreviation for an order of operations: parentheses, exponentiation, multiplication and division (left to right), addition and subtraction (left to right).&#10;">PEMDAS</a>
             (or, since C++ doesn&#8217;t have an exponential operator, PMDAS). For example,</p>
 
           
-<div class="code-cf cpp" id="f_WoaGC9pwQI">
+<div class="code-cf cpp" id="f_gDN0v57QmX">
             
 #include &lt;iostream&gt; <br />
 int main() { <br />
@@ -1362,13 +1362,13 @@ int main() { <br />
 
           
 <p>is evaluated like
-            <span class="cpp inline-code" id="f_r7RLen7yMe">c = (((4 * 8) + (8 / 4)) &#8211; 8) * 8</span>, resulting in 208.</p>
+            <span class="cpp inline-code" id="f_jFKf2PuVyF">c = (((4 * 8) + (8 / 4)) &#8211; 8) * 8</span>, resulting in 208.</p>
 
           
 <p>There are quite a few more operators than these four. Four related operators that are probably familiar to you are +=, -=, *=, and /=. These operators can add, subtract, multiply, and divide, respectively, a variable in place. For example:</p>
 
           
-<div class="code-cf cpp" id="f_tRF2l35TGv">
+<div class="code-cf cpp" id="f_CETe0PwPar">
             
 #include &lt;iostream&gt; <br />
 int main() { <br />
@@ -1411,7 +1411,7 @@ int main() { <br />
             <a href="https://stackoverflow.com/questions/1094872/is-there-a-difference-between-x-and-x-in-java" target="_blank">here</a>:</p>
 
           
-<div class="code-cf cpp" id="f_8wQ0wIozVL">
+<div class="code-cf cpp" id="f_scqhIuOQpO">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -1433,7 +1433,7 @@ int main() { <br />
 <p>This program outputs:</p>
 
           
-<div class="code-cf nohighlight" id="f_lL8E1zv86K" lang="none">6, 6, 5, 6</div>
+<div class="code-cf nohighlight" id="f_KZKDUYashD" lang="none">6, 6, 5, 6</div>
 
           
 <p>Note that there are a lot of other ways to write the code in this section from a syntactic point of view, but do exactly the same thing from a processor's point of view. These will be explored in time, but to reduce complexity, I just wanted to
@@ -1456,7 +1456,7 @@ int main() { <br />
 <p>Every variable we make has a type. For example:</p>
 
         
-<div class="code-cf cpp" id="f_QVapRbAo26">
+<div class="code-cf cpp" id="f_IwMscz4Tq2">
           
 int udder_count = 15; // Great! <br />
 bucket_count = 15;    // Error <br />
@@ -1466,12 +1466,12 @@ bucket_count = 15;    // Error <br />
 
         
 <p>This shouldn't be strange at all to Java and C# programmers, but it may seem strange to a Python or JS programmer. What's that silly
-          <span class="cpp inline-code" id="f_Cqede8MzWl">int</span>
+          <span class="cpp inline-code" id="f_wsKHV8OFP9">int</span>
           doing there? Obviously 15's an integer, so it's quite redundant, no?</p>
 
         
 <p>Not really. An
-          <span class="cpp inline-code" id="f_gMXrvdfyjR">int</span>
+          <span class="cpp inline-code" id="f_GxVdZDKto5">int</span>
           is an integer, true, but it's much more specific than that.</p>
       
 </div><h3 id='ae' style="padding-top: 80px; margin-top: -80px;">2.3.0: Integer Types</h3>
@@ -1479,7 +1479,7 @@ bucket_count = 15;    // Error <br />
 <p>If you try to do this:</p>
 
           
-<div class="code-cf cpp" id="f_F480xdpeIt">int udder_diameter = 1000000000000000;</div>
+<div class="code-cf cpp" id="f_qNIzM4InU8">int udder_diameter = 1000000000000000;</div>
 
           
 <p>The compiler gives you a warning:</p>
@@ -1492,12 +1492,12 @@ bucket_count = 15;    // Error <br />
 
           
 <p>What is this "long to int" complaint? Well, an
-            <span class="cpp inline-code" id="f_p1BvvT4qIc">int</span>
+            <span class="cpp inline-code" id="f_B78VJLsRRg">int</span>
             is an integer that has a set size. On a 64-bit architecture, it's usually 32 bits, or 4 bytes. This gives it a range of -231 to 231 &#8211; 1, or -2,147,483,648 to 2,147,483,647.</p>
 
           
 <p>"Why restrict it like this?" a Python programmer might angrily say. The simple reason is that operations on ints map very well to the operations a
-            <a arrow="true" delay="200" href="javascript:void(0);" id="f_LgEpj4xdmy" maxwidth="180px" placement="bottom" title="Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.&#10;">CPU</a>
+            <a arrow="true" delay="200" href="javascript:void(0);" id="f_73MGToxbGG" maxwidth="180px" placement="bottom" title="Central processing unit, a part of a computer that processes data, and typically consisting of a small number of powerful threads which operate independently.&#10;">CPU</a>
             can do in hardware. Good modern CPUs can multiply two ints extremely quickly, often in less than a nanosecond.</p>
 
           
@@ -1505,23 +1505,23 @@ bucket_count = 15;    // Error <br />
 
           
 <p>So what if we do want a nice, large udder_diameter? Well, we can use
-            <span class="cpp inline-code" id="f_CkdqNYS6dG">long</span>! long is a type like int, but has 64 bits (if we're on a 64-bit computers). This gives a range of -2<sup>63</sup>
+            <span class="cpp inline-code" id="f_fuJNqRzUcR">long</span>! long is a type like int, but has 64 bits (if we're on a 64-bit computers). This gives a range of -2<sup>63</sup>
             to 2<sup>63</sup>
             &#8211; 1, or between about -9 quintillion to 9 quintillion. That's great!</p>
 
           
 <p>C++ defines the base integer type
-            <span class="cpp inline-code" id="f_COoSTa6Z4n">int</span>, and four modifiers on int:
-            <span class="cpp inline-code" id="f_1piNeTaHP9">short</span>,
-            <span class="cpp inline-code" id="f_UYNEcZjeMi">long</span>,
-            <span class="cpp inline-code" id="f_XUonUsT5Qh">signed</span>, and
-            <span class="cpp inline-code" id="f_DswW0axlu1">unsigned</span>.</p>
+            <span class="cpp inline-code" id="f_QrnbQB0ASi">int</span>, and four modifiers on int:
+            <span class="cpp inline-code" id="f_GEckGAZkl9">short</span>,
+            <span class="cpp inline-code" id="f_HffgLELAJ8">long</span>,
+            <span class="cpp inline-code" id="f_QogoirEqf3">signed</span>, and
+            <span class="cpp inline-code" id="f_rr4jorgnIb">unsigned</span>.</p>
 
           
 <p>Any integer can be declared signed or unsigned.
-            <span class="cpp inline-code" id="f_Zsc2wvmsBg">signed</span>
+            <span class="cpp inline-code" id="f_11tpLTvVtW">signed</span>
             makes obvious sense: it can have negative or positive value.
-            <span class="cpp inline-code" id="f_snM0J76wZu">unsigned</span>'s a little more confusing, but it does what it says: the integer cannot be negative. If you don't know how signed and unsigned integers work, especially if you're coming from Java and haven't had experience with unsigned types
+            <span class="cpp inline-code" id="f_VZBo1WuEa1">unsigned</span>'s a little more confusing, but it does what it says: the integer cannot be negative. If you don't know how signed and unsigned integers work, especially if you're coming from Java and haven't had experience with unsigned types
             before, I suggest you quickly read about it. It is not that complex of a concept.</p>
 
           
@@ -1662,9 +1662,9 @@ bucket_count = 15;    // Error <br />
 
           
 <p>Man, that's a lot of types! Thankfully, most of them are pretty rare. In my own experience,
-            <span class="cpp inline-code" id="f_X7HJyUJSvh">short</span>
+            <span class="cpp inline-code" id="f_KIiOUcK6cu">short</span>
             is pretty rare. The
-            <span class="cpp inline-code" id="f_y9PfoRJ4fZ">signed</span>
+            <span class="cpp inline-code" id="f_4N1OIUs9jH">signed</span>
             qualifier is even rarer. I suggest you remember int and long, which are the most common, and the rest of the types will come naturally.</p>
 
           
@@ -1673,32 +1673,32 @@ bucket_count = 15;    // Error <br />
 
           
 <p>If you need maximum portability, use the types
-            <span class="cpp inline-code" id="f_Ffj1bVO36w">int8_t</span>,
-            <span class="cpp inline-code" id="f_PYfm3SWHi2">int16_t</span>,
-            <span class="cpp inline-code" id="f_zXroXqHYOM">int32_t</span>, and
-            <span class="cpp inline-code" id="f_bFXVRPZMpy">int64_t</span>
+            <span class="cpp inline-code" id="f_iTxda1ZZYO">int8_t</span>,
+            <span class="cpp inline-code" id="f_2i64Ua9HJb">int16_t</span>,
+            <span class="cpp inline-code" id="f_OD3BoTYeh8">int32_t</span>, and
+            <span class="cpp inline-code" id="f_emjRkmkjfF">int64_t</span>
             for signed 8-bit, 16-bit, 32-bit, and 64-bit integers, respectively, and
-            <span class="cpp inline-code" id="f_qc9yfJReKz">uint8_t</span>,
-            <span class="cpp inline-code" id="f_PJCAUJDuDT">uint16_t</span>,
-            <span class="cpp inline-code" id="f_NLakiGoAQW">uint32_t</span>, and
-            <span class="cpp inline-code" id="f_t3SxHHYwY4">uint64_t</span>, for the unsigned counterparts, respectively. There are a couple other ones as well, which I won't be getting into, but you can see them
+            <span class="cpp inline-code" id="f_SE5I8ZtMFd">uint8_t</span>,
+            <span class="cpp inline-code" id="f_BnnkxFxljJ">uint16_t</span>,
+            <span class="cpp inline-code" id="f_9uaAlIozMf">uint32_t</span>, and
+            <span class="cpp inline-code" id="f_c9WOQUs7HV">uint64_t</span>, for the unsigned counterparts, respectively. There are a couple other ones as well, which I won't be getting into, but you can see them
             <a href="http://en.cppreference.com/w/cpp/header/cstdint" target="_blank">here</a>. Note that to use these types, you first need to
-            <span class="cpp inline-code" id="f_nplTCXiWfW">#include &lt;cstdint&gt;</span>, which contains the information for these types. These types are simply aliases for the appropriately-sized integer types, regardless of the system.</p>
+            <span class="cpp inline-code" id="f_A9eADFvS9l">#include &lt;cstdint&gt;</span>, which contains the information for these types. These types are simply aliases for the appropriately-sized integer types, regardless of the system.</p>
 
           
 <p>But at least for now, I'll be assuming you're on 64-bit. Try not to get too bogged down in details here anyway: knowledge will come in time.</p>
 
           
 <p>As you'll learn about later, if you need to know the size of a type, you can use the
-            <span class="cpp inline-code" id="f_R15hAWVuBO">sizeof</span>
+            <span class="cpp inline-code" id="f_UsP73mM2HH">sizeof</span>
             operator, which will return the size of a type at compile time. To get the minimums and maximums for each type easily, use
-            <span class="cpp inline-code" id="f_cG9s0t5nb3">std::numeric_limits</span>
+            <span class="cpp inline-code" id="f_cy0zCyy0vY">std::numeric_limits</span>
             from
-            <span class="cpp inline-code" id="f_53UuIdvs9i">#include &lt;limits&gt;</span>
+            <span class="cpp inline-code" id="f_GWQMmi4juN">#include &lt;limits&gt;</span>
             as shown in the example here:</p>
 
           
-<div class="code-cf cpp" id="f_RCAlO8nmMv">
+<div class="code-cf cpp" id="f_KWj1gP55BD">
             
 #include &lt;iostream&gt; <br />
 #include &lt;limits&gt; <br />
@@ -1740,7 +1740,7 @@ int main() { <br />
 <p>Output on my computer:</p>
 
           
-<div class="code-cf nohighlight" id="f_CwSIdn65pa" lang="none">
+<div class="code-cf nohighlight" id="f_EjzAjNqr6i" lang="none">
             
 Size of short: 2 <br />
 Size of unsigned short: 2 <br />
@@ -1781,7 +1781,7 @@ Maximum of unsigned long long: 18446744073709551615 <br />
 <p>There are multiple ways of actually declaring an integer (of any type). There is the obvious way of:</p>
 
           
-<div class="code-cf cpp" id="f_AatRFZpob5">
+<div class="code-cf cpp" id="f_xDyrZxdLOb">
             
 int a = 1337; <br />
 long b = 31337; <br />
@@ -1798,7 +1798,7 @@ long b = 31337; <br />
             is 7A69<sub>16</sub>, so we can write:</p>
 
           
-<div class="code-cf cpp" id="f_Pcm5y8PcmH">
+<div class="code-cf cpp" id="f_CalHEB8teI">
             
 int a = 0x539; <br />
 long b = 0x7a69; <br />
@@ -1810,7 +1810,7 @@ long b = 0x7a69; <br />
 <p>these two variables are completely indistinguishable from the first two. If we want to use octal, we start the integer with "0":</p>
 
           
-<div class="code-cf cpp" id="f_jaENcJJByq">
+<div class="code-cf cpp" id="f_ti6WrNRHqC">
             
 int a = 02471; <br />
 long b = 075151; <br />
@@ -1822,13 +1822,13 @@ long b = 075151; <br />
 <p>If you are sick of writing out things like:</p>
 
           
-<div class="code-cf cpp" id="f_E1GEphrIDZ">long c = 40000000; // 40 million, did I get that right?</div>
+<div class="code-cf cpp" id="f_RHPhZJiETM">long c = 40000000; // 40 million, did I get that right?</div>
 
           
 <p>then you can use exponential notation like so:</p>
 
           
-<div class="code-cf cpp" id="f_2rhLjMtwG3">
+<div class="code-cf cpp" id="f_o8RoLLubfT">
             
 long c = 40e6;  // = 40 * 10 ^ 6 or <br />
 long c = 4e7;	// = 4 * 10 ^ 7 <br />
@@ -1844,31 +1844,31 @@ long c = 4e7;	// = 4 * 10 ^ 7 <br />
 <h3 id='af' style="padding-top: 80px; margin-top: -80px;">2.3.1: Character Types</h3>
 <div class="content">
 <p>To represent a textual character, we use a
-            <span class="cpp inline-code" id="f_YeQX45qpyE">char</span>
+            <span class="cpp inline-code" id="f_eritnFnX40">char</span>
             or one of its related types. char is sort of an unusual type, and there are two direct variants:</p>
 
           
 <ol type="1">
             <li>
-              <span class="cpp inline-code" id="f_8Dd46lRIbo">char</span>: a general character type (8-bit)</li>
+              <span class="cpp inline-code" id="f_MdOZvNiNAd">char</span>: a general character type (8-bit)</li>
             <li>
-              <span class="cpp inline-code" id="f_XKTzlhG8PK">signed char</span>: signed integer (almost always 8-bit, allowing -128 to 127)</li>
+              <span class="cpp inline-code" id="f_YxYOEfA9R5">signed char</span>: signed integer (almost always 8-bit, allowing -128 to 127)</li>
             <li>
-              <span class="cpp inline-code" id="f_R4k72uUcQA">unsigned char</span>: unsigned integer (almost always 8-bit, allowing 0 to 255)</li>
+              <span class="cpp inline-code" id="f_KF7jWB6glN">unsigned char</span>: unsigned integer (almost always 8-bit, allowing 0 to 255)</li>
           </ol>
 
           
 <p>It is implementation-defined whether an unmodified "char" is signed or not, so it's not the safest operation to convert (cast) it to a normal integer without any checks. In cases where you specific behavior for 8-bit integers, use explicitly
-            <span class="cpp inline-code" id="f_dRpIeaiCuK">signed</span>
+            <span class="cpp inline-code" id="f_0mkThtWeZL">signed</span>
             or
-            <span class="cpp inline-code" id="f_rBWnAWpJut">unsigned</span>
+            <span class="cpp inline-code" id="f_3bx2ohLoDB">unsigned</span>
             char.</p>
 
           
 <p>As with the integers, you can initialize chars like so:</p>
 
           
-<div class="code-cf cpp" id="f_wvqyvfiGuK">
+<div class="code-cf cpp" id="f_Y8kk43jFq2">
             
 char a = 0; <br />
 signed char b = -5; <br />
@@ -1879,10 +1879,10 @@ unsigned char c = 5; <br />
 
           
 <p>All the usual integer literal syntax (e.g. hexadecimal) works as well. You normally use a plain
-            <span class="cpp inline-code" id="f_hr8bhgKAsC">char</span>, however, in a text context. For example:</p>
+            <span class="cpp inline-code" id="f_5lMfcm7Y6v">char</span>, however, in a text context. For example:</p>
 
           
-<div class="code-cf cpp" id="f_jk5quZFgNv">
+<div class="code-cf cpp" id="f_sNRjha2ZUs">
             
 char a = 'a'; <br />
 char b = 'b'; <br />
@@ -1895,13 +1895,13 @@ char c = '\n'; <br />
 <p>If you do something like</p>
 
           
-<div class="code-cf cpp" id="f_n98BAIkZ58">std::cout &lt;&lt; a &lt;&lt; b &lt;&lt; c;</div>
+<div class="code-cf cpp" id="f_oPb5n3fkdl">std::cout &lt;&lt; a &lt;&lt; b &lt;&lt; c;</div>
 
           
 <p>it will output "ab" and a newline, as expected. Anywhere a code, a char can be defined with something similar to string syntax:</p>
 
           
-<div class="code-cf cpp" id="f_MjnEPzPPAF">'&lt;character&gt;'</div>
+<div class="code-cf cpp" id="f_pR2x4igN0C">'&lt;character&gt;'</div>
 
           
 <p>Note that "" and '' are different, unlike Python and JS. "" is for strings, and can have multiple characters or just one character. '' is for single characters: using '' where a "" is needed will produce a compiler warning and do stuff you don&#8217;t
@@ -1911,7 +1911,7 @@ char c = '\n'; <br />
 <p>You can still do some math with plain chars. For example:</p>
 
           
-<div class="code-cf cpp" id="f_M3XT5xq2DS">
+<div class="code-cf cpp" id="f_rgkacRxx3W">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -1927,9 +1927,9 @@ int main() { <br />
 
           
 <p>outputs "b". Chars can theoretically encode 256 different characters, but many of them just stick to standard ASCII. If you want to store larger character sets, you can use the character types
-            <span class="cpp inline-code" id="f_bdy3noc0aq">wchar_t</span>,
-            <span class="cpp inline-code" id="f_Aohb8qWqCE">char16_t</span>, and
-            <span class="cpp inline-code" id="f_FsDz3Ih0JQ">char32_t</span>, for the maximum system supported character set, UTF-16, and UTF-32, respectively.</p>
+            <span class="cpp inline-code" id="f_GjeiciDaR5">wchar_t</span>,
+            <span class="cpp inline-code" id="f_kYdhUF3SWp">char16_t</span>, and
+            <span class="cpp inline-code" id="f_n9XZH52Gtg">char32_t</span>, for the maximum system supported character set, UTF-16, and UTF-32, respectively.</p>
 
           
 <p>The signed and unsigned chars are, for all intents and purposes, just integers, but since they are (almost universally) exactly one byte in size they are especially useful for byte/bit-level memory fun.</p>
@@ -1942,7 +1942,7 @@ int main() { <br />
 <p>Consider the following program:</p>
 
           
-<div class="code-cf cpp" id="f_OXVRBcLfFC">
+<div class="code-cf cpp" id="f_sFOA4o2NsK">
             
 char a = 0; <br />
 signed char b = -5; <br />
@@ -1955,7 +1955,7 @@ unsigned char c = 5; <br />
 <p>If you run the above program, you&#8217;ll get an output of:</p>
 
           
-<div class="code-cf nohighlight" id="f_tBjJFlDTVp" lang="none">
+<div class="code-cf nohighlight" id="f_AC9HwIXto6" lang="none">
             
 char a = 'a'; <br />
 char b = 'b'; <br />
@@ -1966,20 +1966,20 @@ char c = '\n'; <br />
 
           
 <p>Well, the second and third lines of output make sense. But the first and fourth lines are quite puzzling to the Python programmer. To see what&#8217;s going on, let&#8217;s first look in the case of our
-            <span class="cpp inline-code" id="f_PWhsC1GMns">unsigned int a</span>
+            <span class="cpp inline-code" id="f_eyREVWRodX">unsigned int a</span>
             friend.</p>
 
           
 <p>Because an unsigned int is represented as 32 bits, the value of 0 is represented like so:</p>
 
           
-<div class="code-cf nohighlight" id="f_qK36PwdtUd" lang="none">00000000 00000000 00000000 00000000</div>
+<div class="code-cf nohighlight" id="f_C5DWvForOY" lang="none">00000000 00000000 00000000 00000000</div>
 
           
 <p>When we subtract one, what happens? Well, assuming smallest bits are on the right, we first subtract 1 from the rightmost zero, making it 1. But it carries to the next zero. It cascades down the line, changing every zero to a 1.</p>
 
           
-<div class="code-cf nohighlight" id="f_W4QlMDZ0ou" lang="none">11111111 11111111 11111111 11111111</div>
+<div class="code-cf nohighlight" id="f_Iar6GTMZlC" lang="none">11111111 11111111 11111111 11111111</div>
 
           
 <p>What happens after the last carry? Well, there&#8217;s nothing left to modify, so it&#8217;s just discarded. At this point the value of the number is 2<sup>32</sup>
@@ -1993,7 +1993,7 @@ char c = '\n'; <br />
 
           
 <p>Signed integers can do this, too. In our example, when our friend
-            <span class="cpp inline-code" id="f_mX3PDrKPDk">short p</span>
+            <span class="cpp inline-code" id="f_wc83SDXCCo">short p</span>
             is incremented from 32767, its maximum value, it overflows and becomes its minimum value, -32768.</p>
 
           
@@ -2019,16 +2019,16 @@ char c = '\n'; <br />
 
           
 <p>There are three types of floating-point numbers in C++:
-            <span class="cpp inline-code" id="f_8fdsCCoBqq">float</span>,
-            <span class="cpp inline-code" id="f_RtbeNnq15g">double</span>, and
-            <span class="cpp inline-code" id="f_s8C5jhvFkL">long double</span>. float is a 32 bit "single precision" number. double is a 64 bit "double precision" number. Finally, long double is a weird type which might be the same precision as double, but on many architectures is an 80 bit "extended
+            <span class="cpp inline-code" id="f_tDBS8X4u2Y">float</span>,
+            <span class="cpp inline-code" id="f_E1M4xMQDg8">double</span>, and
+            <span class="cpp inline-code" id="f_mCs2Ps2kY8">long double</span>. float is a 32 bit "single precision" number. double is a 64 bit "double precision" number. Finally, long double is a weird type which might be the same precision as double, but on many architectures is an 80 bit "extended
             precision" number or occasionally a 128 bit "quadruple precision" number.</p>
 
           
 <p>Here&#8217;s an example of the relative precision between the types:</p>
 
           
-<div class="code-cf cpp" id="f_D65AcPis2h">
+<div class="code-cf cpp" id="f_Jpcnj4R6cf">
             
 #include &lt;iostream&gt; <br />
 #include &lt;iomanip&gt; <br />
@@ -2076,7 +2076,7 @@ int main() { <br />
             0.3. This program, which in a perfect world might output</p>
 
           
-<div class="code-cf nohighlight" id="f_GBvz4aiTJN" lang="none">
+<div class="code-cf nohighlight" id="f_rV3oC0adyl" lang="none">
             
 a = 0.1 <br />
 b = 0.2 <br />
@@ -2095,7 +2095,7 @@ x + y = 0.3 <br />
 <p>actually outputs, on my machine:</p>
 
           
-<div class="code-cf nohighlight" id="f_NsXKRINQI6" lang="none">
+<div class="code-cf nohighlight" id="f_G16JxAcrr6" lang="none">
             
 a = 0.100000001490116119384765625 <br />
 b = 0.20000000298023223876953125 <br />
@@ -2112,16 +2112,16 @@ x + y = 0.3000000000000000166533453693773481063544750213623046875 <br />
 
           
 <p>As you can see, there&#8217;s a small amount of error between the true value of each number and the value it should have. This error decreases the more precision you give it. If you are wondering,
-            <span class="cpp inline-code" id="f_mNG8O7yHep">#include &lt;iomanip&gt;</span>
+            <span class="cpp inline-code" id="f_ifrRev6Gvc">#include &lt;iomanip&gt;</span>
             is just to make
-            <span class="cpp inline-code" id="f_pGHFRVExG2">std::setprecision</span>
+            <span class="cpp inline-code" id="f_ylPID1vHVj">std::setprecision</span>
             available, which allows us to print our floating-point numbers in all their glory rather than having them truncated as by default.</p>
 
           
 <p>Apart from these unfortunate precision considerations, floating-point numbers are quite easy to understand. They have all the same PMDAS operations as the integers and are defined rather easily:</p>
 
           
-<div class="code-cf cpp" id="f_nyKVtuCuOk">
+<div class="code-cf cpp" id="f_31PEHoEpLj">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -2150,7 +2150,7 @@ int main() { <br />
 <p>This program outputs, on my computer:</p>
 
           
-<div class="code-cf nohighlight" id="f_vrN5RuYs0z" lang="none">
+<div class="code-cf nohighlight" id="f_swDBskimGO" lang="none">
             
 a + b = 0.3 <br />
 a * b = 0.02 <br />
@@ -2180,13 +2180,13 @@ a - b = -0.1 <br />
 <h3 id='ai' style="padding-top: 80px; margin-top: -80px;">2.3.4: The Boolean</h3>
 <div class="content">
 <p>A boolean, denoted by
-            <span class="cpp inline-code" id="f_YVpzTT3f5o">bool</span>, is simply a variable that stores true or false. It is probably the simplest of the types here, so I decided to end with it.</p>
+            <span class="cpp inline-code" id="f_WtAMan0QoO">bool</span>, is simply a variable that stores true or false. It is probably the simplest of the types here, so I decided to end with it.</p>
 
           
 <p>There are two values of a boolean: true and false. Whoa.</p>
 
           
-<div class="code-cf cpp" id="f_k4r3KX4kaU">
+<div class="code-cf cpp" id="f_Uwv24aqhix">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -2200,19 +2200,19 @@ int main() { <br />
 
           
 <p>There are also a couple of operators on booleans.
-            <span class="cpp inline-code" id="f_cEFA0dNCzA">!(bool)</span>
+            <span class="cpp inline-code" id="f_mUMHdeVOBb">!(bool)</span>
             negates the boolean, the same as
-            <span class=" python inline-code" id="f_l2IqkQJK2R">not</span>
+            <span class=" python inline-code" id="f_xGtdEN4nBV">not</span>
             in Python,
-            <span class="cpp inline-code" id="f_vSWYg6xwJT">bool &amp;&amp; bool</span>
+            <span class="cpp inline-code" id="f_oNRzGHNQpQ">bool &amp;&amp; bool</span>
             does a logical AND, the same as Python&#8217;s
-            <span class=" python inline-code" id="f_vtnk2tnnYe">and</span>, and
-            <span class="cpp inline-code" id="f_X2GfAhB7U5">bool || bool</span>
+            <span class=" python inline-code" id="f_DUmfbFFocO">and</span>, and
+            <span class="cpp inline-code" id="f_BNDWn6QZZV">bool || bool</span>
             does a logical OR, the same as Python&#8217;s
-            <span class=" python inline-code" id="f_NlwPYe84bb">or</span>. There are others, but here&#8217;s a basic example:</p>
+            <span class=" python inline-code" id="f_lp5jYPFrqo">or</span>. There are others, but here&#8217;s a basic example:</p>
 
           
-<div class="code-cf cpp" id="f_WywbeTQ2P6">
+<div class="code-cf cpp" id="f_9zMPWrBhRq">
             
 #include &lt;iostream&gt; <br />
 #include &lt;iomanip&gt; <br />
@@ -2240,7 +2240,7 @@ int main() { <br />
 <p>Here I made cout print booleans as "true" or "false," because normally they are printed as 1 or 0. Anyway, this should print</p>
 
           
-<div class="code-cf cpp" id="f_56a0fyaWkD">
+<div class="code-cf cpp" id="f_rXN88xBTTl">
             
 true <br />
 false <br />
@@ -2259,20 +2259,20 @@ false <br />
 <h3 id='aj' style="padding-top: 80px; margin-top: -80px;">2.3.5: Strings</h3>
 <div class="content">
 <p>Through a
-            <span class="cpp inline-code" id="f_k0vKokydgt">std::string</span>
+            <span class="cpp inline-code" id="f_YWA7PgHdUp">std::string</span>
             is definitely not a primitive type, I just want to briefly explain it because it is very helpful in a lot of our examples.</p>
 
           
 <p>
-            <span class="cpp inline-code" id="f_1IPd2mr5I2">std::string</span>
+            <span class="cpp inline-code" id="f_OYU4hsR6kp">std::string</span>
             is, well, a string, capable of storing text. To use it, we can
-            <span class="cpp inline-code" id="f_FFqjtwZrrr">#include &lt;string&gt;</span>. Note that
-            <span class="cpp inline-code" id="f_J36MD4rGoW">&lt;string&gt;</span>
+            <span class="cpp inline-code" id="f_V3sMQR8e9l">#include &lt;string&gt;</span>. Note that
+            <span class="cpp inline-code" id="f_4vFXGGcbNp">&lt;string&gt;</span>
             is actually already included by
-            <span class="cpp inline-code" id="f_rU5nvhPszi">&lt;iostream&gt;</span>, so we don't have to include it in this case, but it doesn't change anything. (Worried this might violate the one definition rule? Don't fret! Include guards are on your side; we'll learn about them later.)</p>
+            <span class="cpp inline-code" id="f_udiq6p8dql">&lt;iostream&gt;</span>, so we don't have to include it in this case, but it doesn't change anything. (Worried this might violate the one definition rule? Don't fret! Include guards are on your side; we'll learn about them later.)</p>
 
           
-<div class="code-cf cpp" id="f_uWjOAZG2e5">
+<div class="code-cf cpp" id="f_iVLVICIP6h">
             
 #include &lt;iostream&gt; <br />
 #include &lt;string&gt; <br />
@@ -2302,7 +2302,7 @@ int main() { <br />
 <p>Often we'll want to convert between types. Thankfully, with the fundamental types, this is very easy.</p>
 
             
-<div class="code-cf cpp" id="f_qFnC0ZEJyw">
+<div class="code-cf cpp" id="f_KWwOXHvKnz">
               
 #include &lt;iostream&gt; <br />
  <br />
@@ -2338,7 +2338,7 @@ int main() { <br />
 <p>As you can see, a lot of casting is done implicitly, even when calling functions. This program prints out</p>
 
             
-<div class="code-cf cpp" id="f_2lOlvUI1P6">
+<div class="code-cf cpp" id="f_7BEF1yJ50W">
               
 4 <br />
 1 <br />
@@ -2353,30 +2353,30 @@ I have 5400 buckets of milk! <br />
 <h4 id='am' style="padding-top: 80px; margin-top: -80px;">2.3.6.1: Explicit Conversion</h4>
 <div class="content">
 <p>This is all fine and dandy, but occasionally we'll have to explicitly cast things out. There are six (count them, six!) distinct ways to cast types:
-              <span class="cpp inline-code" id="f_AXp7NflrO9">static_cast</span>,
-              <span class="cpp inline-code" id="f_ttBDrgIqfY">const_cast</span>,
-              <span class="cpp inline-code" id="f_qWNcprw3FL">dynamic_cast</span>,
-              <span class="cpp inline-code" id="f_MBgU1LkyTB">reinterpret_cast</span>, a C-style cast, and a functional-style cast.The last two are equivalent in meaning but slightly different in syntax.</p>
+              <span class="cpp inline-code" id="f_IaKhz6O9JT">static_cast</span>,
+              <span class="cpp inline-code" id="f_hjPesOvtFs">const_cast</span>,
+              <span class="cpp inline-code" id="f_yOf5T9PlEf">dynamic_cast</span>,
+              <span class="cpp inline-code" id="f_Y6X9Y8Kc4O">reinterpret_cast</span>, a C-style cast, and a functional-style cast.The last two are equivalent in meaning but slightly different in syntax.</p>
 
             
 <p>Don't be scared! You'll learn the relevant ones in time.</p>
 
             
 <p>
-              <span class="cpp inline-code" id="f_wqtvFgYOaD">dynamic_cast</span>
+              <span class="cpp inline-code" id="f_hel4XvJMN0">dynamic_cast</span>
               is used in the context of classes, so I will ignore it for now.
-              <span class="cpp inline-code" id="f_v4SPerbFZh">const_cast</span>
+              <span class="cpp inline-code" id="f_JwCpn8wTVI">const_cast</span>
               requires understanding of the
-              <span class="cpp inline-code" id="f_uM91DrqtQf">const</span>
+              <span class="cpp inline-code" id="f_tkQa06VhOp">const</span>
               qualifier, so I will also skip it.</p>
 
             
 <p>
-              <span class="cpp inline-code" id="f_wJO1xAMzGs">static_cast</span>
+              <span class="cpp inline-code" id="f_hxx58s9Omw">static_cast</span>
               simply tells the compiler to convert the type through a variety of defined methods, which are already defined for fundamental types and can be defined for user-defined classes, as we'll learn later. The syntax is like so:</p>
 
             
-<div class="code-cf cpp" id="f_owPia2lmmU">
+<div class="code-cf cpp" id="f_cAHMGGqq31">
               
 #include &lt;iostream&gt; <br />
  <br />
@@ -2395,7 +2395,7 @@ int main() { <br />
 
             
 <p>
-              <span class="cpp inline-code" id="f_CI5qbyFH8s">reinterpret_cast</span>
+              <span class="cpp inline-code" id="f_aN80jvRTzJ">reinterpret_cast</span>
               is even simpler than static_cast, but much more dangerous and often leads to strange behavior. Effectively, it tells the compiler to just treat the bits of the original variable in the context of the new type. For some context on when to use
               reinterpret_cast, you can check out
               <a href="https://stackoverflow.com/questions/573294/when-to-use-reinterpret-cast" target="_blank">this</a>, but it contains references far beyond what we've talked about now.</p>
@@ -2404,7 +2404,7 @@ int main() { <br />
 <p>A C-style cast and functional cast look like this:</p>
 
             
-<div class="code-cf cpp" id="f_mKEwCbqS7T">
+<div class="code-cf cpp" id="f_hEmLev4MDn">
               
 int a = 0; <br />
  <br />
@@ -2419,7 +2419,7 @@ double d = double(a);  // functional <br />
               use these casting methods, because they are rather complicated, even though they look simple. They are included for C compatibility. For information on exactly what these casts do, consult
               <a href="http://en.cppreference.com/w/cpp/language/explicit_cast" target="_blank">the reference</a>. In short, it first tries const_cast, then a strange modified static_cast, then const_cast([modified] static_cast()), then reinterpret_cast, then finally
               const_cast(reinterpret_cast()). Don't worry yourself with this: it's easier to just not use it. There is no real equivalent to C#'s
-              <span class=" cs inline-code" id="f_NzDTndkwEv">as</span>
+              <span class=" cs inline-code" id="f_AfLkpgV5R8">as</span>
               for type conversion, but most type conversions are checked at compile-time. To emulate this behavior, we could use RTTI (Runtime Type Information), which we'll talk about later.</p>
 
           
@@ -2431,7 +2431,7 @@ double d = double(a);  // functional <br />
 <p>The most basic if statement syntax is as follows:</p>
 
           
-<div class="code-cf cpp" id="f_MaVOcBzJla">
+<div class="code-cf cpp" id="f_To9GHTotcx">
             
 if (&lt;condition&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2444,7 +2444,7 @@ if (&lt;condition&gt;) { <br />
 <p>This is equivalent to the if statement in Java, C#, Python, and JS. We can do an if-else like so:</p>
 
           
-<div class="code-cf cpp" id="f_40bKyeBLUK">
+<div class="code-cf cpp" id="f_tqvQsDv9SU">
             
 if (&lt;condition&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2459,7 +2459,7 @@ if (&lt;condition&gt;) { <br />
 <p>Finally, we have an if - else if - else. else if is the same as elif in Python:</p>
 
           
-<div class="code-cf cpp" id="f_830vdvfWuz">
+<div class="code-cf cpp" id="f_H8iPRaTDKA">
             
 if (&lt;condition_1&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2478,7 +2478,7 @@ if (&lt;condition_1&gt;) { <br />
 <p>This idea, if not the syntax, should be familiar to you. If there is only one line in a part of the if-statement, the curly braces are optional:</p>
 
           
-<div class="code-cf cpp" id="f_EUOy4zGY5c">
+<div class="code-cf cpp" id="f_3QQYhQgYHo">
             
 if (&lt;condition_1&gt;) <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;statement&gt;; <br />
@@ -2505,7 +2505,7 @@ else <br />
 <p>You've almost certainly learned what a while loop is. The syntax is rather simple:</p>
 
           
-<div class="code-cf cpp" id="f_sFCzzmBnUb">
+<div class="code-cf cpp" id="f_X8YMpDlrKo">
             
 while (&lt;condition&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2520,14 +2520,14 @@ while (&lt;condition&gt;) { <br />
 
           
 <p>There are a few more things we can do with a while loop. If we want to exit out of the loop prematurely, we can use
-            <span class="cpp inline-code" id="f_tnIlktXWpe">break</span>. If we want to skip the rest of the iteration of the loop, we can use
-            <span class="cpp inline-code" id="f_YwfYrSpPwT">continue</span>. Remember that even if we use continue, the condition is still checked for whether execution should jump back to the start or continue. These keywords should be familiar to you if you're coming from Java, C#, Python or JS.</p>
+            <span class="cpp inline-code" id="f_khtgYr52P0">break</span>. If we want to skip the rest of the iteration of the loop, we can use
+            <span class="cpp inline-code" id="f_PXbZFovO2P">continue</span>. Remember that even if we use continue, the condition is still checked for whether execution should jump back to the start or continue. These keywords should be familiar to you if you're coming from Java, C#, Python or JS.</p>
 
           
 <p>The next type of loop is the do... while loop. It is very similar to the while loop, but it guarantees the contents of the loop are executed at least once. Here is the syntax:</p>
 
           
-<div class="code-cf cpp" id="f_4lNTySBX8z">
+<div class="code-cf cpp" id="f_IbrIqO1JaC">
             
 do { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2544,7 +2544,7 @@ do { <br />
 <p>The last type of loop is the for loop. The syntax is like so:</p>
 
           
-<div class="code-cf cpp" id="f_JdPbaHqlV1">
+<div class="code-cf cpp" id="f_UD4EOOURUP">
             
 for (&lt;initalization&gt;; &lt;condition&gt;; &lt;increment&gt;) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;statement(s)&gt;; <br />
@@ -2557,7 +2557,7 @@ for (&lt;initalization&gt;; &lt;condition&gt;; &lt;increment&gt;) { <br />
 <p>This is the same as the Java, C# and JS for loops, but not the Python for loop. To see how this loop works, let's transform it into a while loop:</p>
 
           
-<div class="code-cf cpp" id="f_b8riT6esTd">
+<div class="code-cf cpp" id="f_VgjLAMEhXy">
             
 { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;initalization&gt;; <br />
@@ -2577,7 +2577,7 @@ for (&lt;initalization&gt;; &lt;condition&gt;; &lt;increment&gt;) { <br />
 <p>The most common use case is to iterate through something. For example, the following program prints out the sum of all numbers between 1 and x, inclusive:</p>
 
           
-<div class="code-cf cpp" id="f_3KydKy8mlf">
+<div class="code-cf cpp" id="f_xQZ8aYadgP">
             
 int main() { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;int x = -1; <br />
@@ -2597,7 +2597,7 @@ int main() { <br />
           </div>
 
           
-<p>In Python, we'd use xrange (Python 2) or range (3). There is another way to use the for loop in C++, introduced in C++11, but we won't talk about that yet.</p>
+<p>In Python, we'd use <span class=" python inline-code" id="f_Lc07tWwXT7">xrange</span> (Python 2) or <span class=" python inline-code" id="f_y9waY8QWMK">range</span> (3). There is another way to use the for loop in C++, introduced in C++11, but we won't talk about that yet.</p>
 
           
 <p>If the body of the for or while loop is only one line, we can omit the curly braces like in the if statement.</p>
@@ -2608,11 +2608,11 @@ int main() { <br />
 <h3 id='aq' style="padding-top: 80px; margin-top: -80px;">2.4.2: Switch Statement</h3>
 <div class="content">
 <p>The last type of control flow we'll talk about is the
-            <span class="cpp inline-code" id="f_nqeOiDehnV">switch</span>
+            <span class="cpp inline-code" id="f_crQeuvSxTG">switch</span>
             statement. In Python we might do something like this:</p>
 
           
-<div class="code-cf python" id="f_Wz6I5mdh8n" lang="python">
+<div class="code-cf python" id="f_ph2t6TlVBo" lang="python">
             
 def convert_number(a): <br />
 &nbsp;&nbsp;&nbsp;&nbsp;if a == 0: <br />
@@ -2632,7 +2632,7 @@ def convert_number(a): <br />
 <p>This is fine, but might be a little verbose. Alternatively, we might be able to do something like</p>
 
           
-<div class="code-cf python" id="f_k9ABrcvEiu" lang="python">
+<div class="code-cf python" id="f_6e20qEhWiH" lang="python">
             
 if (0 &lt;= a &lt; 10): <br />
 &nbsp;&nbsp;&nbsp;&nbsp;return ["zero", "one", "two", "three", ... , "nine"][a] <br />
@@ -2648,7 +2648,7 @@ return "unknown" <br />
 <p>In C++, we can use a switch statement. A switch statement takes an expression, then jumps to the case where it should be handled. In this case, we might do something like:</p>
 
           
-<div class="code-cf cpp" id="f_3XNoIzRSty">
+<div class="code-cf cpp" id="f_xvzgij5W9E">
             
 std::string convert_number(int a) { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;switch (a) { <br />
@@ -2675,7 +2675,7 @@ std::string convert_number(int a) { <br />
             Consider the following program:</p>
 
           
-<div class="code-cf cpp" id="f_Sfm0WMMPPA">
+<div class="code-cf cpp" id="f_MkYCVc3lSm">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -2711,7 +2711,7 @@ int main() { <br />
             consequently, the switch statement, before any other cases are run. We can fix our program like so:</p>
 
           
-<div class="code-cf cpp" id="f_tEDQbPp2SX">
+<div class="code-cf cpp" id="f_mOwy2d3Xod">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -2748,7 +2748,7 @@ int main() { <br />
 
           
 <p>C++ also provides a
-            <span class="cpp inline-code" id="f_osCd2fSvIr">goto</span>
+            <span class="cpp inline-code" id="f_3QJ2quv7Gz">goto</span>
             statement, but its usage is often discouraged in C++ code and at least requires much consideration, so I won't talk about it here.</p>
         
 </div>
@@ -2758,14 +2758,14 @@ int main() { <br />
         </p></div><h3 id='as' style="padding-top: 80px; margin-top: -80px;">2.5.0: Input</h3>
 <div class="content">
 <p>C++ has a variety of input methods. One commonly used one is
-            <span class="cpp inline-code" id="f_AKCguJqYtp">std::cin</span>, defined in
-            <span class="cpp inline-code" id="f_3TlDVEnPTw">#include &lt;iostream&gt;</span>. Like its partner
-            <span class="cpp inline-code" id="f_X027MObkyw">std::cout</span>,
-            <span class="cpp inline-code" id="f_0dIs4ycAhD">std::cin</span>
+            <span class="cpp inline-code" id="f_YoJiEpv6KB">std::cin</span>, defined in
+            <span class="cpp inline-code" id="f_o440XLvRu5">#include &lt;iostream&gt;</span>. Like its partner
+            <span class="cpp inline-code" id="f_IGnnlmGNlM">std::cout</span>,
+            <span class="cpp inline-code" id="f_jgFZVDyRH2">std::cin</span>
             is framed as a stream, and we can pipe input out of this stream.</p>
 
           
-<div class="code-cf cpp" id="f_uGIcM6aGbw">
+<div class="code-cf cpp" id="f_Eg0AcgljL9">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -2782,17 +2782,17 @@ int main() { <br />
 
           
 <p>Here's a very basic program that reads in an integer, then prints its square. When we get to
-            <span class="cpp inline-code" id="f_wmIvtlcnJj">std::cin &gt;&gt; s</span>, execution of the rest of the program just waits until we enter our integer and hit enter. Then, the stuff is computed.</p>
+            <span class="cpp inline-code" id="f_4gn8UDNmmg">std::cin &gt;&gt; s</span>, execution of the rest of the program just waits until we enter our integer and hit enter. Then, the stuff is computed.</p>
 
           
 <p>
-            <span class="cpp inline-code" id="f_0VafvcEkE7">std::cin</span>
+            <span class="cpp inline-code" id="f_WnMCh6QT2R">std::cin</span>
             has pretty intuitive input methods. For example, we can read in a
-            <span class="cpp inline-code" id="f_y3LKLo1N56">std::string</span>
+            <span class="cpp inline-code" id="f_uDFZLgwLbd">std::string</span>
             like so:</p>
 
           
-<div class="code-cf cpp" id="f_zGzvYjQCAM">
+<div class="code-cf cpp" id="f_F0WNWL4k1H">
             
 #include &lt;iostream&gt; <br />
 #include &lt;string&gt; <br />
@@ -2813,13 +2813,13 @@ int main() { <br />
 <h3 id='at' style="padding-top: 80px; margin-top: -80px;">2.5.1: Output</h3>
 <div class="content">
 <p>We already saw
-            <span class="cpp inline-code" id="f_N8GPRu3dQn">std::cout</span>, which is a simple output stream. Some review:</p>
+            <span class="cpp inline-code" id="f_xcxd6cVKCA">std::cout</span>, which is a simple output stream. Some review:</p>
 
           
 <ol type="a">
             <li>Unlike many languages, printing is framed as piping to std::cout, not a function</li>
             <li>We need to
-              <span class="cpp inline-code" id="f_v8OjfXx3Tp">#include &lt;iostream&gt;</span>
+              <span class="cpp inline-code" id="f_l1U1FhcS4A">#include &lt;iostream&gt;</span>
               for std::cout to be defined</li>
             <li>The piping operator is &lt;&lt;</li>
             <li>It can print each supported type without special syntax</li>
@@ -2828,26 +2828,26 @@ int main() { <br />
           </ol>
 
           
-<div class="code-cf cpp" id="f_rW827S47Tf">std::cout &lt;&lt; 3 &lt;&lt; "derp" &lt;&lt; 4.5 &lt;&lt; '\n';</div>
+<div class="code-cf cpp" id="f_OsBFKCsMyc">std::cout &lt;&lt; 3 &lt;&lt; "derp" &lt;&lt; 4.5 &lt;&lt; '\n';</div>
 
           
 <p>There are a couple output streams like this, notably
-            <span class="cpp inline-code" id="f_SS19Oa6w6j">std::clog</span>
+            <span class="cpp inline-code" id="f_G83vwqbTQt">std::clog</span>
             and
-            <span class="cpp inline-code" id="f_24Ioir7LRe">std::cerr</span>. clog and cerr are almost identical for most purposes (more precisely, cerr is buffered whereas clog is not). You can use them to print errors and such for debugging purposes, because when run their output can be redirected to a
+            <span class="cpp inline-code" id="f_2VY0kjhCCk">std::cerr</span>. clog and cerr are almost identical for most purposes (more precisely, cerr is buffered whereas clog is not). You can use them to print errors and such for debugging purposes, because when run their output can be redirected to a
             file separate from cout. These streams are both defined in
-            <span class="cpp inline-code" id="f_Makugnn7FG">#include &lt;iostream&gt;</span>.</p>
+            <span class="cpp inline-code" id="f_LWi4ig8scP">#include &lt;iostream&gt;</span>.</p>
 
           
 <p>For C compatibility, there is also a function called
-            <span class="cpp inline-code" id="f_bpcyGR20zY">printf</span>, but its usage is discouraged and outside the scope of this document.</p>
+            <span class="cpp inline-code" id="f_8fSxaLkV19">printf</span>, but its usage is somewhat discouraged in purely C++ code and outside the scope of this document.</p>
 
           
-<p>To output to a file, we can use std::ofstream, defined in
-            <span class="cpp inline-code" id="f_LXGwk2YXie">#include &lt;fstream&gt;</span>. We first create our file object, then open a file by its path. While the file is open we can write all of our stuff to it. Once we're happy, we close the file.</p>
+<p>To output to a file, we can use <span class="cpp inline-code" id="f_Qlrb74GH1i">std::ofstream</span>, defined in
+            <span class="cpp inline-code" id="f_TIXuUHbIn3">#include &lt;fstream&gt;</span>. We first create our file object, then open a file by its path. While the file is open we can write all of our stuff to it. Once we're happy, we close the file.</p>
 
           
-<div class="code-cf cpp" id="f_bVGYH1qSyN">
+<div class="code-cf cpp" id="f_Djy93jJjnR">
             
 #include &lt;fstream&gt; <br />
  <br />
@@ -2867,7 +2867,7 @@ int main() { <br />
 <p>This writes</p>
 
           
-<div class="code-cf cpp" id="f_mpLwsJI5ja">Lorem ipsum dolor sit amet.<br />Cows are beautiful.</div>
+<div class="code-cf cpp" id="f_l6xVtw0AQe">Lorem ipsum dolor sit amet.<br />Cows are beautiful.</div>
 
           
 <p>to
@@ -2876,10 +2876,10 @@ int main() { <br />
             is relative to where the program was executed (i.e. what folder you are in while in the terminal). If you want an absolute path, specify it according to your OS's conventions.</p>
 
           
-<p>There are a variety of output formats we can use. The default is just plain text, but we can output as binary, for example:</p>
+<p>Similarly to <span class="cpp inline-code" id="f_6ul49NUZ6o">std::cout</span> and <span class="cpp inline-code" id="f_nnYVVcj2V4">printf</span>, here is a function called <span class="cpp inline-code" id="f_nRYCdyP9Hd">fprintf</span> for C compatibility, but it is outside the scope of this document. There are a variety of output formats we can use. The default is just plain text, but we can output as <a arrow="true" delay="200" href="javascript:void(0);" id="f_im6zCtw5vR" maxwidth="180px" placement="bottom" title="A number system in base 2, i.e. each digit is either 1 or 0.&#10;">binary</a>, for example:</p>
 
           
-<div class="code-cf cpp" id="f_MpB6Ey4m38">
+<div class="code-cf cpp" id="f_DmWIl0dGlH">
             
 #include &lt;fstream&gt; <br />
 #include &lt;cstdint&gt; <br />
@@ -2901,13 +2901,13 @@ int main() { <br />
 
           
 <p>Recall that
-            <span class="cpp inline-code" id="f_omCqpapFBt">uint8_t</span>, defined in
-            <span class="cpp inline-code" id="f_VtapX9BbcG">#include &lt;cstdint&gt;</span>, is an unsigned 8-bit integer. We are using the hexadecimal notation here. At the end of this operation
+            <span class="cpp inline-code" id="f_i0KXDkYbZX">uint8_t</span>, defined in
+            <span class="cpp inline-code" id="f_c7ktR8Q52y">#include &lt;cstdint&gt;</span>, is an unsigned 8-bit integer. We are using the <a arrow="true" delay="200" href="javascript:void(0);" id="f_Fflc7KydoZ" maxwidth="180px" placement="bottom" title="A number system in base 16, i.e. each digit is one of 0...9, A...F.&#10;">hexadecimal</a> notation here. At the end of this operation
             <code lang="none">udder.bin</code>
             will simply be</p>
 
           
-<div class="code-cf nohighlight" id="f_dWxTfY5hsx" lang="none">FFEA</div>
+<div class="code-cf nohighlight" id="f_gImy3DAxht" lang="none">FFEA</div>
 
           
 <p>when represented in hexadecimal.</p>
@@ -2925,9 +2925,9 @@ int main() { <br />
 <p>1. Calculate the cube of an inputted integer.</p>
 
         
-<div class="tab-system" id="f_ZUYeZNkMQT" style=";max-height: 750px;">
-          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_d8Biwzh6u4', 'f_ZUYeZNkMQT')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_ZVbGAlFuXu', 'f_ZUYeZNkMQT')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_IfED1LQiyb', 'f_ZUYeZNkMQT')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_FEpZamgY9S', 'f_ZUYeZNkMQT')">Java</button></div><div class="tab-content" id="f_d8Biwzh6u4">
-            <div class="code-cf cpp" id="f_eZtqugMA4k">
+<div class="tab-system" id="f_9qLxCdWiA1" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_rarBllnWSx', 'f_9qLxCdWiA1')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_0QHpw19hZ1', 'f_9qLxCdWiA1')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_958Z3RN9Nz', 'f_9qLxCdWiA1')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_2EAWVQwcKN', 'f_9qLxCdWiA1')">Java</button></div><div class="tab-content" id="f_rarBllnWSx">
+            <div class="code-cf cpp" id="f_nWB7Cyu8XP">
               
 #include &lt;iostream&gt; <br />
  <br />
@@ -2944,8 +2944,8 @@ int main() { <br />
             </div>
           </div>
 
-          <div class="tab-content" id="f_ZVbGAlFuXu">
-            <div class="code-cf python" id="f_oRRHSWcMCx" lang="python">
+          <div class="tab-content" id="f_0QHpw19hZ1">
+            <div class="code-cf python" id="f_AyqYCtN0nb" lang="python">
               
 print "Please enter an integer to be cubed." <br />
 a = int(raw_input()) <br />
@@ -2955,8 +2955,8 @@ print "The cube of %s is %s." % (a, a * a * a) <br />
             </div>
           </div>
 
-          <div class="tab-content" id="f_IfED1LQiyb">
-            <div class="code-cf python3" id="f_5ouaPA4GLZ" lang="python3">
+          <div class="tab-content" id="f_958Z3RN9Nz">
+            <div class="code-cf python3" id="f_BKpGqAMcxl" lang="python3">
               
 print("Please enter an integer to be cubed.") <br />
 a = int(input()) <br />
@@ -2966,8 +2966,8 @@ print("The cube of %s is %s." % (a, a * a * a)) <br />
             </div>
           </div>
 
-          <div class="tab-content" id="f_FEpZamgY9S">
-            <div class="code-cf java" id="f_fTMQKUHSph" lang="java">
+          <div class="tab-content" id="f_2EAWVQwcKN">
+            <div class="code-cf java" id="f_v51CC0jTH6" lang="java">
               
 import java.util.Scanner; <br />
  <br />
@@ -2987,12 +2987,12 @@ public class CubeInteger { <br />
 
         
 <p>2. Calculate the sum of primes between 2 and a million. Note that like Python, JS, C++, and C#, % is the modulo operator. We are also using the sqrt function, found in
-          <span class="cpp inline-code" id="f_Vb1JbFlrr2">#include &lt;cmath&gt;</span>.</p>
+          <span class="cpp inline-code" id="f_zTXKadbe1r">#include &lt;cmath&gt;</span>.</p>
 
         
-<div class="tab-system" id="f_ac7gmaAXse" style=";max-height: 750px;">
-          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_KCdlcXWQmk', 'f_ac7gmaAXse')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_vaeed4vooY', 'f_ac7gmaAXse')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_haaT2oE7pK', 'f_ac7gmaAXse')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_OIwZhfG964', 'f_ac7gmaAXse')">Java</button></div><div class="tab-content" id="f_KCdlcXWQmk">
-            <div class="code-cf cpp" id="f_ldJkE8CQ8f">
+<div class="tab-system" id="f_VtcQoLVE3t" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_jpZ2ItTpp4', 'f_VtcQoLVE3t')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_XXoIy5Hmek', 'f_VtcQoLVE3t')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_Q0pcGFsFfL', 'f_VtcQoLVE3t')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_k5FGctkT5D', 'f_VtcQoLVE3t')">Java</button></div><div class="tab-content" id="f_jpZ2ItTpp4">
+            <div class="code-cf cpp" id="f_8PwvGuQxnS">
               
 #include &lt;iostream&gt; <br />
 #include &lt;limits&gt; <br />
@@ -3033,8 +3033,8 @@ int main() { <br />
 
             </div>
           </div>
-          <div class="tab-content" id="f_vaeed4vooY">
-            <div class="code-cf python" id="f_KizFSHwrDJ" lang="python">
+          <div class="tab-content" id="f_XXoIy5Hmek">
+            <div class="code-cf python" id="f_yZ2IzH6yEu" lang="python">
               
 import math <br />
  <br />
@@ -3066,8 +3066,8 @@ print "The sum of the %s primes between 2 and %s is %s." % (count, limit, sum) <
 
             </div>
           </div>
-          <div class="tab-content" id="f_haaT2oE7pK">
-            <div class="code-cf python3" id="f_B3zDxKLDFw" lang="python3">
+          <div class="tab-content" id="f_Q0pcGFsFfL">
+            <div class="code-cf python3" id="f_r1I6wSxgnM" lang="python3">
               
 import math <br />
  <br />
@@ -3099,8 +3099,8 @@ print("The sum of the %s primes between 2 and %s is %s." % (count, limit, sum)) 
 
             </div>
           </div>
-          <div class="tab-content" id="f_OIwZhfG964">
-            <div class="code-cf java" id="f_VZ5uqmuM9w" lang="java">
+          <div class="tab-content" id="f_k5FGctkT5D">
+            <div class="code-cf java" id="f_MQFjVaayXh" lang="java">
               
 public class PrimeCounter { <br />
 &nbsp;&nbsp;&nbsp;&nbsp;public static boolean is_prime(int x) { <br />
@@ -3145,7 +3145,7 @@ public class PrimeCounter { <br />
 <p>This outputs, in around 0.1 seconds on my computer:</p>
 
         
-<div class="code-cf nohighlight" id="f_rT6JaixhfG" lang="none">The sum of the 78498 primes between 2 and 1000000 is 37550402023.</div>
+<div class="code-cf nohighlight" id="f_HCleWUrXCj" lang="none">The sum of the 78498 primes between 2 and 1000000 is 37550402023.</div>
 
         
 <p>Some quick perf tests on this microbenchmark, averaged out of 5 tests:</p>
@@ -3174,9 +3174,9 @@ public class PrimeCounter { <br />
 <p>3. Find the least common multiple of two inputted numbers with a recursive Euclidean algorithm.</p>
 
         
-<div class="tab-system" id="f_OPbM6gfklH" style=";max-height: 750px;">
-          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_ttf3w3CHpC', 'f_OPbM6gfklH')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_ukwVSRaDZP', 'f_OPbM6gfklH')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_QMnz6GTRp1', 'f_OPbM6gfklH')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_fHe7pW7ZWx', 'f_OPbM6gfklH')">Java</button></div><div class="tab-content" id="f_ttf3w3CHpC">
-            <div class="code-cf cpp" id="f_7LCxRGgGb8">
+<div class="tab-system" id="f_2ISHJ2utae" style=";max-height: 750px;">
+          <div class="tab"><button class="tablinks" onclick="openTabID(event, 'f_oQL3G8TtCQ', 'f_2ISHJ2utae')">C++</button><button class="tablinks" onclick="openTabID(event, 'f_RG47Tn6cZD', 'f_2ISHJ2utae')">Python 2</button><button class="tablinks" onclick="openTabID(event, 'f_2VHUhsqWiY', 'f_2ISHJ2utae')">Python 3</button><button class="tablinks" onclick="openTabID(event, 'f_M7nyU8SHsz', 'f_2ISHJ2utae')">Java</button></div><div class="tab-content" id="f_oQL3G8TtCQ">
+            <div class="code-cf cpp" id="f_zpVPW2iRXm">
               
 #include &lt;iostream&gt; <br />
  <br />
@@ -3206,8 +3206,8 @@ int main() { <br />
 
             </div>
           </div>
-          <div class="tab-content" id="f_ukwVSRaDZP">
-            <div class="code-cf python" id="f_aUYTjGozPz" lang="python">
+          <div class="tab-content" id="f_RG47Tn6cZD">
+            <div class="code-cf python" id="f_eUY76Ju4jW" lang="python">
               
 def gcd(a, b): <br />
 &nbsp;&nbsp;&nbsp;&nbsp;if a % b == 0: <br />
@@ -3227,8 +3227,8 @@ print "The lcm of %s and %s is %s." % (x, y, lcm(x, y)) <br />
 
             </div>
           </div>
-          <div class="tab-content" id="f_QMnz6GTRp1">
-            <div class="code-cf python3" id="f_6road04oaG" lang="python3">
+          <div class="tab-content" id="f_2VHUhsqWiY">
+            <div class="code-cf python3" id="f_1bVL5ETAlN" lang="python3">
               
 def gcd(a, b): <br />
 &nbsp;&nbsp;&nbsp;&nbsp;if a % b == 0: <br />
@@ -3248,8 +3248,8 @@ print("The lcm of %s and %s is %s." % (x, y, lcm(x, y))) <br />
 
             </div>
           </div>
-          <div class="tab-content" id="f_fHe7pW7ZWx">
-            <div class="code-cf java" id="f_1CfVmDJNyF" lang="java">
+          <div class="tab-content" id="f_M7nyU8SHsz">
+            <div class="code-cf java" id="f_o6mDfRTVzE" lang="java">
               
 import java.util.Scanner; <br />
  <br />
@@ -3309,7 +3309,7 @@ public class LCMCalc { <br />
 
           
 <p>To JS programmers: Most of the syntax should be familiar, but the typing of variables may be foreign, as well as the streaming rather than
-            <span class=" javascript inline-code" id="f_CKAczReh61">console.log</span>.</p>
+            <span class=" javascript inline-code" id="f_bgr6fBovs2">console.log</span>.</p>
 
           
 <p>You'll probably need some practice, so here's some problems for you to tackle!</p>
@@ -3324,7 +3324,7 @@ public class LCMCalc { <br />
 <p><b>Problem 1</b>: Print the following string to the console, with or without a trailing newline:</p>
 
           
-<div class="code-cf nohighlight" id="f_aM2h0JGHxz" lang="none">
+<div class="code-cf nohighlight" id="f_FEnHReaagl" lang="none">
             
 \*****/ <br />
 &nbsp;\***/ <br />
@@ -3345,9 +3345,9 @@ public class LCMCalc { <br />
           
 <p><b>Problem 3: </b>Write a program which, given a number in the range of unsigned long, outputs true if the number is a triangular number. Note that the modulo operator is %.</p>
           
-<p><b>Problem 4: </b>Write a program which, given three coefficients of a quadratic equation a, b, c, outputs the roots of the equation ax<sup>2</sup> + bx + c. Note that <span class="cpp inline-code" id="f_g5TsYlnjdw">std::sqrt</span> lives in <span class="cpp inline-code" id="f_4sigiHVlEA">#include &lt;cmath&gt;</span>.</p>
+<p><b>Problem 4: </b>Write a program which, given three coefficients of a quadratic equation a, b, c, outputs the roots of the equation ax<sup>2</sup> + bx + c. Note that <span class="cpp inline-code" id="f_kW0UsqQzqb">std::sqrt</span> lives in <span class="cpp inline-code" id="f_N5KF5LijaJ">#include &lt;cmath&gt;</span>.</p>
         
-<p><b>Problem 5: </b>Write your own implementation of % (modulo), but for doubles. You could use repeated subtraction, or more efficient methods. Please don't use the built-in <span class="cpp inline-code" id="f_G8J6irpt62">std::fmod</span>.</p>
+<p><b>Problem 5: </b>Write your own implementation of % (modulo), but for doubles. You could use repeated subtraction, or more efficient methods. Please don't use the built-in <span class="cpp inline-code" id="f_Jk2qTRCmTZ">std::fmod</span>.</p>
          
 <p><b>Problem 6: </b>Write a program which, given a number and two temperature units ("K", "C", or "F") convert the number from the temperature unit of the first to the unit of the second.</p>
           
@@ -3357,7 +3357,7 @@ public class LCMCalc { <br />
 <p><b>Problem 8: </b>Casting practice! The following code: </p>
 
           
-<div class="code-cf cpp" id="f_joNaQf3fwP">
+<div class="code-cf cpp" id="f_shrLMPut5h">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -3370,7 +3370,7 @@ int main() { <br />
           </div>
 
           
-<p>outputs "@". Change the line indicated so that it prints out c as an integer. I suggest you use static_cast.</p>
+<p>outputs "@". Change the line indicated so that it prints out c as an integer. I suggest you use <span class="cpp inline-code" id="f_341ciG4UEC">static_cast</span>.</p>
           
 <p><b>Problem 9: </b>Write a function which, given two booleans, outputs the result of them XORed. Don't use the built-in operator ^ .</p>
           
@@ -3380,7 +3380,7 @@ int main() { <br />
 <p><b>Problem 11: </b>What will the following program output?</p>
 
           
-<div class="code-cf cpp" id="f_LHXy2PdPHx">
+<div class="code-cf cpp" id="f_cQvg6KbTf1">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -3403,7 +3403,7 @@ int main() { <br />
 <p><b>Problem 12: </b>What are the two errors in the following program? Note that one is syntactic and one is in meaning. If we only fixed the first error and compiled the program, what would happen when we executed it?</p>
 
           
-<div class="code-cf cpp" id="f_TMynhJkCBk">
+<div class="code-cf cpp" id="f_0NJbP6X6sD">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -3425,7 +3425,7 @@ int main() { <br />
 <p><b>Problem 13: </b>What will the following program output, assuming an int is 32-bits? </p>
 
           
-<div class="code-cf cpp" id="f_tabIaoZoH8">
+<div class="code-cf cpp" id="f_1sw4jO9E7D">
             
 #include &lt;iostream&gt; <br />
  <br />
@@ -3445,8 +3445,68 @@ int main() { <br />
         
 </div>
 <h1 id='ay' style="padding-top: 80px; margin-top: -80px;">3: The C++ Memory Model</h1>
-<div class="content"><p>Every object that's not optimized away by the compiler is stored in memory somewhere. When we're programming in languages like Java, C# and Python, we rarely have to care about this fact until we need to consider performance considerations. That's because those languages separate us from the happenings at the memory level.</p></div><h2 id='az' style="padding-top: 80px; margin-top: -80px;">3.0: Memory</h2>
+<div class="content"><p>Every object in a program, if it's not optimized away, is stored in memory somewhere. When we're programming in languages like Java, C# and Python, we rarely have to care about this fact until we need to consider performance considerations. That's because those languages separate us from the happenings at the memory level.</p></div><h2 id='az' style="padding-top: 80px; margin-top: -80px;">3.0: Memory</h2>
+<div class="content">
+<p>Some assumptions here: a byte on your computer is 8 bits, and it is 64-bit.</p>
 
+
+<p>When writing a typical program, most (but not all) of our variables are stored in <a arrow="true" delay="200" href="javascript:void(0);" id="f_ql5Cr1C4HC" maxwidth="180px" placement="bottom" title="Random Access Memory; memory that can be rapidly accessed at will, unlike a hard drive or SSD&#10;">RAM</a>, or random access memory. If you've built a PC or checked out a computer's specifications before, you've probably seen this. We can store plenty of stuff in RAM, depending on how much your system has, and the amount we can store with new computers keeps growing with improvements in technology.</p>
+
+
+<p>At its most fundamental level, RAM is nothing but a sequence of bits. It is the program that interprets these bits and bytes, not the content itself.</p>
+
+
+<p>What is the mapping from software (our C++ code) to hardware (the RAM)? Well, a variable's address is always aligned on a byte, including variables that are smaller than a byte, such as a boolean. For example, an adjacent integer, boolean, and double might be stored like this, if it was little endian:</p>
+
+
+<table>
+  <tr>
+    <th>Address</th>
+    <th>0x7fff5ae82afc</th>
+    <th>0x7fff5ae82afd</th>
+    <th>0x7fff5ae82afe</th>
+    <th>0x7fff5ae82aff</th>
+    <th>0x7fff5ae82b00</th>
+    <th>0x7fff5ae82b01</th>
+    <th>0x7fff5ae82b02</th>
+    <th>0x7fff5ae82b03</th>
+    <th>0x7fff5ae82b04</th>
+    <th>0x7fff5ae82b05</th>
+    <th>0x7fff5ae82b06</th>
+    <th>0x7fff5ae82b07</th>
+    <th>0x7fff5ae82b08</th>
+  </tr>
+
+  <tr>
+    <th>Type</th>
+    <th colspan="4">int (4 bytes)</th>
+    <th>double (1 byte)</th>
+    <th colspan="8">double (8 bytes)</th>
+  </tr>
+
+  <tr>
+    <th>Bytes</th>
+<th>00111001</th>
+<th>00000101</th>
+<th>00000000</th>
+<th>00000000</th>
+<th>00000001</th>
+<th>00011000</th>
+<th>00101101</th>
+<th>01000100</th>
+<th>01010100</th>
+<th>11111011</th>
+<th>00100001</th>
+<th>00001001</th>
+<th>01000000</th>
+
+  </tr>
+</table>
+
+
+<p>For reference the int has value 1337, the bool has value true, and the double has an approximation of pi as its value. As you can see, a boolean is smaller than a byte in content (it only needs 1/8 a byte), but it takes up a whole byte.</p>
+
+</div>
 
 <h2 id='ba' style="padding-top: 80px; margin-top: -80px;">3.1: L-values and R-values</h2>
 
@@ -3461,293 +3521,303 @@ int main() { <br />
 
 
 <!-- Begin footer scripts -->
-<script>;tippy('#f_4nRedx4wrM', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_xZfG78EF3d', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_j8gwc8X5DL', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_QW600OKuxs', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_mwdoFpFa5s', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_REcde2YW2Q', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_koKJZpl1wz', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_dKSSg5w7VW', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_im4mguiqph', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_xYkuTiSCcM', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_mNA5E6tcKw', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_oK8egG1A5h', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_6q5zsV94DL', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_32fVuBQ7Zk', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_buvSGk7Wyf', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_M7nHCpaH0V', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_a8s0aph0rr"));;
-;tippy('#f_ehj2xoRzhp', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_lZ626LMwo5', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_xsmGi7Tu96', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_rNwdrSVDqj', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_UVaxGW5ntt', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'compiler', arrow: 'true', });;
-;tippy('#f_CJgk4BZ7bA', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_fFhtMjwV8h', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'pointer', arrow: 'true', });;
-;tippy('#f_jYFQsfZfzz', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_XRQ2HnpdYG', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_fytnh40Cib', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_sEaYVr4dZS', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_i0jmBvVZjz', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_3S8IVMOm6j', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_27ul22U6PV', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_yecPEEsTg0', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_iKKTvcwjns"));;
-;hljs.highlightBlock(document.getElementById("f_2CaJf1h39o"));;
-;hljs.highlightBlock(document.getElementById("f_pizeskbBpx"));;
-;hljs.highlightBlock(document.getElementById("f_IquzYn5BXS"));;
-;hljs.highlightBlock(document.getElementById("f_An5WOtxmbD"));;
-;hljs.highlightBlock(document.getElementById("f_cC7YTOFGJf"));;
-;hljs.highlightBlock(document.getElementById("f_kkUDjKCgYx"));;
-;hljs.highlightBlock(document.getElementById("f_UKYNkwNCyP"));;
-;hljs.highlightBlock(document.getElementById("f_zfgbwmWq32"));;
-;hljs.highlightBlock(document.getElementById("f_DtqKCKERun"));;
-;hljs.highlightBlock(document.getElementById("f_XTGijLTmJ6"));;
-;hljs.highlightBlock(document.getElementById("f_xsroQQLZSN"));;
-;hljs.highlightBlock(document.getElementById("f_lQ3kgIMsOO"));;
-;hljs.highlightBlock(document.getElementById("f_GAIfjGNA0i"));;
-;hljs.highlightBlock(document.getElementById("f_pVzvMkCGxg"));;
-;hljs.highlightBlock(document.getElementById("f_GILnbkEAWB"));;
-;tippy('#f_55wVeNFLbc', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'executable', arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_JFQsYv0xMe"));;
-;hljs.highlightBlock(document.getElementById("f_lqLffENBG8"));;
-;hljs.highlightBlock(document.getElementById("f_A5NR3MwRRR"));;
-;hljs.highlightBlock(document.getElementById("f_wAtIBAzCC2"));;
-;hljs.highlightBlock(document.getElementById("f_KN98mv7B4m"));;
-;hljs.highlightBlock(document.getElementById("f_6hcFmYB0Xj"));;
-;document.getElementById("f_wT15DbBP1M").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_wT15DbBP1M").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_t4ykSON3nF"));;
-;hljs.highlightBlock(document.getElementById("f_5ea4ArwJm1"));;
-;hljs.highlightBlock(document.getElementById("f_D8PbI97SOE"));;
-;hljs.highlightBlock(document.getElementById("f_oEw9GYPPjT"));;
-;hljs.highlightBlock(document.getElementById("f_wZlj9ufmLr"));;
-;hljs.highlightBlock(document.getElementById("f_LvrWZmvv3J"));;
-;hljs.highlightBlock(document.getElementById("f_H42TdGVPP8"));;
-;hljs.highlightBlock(document.getElementById("f_UZYOzAPKmg"));;
-;hljs.highlightBlock(document.getElementById("f_ZrBQSRnfxu"));;
-;hljs.highlightBlock(document.getElementById("f_aM5rUFdlMF"));;
-;document.getElementById("f_IEmDmSmADW").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_IEmDmSmADW").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_Ody2JjZEiB"));;
-;hljs.highlightBlock(document.getElementById("f_3tzK9FSHai"));;
-;hljs.highlightBlock(document.getElementById("f_BoMXLoAP4u"));;
-;hljs.highlightBlock(document.getElementById("f_8Xbpv1IJDc"));;
-;hljs.highlightBlock(document.getElementById("f_UJuzmjCKl8"));;
-;hljs.highlightBlock(document.getElementById("f_c1ZabcUe6x"));;
-;hljs.highlightBlock(document.getElementById("f_rFMHEdybPJ"));;
-;hljs.highlightBlock(document.getElementById("f_RWqWHoxBgs"));;
-;hljs.highlightBlock(document.getElementById("f_5wsRGbQKN6"));;
-;hljs.highlightBlock(document.getElementById("f_PJ188tEw2y"));;
-;hljs.highlightBlock(document.getElementById("f_3sPolOc0zL"));;
-;hljs.highlightBlock(document.getElementById("f_xCgKFhNTsQ"));;
-;hljs.highlightBlock(document.getElementById("f_2FsehKp1fs"));;
-;tippy('#f_AmUsJe6Frx', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_VVsh0F9fhk', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_RT8An0PNNE"));;
-;hljs.highlightBlock(document.getElementById("f_us6lGf64jF"));;
-;hljs.highlightBlock(document.getElementById("f_zEK1BuEG0g"));;
-;hljs.highlightBlock(document.getElementById("f_4tA9vWTa21"));;
-;tippy('#f_E32p4zHA2O', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;tippy('#f_uRKrcyXvKL', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_pWstupzRaM"));;
-;hljs.highlightBlock(document.getElementById("f_kNHruwEL37"));;
-;hljs.highlightBlock(document.getElementById("f_hWgl3vaMt0"));;
-;hljs.highlightBlock(document.getElementById("f_rGeI6IKAtk"));;
-;hljs.highlightBlock(document.getElementById("f_jSdKZR9q8m"));;
-;hljs.highlightBlock(document.getElementById("f_hrfO1DDteG"));;
-;hljs.highlightBlock(document.getElementById("f_e2P0S7flAY"));;
-;hljs.highlightBlock(document.getElementById("f_9Ph45aUybA"));;
-;hljs.highlightBlock(document.getElementById("f_nVVnjQgrKT"));;
-;hljs.highlightBlock(document.getElementById("f_42S9mAYuVf"));;
-;hljs.highlightBlock(document.getElementById("f_tFvdTw8dML"));;
-;hljs.highlightBlock(document.getElementById("f_ZhgU4TvAs2"));;
-;hljs.highlightBlock(document.getElementById("f_7I7x6vVivM"));;
-;hljs.highlightBlock(document.getElementById("f_oo9eJ0iar0"));;
-;hljs.highlightBlock(document.getElementById("f_9xXst8XpoJ"));;
-;hljs.highlightBlock(document.getElementById("f_dig6OXojgV"));;
-;hljs.highlightBlock(document.getElementById("f_RCHXGv0NH9"));;
-;hljs.highlightBlock(document.getElementById("f_hWahv19lJO"));;
-;hljs.highlightBlock(document.getElementById("f_PNj2yyoDkP"));;
-;hljs.highlightBlock(document.getElementById("f_g6xEi7k4RY"));;
-;hljs.highlightBlock(document.getElementById("f_m9zdvFhhvN"));;
-;hljs.highlightBlock(document.getElementById("f_G3MQkffjD3"));;
-;hljs.highlightBlock(document.getElementById("f_EV2cSdfFeo"));;
-;hljs.highlightBlock(document.getElementById("f_9PxyINiLsl"));;
-;hljs.highlightBlock(document.getElementById("f_O5VtCsU51K"));;
-;hljs.highlightBlock(document.getElementById("f_4Ihnk2oOEU"));;
-;hljs.highlightBlock(document.getElementById("f_i6cAhQcAfU"));;
-;hljs.highlightBlock(document.getElementById("f_PT1zDbKnXd"));;
-;hljs.highlightBlock(document.getElementById("f_L6yvZalCHg"));;
-;hljs.highlightBlock(document.getElementById("f_XBqWDzRGXx"));;
-;tippy('#f_tUlNZt06TZ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_WoaGC9pwQI"));;
-;hljs.highlightBlock(document.getElementById("f_r7RLen7yMe"));;
-;hljs.highlightBlock(document.getElementById("f_tRF2l35TGv"));;
-;hljs.highlightBlock(document.getElementById("f_8wQ0wIozVL"));;
-;hljs.highlightBlock(document.getElementById("f_lL8E1zv86K"));;
-;hljs.highlightBlock(document.getElementById("f_QVapRbAo26"));;
-;hljs.highlightBlock(document.getElementById("f_Cqede8MzWl"));;
-;hljs.highlightBlock(document.getElementById("f_gMXrvdfyjR"));;
-;hljs.highlightBlock(document.getElementById("f_F480xdpeIt"));;
-;hljs.highlightBlock(document.getElementById("f_p1BvvT4qIc"));;
-;tippy('#f_LgEpj4xdmy', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
-;hljs.highlightBlock(document.getElementById("f_CkdqNYS6dG"));;
-;hljs.highlightBlock(document.getElementById("f_COoSTa6Z4n"));;
-;hljs.highlightBlock(document.getElementById("f_1piNeTaHP9"));;
-;hljs.highlightBlock(document.getElementById("f_UYNEcZjeMi"));;
-;hljs.highlightBlock(document.getElementById("f_XUonUsT5Qh"));;
-;hljs.highlightBlock(document.getElementById("f_DswW0axlu1"));;
-;hljs.highlightBlock(document.getElementById("f_Zsc2wvmsBg"));;
-;hljs.highlightBlock(document.getElementById("f_snM0J76wZu"));;
-;hljs.highlightBlock(document.getElementById("f_X7HJyUJSvh"));;
-;hljs.highlightBlock(document.getElementById("f_y9PfoRJ4fZ"));;
-;hljs.highlightBlock(document.getElementById("f_Ffj1bVO36w"));;
-;hljs.highlightBlock(document.getElementById("f_PYfm3SWHi2"));;
-;hljs.highlightBlock(document.getElementById("f_zXroXqHYOM"));;
-;hljs.highlightBlock(document.getElementById("f_bFXVRPZMpy"));;
-;hljs.highlightBlock(document.getElementById("f_qc9yfJReKz"));;
-;hljs.highlightBlock(document.getElementById("f_PJCAUJDuDT"));;
-;hljs.highlightBlock(document.getElementById("f_NLakiGoAQW"));;
-;hljs.highlightBlock(document.getElementById("f_t3SxHHYwY4"));;
-;hljs.highlightBlock(document.getElementById("f_nplTCXiWfW"));;
-;hljs.highlightBlock(document.getElementById("f_R15hAWVuBO"));;
-;hljs.highlightBlock(document.getElementById("f_cG9s0t5nb3"));;
-;hljs.highlightBlock(document.getElementById("f_53UuIdvs9i"));;
-;hljs.highlightBlock(document.getElementById("f_RCAlO8nmMv"));;
-;hljs.highlightBlock(document.getElementById("f_CwSIdn65pa"));;
-;hljs.highlightBlock(document.getElementById("f_AatRFZpob5"));;
-;hljs.highlightBlock(document.getElementById("f_Pcm5y8PcmH"));;
-;hljs.highlightBlock(document.getElementById("f_jaENcJJByq"));;
-;hljs.highlightBlock(document.getElementById("f_E1GEphrIDZ"));;
-;hljs.highlightBlock(document.getElementById("f_2rhLjMtwG3"));;
-;hljs.highlightBlock(document.getElementById("f_YeQX45qpyE"));;
-;hljs.highlightBlock(document.getElementById("f_8Dd46lRIbo"));;
-;hljs.highlightBlock(document.getElementById("f_XKTzlhG8PK"));;
-;hljs.highlightBlock(document.getElementById("f_R4k72uUcQA"));;
-;hljs.highlightBlock(document.getElementById("f_dRpIeaiCuK"));;
-;hljs.highlightBlock(document.getElementById("f_rBWnAWpJut"));;
-;hljs.highlightBlock(document.getElementById("f_wvqyvfiGuK"));;
-;hljs.highlightBlock(document.getElementById("f_hr8bhgKAsC"));;
-;hljs.highlightBlock(document.getElementById("f_jk5quZFgNv"));;
-;hljs.highlightBlock(document.getElementById("f_n98BAIkZ58"));;
-;hljs.highlightBlock(document.getElementById("f_MjnEPzPPAF"));;
-;hljs.highlightBlock(document.getElementById("f_M3XT5xq2DS"));;
-;hljs.highlightBlock(document.getElementById("f_bdy3noc0aq"));;
-;hljs.highlightBlock(document.getElementById("f_Aohb8qWqCE"));;
-;hljs.highlightBlock(document.getElementById("f_FsDz3Ih0JQ"));;
-;hljs.highlightBlock(document.getElementById("f_OXVRBcLfFC"));;
-;hljs.highlightBlock(document.getElementById("f_tBjJFlDTVp"));;
-;hljs.highlightBlock(document.getElementById("f_PWhsC1GMns"));;
-;hljs.highlightBlock(document.getElementById("f_qK36PwdtUd"));;
-;hljs.highlightBlock(document.getElementById("f_W4QlMDZ0ou"));;
-;hljs.highlightBlock(document.getElementById("f_mX3PDrKPDk"));;
-;hljs.highlightBlock(document.getElementById("f_8fdsCCoBqq"));;
-;hljs.highlightBlock(document.getElementById("f_RtbeNnq15g"));;
-;hljs.highlightBlock(document.getElementById("f_s8C5jhvFkL"));;
-;hljs.highlightBlock(document.getElementById("f_D65AcPis2h"));;
-;hljs.highlightBlock(document.getElementById("f_GBvz4aiTJN"));;
-;hljs.highlightBlock(document.getElementById("f_NsXKRINQI6"));;
-;hljs.highlightBlock(document.getElementById("f_mNG8O7yHep"));;
-;hljs.highlightBlock(document.getElementById("f_pGHFRVExG2"));;
-;hljs.highlightBlock(document.getElementById("f_nyKVtuCuOk"));;
-;hljs.highlightBlock(document.getElementById("f_vrN5RuYs0z"));;
-;hljs.highlightBlock(document.getElementById("f_YVpzTT3f5o"));;
-;hljs.highlightBlock(document.getElementById("f_k4r3KX4kaU"));;
-;hljs.highlightBlock(document.getElementById("f_cEFA0dNCzA"));;
-;hljs.highlightBlock(document.getElementById("f_l2IqkQJK2R"));;
-;hljs.highlightBlock(document.getElementById("f_vSWYg6xwJT"));;
-;hljs.highlightBlock(document.getElementById("f_vtnk2tnnYe"));;
-;hljs.highlightBlock(document.getElementById("f_X2GfAhB7U5"));;
-;hljs.highlightBlock(document.getElementById("f_NlwPYe84bb"));;
-;hljs.highlightBlock(document.getElementById("f_WywbeTQ2P6"));;
-;hljs.highlightBlock(document.getElementById("f_56a0fyaWkD"));;
-;hljs.highlightBlock(document.getElementById("f_k0vKokydgt"));;
-;hljs.highlightBlock(document.getElementById("f_1IPd2mr5I2"));;
-;hljs.highlightBlock(document.getElementById("f_FFqjtwZrrr"));;
-;hljs.highlightBlock(document.getElementById("f_J36MD4rGoW"));;
-;hljs.highlightBlock(document.getElementById("f_rU5nvhPszi"));;
-;hljs.highlightBlock(document.getElementById("f_uWjOAZG2e5"));;
-;hljs.highlightBlock(document.getElementById("f_qFnC0ZEJyw"));;
-;hljs.highlightBlock(document.getElementById("f_2lOlvUI1P6"));;
-;hljs.highlightBlock(document.getElementById("f_AXp7NflrO9"));;
-;hljs.highlightBlock(document.getElementById("f_ttBDrgIqfY"));;
-;hljs.highlightBlock(document.getElementById("f_qWNcprw3FL"));;
-;hljs.highlightBlock(document.getElementById("f_MBgU1LkyTB"));;
-;hljs.highlightBlock(document.getElementById("f_wqtvFgYOaD"));;
-;hljs.highlightBlock(document.getElementById("f_v4SPerbFZh"));;
-;hljs.highlightBlock(document.getElementById("f_uM91DrqtQf"));;
-;hljs.highlightBlock(document.getElementById("f_wJO1xAMzGs"));;
-;hljs.highlightBlock(document.getElementById("f_owPia2lmmU"));;
-;hljs.highlightBlock(document.getElementById("f_CI5qbyFH8s"));;
-;hljs.highlightBlock(document.getElementById("f_mKEwCbqS7T"));;
-;hljs.highlightBlock(document.getElementById("f_NzDTndkwEv"));;
-;hljs.highlightBlock(document.getElementById("f_MaVOcBzJla"));;
-;hljs.highlightBlock(document.getElementById("f_40bKyeBLUK"));;
-;hljs.highlightBlock(document.getElementById("f_830vdvfWuz"));;
-;hljs.highlightBlock(document.getElementById("f_EUOy4zGY5c"));;
-;hljs.highlightBlock(document.getElementById("f_sFCzzmBnUb"));;
-;hljs.highlightBlock(document.getElementById("f_tnIlktXWpe"));;
-;hljs.highlightBlock(document.getElementById("f_YwfYrSpPwT"));;
-;hljs.highlightBlock(document.getElementById("f_4lNTySBX8z"));;
-;hljs.highlightBlock(document.getElementById("f_JdPbaHqlV1"));;
-;hljs.highlightBlock(document.getElementById("f_b8riT6esTd"));;
-;hljs.highlightBlock(document.getElementById("f_3KydKy8mlf"));;
-;hljs.highlightBlock(document.getElementById("f_nqeOiDehnV"));;
-;hljs.highlightBlock(document.getElementById("f_Wz6I5mdh8n"));;
-;hljs.highlightBlock(document.getElementById("f_k9ABrcvEiu"));;
-;hljs.highlightBlock(document.getElementById("f_3XNoIzRSty"));;
-;hljs.highlightBlock(document.getElementById("f_Sfm0WMMPPA"));;
-;hljs.highlightBlock(document.getElementById("f_tEDQbPp2SX"));;
-;hljs.highlightBlock(document.getElementById("f_osCd2fSvIr"));;
-;hljs.highlightBlock(document.getElementById("f_AKCguJqYtp"));;
-;hljs.highlightBlock(document.getElementById("f_3TlDVEnPTw"));;
-;hljs.highlightBlock(document.getElementById("f_X027MObkyw"));;
-;hljs.highlightBlock(document.getElementById("f_0dIs4ycAhD"));;
-;hljs.highlightBlock(document.getElementById("f_uGIcM6aGbw"));;
-;hljs.highlightBlock(document.getElementById("f_wmIvtlcnJj"));;
-;hljs.highlightBlock(document.getElementById("f_0VafvcEkE7"));;
-;hljs.highlightBlock(document.getElementById("f_y3LKLo1N56"));;
-;hljs.highlightBlock(document.getElementById("f_zGzvYjQCAM"));;
-;hljs.highlightBlock(document.getElementById("f_N8GPRu3dQn"));;
-;hljs.highlightBlock(document.getElementById("f_v8OjfXx3Tp"));;
-;hljs.highlightBlock(document.getElementById("f_rW827S47Tf"));;
-;hljs.highlightBlock(document.getElementById("f_SS19Oa6w6j"));;
-;hljs.highlightBlock(document.getElementById("f_24Ioir7LRe"));;
-;hljs.highlightBlock(document.getElementById("f_Makugnn7FG"));;
-;hljs.highlightBlock(document.getElementById("f_bpcyGR20zY"));;
-;hljs.highlightBlock(document.getElementById("f_LXGwk2YXie"));;
-;hljs.highlightBlock(document.getElementById("f_bVGYH1qSyN"));;
-;hljs.highlightBlock(document.getElementById("f_mpLwsJI5ja"));;
-;hljs.highlightBlock(document.getElementById("f_MpB6Ey4m38"));;
-;hljs.highlightBlock(document.getElementById("f_omCqpapFBt"));;
-;hljs.highlightBlock(document.getElementById("f_VtapX9BbcG"));;
-;hljs.highlightBlock(document.getElementById("f_dWxTfY5hsx"));;
-;hljs.highlightBlock(document.getElementById("f_eZtqugMA4k"));;
-;hljs.highlightBlock(document.getElementById("f_oRRHSWcMCx"));;
-;hljs.highlightBlock(document.getElementById("f_5ouaPA4GLZ"));;
-;hljs.highlightBlock(document.getElementById("f_fTMQKUHSph"));;
-;document.getElementById("f_ZUYeZNkMQT").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_ZUYeZNkMQT").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_Vb1JbFlrr2"));;
-;hljs.highlightBlock(document.getElementById("f_ldJkE8CQ8f"));;
-;hljs.highlightBlock(document.getElementById("f_KizFSHwrDJ"));;
-;hljs.highlightBlock(document.getElementById("f_B3zDxKLDFw"));;
-;hljs.highlightBlock(document.getElementById("f_VZ5uqmuM9w"));;
-;document.getElementById("f_ac7gmaAXse").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_ac7gmaAXse").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_rT6JaixhfG"));;
-;hljs.highlightBlock(document.getElementById("f_7LCxRGgGb8"));;
-;hljs.highlightBlock(document.getElementById("f_aUYTjGozPz"));;
-;hljs.highlightBlock(document.getElementById("f_6road04oaG"));;
-;hljs.highlightBlock(document.getElementById("f_1CfVmDJNyF"));;
-;document.getElementById("f_OPbM6gfklH").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_OPbM6gfklH").getElementsByClassName("tablinks")[0].className+=" active-f";;
-;hljs.highlightBlock(document.getElementById("f_CKAczReh61"));;
-;hljs.highlightBlock(document.getElementById("f_aM2h0JGHxz"));;
-;hljs.highlightBlock(document.getElementById("f_g5TsYlnjdw"));;
-;hljs.highlightBlock(document.getElementById("f_4sigiHVlEA"));;
-;hljs.highlightBlock(document.getElementById("f_G8J6irpt62"));;
-;hljs.highlightBlock(document.getElementById("f_joNaQf3fwP"));;
-;hljs.highlightBlock(document.getElementById("f_LHXy2PdPHx"));;
-;hljs.highlightBlock(document.getElementById("f_TMynhJkCBk"));;
-;hljs.highlightBlock(document.getElementById("f_tabIaoZoH8"));</script>
+<script>;tippy('#f_VqO1SFbd1E', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_cZOCMYgTPY', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_HwYQnBLARc', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_Xi3Vy0zm56', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_SwrI0KBg9D', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_8CIz7QVKN8', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_vV2Jw0ROuQ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_5GpiffZrHl', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_BmFb6ra7k0', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_0BaEV08y78', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_vvGKy8AKMf', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_7crnHevmHR', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_qP0QlcFY44', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_2oDnRq0HY8', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_Yv8pDE83fa', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_FPkhnOGgzr', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_L1IE8vGw5o"));;
+;tippy('#f_WocystbNRg', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_d06aFXbgVQ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_ZMIo69dGUm', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_rzlDGmhKbm', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_em1xu6C1My', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'compiler', arrow: 'true', });;
+;tippy('#f_C5Ra2W9b0e', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_h2DquoiUcv', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'pointer', arrow: 'true', });;
+;tippy('#f_zURM9uhaq4', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_D9RLRCo5dl', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_OdKO9GlK59', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_Oq6kJp14KU', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_3dMXMvFwwn', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_n0maAmwSv5', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_Xqm11q3Twy', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_sZ59rWZfCF', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_NrZjH9iQrL"));;
+;hljs.highlightBlock(document.getElementById("f_YyEeDDZeia"));;
+;hljs.highlightBlock(document.getElementById("f_dlDQWRqmxB"));;
+;hljs.highlightBlock(document.getElementById("f_9rU1DmqwS3"));;
+;hljs.highlightBlock(document.getElementById("f_gacgaHQ2df"));;
+;hljs.highlightBlock(document.getElementById("f_OWt1yk3XRm"));;
+;hljs.highlightBlock(document.getElementById("f_IzJ4qIexEe"));;
+;hljs.highlightBlock(document.getElementById("f_7HjiPLNLsl"));;
+;hljs.highlightBlock(document.getElementById("f_HZkLAOWLlt"));;
+;hljs.highlightBlock(document.getElementById("f_kIIrWnDJGj"));;
+;hljs.highlightBlock(document.getElementById("f_4axWWbQmIW"));;
+;hljs.highlightBlock(document.getElementById("f_5are8hetzy"));;
+;hljs.highlightBlock(document.getElementById("f_bOxjI2oetW"));;
+;hljs.highlightBlock(document.getElementById("f_yvF4V1GtOy"));;
+;hljs.highlightBlock(document.getElementById("f_czzXw58M4s"));;
+;hljs.highlightBlock(document.getElementById("f_5r5L6FYmEE"));;
+;tippy('#f_UVSsaSEkjW', {placement: 'bottom', maxwidth: '180px', delay: 200, alias: 'executable', arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_lxyOKkYjc2"));;
+;hljs.highlightBlock(document.getElementById("f_oIDqfLjTdM"));;
+;hljs.highlightBlock(document.getElementById("f_ERMbfxkO8r"));;
+;hljs.highlightBlock(document.getElementById("f_7yKvZZUeJX"));;
+;hljs.highlightBlock(document.getElementById("f_FnsmXAkISk"));;
+;hljs.highlightBlock(document.getElementById("f_WzXVV9eh0X"));;
+;document.getElementById("f_Gn3tjnaAtA").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_Gn3tjnaAtA").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_Hwk4brgGFC"));;
+;hljs.highlightBlock(document.getElementById("f_fWeh1f5pje"));;
+;hljs.highlightBlock(document.getElementById("f_hqej2xloqs"));;
+;hljs.highlightBlock(document.getElementById("f_uyVVsfWzdO"));;
+;hljs.highlightBlock(document.getElementById("f_XSM50AzHeA"));;
+;hljs.highlightBlock(document.getElementById("f_jYp0AgsGTd"));;
+;hljs.highlightBlock(document.getElementById("f_epCv8uhAJX"));;
+;hljs.highlightBlock(document.getElementById("f_WVrz6egVwn"));;
+;hljs.highlightBlock(document.getElementById("f_DBPlxvKjct"));;
+;hljs.highlightBlock(document.getElementById("f_lL95B5CZri"));;
+;document.getElementById("f_5j16FgbjpR").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_5j16FgbjpR").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_cVBwdvQxXz"));;
+;hljs.highlightBlock(document.getElementById("f_LOwvdTQF8P"));;
+;hljs.highlightBlock(document.getElementById("f_mIgMML55wz"));;
+;hljs.highlightBlock(document.getElementById("f_Vh6yDSJEaO"));;
+;hljs.highlightBlock(document.getElementById("f_PdPCgST78o"));;
+;hljs.highlightBlock(document.getElementById("f_dYDPDUpJsL"));;
+;hljs.highlightBlock(document.getElementById("f_7P2Po5RFk8"));;
+;hljs.highlightBlock(document.getElementById("f_X0xM1bTMjr"));;
+;hljs.highlightBlock(document.getElementById("f_y2homHionR"));;
+;hljs.highlightBlock(document.getElementById("f_1OYgB4akNb"));;
+;hljs.highlightBlock(document.getElementById("f_3eSl6nkyZG"));;
+;hljs.highlightBlock(document.getElementById("f_DIeicBDv5M"));;
+;hljs.highlightBlock(document.getElementById("f_ntKMgeEBfe"));;
+;tippy('#f_5HjRgYKAqD', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_1tf0OC7bMS', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_TcCJ84MtyX"));;
+;hljs.highlightBlock(document.getElementById("f_opjrNmtPGt"));;
+;hljs.highlightBlock(document.getElementById("f_Roao2FwiBJ"));;
+;hljs.highlightBlock(document.getElementById("f_aTWAreZp0T"));;
+;tippy('#f_mkUg5sp3Lc', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;tippy('#f_kZp88QK5ym', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_2wcYJ2tbLN"));;
+;hljs.highlightBlock(document.getElementById("f_yukTW49Gtj"));;
+;hljs.highlightBlock(document.getElementById("f_YQ2BkRaF68"));;
+;hljs.highlightBlock(document.getElementById("f_V2GehpVCSb"));;
+;hljs.highlightBlock(document.getElementById("f_EM81nv56NM"));;
+;hljs.highlightBlock(document.getElementById("f_sYeGPP8ZHP"));;
+;hljs.highlightBlock(document.getElementById("f_q5iBGST0dc"));;
+;hljs.highlightBlock(document.getElementById("f_5HDwaAl4pQ"));;
+;hljs.highlightBlock(document.getElementById("f_kNTCzBYE42"));;
+;hljs.highlightBlock(document.getElementById("f_3R0hOxKDqI"));;
+;hljs.highlightBlock(document.getElementById("f_Yr3JWBuFdC"));;
+;hljs.highlightBlock(document.getElementById("f_KYOMRLGzgf"));;
+;hljs.highlightBlock(document.getElementById("f_bCwv2GGDia"));;
+;hljs.highlightBlock(document.getElementById("f_KsV2rDvsNJ"));;
+;hljs.highlightBlock(document.getElementById("f_1Md5wcLEpX"));;
+;hljs.highlightBlock(document.getElementById("f_41qH70YxKC"));;
+;hljs.highlightBlock(document.getElementById("f_grst3fAT2N"));;
+;hljs.highlightBlock(document.getElementById("f_MNLCVezABU"));;
+;hljs.highlightBlock(document.getElementById("f_byT8WBBwI4"));;
+;hljs.highlightBlock(document.getElementById("f_jozxgmRQmJ"));;
+;hljs.highlightBlock(document.getElementById("f_wkiA2dcK2z"));;
+;hljs.highlightBlock(document.getElementById("f_54r6FDynmG"));;
+;hljs.highlightBlock(document.getElementById("f_FsxvvbwThx"));;
+;hljs.highlightBlock(document.getElementById("f_TvDQrLFu4J"));;
+;hljs.highlightBlock(document.getElementById("f_GftMWbhGDg"));;
+;hljs.highlightBlock(document.getElementById("f_eACe4DmuiG"));;
+;hljs.highlightBlock(document.getElementById("f_LFhp6rdTCE"));;
+;hljs.highlightBlock(document.getElementById("f_N0btIdtZEl"));;
+;hljs.highlightBlock(document.getElementById("f_FIlybHHSsr"));;
+;hljs.highlightBlock(document.getElementById("f_KLCFMoGTaC"));;
+;tippy('#f_BW8IDwNgTs', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_gDN0v57QmX"));;
+;hljs.highlightBlock(document.getElementById("f_jFKf2PuVyF"));;
+;hljs.highlightBlock(document.getElementById("f_CETe0PwPar"));;
+;hljs.highlightBlock(document.getElementById("f_scqhIuOQpO"));;
+;hljs.highlightBlock(document.getElementById("f_KZKDUYashD"));;
+;hljs.highlightBlock(document.getElementById("f_IwMscz4Tq2"));;
+;hljs.highlightBlock(document.getElementById("f_wsKHV8OFP9"));;
+;hljs.highlightBlock(document.getElementById("f_GxVdZDKto5"));;
+;hljs.highlightBlock(document.getElementById("f_qNIzM4InU8"));;
+;hljs.highlightBlock(document.getElementById("f_B78VJLsRRg"));;
+;tippy('#f_73MGToxbGG', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_fuJNqRzUcR"));;
+;hljs.highlightBlock(document.getElementById("f_QrnbQB0ASi"));;
+;hljs.highlightBlock(document.getElementById("f_GEckGAZkl9"));;
+;hljs.highlightBlock(document.getElementById("f_HffgLELAJ8"));;
+;hljs.highlightBlock(document.getElementById("f_QogoirEqf3"));;
+;hljs.highlightBlock(document.getElementById("f_rr4jorgnIb"));;
+;hljs.highlightBlock(document.getElementById("f_11tpLTvVtW"));;
+;hljs.highlightBlock(document.getElementById("f_VZBo1WuEa1"));;
+;hljs.highlightBlock(document.getElementById("f_KIiOUcK6cu"));;
+;hljs.highlightBlock(document.getElementById("f_4N1OIUs9jH"));;
+;hljs.highlightBlock(document.getElementById("f_iTxda1ZZYO"));;
+;hljs.highlightBlock(document.getElementById("f_2i64Ua9HJb"));;
+;hljs.highlightBlock(document.getElementById("f_OD3BoTYeh8"));;
+;hljs.highlightBlock(document.getElementById("f_emjRkmkjfF"));;
+;hljs.highlightBlock(document.getElementById("f_SE5I8ZtMFd"));;
+;hljs.highlightBlock(document.getElementById("f_BnnkxFxljJ"));;
+;hljs.highlightBlock(document.getElementById("f_9uaAlIozMf"));;
+;hljs.highlightBlock(document.getElementById("f_c9WOQUs7HV"));;
+;hljs.highlightBlock(document.getElementById("f_A9eADFvS9l"));;
+;hljs.highlightBlock(document.getElementById("f_UsP73mM2HH"));;
+;hljs.highlightBlock(document.getElementById("f_cy0zCyy0vY"));;
+;hljs.highlightBlock(document.getElementById("f_GWQMmi4juN"));;
+;hljs.highlightBlock(document.getElementById("f_KWj1gP55BD"));;
+;hljs.highlightBlock(document.getElementById("f_EjzAjNqr6i"));;
+;hljs.highlightBlock(document.getElementById("f_xDyrZxdLOb"));;
+;hljs.highlightBlock(document.getElementById("f_CalHEB8teI"));;
+;hljs.highlightBlock(document.getElementById("f_ti6WrNRHqC"));;
+;hljs.highlightBlock(document.getElementById("f_RHPhZJiETM"));;
+;hljs.highlightBlock(document.getElementById("f_o8RoLLubfT"));;
+;hljs.highlightBlock(document.getElementById("f_eritnFnX40"));;
+;hljs.highlightBlock(document.getElementById("f_MdOZvNiNAd"));;
+;hljs.highlightBlock(document.getElementById("f_YxYOEfA9R5"));;
+;hljs.highlightBlock(document.getElementById("f_KF7jWB6glN"));;
+;hljs.highlightBlock(document.getElementById("f_0mkThtWeZL"));;
+;hljs.highlightBlock(document.getElementById("f_3bx2ohLoDB"));;
+;hljs.highlightBlock(document.getElementById("f_Y8kk43jFq2"));;
+;hljs.highlightBlock(document.getElementById("f_5lMfcm7Y6v"));;
+;hljs.highlightBlock(document.getElementById("f_sNRjha2ZUs"));;
+;hljs.highlightBlock(document.getElementById("f_oPb5n3fkdl"));;
+;hljs.highlightBlock(document.getElementById("f_pR2x4igN0C"));;
+;hljs.highlightBlock(document.getElementById("f_rgkacRxx3W"));;
+;hljs.highlightBlock(document.getElementById("f_GjeiciDaR5"));;
+;hljs.highlightBlock(document.getElementById("f_kYdhUF3SWp"));;
+;hljs.highlightBlock(document.getElementById("f_n9XZH52Gtg"));;
+;hljs.highlightBlock(document.getElementById("f_sFOA4o2NsK"));;
+;hljs.highlightBlock(document.getElementById("f_AC9HwIXto6"));;
+;hljs.highlightBlock(document.getElementById("f_eyREVWRodX"));;
+;hljs.highlightBlock(document.getElementById("f_C5DWvForOY"));;
+;hljs.highlightBlock(document.getElementById("f_Iar6GTMZlC"));;
+;hljs.highlightBlock(document.getElementById("f_wc83SDXCCo"));;
+;hljs.highlightBlock(document.getElementById("f_tDBS8X4u2Y"));;
+;hljs.highlightBlock(document.getElementById("f_E1M4xMQDg8"));;
+;hljs.highlightBlock(document.getElementById("f_mCs2Ps2kY8"));;
+;hljs.highlightBlock(document.getElementById("f_Jpcnj4R6cf"));;
+;hljs.highlightBlock(document.getElementById("f_rV3oC0adyl"));;
+;hljs.highlightBlock(document.getElementById("f_G16JxAcrr6"));;
+;hljs.highlightBlock(document.getElementById("f_ifrRev6Gvc"));;
+;hljs.highlightBlock(document.getElementById("f_ylPID1vHVj"));;
+;hljs.highlightBlock(document.getElementById("f_31PEHoEpLj"));;
+;hljs.highlightBlock(document.getElementById("f_swDBskimGO"));;
+;hljs.highlightBlock(document.getElementById("f_WtAMan0QoO"));;
+;hljs.highlightBlock(document.getElementById("f_Uwv24aqhix"));;
+;hljs.highlightBlock(document.getElementById("f_mUMHdeVOBb"));;
+;hljs.highlightBlock(document.getElementById("f_xGtdEN4nBV"));;
+;hljs.highlightBlock(document.getElementById("f_oNRzGHNQpQ"));;
+;hljs.highlightBlock(document.getElementById("f_DUmfbFFocO"));;
+;hljs.highlightBlock(document.getElementById("f_BNDWn6QZZV"));;
+;hljs.highlightBlock(document.getElementById("f_lp5jYPFrqo"));;
+;hljs.highlightBlock(document.getElementById("f_9zMPWrBhRq"));;
+;hljs.highlightBlock(document.getElementById("f_rXN88xBTTl"));;
+;hljs.highlightBlock(document.getElementById("f_YWA7PgHdUp"));;
+;hljs.highlightBlock(document.getElementById("f_OYU4hsR6kp"));;
+;hljs.highlightBlock(document.getElementById("f_V3sMQR8e9l"));;
+;hljs.highlightBlock(document.getElementById("f_4vFXGGcbNp"));;
+;hljs.highlightBlock(document.getElementById("f_udiq6p8dql"));;
+;hljs.highlightBlock(document.getElementById("f_iVLVICIP6h"));;
+;hljs.highlightBlock(document.getElementById("f_KWwOXHvKnz"));;
+;hljs.highlightBlock(document.getElementById("f_7BEF1yJ50W"));;
+;hljs.highlightBlock(document.getElementById("f_IaKhz6O9JT"));;
+;hljs.highlightBlock(document.getElementById("f_hjPesOvtFs"));;
+;hljs.highlightBlock(document.getElementById("f_yOf5T9PlEf"));;
+;hljs.highlightBlock(document.getElementById("f_Y6X9Y8Kc4O"));;
+;hljs.highlightBlock(document.getElementById("f_hel4XvJMN0"));;
+;hljs.highlightBlock(document.getElementById("f_JwCpn8wTVI"));;
+;hljs.highlightBlock(document.getElementById("f_tkQa06VhOp"));;
+;hljs.highlightBlock(document.getElementById("f_hxx58s9Omw"));;
+;hljs.highlightBlock(document.getElementById("f_cAHMGGqq31"));;
+;hljs.highlightBlock(document.getElementById("f_aN80jvRTzJ"));;
+;hljs.highlightBlock(document.getElementById("f_hEmLev4MDn"));;
+;hljs.highlightBlock(document.getElementById("f_AfLkpgV5R8"));;
+;hljs.highlightBlock(document.getElementById("f_To9GHTotcx"));;
+;hljs.highlightBlock(document.getElementById("f_tqvQsDv9SU"));;
+;hljs.highlightBlock(document.getElementById("f_H8iPRaTDKA"));;
+;hljs.highlightBlock(document.getElementById("f_3QQYhQgYHo"));;
+;hljs.highlightBlock(document.getElementById("f_X8YMpDlrKo"));;
+;hljs.highlightBlock(document.getElementById("f_khtgYr52P0"));;
+;hljs.highlightBlock(document.getElementById("f_PXbZFovO2P"));;
+;hljs.highlightBlock(document.getElementById("f_IbrIqO1JaC"));;
+;hljs.highlightBlock(document.getElementById("f_UD4EOOURUP"));;
+;hljs.highlightBlock(document.getElementById("f_VgjLAMEhXy"));;
+;hljs.highlightBlock(document.getElementById("f_xQZ8aYadgP"));;
+;hljs.highlightBlock(document.getElementById("f_Lc07tWwXT7"));;
+;hljs.highlightBlock(document.getElementById("f_y9waY8QWMK"));;
+;hljs.highlightBlock(document.getElementById("f_crQeuvSxTG"));;
+;hljs.highlightBlock(document.getElementById("f_ph2t6TlVBo"));;
+;hljs.highlightBlock(document.getElementById("f_6e20qEhWiH"));;
+;hljs.highlightBlock(document.getElementById("f_xvzgij5W9E"));;
+;hljs.highlightBlock(document.getElementById("f_MkYCVc3lSm"));;
+;hljs.highlightBlock(document.getElementById("f_mOwy2d3Xod"));;
+;hljs.highlightBlock(document.getElementById("f_3QJ2quv7Gz"));;
+;hljs.highlightBlock(document.getElementById("f_YoJiEpv6KB"));;
+;hljs.highlightBlock(document.getElementById("f_o440XLvRu5"));;
+;hljs.highlightBlock(document.getElementById("f_IGnnlmGNlM"));;
+;hljs.highlightBlock(document.getElementById("f_jgFZVDyRH2"));;
+;hljs.highlightBlock(document.getElementById("f_Eg0AcgljL9"));;
+;hljs.highlightBlock(document.getElementById("f_4gn8UDNmmg"));;
+;hljs.highlightBlock(document.getElementById("f_WnMCh6QT2R"));;
+;hljs.highlightBlock(document.getElementById("f_uDFZLgwLbd"));;
+;hljs.highlightBlock(document.getElementById("f_F0WNWL4k1H"));;
+;hljs.highlightBlock(document.getElementById("f_xcxd6cVKCA"));;
+;hljs.highlightBlock(document.getElementById("f_l1U1FhcS4A"));;
+;hljs.highlightBlock(document.getElementById("f_OsBFKCsMyc"));;
+;hljs.highlightBlock(document.getElementById("f_G83vwqbTQt"));;
+;hljs.highlightBlock(document.getElementById("f_2VY0kjhCCk"));;
+;hljs.highlightBlock(document.getElementById("f_LWi4ig8scP"));;
+;hljs.highlightBlock(document.getElementById("f_8fSxaLkV19"));;
+;hljs.highlightBlock(document.getElementById("f_Qlrb74GH1i"));;
+;hljs.highlightBlock(document.getElementById("f_TIXuUHbIn3"));;
+;hljs.highlightBlock(document.getElementById("f_Djy93jJjnR"));;
+;hljs.highlightBlock(document.getElementById("f_l6xVtw0AQe"));;
+;hljs.highlightBlock(document.getElementById("f_6ul49NUZ6o"));;
+;hljs.highlightBlock(document.getElementById("f_nnYVVcj2V4"));;
+;hljs.highlightBlock(document.getElementById("f_nRYCdyP9Hd"));;
+;tippy('#f_im6zCtw5vR', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_DmWIl0dGlH"));;
+;hljs.highlightBlock(document.getElementById("f_i0KXDkYbZX"));;
+;hljs.highlightBlock(document.getElementById("f_c7ktR8Q52y"));;
+;tippy('#f_Fflc7KydoZ', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });;
+;hljs.highlightBlock(document.getElementById("f_gImy3DAxht"));;
+;hljs.highlightBlock(document.getElementById("f_nWB7Cyu8XP"));;
+;hljs.highlightBlock(document.getElementById("f_AyqYCtN0nb"));;
+;hljs.highlightBlock(document.getElementById("f_BKpGqAMcxl"));;
+;hljs.highlightBlock(document.getElementById("f_v51CC0jTH6"));;
+;document.getElementById("f_9qLxCdWiA1").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_9qLxCdWiA1").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_zTXKadbe1r"));;
+;hljs.highlightBlock(document.getElementById("f_8PwvGuQxnS"));;
+;hljs.highlightBlock(document.getElementById("f_yZ2IzH6yEu"));;
+;hljs.highlightBlock(document.getElementById("f_r1I6wSxgnM"));;
+;hljs.highlightBlock(document.getElementById("f_MQFjVaayXh"));;
+;document.getElementById("f_VtcQoLVE3t").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_VtcQoLVE3t").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_HCleWUrXCj"));;
+;hljs.highlightBlock(document.getElementById("f_zpVPW2iRXm"));;
+;hljs.highlightBlock(document.getElementById("f_eUY76Ju4jW"));;
+;hljs.highlightBlock(document.getElementById("f_1bVL5ETAlN"));;
+;hljs.highlightBlock(document.getElementById("f_o6mDfRTVzE"));;
+;document.getElementById("f_2ISHJ2utae").getElementsByClassName("tab-content")[0].style.display="block";document.getElementById("f_2ISHJ2utae").getElementsByClassName("tablinks")[0].className+=" active-f";;
+;hljs.highlightBlock(document.getElementById("f_bgr6fBovs2"));;
+;hljs.highlightBlock(document.getElementById("f_FEnHReaagl"));;
+;hljs.highlightBlock(document.getElementById("f_kW0UsqQzqb"));;
+;hljs.highlightBlock(document.getElementById("f_N5KF5LijaJ"));;
+;hljs.highlightBlock(document.getElementById("f_Jk2qTRCmTZ"));;
+;hljs.highlightBlock(document.getElementById("f_shrLMPut5h"));;
+;hljs.highlightBlock(document.getElementById("f_341ciG4UEC"));;
+;hljs.highlightBlock(document.getElementById("f_cQvg6KbTf1"));;
+;hljs.highlightBlock(document.getElementById("f_0NJbP6X6sD"));;
+;hljs.highlightBlock(document.getElementById("f_1sw4jO9E7D"));;
+;tippy('#f_ql5Cr1C4HC', {placement: 'bottom', maxwidth: '180px', delay: 200, arrow: 'true', });</script>
 <!-- End footer scripts -->
 
 
