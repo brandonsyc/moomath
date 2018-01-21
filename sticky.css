@@ -19,6 +19,7 @@ body {
 	margin: 0;
 }
 .first {
+	border-bottom: 5px solid #096;
 	text-align: center;
 }
 .first h1 {
@@ -45,9 +46,6 @@ body {
 .sticky a {
 	color: #000;
 	padding: 0 25px;
-}
-.navigate {
-	border-top: 5px solid #096;
 }
 .sticky {
 	background-color: #fff;
