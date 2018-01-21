@@ -57,6 +57,11 @@ function update(x) {
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
 			children[i].style.display = "initial";
+			if (x === "") {
+				children[i].children[2].style.display = "initial";
+			} else {
+				children[i].children[2].style.display = "none";
+			}
 		} else {
 			children[i].style.display = "none";
 		}

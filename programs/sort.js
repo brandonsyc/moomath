@@ -15,7 +15,7 @@ rawFile.onreadystatechange = function () {
 				var sub = array[i].split(" - ");
 
 				var block = document.createElement("div");
-				block.classList.add("compact");
+				block.classList.add("block");
 				list.appendChild(block);
 
 				var title = document.createElement("h2");
