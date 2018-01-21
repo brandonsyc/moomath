@@ -20,7 +20,8 @@ document.body.appendChild(last);
 
 document.body.onscroll = function() {
 	"use strict";
-	if (navigate.getBoundingClientRect().top < -5) {
+	console.log(sticky.style.borderTop);
+	if (navigate.getBoundingClientRect().top < -sticky.style.b) {
 		sticky.style.opacity = 1;
 	} else {
 		sticky.style.opacity = 0;
