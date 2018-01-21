@@ -1,6 +1,6 @@
 var navigate = document.createElement("div");
 navigate.classList.add("navigate");
-navigate.innerHTML = "<a href=\"https://nichodon.github.io/\">Home</a><a>Articles</a><a>Programs</a><a>Learning C++</a>";
+navigate.innerHTML = "<a href=\"https://moomath.com\">Home</a><a href=\"https://moomath.com/articles\">Articles</a><a href=\"https://moomath.com/programs\">Programs</a><a href=\"https://moomath.com/about\">About</a>";
 document.body.insertBefore(navigate, document.body.children[0]);
 
 var first = document.createElement("div");
@@ -10,7 +10,7 @@ document.body.insertBefore(first, document.body.children[0]);
 
 var sticky = document.createElement("div");
 sticky.classList.add("sticky");
-sticky.innerHTML = "<a href=\"https://nichodon.github.io/\">Home</a><a>Articles</a><a>Programs</a><a>Learning C++</a>";
+sticky.innerHTML = "<a href=\"https://moomath.com\">Home</a><a href=\"https://moomath.com/articles\">Articles</a><a href=\"https://moomath.com/programs\">Programs</a><a href=\"https://moomath.com/about\">About</a>";
 document.body.insertBefore(sticky, document.body.children[0]);
 
 var last = document.createElement("div");
