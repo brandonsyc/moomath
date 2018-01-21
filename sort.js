@@ -34,7 +34,7 @@ rawFile.onreadystatechange = function () {
 				var text = document.createElement("p");
 
 				var rf2 = new XMLHttpRequest();
-				rf2.open("GET", "https://nichodon.github.io/" + type + "/" + sub[3] + "/" + type + ".txt", false);
+				rf2.open("GET", "https://nichodon.github.io/" + type + "/" + sub[3] + "/" + type.slice(0, -1) + ".txt", false);
 				rf2.onreadystatechange = function () {
 					if (rf2.readyState === 4) {
 						if (rf2.status === 200 || rf2.status === 0) {
