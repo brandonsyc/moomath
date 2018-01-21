@@ -2,13 +2,13 @@
 	display: flex;
 	margin: auto;
 	max-width: 860px;
-	padding: 50px;
+	padding: 25px;
 }
 .side {
-	margin: 20px;
 	width: 75%;
 }
 .left {
+	margin-right: 20px;
 	width: 25%;
 }
 .side div {
