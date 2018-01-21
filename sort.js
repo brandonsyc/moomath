@@ -1,8 +1,10 @@
+var type;
+
 var list = document.getElementById("list");
 var found = false;
 
 var rawFile = new XMLHttpRequest();
-rawFile.open("GET", "https://nichodon.github.io/programs/list.txt", false);
+rawFile.open("GET", "https://nichodon.github.io/" + type + "/list.txt", false);
 rawFile.onreadystatechange = function () {
 	"use strict";
 
@@ -17,19 +19,22 @@ rawFile.onreadystatechange = function () {
 				var block = document.createElement("div");
 				block.classList.add("block");
 				list.appendChild(block);
+				
+				var ta = document.createElement("div");
+				block.appendChild(ta);
 
 				var title = document.createElement("h2");
 				title.innerHTML = sub[0];
-				block.appendChild(title);
+				ta.appendChild(title);
 
 				var author = document.createElement("p");
 				author.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
-				block.appendChild(author);
+				ta.appendChild(author);
 
 				var text = document.createElement("p");
 
 				var rf2 = new XMLHttpRequest();
-				rf2.open("GET", "https://nichodon.github.io/programs/" + sub[3] + "/blurb.txt", false);
+				rf2.open("GET", "https://nichodon.github.io/" + type + "/" + sub[3] + "/" + type + ".txt", false);
 				rf2.onreadystatechange = function () {
 					if (rf2.readyState === 4) {
 						if (rf2.status === 200 || rf2.status === 0) {
@@ -43,7 +48,7 @@ rawFile.onreadystatechange = function () {
 
 				var more = document.createElement("p");
 				more.classList.add("more");
-				more.innerHTML = "<a href=\"" + sub[3] + "\">See Program</a>";
+				more.innerHTML = "<a href=\"" + sub[3] + "\">Read More</a>";
 				block.appendChild(more);
 			}
 		}
@@ -55,8 +60,14 @@ function update(x) {
 	"use strict";
 	var children = document.getElementById("list").children;
 	for (var i = 0; i < children.length; i++) {
-		if (children[i].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
-			children[i].style.display = "initial";
+		if (children[i].children[0].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
+			if (x === "") {
+				children[i].style.display = "initial";
+				children[i].children[1].style.display = "initial";
+			} else {
+				children[i].style.display = "flex";
+				children[i].children[1].style.display = "none";
+			}
 		} else {
 			children[i].style.display = "none";
 		}

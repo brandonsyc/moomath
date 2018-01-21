@@ -37,8 +37,10 @@ body {
 	min-height: 5px;
 }
 .block {
+	align-items: center;
 	background-color: #fff;
 	border-top: 5px solid #ccc;
+	justify-content: space-between;
 	max-width: 910px;
 	padding: 25px;
 	width: 100%;
