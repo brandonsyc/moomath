@@ -13,10 +13,10 @@ Here's a table of some of our best content, with a lovely representative from ea
 
 | Content | Link | Classification |
 | --- | --- | --- |
-| Base-Motif Fractals | [Link](https://nichodon.github.io/fractals/0003/) | Math |
-| Time Signature Metronome | [Link](https://nichodon.github.io/programs/0003/) | Music |
-| Solar System Simulator | [Link](https://nichodon.github.io/programs/0006/) | Science |
-| Brainf\*ck Interpreter (WIP) | [Link](https://nichodon.github.io/programs/0008/) | Programming |
+| Base-Motif Fractals | [Link](https://moomath.com/articles/0003/) | Math |
+| Time Signature Metronome | [Link](https://moomath.com/programs/0003/) | Music |
+| Solar System Simulator | [Link](https://moomath.com/programs/0006/) | Science |
+| Brainf\*ck Interpreter (WIP) | [Link](https://moomath.com/programs/0008/) | Programming |
 
 For a complete catalog, go the [website](http://moomath.com)!
 
