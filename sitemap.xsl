@@ -7,7 +7,7 @@
 		<html>
 			<head>
 				<meta charset="utf-8">
-				<title>Sitemap &ndash; Moomath</title>
+				<title>Sitemap</title>
 				<link rel="stylesheet" type="text/css" href="sticky.css">
 				<link rel="stylesheet" type="text/css" href="sitemap.css">
 				<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
