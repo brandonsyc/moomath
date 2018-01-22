@@ -202,7 +202,7 @@ a.icon {
 	overflow: hidden;
 }
 .gif {
-    background-image: url("programs/0006/images/thumb.png");
+    background-image: url("images/thumb.png");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

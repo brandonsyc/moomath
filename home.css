@@ -10,7 +10,7 @@ html {
 }
 .full {
 	align-items: center;
-	background-image: url(programs/0006/images/thumb.png);
+	background-image: url(images/thumb.png);
 	background-position: center;
 	background-size: cover;
 	display: flex;
