@@ -180,6 +180,10 @@
 				camera.rotation.y = target;
 
 				renderer.render(scene, camera);
+				
+				if (intersection[ghost.x][ghost.z]) {
+					console.log("a");
+				}
 			};
 
 			animate();

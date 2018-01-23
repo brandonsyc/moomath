@@ -1,149 +1,132 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Unit Converter</title>
-<link rel="stylesheet" type="text/css" href="../../styles.css">
-<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-<link rel="stylesheet" type="text/css" href="convert.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Unit Converter</title>
+		<link rel="stylesheet" type="text/css" href="../../sticky.css">
+		<link rel="stylesheet" type="text/css" href="../program.css">
+		<link rel="stylesheet" type="text/css" href="convert.css">
+		<link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	
+	<body>
+		<div class="content">
+			<h1>Unit Converter</h1>
+			<p>17 June, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
 
-<div id="top"></div>
+			<script src="convert.js"></script>
 
-<div class="content">
-<h1>Unit Converter</h1>
-<p>17 June, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
+			<p>
+				This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.<br><br>I've just finished putting all the units in here so there might be bugs or inaccuracies. Please contact us if you find one such error.<br>Bugged: parts of EPUL, parts of Length, Temperature, parts of Speed
+			</p>
 
-<div class="article">
-<script src="convert.js"></script>
+			<input type="radio" id="area" name="type" value="area" onClick="update()" checked>
+			<label for="area">Area</label>
+			<input type="radio" id="density" name="type" value="density" onClick="update()">
+			<label for="density">Density</label>
+			<input type="radio" id="energy" name="type" value="energy" onClick="update()">
+			<label for="energy">Energy</label>
+			<input type="radio" id="force" name="type" value="force" onClick="update()">
+			<label for="force">Force</label>
+			<input type="radio" id="length" name="type" value="length" onClick="update()">
+			<label for="length">Length</label>
+			<input type="radio" id="mass" name="type" value="mass" onClick="update()">
+			<label for="mass">Mass</label>
+			<input type="radio" id="speed" name="type" value="speed" onClick="update()">
+			<label for="speed">Speed</label>
+			<input type="radio" id="temperature" name="type" value="temperature" onClick="update()">
+			<label for="temperature">Temperature</label>
+			<input type="radio" id="volume" name="type" value="volume" onClick="update()">
+			<label for="volume">Volume</label>
+			<button class="mbut" onClick="more()">&#8943;</button>
+			<br>
+			<div class="more most">
+				<input type="radio" id="ard" name="type" value="ard" onClick="update()">
+				<label for="ard">Absorbed Radiation Dose</label>
+				<input type="radio" id="acceleration" name="type" value="acceleration" onClick="update()">
+				<label for="acceleration">Acceleration</label>
+				<input type="radio" id="apua" name="type" value="apua" onClick="update()">
+				<label for="apua">Area Per Unit Area</label>
+				<input type="radio" id="charge" name="type" value="charge" onClick="update()">
+				<label for="charge">Charge</label>
+				<input type="radio" id="ca" name="type" value="ca" onClick="update()">
+				<label for="ca">Chemical Amount</label>
+				<input type="radio" id="c02puv" name="type" value="c02puv" onClick="update()">
+				<label for="c02puv">CO2 Per Unit Volume</label>
+				<input type="radio" id="epul" name="type" value="epul" onClick="update()">
+				<label for="epul">Energy Per Unit Length</label>
+				<input type="radio" id="epum" name="type" value="epum" onClick="update()">
+				<label for="epum">Energy Per Unit Mass</label>
+				<input type="radio" id="erd" name="type" value="erd" onClick="update()">
+				<label for="erd">Equivalent Radiation Dose</label>
+				<input type="radio" id="ee" name="type" value="ee" onClick="update()">
+				<label for="ee">Exhaust Emission</label>
+				<input type="radio" id="flow" name="type" value="flow" onClick="update()">
+				<label for="flow">Flow</label>
+				<input type="radio" id="gradient" name="type" value="gradient" onClick="update()">
+				<label for="gradient">Gradient</label>
+				<input type="radio" id="ld" name="type" value="ld" onClick="update()">
+				<label for="ld">Linear Density</label>
+				<input type="radio" id="mfs" name="type" value="mfs" onClick="update()">
+				<label for="mfs">Magnetic Field Strength</label>
+				<input type="radio" id="mf" name="type" value="mf" onClick="update()">
+				<label for="mf">Magnetizing Field</label>
+				<input type="radio" id="mpup" name="type" value="mpup" onClick="update()">
+				<label for="mpup">Mass Per Unit Power</label>
+				<input type="radio" id="mr" name="type" value="mr" onClick="update()">
+				<label for="mr">Molar Rate</label>
+				<input type="radio" id="pua" name="type" value="pua" onClick="update()">
+				<label for="pua">Per Unit Area</label>
+				<input type="radio" id="puv" name="type" value="puv" onClick="update()">
+				<label for="puv">Per Unit Volume</label>
+				<input type="radio" id="power" name="type" value="power" onClick="update()">
+				<label for="power">Power</label>
+				<input type="radio" id="ppum" name="type" value="ppum" onClick="update()">
+				<label for="ppum">Power Per Unit Mass</label>
+				<input type="radio" id="pressure" name="type" value="pressure" onClick="update()">
+				<label for="pressure">Pressure</label>
+				<input type="radio" id="radioactivity" name="type" value="radioactivity" onClick="update()">
+				<label for="radioactivity">Radioactivity</label>
+				<input type="radio" id="tc" name="type" value="tc" onClick="update()">
+				<label for="tc">Temperature Change</label>
+				<input type="radio" id="time" name="type" value="time" onClick="update()">
+				<label for="time">Time</label>
+				<input type="radio" id="torque" name="type" value="torque" onClick="update()">
+				<label for="torque">Torque</label>
+				<input type="radio" id="vpua" name="type" value="vpua" onClick="update()">
+				<label for="vpua">Volume Per Unit Area</label>
+			</div>
 
-<p>
-	This unit converter is exact in every calculation to 16 places and has a vast collection of different units (Source: Wikipedia).<br>The converter will attempt to guess the unit based on the search query.<br><br>I've just finished putting all the units in here so there might be bugs or inaccuracies. Please contact us if you find one such error.<br>Bugged: parts of EPUL, parts of Length, Temperature, parts of Speed
-</p>
+			<div class="box">
+				<div>
+					<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search" type="text">
+					<p class="unit">Input</p>
+					<input placeholder="Number of units" class="search" onKeyUp="check()" type="number">
+				</div>
+				<button onClick="change()">&#8652;</button>
+				<div>
+					<input placeholder="Unit name or symbol" onKeyUp="search(2)" class="search" type="text">
+					<p class="unit">Input</p>
+					<input readonly class="search disabled" type="text">
+				</div>
+			</div>
+		</div>
 
-<hr>
-
-<input type="radio" id="area" name="type" value="area" onClick="update()" checked>
-<label for="area">Area</label>
-<input type="radio" id="density" name="type" value="density" onClick="update()">
-<label for="density">Density</label>
-<input type="radio" id="energy" name="type" value="energy" onClick="update()">
-<label for="energy">Energy</label>
-<input type="radio" id="force" name="type" value="force" onClick="update()">
-<label for="force">Force</label>
-<input type="radio" id="length" name="type" value="length" onClick="update()">
-<label for="length">Length</label>
-<input type="radio" id="mass" name="type" value="mass" onClick="update()">
-<label for="mass">Mass</label>
-<input type="radio" id="speed" name="type" value="speed" onClick="update()">
-<label for="speed">Speed</label>
-<input type="radio" id="temperature" name="type" value="temperature" onClick="update()">
-<label for="temperature">Temperature</label>
-<input type="radio" id="volume" name="type" value="volume" onClick="update()">
-<label for="volume">Volume</label>
-<button class="mbut" onClick="more()">&#8943;</button>
-<br>
-<div class="more most">
-	<input type="radio" id="ard" name="type" value="ard" onClick="update()">
-	<label for="ard">Absorbed Radiation Dose</label>
-	<input type="radio" id="acceleration" name="type" value="acceleration" onClick="update()">
-	<label for="acceleration">Acceleration</label>
-	<input type="radio" id="apua" name="type" value="apua" onClick="update()">
-	<label for="apua">Area Per Unit Area</label>
-	<input type="radio" id="charge" name="type" value="charge" onClick="update()">
-	<label for="charge">Charge</label>
-	<input type="radio" id="ca" name="type" value="ca" onClick="update()">
-	<label for="ca">Chemical Amount</label>
-	<input type="radio" id="c02puv" name="type" value="c02puv" onClick="update()">
-	<label for="c02puv">CO2 Per Unit Volume</label>
-	<input type="radio" id="epul" name="type" value="epul" onClick="update()">
-	<label for="epul">Energy Per Unit Length</label>
-	<input type="radio" id="epum" name="type" value="epum" onClick="update()">
-	<label for="epum">Energy Per Unit Mass</label>
-	<input type="radio" id="erd" name="type" value="erd" onClick="update()">
-	<label for="erd">Equivalent Radiation Dose</label>
-	<input type="radio" id="ee" name="type" value="ee" onClick="update()">
-	<label for="ee">Exhaust Emission</label>
-	<input type="radio" id="flow" name="type" value="flow" onClick="update()">
-	<label for="flow">Flow</label>
-	<input type="radio" id="gradient" name="type" value="gradient" onClick="update()">
-	<label for="gradient">Gradient</label>
-	<input type="radio" id="ld" name="type" value="ld" onClick="update()">
-	<label for="ld">Linear Density</label>
-	<input type="radio" id="mfs" name="type" value="mfs" onClick="update()">
-	<label for="mfs">Magnetic Field Strength</label>
-	<input type="radio" id="mf" name="type" value="mf" onClick="update()">
-	<label for="mf">Magnetizing Field</label>
-	<input type="radio" id="mpup" name="type" value="mpup" onClick="update()">
-	<label for="mpup">Mass Per Unit Power</label>
-	<input type="radio" id="mr" name="type" value="mr" onClick="update()">
-	<label for="mr">Molar Rate</label>
-	<input type="radio" id="pua" name="type" value="pua" onClick="update()">
-	<label for="pua">Per Unit Area</label>
-	<input type="radio" id="puv" name="type" value="puv" onClick="update()">
-	<label for="puv">Per Unit Volume</label>
-	<input type="radio" id="power" name="type" value="power" onClick="update()">
-	<label for="power">Power</label>
-	<input type="radio" id="ppum" name="type" value="ppum" onClick="update()">
-	<label for="ppum">Power Per Unit Mass</label>
-	<input type="radio" id="pressure" name="type" value="pressure" onClick="update()">
-	<label for="pressure">Pressure</label>
-	<input type="radio" id="radioactivity" name="type" value="radioactivity" onClick="update()">
-	<label for="radioactivity">Radioactivity</label>
-	<input type="radio" id="tc" name="type" value="tc" onClick="update()">
-	<label for="tc">Temperature Change</label>
-	<input type="radio" id="time" name="type" value="time" onClick="update()">
-	<label for="time">Time</label>
-	<input type="radio" id="torque" name="type" value="torque" onClick="update()">
-	<label for="torque">Torque</label>
-	<input type="radio" id="vpua" name="type" value="vpua" onClick="update()">
-	<label for="vpua">Volume Per Unit Area</label>
-</div>
-
-<div class="box">
-	<div class="side">
-		<input placeholder="Unit name or symbol" onKeyUp="search(0)" class="search">
-		<p class="unit">Input</p>
-		<input placeholder="Number of units" class="search" onKeyUp="check()" type="number">
-	</div>
-	<div class="switch">
-		<button onClick="change()">&#8652;</button>
-	</div>
-	<div class="side">
-		<input placeholder="Unit name or symbol" onKeyUp="search(2)" class="search">
-		<p class="unit">Input</p>
-		<input readonly class="search disabled">
-	</div>
-</div>
-
-<div class="separate"></div>
-</div>
-</div>
-
-<div class="source-link">
-	<a href="https://nichodon.github.io/programs/0001/convert.js" target="_blank">Program Source Code</a>
-	<div class="separate"></div>
-</div>
-<div id="bottom"></div>
-
-<script>
-	function more() {
-		var div = document.getElementsByClassName("more")[0];
-		if (div.className === "more") {
-			div.className += " most";
-			div.style.maxHeight = div.scrollHeight + "px";
-		}
-		else {
-			div.className = "more";
-			div.style.maxHeight = "0px";
-		}
-	}
-	more();
-</script>
-
-<script src="../../frame.js"></script>
-
-</body>
+		<script>
+			function more() {
+				var div = document.getElementsByClassName("more")[0];
+				if (div.className === "more") {
+					div.className += " most";
+					div.style.maxHeight = div.scrollHeight + "px";
+				}
+				else {
+					div.className = "more";
+					div.style.maxHeight = "0px";
+				}
+			}
+			more();
+		</script>
+		<script src="../../sticky.js"></script>
+	</body>
 </html>

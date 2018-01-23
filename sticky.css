@@ -12,8 +12,12 @@
 *::-webkit-scrollbar-track {
 	background-color: #ccc;	
 }
-p {
+p,
+button,
+input {
 	font-size: 15px;
+}
+p {
 	line-height: 30px;
 	overflow-x: auto;
 }
@@ -21,7 +25,7 @@ a {
 	color: #08b;
 	text-decoration: none;
 }
-strong {
+strong * {
 	font-weight: 900;
 }
 body {
@@ -69,6 +73,6 @@ body {
 	border-top: 5px solid #999;
 	text-align: center;
 	margin: auto;
-	padding: 0 25px;
+	padding: 10px 25px;
 	width: calc(100% - 50px);
 }

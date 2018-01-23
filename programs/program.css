@@ -1,0 +1,44 @@
+.content {
+	max-width: 910px;
+	padding: 25px;
+}
+input[type=radio] {
+	width: 0;
+	visibility: hidden;
+}
+input[type=radio]:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	line-height: 50px;
+	padding: 10px;
+	transition: 0.2s;
+	white-space: nowrap;
+}
+input[type=text],
+input[type=number] {
+	border: 1px solid #ddd;
+	padding: 20px;
+	transition: 0.2s;
+	width: calc(100% - 42px);
+}
+input:hover {
+	border: 1px solid #bbb;
+}
+button {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	color: #333;
+	height: 100%;
+	padding: 10px;
+	transition: 0.2s;
+}
+button:hover {
+	background-color: #eee;
+	color: #333;
+}
+button:active {
+	box-shadow: inset 0px 0px 5px #bbb;
+}
