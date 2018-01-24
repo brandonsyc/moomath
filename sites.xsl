@@ -17,11 +17,11 @@
 				<div>
 					<xsl:for-each select="s:urlset/s:url">
 						<strong><xsl:value-of select="s:loc" /></strong>
-						<br></br>
+						<br />
 						Last modification: <xsl:value-of select="s:lastmod" />
-						<br></br>
+						<br />
 						Priority: <xsl:value-of select="s:priority" />
-						<br></br>
+						<br />
 						Images:
 						<ol>
 							<xsl:for-each select="image:image">
@@ -32,7 +32,7 @@
 						</ol>
 					</xsl:for-each>
 				</div>
-				<script src="../sticky.js"></script>
+				<script src="../sticky.js" />
 			</body>
 		</html>
 	</xsl:template>

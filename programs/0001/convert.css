@@ -4,6 +4,7 @@
 	background-color: #eee;
 }
 .box {
+	justify-content: center;
 	display: flex;
 	margin-top: 20px;
 }
