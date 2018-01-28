@@ -900,3 +900,5 @@ function BFtoJS(bf) {
 
   return bf;
 }
+
+document.getElementsByClassName("cm-s-default")[0].onmousedown = function() {try{document.getElementsByClassName("CodeMirror-cursor")[0].innerHTML = ""}catch(e){;}}
