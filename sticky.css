@@ -25,6 +25,7 @@ a {
 	color: #08b;
 	text-decoration: none;
 }
+strong,
 strong * {
 	font-weight: 900;
 }

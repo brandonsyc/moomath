@@ -1,19 +1,4 @@
-input {
-	vertical-align: middle;
-}
-input[type=number] {
-	display: inline-block;
-	max-width: 50px;
-}
-input[type=range] {
-    display: inline-block;
-    max-width: 120px;
-}
-input[type=checkbox] {
-    display: inline-block;
-    max-width: 10px;
-    margin-left: 20px;
-}
+
 .box p {
 	display: inline-block;
 	vertical-align: middle;

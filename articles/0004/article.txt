@@ -11,6 +11,7 @@ There are a variety of ways to define the C curve, some of which are more intuit
 <div class="toolbar">
 <input type="text" id="sequence1" onInput="calculateSystem(1)" value="F+F-F">
 <button onclick="calculateSystem(1);playSystem(1)">Play</button>
+</div>
 
 To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. Then, we replace every F in the sequence with the sequence (+F--F+), giving us +(+F--F+)--(+F--F+)+, which is iteration 2. If we continually apply this process, we get the C curve. Here's what it looks like for iterations 1-7:
 
@@ -19,10 +20,12 @@ To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. T
 <div class="toolbar">
 <input type="text" id="sequence2" onInput="calculateSystem(2)" value="+F--F+" disabled>
 <button onclick="updateSystem2Iters();playSystem(2)">Play</button>
+</div>
 
 <div class="toolbar">
 <label for="iter2">Iteration</label>
 <input type="number" id="iter2" onInput="updateSystem2Iters()" value="1" min="1" max="7">
+</div>
 
 As we take the number of iterations to infinity, the resulting curve becomes the Lévy C curve. The problem is that this construction, in order to produce a complete fractal with finite size, must necessarily use infinitesimally small step sizes. Let's use a slightly more geometrical definition, one which fits our idea of the base-motif fractal from the <a href="nichodon.github.io/fractals/0003">previous article</a>.
 
@@ -135,9 +138,13 @@ An extra bit: If you'd like good quality pictures of the C curve itself, you can
 <div class="tbr">
 <div class="fl">
 <button type="button" onclick="resetBZoom()">Reset Zoom</button>
+</div>
+</div>
 
 <div class="fl fr">
 <button type="button" onclick="resetMZoom()">Reset Zoom</button>
+</div>
+</div>
 
 <div class="toolbar">
 <label for="iterations">Iterations</label>
@@ -153,10 +160,14 @@ An extra bit: If you'd like good quality pictures of the C curve itself, you can
 <button type="button" onclick="drawFractal()">Draw Fractal</button>
 <button type="button" onclick="resetFZoom()">Reset Zoom</button>
 <button type="button" onclick="stopDrawing()">Stop Drawing</button>
+</div>
 
 <div class="warning">
 <p id="progress">hi</p>
+</div>
 
 
 <div style="height: 1024px;">
 <canvas id="cesaro" width="1024" height="1024"></canvas>
+</div>
+</div>

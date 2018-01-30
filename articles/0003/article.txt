@@ -45,7 +45,7 @@ There will be a lot of self intersection in this fractal. Here is what it looks 
 And here is what it looks like when completed:
 
 ::fig::images/cesaro4c.png::A Base-Motif Fractal::Figure 4c: The completed fractal.::
-  
+	
 There are a lot of interesting things about these curves. For example, consider the perimeter of our first shape, the one depicted in Figure 2<sub>d</sub>:
 
 ::fig::images/cesaro2d.png::A Base-Motif Fractal::Figure 2d: The finished fractal.::
@@ -78,43 +78,43 @@ We'll explore these fractals in much more depth later, but for now, here is a wi
 <canvas id="base-motif" width="1024" height="512"></canvas>
 
 <div class="tbr">
-  <div class="fl">
-<div class="warn2">
-  <p>&nbsp;</p>
-</div>
-<input type="text" id="baseinput" oninput="updateBM()" value="(-0.25,0), (0.25,0)">
-<br><br>
-<button type="button" onclick="resetBZoom()">Reset Zoom</button>
-  </div>
-  <div class="fl fr">
-<div class="warn2">
-  <p id="warningP">&nbsp;</p>
-</div>
-<input type="text" id="motifinput" oninput="updateBM()" value="(0,0), (0.5,0.5), (1,0)">
-<br><br>
-<button type="button" onclick="resetMZoom()">Reset Zoom</button>
-  </div>
+	<div class="fl">
+		<div class="warn2">
+			<p>&nbsp;</p>
+		</div>
+		<input type="text" id="baseinput" oninput="updateBM()" value="(-0.25,0), (0.25,0)">
+		<br><br>
+		<button type="button" onclick="resetBZoom()">Reset Zoom</button>
+	</div>
+	<div class="fl fr">
+		<div class="warn2">
+			<p id="warningP">&nbsp;</p>
+		</div>
+		<input type="text" id="motifinput" oninput="updateBM()" value="(0,0), (0.5,0.5), (1,0)">
+		<br><br>
+		<button type="button" onclick="resetMZoom()">Reset Zoom</button>
+	</div>
 </div>
 
 <div class="toolbar">
-  <label for="iterations">Iterations</label>
-  <input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
-  <label for="color">Fractal Color </label>
-  <input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
-  <input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
-  <label for="drawGrid">Draw Grid</label>
-  <input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
-  <label for="drawAxes">Draw Axes</label>
+	<label for="iterations">Iterations</label>
+	<input type="number" id="iterations" oninput="updateIterations()" value="25" min="0" max="100">
+	<label for="color">Fractal Color </label>
+	<input type="text" id="color" oninput="updateColor()" value="#333333" style="max-width: 70px">
+	<input type="checkbox" id="drawGrid" onchange="updateDrawGrid()" checked="checked">
+	<label for="drawGrid">Draw Grid</label>
+	<input type="checkbox" id="drawAxes" onchange="updateDrawAxes()" checked="checked">
+	<label for="drawAxes">Draw Axes</label>
 </div>
 
 <div class="cdf">
-  <button type="button" onclick="drawFractal()">Draw Fractal</button>
-  <button type="button" onclick="resetFZoom()">Reset Zoom</button>
-  <button type="button" onclick="stopDrawing()">Stop Drawing</button>
+	<button type="button" onclick="drawFractal()">Draw Fractal</button>
+	<button type="button" onclick="resetFZoom()">Reset Zoom</button>
+	<button type="button" onclick="stopDrawing()">Stop Drawing</button>
 </div>
 
 <div class="warning">
-  <p id="progress">hi</p>
+	<p id="progress">hi</p>
 </div>
 
 <div style="height: 1024px;">
