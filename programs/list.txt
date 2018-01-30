@@ -3,5 +3,5 @@ Polyrhythm Player - 19 June, 2017 - anematode - 0002
 Time Signature Metronome - 21 June, 2017 - anematode - 0003
 Chord Recognizer - 26 June, 2017 - Nichodon - 0004
 Planet Simulator - 29 June, 2017 - Nichodon - 0005
-3D Solar System Simulator - 12 July, 2017 - amematode - 0006
+3D Solar System Simulator - 12 July, 2017 - anematode - 0006
 Brainf*ck Interpreter - 26 August, 2017 - anematode - 0007
