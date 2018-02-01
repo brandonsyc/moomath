@@ -1,4 +1,4 @@
-ErrorDocument 403 /errors/403/
-ErrorDocument 404 /errors/404/
-ErrorDocument 418 /errors/418/
-ErrorDocument 500 /errors/500/
+ErrorDocument 403 /errors/403/index.html
+ErrorDocument 404 /errors/404/index.html
+ErrorDocument 418 /errors/418/index.html
+ErrorDocument 500 /errors/500/index.html
