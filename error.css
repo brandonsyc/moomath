@@ -21,10 +21,12 @@ div {
 	height: 200px;
 	position: fixed;
 	width: 100px;
+	z-index: -1;
 }
 h1 {
 	transition: 0.5s;
 }
-*:not(div) {
+p,
+h1 {
 	background-color: rgba(255, 255, 255, 0.5);
 }

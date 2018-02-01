@@ -7,13 +7,12 @@ document.getElementsByTagName("p")[0].onclick = function() {
 
 function cow() {
 	"use strict";
-	
 	cows++;
 	
 	var div = document.createElement("div");
-	div.style.backgroundImage = "url(https://nichodon.github.io/images/back.png)";
+	div.style.backgroundImage = "url(https://moomath.com/images/back.png)";
 	if (Math.random() < 0.5) {
-		div.style.backgroundImage = "url(https://nichodon.github.io/images/front.png)";
+		div.style.backgroundImage = "url(https://moomath.com/images/front.png)";
 	}
 	div.style.top = Math.random() * 100 + "%";
 	div.style.left = Math.random() * 100 + "%";
