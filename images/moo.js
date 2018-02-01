@@ -1,9 +1,14 @@
 var cows = 0;
 
+document.getElementsByTagName("p")[0].onclick = function() {
+	"use strict";
+	cow();
+};
+
 function cow() {
 	"use strict";
 	cows++;
-	var div = document.createElement("DIV");
+	var div = document.createElement("div");
 	div.style.backgroundImage = "url(https://nichodon.github.io/images/back.png)";
 	if (Math.random() < 0.5) {
 		div.style.backgroundImage = "url(https://nichodon.github.io/images/front.png)";
@@ -22,7 +27,7 @@ function cow() {
 	span.style.transition = "0.5s";
 	span.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
 	if (cows === 1024) {
-		window.location.replace("https://nichodon.github.io");
+		window.location.replace("https://moomath.com");
 	} else if (cows >= 512) {
 		span.innerHTML = "EXPLOSIVE MOO!";
 	} else if (cows >= 256) {
@@ -45,5 +50,3 @@ function cow() {
 		span.innerHTML = "Moo!";
 	}
 }
-
-var HIDE_SOURCE_LINK_ = true;
