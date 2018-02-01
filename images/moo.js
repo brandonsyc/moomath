@@ -23,30 +23,30 @@ function cow() {
 	div.style.transform = "translate(-50%, -50%) rotate(" + Math.random() * 360 + "deg)";
 	div.style.zIndex = "1";
 	document.body.appendChild(div);
-	var span = document.getElementsByTagName("span")[0];
-	span.style.transition = "0.5s";
-	span.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
+	var h1 = document.getElementsByTagName("h1")[0];
+	h1.style.transition = "0.5s";
+	h1.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
 	if (cows === 1024) {
 		window.location.replace("https://moomath.com");
 	} else if (cows >= 512) {
-		span.innerHTML = "EXPLOSIVE MOO!";
+		h1.innerHTML = "EXPLOSIVE MOO!";
 	} else if (cows >= 256) {
-		span.innerHTML = "Hugest Moo!";
+		h1.innerHTML = "Huger Moo!";
 	} else if (cows >= 128) {
-		span.innerHTML = "Greater Moo!";
+		h1.innerHTML = "Greater Moo!";
 	} else if (cows >= 64) {
-		span.innerHTML = "Larger Moo!";
+		h1.innerHTML = "Larger Moo!";
 	} else if (cows >= 32) {
-		span.innerHTML = "Bigger Moo!";
+		h1.innerHTML = "Bigger Moo!";
 	} else if (cows >= 16) {
-		span.innerHTML = "Huge Moo!";
+		h1.innerHTML = "Huge Moo!";
 	} else if (cows >= 8) {
-		span.innerHTML = "Great Moo!";
+		h1.innerHTML = "Great Moo!";
 	} else if (cows >= 4) {
-		span.innerHTML = "Large Moo!";
+		h1.innerHTML = "Large Moo!";
 	} else if (cows >= 2) {
-		span.innerHTML = "Big Moo!";
+		h1.innerHTML = "Big Moo!";
 	} else {
-		span.innerHTML = "Moo!";
+		h1.innerHTML = "Moo!";
 	}
 }
