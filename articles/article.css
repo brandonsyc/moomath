@@ -3,6 +3,9 @@
 	max-width: 860px;
 	padding: 50px;
 }
+.article p {
+	letter-spacing: 0px;
+}
 figure {
 	margin: 50px 0;
 	text-align: center;
