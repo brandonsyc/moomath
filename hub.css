@@ -3,6 +3,7 @@ html, body {
 	margin: 0;
 }
 body {
+	overflow-x: hidden;
 	overflow-y: scroll;
 }
 .header {
@@ -43,7 +44,6 @@ body {
 	justify-content: space-between;
 	max-width: 910px;
 	padding: 25px;
-	width: 100%;
 }
 .more {
 	line-height: 75px;

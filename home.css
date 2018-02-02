@@ -17,11 +17,13 @@ html {
 	flex-direction: column;
 	height: 100%;
 	justify-content: center;
+	overflow: hidden;
 }
 .full h1 {
 	color: #fff;
-	font-size: 50px;
+	font-size: 40px;
 	letter-spacing: 25px;
+	text-indent: 25px;
 }
 .list {
 	display: flex;
@@ -31,7 +33,7 @@ html {
 	border-left: 1px solid #666;
 	border-right: 1px solid #666;
 	color: #ccc;
-	font-size: 25px;
+	font-size: 20px;
 	padding: 10px 25px;
 	text-decoration: none;
 }
