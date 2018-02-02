@@ -3,5 +3,5 @@ ErrorDocument 404 /errors/404/index.html
 ErrorDocument 500 /errors/500/index.html
 
 RewriteEngine on
-RewriteCond %{HTTP_HOST} ^nichodon.github.io [NC]
+RewriteCond %{HTTP_HOST} ^nichodon.github.io/ [NC]
 RewriteRule ^(.*)$ https://moomath.com/$1 [r=301,NC]
