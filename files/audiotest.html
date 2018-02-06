@@ -5,76 +5,87 @@
 	</head>
 	<body>
 		<script>
-			var mode = 0;
-			
-			const audio = new Audio();
-			audio.src = 'https://moomath.com/files/proj12.mp3';
-			audio.crossOrigin = "anonymous";
-			audio.autoplay = true;
-			audio.preload = 'auto';
+			if (navigator.mediaDevices) {
+				navigator.mediaDevices.getUserMedia ({audio: true}).then(function(stream) {
+					var mode = 0;
 
-			const context = new AudioContext();
-			const analyser = context.createAnalyser();
-			analyser.smoothingTimeConstant = 0.9;
-			analyser.connect(context.destination);
-			
-			const source = context.createMediaElementSource(audio);
-			source.connect(analyser);
+					const audio = new Audio();
+					audio.src = 'https://moomath.com/files/proj12.mp3';
+					audio.crossOrigin = "anonymous";
+					audio.autoplay = true;
+					audio.preload = 'auto';
 
-			const count = analyser.frequencyBinCount;
-			const dataArray = new Float32Array(count);
+					const context = new AudioContext();
+					const analyser = context.createAnalyser();
+					analyser.connect(context.destination);
 
-			const canvas = document.createElement('canvas');
-			canvas.style.position = 'absolute';
-			canvas.style.top = 0;
-			canvas.style.left = 0;
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
-			document.body.appendChild(canvas);
-			const two = canvas.getContext('2d');
-			two.clearRect(0, 0, canvas.width, canvas.height);
-			
-			canvas.onclick = function() {
-				mode = mode === 2 ? 0 : mode + 1;
-			};
+					const source = context.createMediaElementSource(audio);
+					//const source = context.createMediaStreamSource(stream);
+					
+var gainNode = context.createGain();
+source.connect(gainNode);
+gainNode.connect(context.destination);
+    gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
+
+					source.connect(analyser);
+
+					const count = analyser.frequencyBinCount;
+					const dataArray = new Float32Array(count);
+
+					const canvas = document.createElement('canvas');
+					canvas.style.position = 'absolute';
+					canvas.style.top = 0;
+					canvas.style.left = 0;
+					canvas.width = window.innerWidth;
+					canvas.height = window.innerHeight;
+					document.body.appendChild(canvas);
+					const two = canvas.getContext('2d');
+					two.clearRect(0, 0, canvas.width, canvas.height);
+
+					canvas.onclick = function() {
+						mode = mode === 2 ? 0 : mode + 1;
+					};
 
 
-			function draw() {
-				requestAnimationFrame(draw);
+					function draw() {
+						requestAnimationFrame(draw);
 
-				analyser.getFloatFrequencyData(dataArray);
+						analyser.getFloatFrequencyData(dataArray);
 
-				two.fillStyle = 'white';
-				two.fillRect(0, 0, canvas.width, canvas.height);
+						two.fillStyle = 'white';
+						two.fillRect(0, 0, canvas.width, canvas.height);
 
-				const barWidth = (canvas.width / count) * 2.5;
-				let posX = 0;
-				for (let i = 0; i < count; i++) {
-					const barHeight = (dataArray[i] + 150) * 2;
-					if (mode === 0) {
-						two.fillStyle = 'rgb(0, ' + Math.floor(barHeight + 50) + ', 255)';
-						two.fillRect(posX, canvas.height - barHeight * 2 + 200, barWidth, barHeight * 2);
-					} else if (mode === 1) {
-						two.strokeStyle = 'red';
-						two.beginPath();
-						two.moveTo(posX, canvas.height - barHeight * 2 + 200);
-						two.lineTo(posX + barWidth, canvas.height - (dataArray[i + 1] + 150) * 2 * 2 + 200);
-						two.stroke();
-					} else {
-						two.fillStyle = 'red';
-						two.beginPath();
-						two.arc(posX, canvas.height - barHeight * 2 + 200, barWidth, 0, 2 * Math.PI);
-						two.fill();
-						two.fillStyle = 'black';
-						two.beginPath();
-						two.arc(posX, canvas.height - barHeight * 2 + 200, barWidth / 2, 0, 2 * Math.PI);
-						two.fill();
-					}
-					posX += barWidth;
-				}
-			};
+						const width = (canvas.width / count) * 2.5;
+						let pos = 0;
+						for (let i = 0; i < count; i++) {
+							const height1 = Math.pow(1.05, dataArray[i] + 150);
+							const height2 = Math.pow(1.05, dataArray[i + 1] + 150);
+							if (mode === 0) {
+								two.fillStyle = 'rgb(0, ' + Math.floor(255 - height1 / 2) + ', 255)';
+								two.fillRect(pos, canvas.height - height1, width, height1);
+							} else if (mode === 1) {
+								two.strokeStyle = 'red';
+								two.beginPath();
+								two.moveTo(pos, canvas.height - height1);
+								two.lineTo(pos + width, canvas.height - height2);
+								two.stroke();
+							} else {
+								two.fillStyle = 'red';
+								two.beginPath();
+								two.arc(pos, canvas.height - height1, width, 0, 2 * Math.PI);
+								two.fill();
+								two.fillStyle = 'black';
+								two.beginPath();
+								two.arc(pos, canvas.height - height1, width / 2, 0, 2 * Math.PI);
+								two.fill();
+							}
+							pos += width;
+						}
+					};
 
-			draw();
+					draw();
+				})
+			}
 		</script>
 	</body>
 </html>
