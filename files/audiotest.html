@@ -6,16 +6,18 @@
 	<body>
 		<script>
 			const audio = new Audio();
-			audio.src = 'https://moomath.com/files/proj12.mp3';
+			audio.src = 'https://moomath.com/files/proj15.mp3';
 			audio.crossOrigin = "anonymous";
 			audio.autoplay = true;
 			audio.preload = 'auto';
 
 			const context = new AudioContext();
 			const analyser = context.createAnalyser();
+			analyser.smoothingTimeConstant = 0.9;
+			analyser.connect(context.destination);
+			
 			const source = context.createMediaElementSource(audio);
 			source.connect(analyser);
-			analyser.connect(context.destination);
 
 			const count = analyser.frequencyBinCount;
 			const dataArray = new Float32Array(count);
@@ -42,9 +44,9 @@
 				const barWidth = (canvas.width / count) * 2.5;
 				let posX = 0;
 				for (let i = 0; i < count; i++) {
-					const barHeight = (dataArray[i] + 140) * 2;
-					two.fillStyle = 'rgb(0, 255, ' + Math.floor(barHeight + 100) + ')';
-					two.fillRect(posX, canvas.height - barHeight * 2, barWidth - 1, barHeight * 2);
+					const barHeight = (dataArray[i] + 150) * 2;
+					two.fillStyle = 'rgb(0, ' + Math.floor(barHeight + 50) + ', 255)';
+					two.fillRect(posX, canvas.height - barHeight * 2 + 200, barWidth, barHeight * 2);
 					posX += barWidth;
 				}
 			};
