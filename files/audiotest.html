@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		<script>
-			var mode = false;
+			var mode = 0;
 			
 			const audio = new Audio();
 			audio.src = 'https://moomath.com/files/proj12.mp3';
@@ -35,7 +35,7 @@
 			two.clearRect(0, 0, canvas.width, canvas.height);
 			
 			canvas.onclick = function() {
-				mode = !mode;
+				mode = mode === 2 ? 0 : mode + 1;
 			};
 
 
@@ -51,15 +51,24 @@
 				let posX = 0;
 				for (let i = 0; i < count; i++) {
 					const barHeight = (dataArray[i] + 150) * 2;
-					if (mode) {
+					if (mode === 0) {
 						two.fillStyle = 'rgb(0, ' + Math.floor(barHeight + 50) + ', 255)';
 						two.fillRect(posX, canvas.height - barHeight * 2 + 200, barWidth, barHeight * 2);
-					} else {
+					} else if (mode === 1) {
 						two.strokeStyle = 'red';
 						two.beginPath();
 						two.moveTo(posX, canvas.height - barHeight * 2 + 200);
 						two.lineTo(posX + barWidth, canvas.height - (dataArray[i + 1] + 150) * 2 * 2 + 200);
 						two.stroke();
+					} else {
+						two.fillStyle = 'red';
+						two.beginPath();
+						two.arc(posX, canvas.height - barHeight * 2 + 200, barWidth, 0, 2 * Math.PI);
+						two.fill();
+						two.fillStyle = 'black';
+						two.beginPath();
+						two.arc(posX, canvas.height - barHeight * 2 + 200, barWidth / 2, 0, 2 * Math.PI);
+						two.fill();
 					}
 					posX += barWidth;
 				}
