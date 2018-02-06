@@ -25,7 +25,7 @@
 var gainNode = context.createGain();
 source.connect(gainNode);
 gainNode.connect(context.destination);
-    gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
+gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 
 					source.connect(analyser);
 
@@ -55,13 +55,13 @@ gainNode.connect(context.destination);
 						two.fillStyle = 'white';
 						two.fillRect(0, 0, canvas.width, canvas.height);
 
-						const width = (canvas.width / count) * 2.5;
+						const width = (canvas.width / count) * 5;
 						let pos = 0;
 						for (let i = 0; i < count; i++) {
-							const height1 = Math.pow(1.05, dataArray[i] + 150);
-							const height2 = Math.pow(1.05, dataArray[i + 1] + 150);
+							const height1 = Math.pow(1.05, dataArray[i] + 150) * 1.5;
+							const height2 = Math.pow(1.05, dataArray[i + 1] + 150) * 1.5;
 							if (mode === 0) {
-								two.fillStyle = 'rgb(0, ' + Math.floor(255 - height1 / 2) + ', 255)';
+								two.fillStyle = 'rgb(0, ' + Math.floor(255 - height1 / 4) + ', 255)';
 								two.fillRect(pos, canvas.height - height1, width, height1);
 							} else if (mode === 1) {
 								two.strokeStyle = 'red';
@@ -72,11 +72,11 @@ gainNode.connect(context.destination);
 							} else {
 								two.fillStyle = 'red';
 								two.beginPath();
-								two.arc(pos, canvas.height - height1, width, 0, 2 * Math.PI);
-								two.fill();
-								two.fillStyle = 'black';
-								two.beginPath();
 								two.arc(pos, canvas.height - height1, width / 2, 0, 2 * Math.PI);
+								two.fill();
+								two.fillStyle = 'rgb(127, 0, 0)';
+								two.beginPath();
+								two.arc(pos, canvas.height - height1, width / 4, 0, 2 * Math.PI);
 								two.fill();
 							}
 							pos += width;
