@@ -1,61 +1,55 @@
 <!doctype html>
-<body>
-<script>
-const audioCtx = new AudioContext();
+<html>
+	<head>
+		<title>Awesomesauces</title>
+	</head>
+	<body>
+		<script>
+			const audio = new Audio();
+			audio.src = 'https://moomath.com/files/proj12.mp3';
+			audio.crossOrigin = "anonymous";
+			audio.autoplay = true;
+			audio.preload = 'auto';
 
-//Create audio source
-//Here, we use an audio file, but this could also be e.g. microphone input
-const audioEle = new Audio();
-audioEle.src = 'https://moomath.com/files/mus.mp3';//insert file name here
-	audioEle.crossOrigin = "anonymous";
-audioEle.autoplay = true;
-audioEle.preload = 'auto';
-const audioSourceNode = audioCtx.createMediaElementSource(audioEle);
+			const context = new AudioContext();
+			const analyser = context.createAnalyser();
+			const source = context.createMediaElementSource(audio);
+			source.connect(analyser);
+			analyser.connect(context.destination);
 
-//Create analyser node
-const analyserNode = audioCtx.createAnalyser();
-analyserNode.fftSize = 256;
-const bufferLength = analyserNode.frequencyBinCount;
-const dataArray = new Float32Array(bufferLength);
+			const count = analyser.frequencyBinCount;
+			const dataArray = new Float32Array(count);
 
-//Set up audio node network
-audioSourceNode.connect(analyserNode);
-analyserNode.connect(audioCtx.destination);
-
-//Create 2D canvas
-const canvas = document.createElement('canvas');
-canvas.style.position = 'absolute';
-canvas.style.top = 0;
-canvas.style.left = 0;
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-document.body.appendChild(canvas);
-const canvasCtx = canvas.getContext('2d');
-canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+			const canvas = document.createElement('canvas');
+			canvas.style.position = 'absolute';
+			canvas.style.top = 0;
+			canvas.style.left = 0;
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			document.body.appendChild(canvas);
+			const two = canvas.getContext('2d');
+			two.clearRect(0, 0, canvas.width, canvas.height);
 
 
-function draw() {
-  //Schedule next redraw
-  requestAnimationFrame(draw);
+			function draw() {
+				requestAnimationFrame(draw);
 
-  //Get spectrum data
-  analyserNode.getFloatFrequencyData(dataArray);
+				analyser.getFloatFrequencyData(dataArray);
 
-  //Draw black background
-  canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-  canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+				two.fillStyle = 'white';
+				two.fillRect(0, 0, canvas.width, canvas.height);
 
-  //Draw spectrum
-  const barWidth = (canvas.width / bufferLength) * 2.5;
-  let posX = 0;
-  for (let i = 0; i < bufferLength; i++) {
-    const barHeight = (dataArray[i] + 140) * 2;
-    canvasCtx.fillStyle = 'rgb(' + Math.floor(barHeight + 100) + ', 50, 50)';
-    canvasCtx.fillRect(posX, canvas.height - barHeight / 2, barWidth, barHeight / 2);
-    posX += barWidth + 1;
-  }
-};
+				const barWidth = (canvas.width / count) * 2.5;
+				let posX = 0;
+				for (let i = 0; i < count; i++) {
+					const barHeight = (dataArray[i] + 140) * 2;
+					two.fillStyle = 'rgb(0, 255, ' + Math.floor(barHeight + 100) + ')';
+					two.fillRect(posX, canvas.height - barHeight * 2, barWidth - 1, barHeight * 2);
+					posX += barWidth;
+				}
+			};
 
-draw();
-</script>
-</body>
+			draw();
+		</script>
+	</body>
+</html>
