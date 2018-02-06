@@ -5,8 +5,10 @@
 	</head>
 	<body>
 		<script>
+			var mode = false;
+			
 			const audio = new Audio();
-			audio.src = 'https://moomath.com/files/proj15.mp3';
+			audio.src = 'https://moomath.com/files/proj12.mp3';
 			audio.crossOrigin = "anonymous";
 			audio.autoplay = true;
 			audio.preload = 'auto';
@@ -31,6 +33,10 @@
 			document.body.appendChild(canvas);
 			const two = canvas.getContext('2d');
 			two.clearRect(0, 0, canvas.width, canvas.height);
+			
+			canvas.onclick = function() {
+				mode = !mode;
+			};
 
 
 			function draw() {
@@ -45,8 +51,16 @@
 				let posX = 0;
 				for (let i = 0; i < count; i++) {
 					const barHeight = (dataArray[i] + 150) * 2;
-					two.fillStyle = 'rgb(0, ' + Math.floor(barHeight + 50) + ', 255)';
-					two.fillRect(posX, canvas.height - barHeight * 2 + 200, barWidth, barHeight * 2);
+					if (mode) {
+						two.fillStyle = 'rgb(0, ' + Math.floor(barHeight + 50) + ', 255)';
+						two.fillRect(posX, canvas.height - barHeight * 2 + 200, barWidth, barHeight * 2);
+					} else {
+						two.strokeStyle = 'red';
+						two.beginPath();
+						two.moveTo(posX, canvas.height - barHeight * 2 + 200);
+						two.lineTo(posX + barWidth, canvas.height - (dataArray[i + 1] + 150) * 2 * 2 + 200);
+						two.stroke();
+					}
 					posX += barWidth;
 				}
 			};
