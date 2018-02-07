@@ -58,8 +58,10 @@ gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 						const width = (canvas.width / count) * 5;
 						let pos = 0;
 						for (let i = 0; i < count; i++) {
+							const height0 = i == 0 ? 0 : Math.pow(1.05, dataArray[i - 1] + 150) * 1.5;
 							const height1 = Math.pow(1.05, dataArray[i] + 150) * 1.5;
 							const height2 = Math.pow(1.05, dataArray[i + 1] + 150) * 1.5;
+							const height3 = Math.pow(1.05, dataArray[i + 2] + 150) * 1.5;
 							if (mode === 0) {
 								two.fillStyle = 'rgb(0, ' + Math.floor(255 - height1 / 4) + ', 255)';
 								two.fillRect(pos, canvas.height - height1, width, height1);
@@ -67,7 +69,10 @@ gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 								two.strokeStyle = 'red';
 								two.beginPath();
 								two.moveTo(pos, canvas.height - height1);
-								two.lineTo(pos + width, canvas.height - height2);
+								two.quadraticCurveTo(pos + width / 2, (
+									canvas.height - height1 - (height1 - height0) / 2 +
+									canvas.height - height2 - (height2 - height3) / 2
+								) / 2, pos + width, canvas.height - height2);
 								two.stroke();
 							} else {
 								two.fillStyle = 'red';
