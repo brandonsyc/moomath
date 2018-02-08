@@ -22,22 +22,18 @@ function cow() {
 	var h1 = document.getElementsByTagName("h1")[0];
 	h1.style.color = "rgba(" + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + "," + Math.round(Math.random() * 255) + ",1)";
 	
-	if (cows === 1024) {
+	if (cows === 256) {
 		window.location.replace("https://moomath.com");
-	} else if (cows >= 512) {
-		h1.innerHTML = "EXPLOSIVE MOO!";
-	} else if (cows >= 256) {
-		h1.innerHTML = "Huger Moo!";
 	} else if (cows >= 128) {
-		h1.innerHTML = "Greater Moo!";
+		h1.innerHTML = "EXPLOSIVE Moo!";
 	} else if (cows >= 64) {
-		h1.innerHTML = "Larger Moo!";
+		h1.innerHTML = "Largest Moo!";
 	} else if (cows >= 32) {
-		h1.innerHTML = "Bigger Moo!";
+		h1.innerHTML = "Biggest Moo!";
 	} else if (cows >= 16) {
-		h1.innerHTML = "Huge Moo!";
+		h1.innerHTML = "Larger Moo!";
 	} else if (cows >= 8) {
-		h1.innerHTML = "Great Moo!";
+		h1.innerHTML = "Bigger Moo!";
 	} else if (cows >= 4) {
 		h1.innerHTML = "Large Moo!";
 	} else if (cows >= 2) {
