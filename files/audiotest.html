@@ -10,7 +10,7 @@
 					var mode = 0;
 
 					const audio = new Audio();
-					audio.src = 'https://moomath.com/files/proj12.mp3';
+					audio.src = 'https://moomath.com/files/proj15.mp3';
 					audio.crossOrigin = "anonymous";
 					audio.autoplay = true;
 					audio.preload = 'auto';
@@ -71,8 +71,9 @@ gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 								two.moveTo(pos, canvas.height - height1);
 								two.quadraticCurveTo(pos + width / 2, (
 									canvas.height - height1 - (height1 - height0) / 2 +
-									canvas.height - height2 - (height2 - height3) / 2
-								) / 2, pos + width, canvas.height - height2);
+									canvas.height - height2 - (height2 - height3) / 2 +
+									canvas.height - (height1 + height2) / 2
+								) / 3, pos + width, canvas.height - height2);
 								two.stroke();
 							} else {
 								two.fillStyle = 'red';
