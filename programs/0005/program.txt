@@ -1,1 +1,1 @@
-Our 2D simulator is a sandbox for the creation of custom solar systems. All parameters are customizable and scientifically accurate.<br>Status: Bug fixes needed, more features such as zoom, pan, and presets being developed.
+Our 2D simulator is a sandbox for the creation of custom solar systems. All parameters are customizable and scientifically accurate.<br><strong>Status</strong>: Bug fixes needed, more features such as zoom, pan, and presets being developed.

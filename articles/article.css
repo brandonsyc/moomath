@@ -3,9 +3,6 @@
 	max-width: 860px;
 	padding: 50px;
 }
-.article p {
-	letter-spacing: 0px;
-}
 figure {
 	margin: 50px 0;
 	text-align: center;
@@ -13,12 +10,12 @@ figure {
 img {
 	border: 1px solid #000;
 	margin: 25px 0;
-	max-width: 808px;
-	width: calc(100% - 50px);
+	width: 50%;
 }
 pre {
 	background-color: #eee;
 	border: none !important;
+	overflow-x: auto;
 	padding: 25px !important;
 	max-width: 910px;
 }
@@ -38,7 +35,8 @@ th {
 	font-weight: 900;
 }
 .header {
-	margin: 100px auto;
+	letter-spacing: 1px;
+	margin: 100px auto 0 auto;
 	max-width: 960px;
 	text-align: center;
 }

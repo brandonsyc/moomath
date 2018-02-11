@@ -26,6 +26,10 @@ rawFile.onreadystatechange = function () {
 				var title = document.createElement("h2");
 				title.innerHTML = sub[0];
 				ta.appendChild(title);
+				
+				var thing = document.createElement("title");
+				thing.innerHTML = sub[0];
+				document.head.appendChild(thing);
 
 				var author = document.createElement("p");
 				author.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
