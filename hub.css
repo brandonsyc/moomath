@@ -44,6 +44,7 @@ body {
 	justify-content: space-between;
 	max-width: 910px;
 	padding: 25px;
+	width: 100%;
 }
 .more {
 	line-height: 75px;

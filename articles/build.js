@@ -39,12 +39,16 @@ rawFile.onreadystatechange = function () {
 			var setting = "";
 			
 			for (var i = 0; i < array.length; i++) {
+				var pars;
 				if (array[i].includes("::fig::")) {
-					var pars = array[i].split("::");
+					pars = array[i].split("::");
 					out += "<figure><img src=\"" + pars[2] + "\" alt=\"" + pars[3] + "\"><figcaption>" + pars[4] + "</figcaption></figure>";
 				} else if (array[i].includes("::code::")) {
 					setting = "code";
 					out += "<pre class=\"prettyprint\">";
+				} else if (array[i].includes("::vid::")) {
+					pars = array[i].split("::");
+					out += "<div class=\"video\"><iframe src=\"" + pars[2] + "\" allowfullscreen></iframe></div>";
 				} else if (array[i] === "::") {
 					if (setting === "code") {
 						out += "</pre>";
