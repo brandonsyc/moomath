@@ -7,10 +7,12 @@ figure {
 	margin: 50px 0;
 	text-align: center;
 }
+img {
+	margin: 25px 0;
+}
 img,
 .video {
 	border: 1px solid #000;
-	margin: 25px 0;
 	width: 50%;
 }
 pre {
@@ -41,6 +43,15 @@ th {
 	max-width: 960px;
 	text-align: center;
 }
+.video {
+	margin: 50px auto;
+	padding-top: 50%;
+	position: relative;
+}
 iframe {
-	
+	border: none;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	width: 100%;
 }
