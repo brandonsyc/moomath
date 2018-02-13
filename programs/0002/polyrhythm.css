@@ -1,8 +1,10 @@
-
 .box p {
 	display: inline-block;
 	vertical-align: middle;
 }
 canvas {
 	width: 90%;
+}
+input {
+	vertical-align: middle;
 }

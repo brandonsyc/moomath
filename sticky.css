@@ -13,7 +13,9 @@
 }
 p,
 button,
-input {
+input[type=text],
+imput[type=number],
+label {
 	font-size: 15px;
 }
 p {
