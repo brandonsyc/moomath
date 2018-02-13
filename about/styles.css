@@ -11,9 +11,34 @@
 	margin-right: 20px;
 	width: 25%;
 }
-.side div {
+.image {
 	background-size: cover;
 	border-radius: 5px;
+	margin-right: 20px;
 	padding-top: 100%;
 	width: 100%;
+}
+@media only screen and (max-width: 768px) {
+	.blurb {
+		display: block;
+	}
+	.left {
+		display: flex;
+	}
+	.image {
+		padding-left: 160px;
+		padding-top: 160px;
+	}
+	.side:not(.left) {
+		width: 100%;
+	}
+}
+@media only screen and (max-width: 425px) {
+	.left {
+		display: inherit;
+	}
+	.image {
+		padding-left: 100%;
+		padding-top: 200%;
+	}
 }
