@@ -49,11 +49,17 @@ body {
 	letter-spacing: 1px;
 	margin: -25px 0 50px 0;
 }
+.navigate div,
+.sticky div {
+	display: flex;
+	justify-content: center;
+	margin: auto;
+	max-width: 720px;
+	width: 75%;
+}
 .navigate,
 .sticky {
 	border-bottom: 5px solid #096;
-	display: flex;
-	justify-content: center;
 	margin: auto;
 	padding: 25px;
 	width: calc(100% - 50px);
@@ -61,8 +67,10 @@ body {
 .navigate a,
 .sticky a {
 	color: #000;
+	flex-grow: 1;
 	letter-spacing: 1px;
 	padding: 0 10px;
+	text-align: center;
 }
 .sticky {
 	background-color: #fff;
