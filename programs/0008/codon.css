@@ -1,9 +1,10 @@
 input {
-	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
-	height: 33px;
+	border: 1px solid #ddd;
+	font-family: "Ludica Console", Monaco, monospace;
+	height: 35px;
 	text-align: center;
 	margin: 0;
-	padding: 0;
+	padding: 0 !important;
 	width: 17.25px;
 	vertical-align: middle;
 }
@@ -12,7 +13,7 @@ input:focus {
 }
 .dna p {
 	display: inline-block;
-	font-family: Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", "monospace";
+	font-family: "Ludica Console", Monaco, monospace !important;
 	padding: 5px;
 	vertical-align: middle;
 }

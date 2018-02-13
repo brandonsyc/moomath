@@ -27,7 +27,7 @@ function check(x) {
 	var input = document.getElementById(x);
 	for (var i = 0; i < input.value.length; i++) {
 		if (data.includes(input.value.charAt(i).toUpperCase())) {
-			var p = document.createElement("P");
+			var p = document.createElement("p");
 			p.innerHTML = input.value.charAt(i).toUpperCase();
 			dna.insertBefore(p, input);
 			p.onclick = function() {
@@ -47,7 +47,7 @@ function replace(x) {
 	"use strict";
 	var old = document.getElementById("semi");
 	add(old);
-	var semi = document.createElement("INPUT");
+	var semi = document.createElement("input");
 	semi.id = "semi";
 	dna.insertBefore(semi, x);
 	semi.onkeydown = function() {
@@ -67,7 +67,7 @@ function update() {
 
 function add(x) {
 	"use strict";
-	var p = document.createElement("P");
+	var p = document.createElement("p");
 	if (x !== null) {
 		if (x.value !== "") {
 			p.innerHTML = x.value;
@@ -91,7 +91,7 @@ function stringit() {
     	amino.removeChild(amino.lastChild);
 	}
 	for (var i = 2; i < dna.children.length - 1; i++) {
-		var p = document.createElement("P");
+		var p = document.createElement("p");
 		if (data.includes(dna.children[i].innerHTML)) {
 			var swap = comp[data.indexOf(dna.children[i].innerHTML)];
 			p.innerHTML = swap;
@@ -99,7 +99,7 @@ function stringit() {
 			p.className = swap.toLowerCase();
 			out += swap.toLowerCase();
 		} else {
-			var fake = document.createElement("INPUT");
+			var fake = document.createElement("input");
 			rna.appendChild(fake);
 			fake.disabled = true;
 		}
@@ -133,7 +133,7 @@ function stringit() {
 			}
 		}	
 	}
-	var input = document.createElement("INPUT");
+	var input = document.createElement("input");
 	rna.appendChild(input);
 	input.disabled = true;
 	var match = /aug.*?(uaa|uag|uga)/.exec(checked);
