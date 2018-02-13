@@ -1,3 +1,6 @@
+hr {
+	border: 1px solid #666;
+}
 .content {
 	margin: auto;
 	max-width: 910px;
