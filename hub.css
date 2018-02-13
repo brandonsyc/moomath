@@ -44,9 +44,10 @@ body {
 	justify-content: space-between;
 	max-width: 910px;
 	padding: 25px;
-	width: 100%;
+	width: calc(100% - 50px);
 }
 .more {
+	flex-shrink: 0;
 	line-height: 75px;
 }
 .more a {
@@ -91,4 +92,12 @@ input:focus {
 }
 .navigate {
 	border-top: none;
+}
+.flex {
+	display: flex;
+}
+@media only screen and (max-width: 425px) {
+	.flex {
+		display: initial;
+	}
 }

@@ -66,10 +66,10 @@ function update(x) {
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].children[0].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
 			if (x === "") {
-				children[i].style.display = "initial";
+				children[i].classList.remove("flex");
 				children[i].children[1].style.display = "initial";
 			} else {
-				children[i].style.display = "flex";
+				children[i].classList.add("flex");
 				children[i].children[1].style.display = "none";
 			}
 		} else {

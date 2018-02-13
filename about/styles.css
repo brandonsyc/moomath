@@ -35,10 +35,11 @@
 }
 @media only screen and (max-width: 425px) {
 	.left {
-		display: inherit;
+		display: initial;
 	}
 	.image {
-		padding-left: 100%;
-		padding-top: 200%;
+		padding-left: 0;
+		padding-top: 75%;
+		width: 75%;
 	}
 }
