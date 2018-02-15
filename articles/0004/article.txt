@@ -6,7 +6,9 @@ The Lévy C curve, also known as the Lévy Dragon, is a very interesting 2-dimen
 
 There are a variety of ways to define the C curve, some of which are more intuitive than others. One way to define it is in terms of a process known as a Lindenmayer system (L-system), which I will briefly present here. Start by defining three operations, F, +, and -, meaning move forward by one unit, turn clockwise by 45°, and turn counterclockwise by 45°. We can treat a sequence of these operations as a path on the coordinate plane. For example, the path F+F-F looks like so:
 
+<div style="text-align:center">
 <canvas width="512" height="512" id="l1"></canvas>
+</div>
 
 <div class="toolbar">
 <input type="text" id="sequence1" onInput="calculateSystem(1)" value="F+F-F">
@@ -15,7 +17,9 @@ There are a variety of ways to define the C curve, some of which are more intuit
 
 To draw the C curve, we start with the sequence +F--F+. Call this iteration 1. Then, we replace every F in the sequence with the sequence (+F--F+), giving us +(+F--F+)--(+F--F+)+, which is iteration 2. If we continually apply this process, we get the C curve. Here's what it looks like for iterations 1-7:
 
+<div style="text-align:center">
 <canvas width="512" height="512" id="l2"></canvas>
+</div>
 
 <div class="toolbar">
 <input type="text" id="sequence2" onInput="calculateSystem(2)" value="+F--F+" disabled>

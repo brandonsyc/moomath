@@ -23,6 +23,10 @@ rawFile.onreadystatechange = function () {
 						h1.innerHTML = sub[0];
 						header.appendChild(h1);
 						
+						var thing = document.createElement("title");
+						thing.innerHTML = sub[0];
+						document.head.appendChild(thing);
+						
 						var p = document.createElement("p");
 						p.innerHTML = "by <a href=\"https://github.com/" + sub[1] + "\" target=\"_blank\">" + sub[1] + "</a> &ndash; " + sub[2];
 						header.appendChild(p);

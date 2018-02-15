@@ -15,7 +15,7 @@ document.body.insertBefore(sticky, document.body.children[0]);
 
 var last = document.createElement("div");
 last.classList.add("last");
-last.innerHTML = "<p>&copy; 2017 &ndash; 2018 Moomath<br>Contact: <a href=\"mailto:timothy.herchen@gmail.com\">timothy.herchen@gmail.com</a><br><a href=\"https://moomath.com/sitemap\">Sitemap</a> &ndash; <a href=\"https://github.com/nichodon/nichodon.github.io\">Source</a></p>";
+last.innerHTML = "<p>&copy; 2017 &ndash; " + document.createTextNode(new Date().getFullYear()) + " Moomath<br>Contact: <a href=\"mailto:timothy.herchen@gmail.com\">timothy.herchen@gmail.com</a><br><a href=\"https://moomath.com/sitemap\">Sitemap</a> &ndash; <a href=\"https://github.com/nichodon/nichodon.github.io\">Source</a></p>";
 document.body.appendChild(last);
 
 document.body.onscroll = function() {

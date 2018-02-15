@@ -16,7 +16,7 @@ We do the same thing with the resulting curve:
 
 We can continue this process out to infinity:
 
-<iframe src="https://www.youtube.com/embed/eTjeIGTQpdE?modestbranding=1" allowfullscreen></iframe>
+::vid::https://www.youtube.com/embed/eTjeIGTQpdE?modestbranding=1::
 
 Note that at every odd step, all line segments are diagonal, relative to the lines of the coordinate plane, whereas at every even step, all line segments are parallel to the coordinate plane. At the end of all that, we get a very interesting curve.
 
@@ -118,5 +118,5 @@ We'll explore these fractals in much more depth later, but for now, here is a wi
 </div>
 
 <div style="height: 1024px;">
-<canvas id="cesaro" width="1024" height="1024"></canvas>
+	<canvas id="cesaro" width="1024" height="1024"></canvas>
 </div>
