@@ -9,12 +9,12 @@
 				<meta charset="utf-8" />
 				<title>Sitemap</title>
 				<link rel="stylesheet" type="text/css" href="sticky.css" />
-				<link rel="stylesheet" type="text/css" href="sitemap.css" />
+				<link rel="stylesheet" type="text/css" href="articles/article.css" />
 				<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</head>
 			<body>
-				<div>
+				<div class="article">
 					<xsl:for-each select="s:urlset/s:url">
 						<strong><xsl:value-of select="s:loc" /></strong>
 						<br />
@@ -32,7 +32,7 @@
 						</ol>
 					</xsl:for-each>
 				</div>
-				<script src="../sticky.js" />
+				<script src="sticky.js" />
 			</body>
 		</html>
 	</xsl:template>
