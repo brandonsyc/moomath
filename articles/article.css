@@ -48,7 +48,7 @@ th {
 	padding-top: 50%;
 	position: relative;
 }
-iframe {
+.video iframe {
 	border: none;
 	height: 100%;
 	position: absolute;
