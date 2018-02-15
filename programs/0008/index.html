@@ -1,44 +1,128 @@
-<!doctype html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Codon Coder</title>
-		<link rel="stylesheet" type="text/css" href="../../sticky.css">
-		<link rel="stylesheet" type="text/css" href="../program.css">
-		<link rel="stylesheet" type="text/css" href="codon.css">
-		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	</head>
-	<body>
-		<div class="content">
-			<h1>Codon Coder</h1>
-			<p>17 November, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
-			
-			<button onClick="cleanse()">Clear</button>
-			<p>
-				<strong>Limitations:</strong> currently the Coder only recognizes one sequence at a time. For example, TACAAAACTTACTTTACT translates to Start Phe Stop. Also, intron removal is not supported (that will be inplemented soon).
-			</p>
-			<hr>
-			<div id="dna" class="dna">
-				<p>DNA Strand:</p>
-				<br>
-				<input type="text" onKeyDown="check('input')" onKeyUp="check('input')" id="input" onFocus="update()">
-			</div>
-			<hr>
-			<div id="rna" class="dna">
-				<p>RNA Strand:</p>
-				<br>
-				<input disabled>
-			</div>
-			<hr>
-			<div id="amino" class="dna">
-				<p>Final Product:</p>
-				<br>
-			</div>
-		</div>
-		
-		<script src="codon.js"></script>
-		<script src="../../querystring.js"></script>
-		<script src="../../sticky.js"></script>
-	</body>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Polycubes</title>
+<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+</head>
+
+<style>
+
+	* {
+	  margin: 0px;
+	}
+
+	button {
+		background-image: url(../../other/0003%20-%20Copy/src/textures/px.jpg);
+		border: 2px solid #c96;
+		margin: 1px 0;
+		padding: 5px;
+		animation-name: bout;
+		animation-duration: 0.4s;
+	}
+
+	button:hover {
+		animation-name: bin;
+		animation-duration: 0.4s;
+		transform: scale(1.1);
+	}
+
+	@keyframes bin {
+		0% {transform: scale(1);}
+		40% {transform: scale(1.1);}
+		80% {transform: scale(1.075);}
+		100% {transform: scale(1.1);}
+	}
+
+	@keyframes bout {
+		0% {transform: scale(1.1);}
+		40% {transform: scale(1);}
+		80% {transform: scale(1.025);}
+		100% {transform: scale(1);}
+	}
+
+	.side {
+	  background-color: rgba(255, 255, 255, 0.3);
+	  border-radius: 4px;
+	  position: absolute;
+	  width: 250px;
+	  top: 15%;
+	  right: 3;
+
+	  pointer-events: auto;
+	  z-index: 100;
+	}
+
+	.left {
+	  background-color: rgba(255, 255, 255, 0.3);
+	  border-radius: 4px;
+	  position: absolute;
+	  width: 250px;
+	  top: 15%;
+	  left: 3;
+
+	  pointer-events: auto;
+	  z-index: 100;
+	}
+
+	.side {
+	  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	}
+
+	.left {
+	  font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
+	}
+
+	.side h2,h3 {
+	  text-align: center;
+	}
+
+	.side p {
+	  margin-left: 10px;
+	}
+
+	.side button {
+	  margin-left: 10px;
+	}
+
+	.left h2 {
+	  text-align: center;
+	}
+
+	.left p {
+	  margin-left: 10px;
+	  margin-right: 10px;
+	}
+
+	.left center {
+	  text-align: center;
+	}
+</style>
+
+<body>
+  <div class="side">
+  </div>
+  <div class="left">
+    <br>
+    <h2>Help</h2>
+    <br>
+    <p>This script displays all polycubes with 1, 2, 3, ..., 7 cubes which fit in a 3 &times; 3 &times; 3 bounding box.
+      Click and drag to pan around the target, click on other polycubes to shift focus, scroll to zoom, and use arrow keys
+      or hold right click to move left and right.</p>
+      <br>
+    <h3>Source Code</h3>
+    <p class="center"><a onClick="window.location.href='https://github.com/anematode/polyomino'" href="../../Don't you just love polycubes?! By the way, this is a fake link.">GitHub Repository</a></p>
+		<br>
+		<p>Wood Texture by Petr Kratochvil</p>
+		<p><a onClick="window.location.href='https://www.publicdomainpictures.net/view-image.php?image=26031'" href="../../other/0003 - Copy/enormous udder man">Image Source</a></p>
+		<p>
+		<br>
+  </div>
+</body>
+
+<script src="../../other/0003 - Copy/src/c.js"></script>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script src="../../other/0003 - Copy/src/orbitControls.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/16.3.5/Tween.min.js"></script>
+<script src="../../other/0003 - Copy/src/polycube.js"></script>
+
 </html>

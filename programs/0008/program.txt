@@ -1,1 +1,1 @@
-This program converts a DNA sequence (A, C, G, or T) into and RNA stand (A, C, G, or U) and into an amino acid squence. Stands can also be pasted in, making it much better than tediously consulting a codon table for each group of three.<br><strong>Status</strong>: Done, maybe add introns.
+Made partly in C++, this program generates all 3x3x3 polycubes in 3D. The polycubes are separated into categories by number of units of volume.<br><strong>Status</strong>: Done.
