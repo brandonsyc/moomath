@@ -9,7 +9,7 @@
 				<meta charset="utf-8" />
 				<title>Sitemap</title>
 				<link rel="stylesheet" type="text/css" href="sticky.css" />
-				<link rel="stylesheet" type="text/css" href="articles/article.css" />
+				<link rel="stylesheet" type="text/css" href="article.css" />
 				<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</head>
