@@ -38,7 +38,6 @@ function getUrlVars() {
 	return vars;
 }
 
-
 function getParameterByName(name, url) {
 	"use strict";
 	if (!url) {

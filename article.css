@@ -1,7 +1,7 @@
 .article {
 	margin: auto;
-	max-width: 860px;
-	padding: 50px;
+	max-width: 910px;
+	padding: 25px;
 }
 figure {
 	margin: 50px 0;
@@ -29,6 +29,9 @@ pre span {
 }
 table {
 	background-color: #eee;
+	display: block;
+	overflow-x: auto;
+	width: 100%;
 }
 td,
 th {
@@ -54,4 +57,10 @@ th {
 	position: absolute;
 	top: 0;
 	width: 100%;
+}
+@media only screen and (max-width: 768px) {
+	img,
+	.video {
+		width: 75%;
+	}
 }
