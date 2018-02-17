@@ -70,7 +70,7 @@ function isDescendant(parent, child) {
 
 function prepareEmbed() {
 	"use strict";
-	var divs = document.getElementsByTagName("div");
+	var children = document.getElementsByTagName("*");
 	var box = document.getElementsByClassName("box")[0];
 	
 	box.insertBefore(document.createElement("BR"), box.childNodes[0]);
@@ -89,16 +89,16 @@ function prepareEmbed() {
 	load.style.transition = "opacity 1s 1s, z-index 0s 2s";
 	document.body.appendChild(load);
 	
-	for (var i = 0; i < divs.length; i++) {
-		if (divs[i] !== load) {
-			divs[i].style.transition = "0s";
-			if (!isDescendant(box, divs[i]) && box !== divs[i]) {
-				divs[i].style.visibility = "hidden";
-				divs[i].style.height = "0px";
-				divs[i].style.position = "fixed";
-				divs[i].style.top = "0px";
+	for (var i = 0; i < children.length; i++) {
+		if (children[i] !== load) {
+			children[i].style.transition = "0s";
+			if (!isDescendant(box, children[i]) && box !== children[i]) {
+				children[i].style.visibility = "hidden";
+				children[i].style.height = "0px";
+				children[i].style.position = "fixed";
+				children[i].style.top = "0px";
 			} else {
-				divs[i].style.visibility = "visible";
+				children[i].style.visibility = "visible";
 			}
 		}
 	}
