@@ -1,22 +1,17 @@
-# Moomath
-
-Welcome to the repository for [Moomath](http://moomath.com)!
-
-![Io is wonderful](https://raw.githubusercontent.com/Nichodon/nichodon.github.io/master/images/favicon.png)
+# Moomath Repo
 
 ## About
 
-We're two high school freshmen who share a love of programming, music, math, and, well, anything good (nerdy)!
-We like putting various content on here, but it's not exactly that user-friendly, both for website visitors and potential contributors. That's something, however, to be improved on.
+We're two high school freshmen who share a love of programming, music, math, and anything else nerdy! We like putting pedantic content on ony topic here.
 
 Here's a table of some of our best content, with a lovely representative from each category.
 
 | Content | Link | Classification |
 | --- | --- | --- |
-| Base-Motif Fractals | [Link](https://moomath.com/articles/0003/) | Math |
+| Base-Motif Fractals | [Link](https://moomath.com/articles/0003/) | Geometry |
 | Time Signature Metronome | [Link](https://moomath.com/programs/0003/) | Music |
 | Solar System Simulator | [Link](https://moomath.com/programs/0006/) | Science |
-| Brainf\*ck Interpreter (WIP) | [Link](https://moomath.com/programs/0008/) | Programming |
+| Brainf\*ck Interpreter | [Link](https://moomath.com/programs/0007/) | Programming |
 
 For a complete catalog, go the [website](http://moomath.com)!
 
@@ -30,25 +25,20 @@ If you've found an issue with something, please notify us! Assuming you have a G
 
 Brandon Chung
 
-* Can do things in HTML, Python (iff 2), XSLT, English
-* Dabbles in OpenSCAD and Arduino
+* Can do things in HTML, Python, XSLT, Java, JS, English
+* Dabbles and Arduino
 * Is in love with CSS
-* Able to use but absolutely hates JS
-* Trying to learn but kind of failing C++
 
 Timothy Herchen
 
 * Proficient in JS, English
 * Somewhat proficient in C++, non-OOP Python
 * Okay in C, Java, HTML, x86 Assembly (read-only!)
-* Shameful at C#, CSS, 中文
 
 ## Contact
 
-Please email Timothy at [timothy.herchen@gmail.com](mailto:timothy.herchen@gmail.com) if you have any questions or would like to contribute! We'll likely be interested.
-Bug fixes, security issues, and website improvement are also appreciated.
+Please email Timothy at [timothy.herchen@gmail.com](mailto:timothy.herchen@gmail.com) if you have any questions or would like to contribute! We'll definitely be interested. Bug fixes, security issues, and website improvement are also appreciated.
 
 ## Other Projects
 
 * Udderly Web Design (a light-hearted collaborative web designing team)
-* [Grapheme](https://github.com/anematode/grapheme) (highly WIP, a JS graphing calculator API)
