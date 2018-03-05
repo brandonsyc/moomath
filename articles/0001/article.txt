@@ -1,6 +1,6 @@
 Ever since the term was introduced by <a href="https://en.wikipedia.org/wiki/Benoit_Mandelbrot" target="_blank">Benoit B. Mandelbrot</a>, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a>, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.
 
-Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a href="http://dictionary.com" target="_blank">Dictionary.com</a> defines the word fractal to mean "<i>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or physical properties of the structure, as the perimeter of a curve or the flow rate in a porous medium, behave as if the dimensions of the structure (fractal dimensions) are greater than the spatial dimensions.</i>" This is quite wordy, sure, but to get a better idea of what a fractal is, let's look at some examples.
+Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a href="http://dictionary.com" target="_blank">Dictionary.com</a> defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or physical properties of the structure, as the perimeter of a curve or the flow rate in a porous medium, behave as if the dimensions of the structure (fractal dimensions) are greater than the spatial dimensions.</em>" This is quite wordy, sure, but to get a better idea of what a fractal is, let's look at some examples.
 
 Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
 
@@ -12,15 +12,15 @@ First, let's consider the name. The Mandelbrot set is really just that: a <stron
 
 To understand the construction of the Mandelbrot set, we need to know about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a>. Complex numbers, of course, are an incredibly rich subject, and they have applications in physics, statistics, and much more. In essence, complex numbers are based off an "imaginary number" called <em>i</em>, defined so that \(i^2=-1\).
 
-Like any other number, the conventional rules for arithmetic addition and subtraction work with <i>i</i>. For example, \(2i+2i=4i\) and \(5i-2i=3i\).
+Like any other number, the conventional rules for arithmetic addition and subtraction work with <em>i</em>. For example, \(2i+2i=4i\) and \(5i-2i=3i\).
 
-By the definition of <i>i</i>, we know that \(i^2=-1\). But what's the value of, say, \((3i)^2\)? Well, we can treat this expression as \((3 \cdot i)^2 = 3^2 \cdot i^2\). Using our definition of <i>i</i>, we thus know that \((3i)^2=9\cdot-1=-9\).
+By the definition of <em>i</em>, we know that \(i^2=-1\). But what's the value of, say, \((3i)^2\)? Well, we can treat this expression as \((3 \cdot i)^2 = 3^2 \cdot i^2\). Using our definition of <em>i</em>, we thus know that \((3i)^2=9\cdot-1=-9\).
 
 How about complex numbers? Well, when we add them, we just add their real components and their imaginary components in turn. For example, \((2+3i)+(4+9i)=(2+4)+(3+9)i=6+12i\)  and  \((2+3i)-(4+9i)=(2-4)+(3-9)i=-2-6i\). Multiplication of complex numbers is a tad tricker, but we just use the distributive property. For example, \((2+3i)\cdot(4+9i)=8+18i+12i-27=-19+30i\).
 
 We have these lovely complex numbers now. But is there a way to visualize them?
 
-Sure thing! We can think of these complex numbers as <i>points</i> on a plane, sort of like a Cartesian coordinate system. The <i>number</i> \(a+bi\) corresponds to the <i>point</i> \((a,b)\) on the coordinate plane.
+Sure thing! We can think of these complex numbers as <em>points</em> on a plane, sort of like a Cartesian coordinate system. The <em>number</em> \(a+bi\) corresponds to the <em>point</em> \((a,b)\) on the coordinate plane.
 
 Of course, this is just a very basic introduction to complex numbers and the idea of the complex plane, so if you haven't learned about them yet and really want to understand what will be going on in the rest of this article, reading about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a> and the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a> may be helpful.
 
