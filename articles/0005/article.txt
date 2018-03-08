@@ -11,13 +11,9 @@ Whenever usage of <strong>goto</strong> in C or C++ arises in discussion, people
 Those who deride goto usage argue that it can create so-called "spaghetti" code, in which the program flow is rather unclear to the human reader, as it can jump around from place to place in rather unexpected ways. Consider the following code for
 example:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex1">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex1"></code>
+::
 
 For reference, this sample function returns the number 85.
 
@@ -27,13 +23,9 @@ When the execution reaches “goto loop1,” it goes back, like a loop would, an
 
 This is extremely confusing code, and the lack of indentation also hides the fact that there is really just a loop embedded in all the goto statements. We could rewrite this example like so:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex2">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex2"></code>
+::
 
 What’s going on here is much, much clearer, and we can follow the code along as we read. So clearly, using goto in this case is confusing and an equivalent concept can and should be implemented cleanly using other constructs. If you're just starting
 programming, it's thus probably a good idea to abstain from using goto so that you understand the power for, while, and do/while already gives you.
@@ -42,93 +34,53 @@ Of course, if one abstains from goto or uses a language without goto statements 
 
 Take a look at the compiled version of the each of the codes (Intel x86 Assembly syntax).
 
-<div class="container">
-<div class="fixed">
-<p><a href="#ex1">Using goto</a> (<a href="https://gcc.gnu.org/">GCC</a>, no optimizations)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex3">
+<a href="#ex1">Using goto</a> (<a href="https://gcc.gnu.org/">GCC</a>, no optimizations)
 
-</code>
-</pre>
-</div>
-</div>
+::code::
+<code class="x86" id="ex3"></code>
+::
 
-<div class="flex-item">
-<p><a href="#ex2">Using do/while</a>, (GCC, no optimizations)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex4">
+<a href="#ex2">Using do/while</a>, (GCC, no optimizations)
 
-</code>
-</pre>
-</div>
-</div>
-</div>
+::code::
+<code class="x86" id="ex4"></code>
+::
 
 The assemblies are almost identical. Notice that whenever the two differ, it is always because the compiled goto has some operation which has no effect.
 
 Notice that in this case, the compiled no-goto code, even without optimizations, is simpler and than the code written with gotos. In particular, the code with gotos has several no-ops (non-operations, an instruction which literally does nothing). Their presence is likely because GCC is written for, well, normal code. Let’s see what happens when we try turning on optimizations, though.
 
-<div class="container">
-<div class="fixed">
-<p><a href="#ex1">Using goto</a> (gcc -O3)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex5">
+<a href="#ex1">Using goto</a> (gcc -O3)
 
-</code>
-</pre>
-</div>
-</div>
+::code::
+<code class="x86" id="ex5"></code>
+::
 
-<div class="flex-item">
-<p><a href="#ex2">Using do/while</a> (gcc -O3)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex6">
+<a href="#ex2">Using do/while</a> (gcc -O3)
 
-</code>
-</pre>
-</div>
-</div>
-</div>
+::code::
+<code class="x86" id="ex6"></code>
+::
 
 Here you can see modern optimization capability at work! GCC correctly detected that the function was constant, so all it does is return 85. But to force the compiler to translate the algorithm rather than pre-computing it, we can declare the integers volatile:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex7">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex7"></code>
+::
 
 This gives us the following assembly:
 
-<div class="container">
-<div class="fixed">
-<p><a href="#ex1">Using goto</a> (gcc -O3)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex8">
+<a href="#ex1">Using goto</a> (gcc -O3)
 
-</code>
-</pre>
-</div>
-</div>
+::code::
+<code class="x86" id="ex8"></code>
+::
 
-<div class="flex-item">
-<p><a href="#ex2">Using do/while</a> (gcc -O3)</p>
-<div class="code">
-<pre>
-<code class="x86" id="ex9">
+<a href="#ex2">Using do/while</a> (gcc -O3)
 
-</code>
-</pre>
-</div>
-</div>
-</div>
+::code::
+<code class="x86" id="ex9"></code>
+::
 
 We get assembly that is functionally identical. This shows the high degree of parallelism between the code without goto and the code with goto; they implement the same algorithm, just in a different format, and this is expressed in the resulting assembly once the code has been distilled through optimization. The only difference to us coders is the readability; clearly, we shouldn't use goto here.
 
@@ -136,31 +88,19 @@ We get assembly that is functionally identical. This shows the high degree of pa
 
 When we see goto in the wild, however, nasty "spaghetti code" like this is rarely the use case. A common programming idiom in C, for example, when recovering from errors, goes something like this:
 
-<div class="code">
-<pre>
-<code class="c" id="ex10">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="c" id="ex10"></code>
+::
 
 There is no easy way to do this using other constructs in C, apart from nested if-statements or other strange constructs, all of which damage clarity:
 
-<div class="code">
-<pre>
-<code class="c" id="ex11">
+::code::
+<code class="c" id="ex11"></code>
+::
 
-</code>
-</pre>
-</div>
-
-<div class="code">
-<pre>
-<code class="c" id="ex12">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="c" id="ex12"></code>
+::
 
 In C++, however, this construct is superseded with the rather elegant notion of RAII (Resource Acquisition is Initialization), where we would wrap the initialization and de-initialization into a class which, when created, properly initializes, and also has implemented a delete operator that deinitializes. This way, if an exception is thrown while initializing, the stack unwinds and all created resources are deleted/de-initialized properly. For more information on RAII, you can consult some of the following references:
 
@@ -176,55 +116,37 @@ In Java, we'd use a try/catch/finally to emulate this behavior.
 
 By far the most common use case of goto outside of C is to escape from a nested loop. For example, consider the following function:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex13">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex13"></code>
+::
 
 If we were adamant in getting rid of that pesky goto, we have two main choices. The first strategy is to factor out the for loops into a separate function and use goto’s big brother: return. This could be in the form of returning an <a href="http://en.cppreference.com/w/cpp/utility/pair">std::pair</a>:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex14">
+::code::
+<code class="cpp" id="ex14"></code>
+::
 
-</code>
-</pre>
-</div>
-<p>or by passing a pointer/l-value to x and y.</p>
+or by passing a pointer/l-value to x and y.
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex15">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex15"></code>
+::
 
 The first is more expressive, but the second is (slightly) faster. Note that to help the compiler, we can declare these functions <a href="http://en.cppreference.com/w/cpp/language/inline">inline</a>. Personally, I think the goto is easier to follow and understand than both of these, but that is a matter of personal preference.
 
 The second strategy is to use a boolean to keep track of whether you need to break out of the outer loop, like so:
 
-<div class="code">
-<pre>
-<code class="cpp" id="ex16">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="cpp" id="ex16"></code>
+::
 
 This is how I was told to do it, and it seemed perfectly natural for a while: we should only use goto’s more expressive brothers "break", "continue", and "return." Looking at this now, though, it seems rather inelegant. Also, the code might be (slightly) slower, because every time the loop runs, found is checked as true or false. Looking at the corresponding assembly for the loop:
 
-<div class="code">
-<p>(GCC, no optimizations)</p>
-<pre>
-<code class="x86" id="ex17">
+(GCC, no optimizations)
 
-</code>
-</pre>
-</div>
+::code::
+<code class="x86" id="ex17"></code>
+::
 
 As you can see, the conditional break makes it into the code. Even at optimization level –O1, however, the code generated is identical to the code with the goto; the boolean isn’t even allocated memory. Thus, our code’s speed is not really a concern here, but its readability. This may be the most eloquent solution for those who reject goto.</p>
 
@@ -232,13 +154,9 @@ As you can see, the conditional break makes it into the code. Even at optimizati
 
 In languages that and can't undergo this kind of optimization, however, such as Java, this can be more of a problem. If this code were translated and compiled in Java, the boolean would indeed be checked every time the loop runs. Thankfully, Java provides an alternative:
 
-<div class="code">
-<pre>
-<code class="java" id="ex18">
-
-</code>
-</pre>
-</div>
+::code::
+<code class="java" id="ex18"></code>
+::
 
 This Java code breaks directly to the outer loop from the inner one, exhibiting both the convenience of a goto and the expressiveness and safety of a break. This is quite brilliant design.
 
