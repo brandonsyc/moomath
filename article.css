@@ -58,6 +58,9 @@ th {
 	top: 0;
 	width: 100%;
 }
+.no {
+	border: none;
+}
 @media only screen and (max-width: 768px) {
 	img,
 	.video {

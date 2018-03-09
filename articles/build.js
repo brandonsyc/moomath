@@ -46,7 +46,11 @@ rawFile.onreadystatechange = function () {
 				var pars;
 				if (array[i].includes("::fig::")) {
 					pars = array[i].split("::");
-					out += "<figure><img src=\"" + pars[2] + "\" alt=\"" + pars[3] + "\"><figcaption>" + pars[4] + "</figcaption></figure>";
+					out += "<figure><img src=\"" + pars[2] + "\" alt=\"" + pars[3];
+					if (pars[5] === "no") {
+						out += "\" class=\"no";
+					}
+					out += "\"><figcaption>" + pars[4] + "</figcaption></figure>";
 				} else if (array[i].includes("::code::")) {
 					setting = "code";
 					out += "<pre class=\"prettyprint\">";
