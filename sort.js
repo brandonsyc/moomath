@@ -11,7 +11,7 @@ rawFile.onreadystatechange = function () {
 	if (rawFile.readyState === 4) {
 		if (rawFile.status === 200 || rawFile.status === 0) {
 			var array = rawFile.responseText.split("\n");
-			for (var i = 0; i < array.length; i++) {
+			for (var i = array.length - 1; i > -1; i--) {
 				found = true;
 
 				var sub = array[i].split(" - ");
@@ -65,6 +65,7 @@ function update(x) {
 	var children = document.getElementById("list").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].children[0].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
+			children[i].style.display = "initial";
 			if (x === "") {
 				children[i].classList.remove("flex");
 				children[i].children[1].style.display = "initial";

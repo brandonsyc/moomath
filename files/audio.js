@@ -3,6 +3,15 @@ var audioCtx = new AudioContext();
 
 var oscillator = audioCtx.createOscillator();
 var biquadFilter = audioCtx.createBiquadFilter();
+var convolver = audioCtx.createConvolver();
+
+var data = "zsxdcvgbhnjmq2w3er5t6y7ui";
+
+document.onkeypress = function(evt) {
+    var x = data.indexOf(String.fromCharCode(evt.keyCode)) + 40;
+	var hertz = Math.pow(Math.pow(2, 1 / 12), x - 49) * 440;
+	oscillator.frequency.setValueAtTime(hertz, audioCtx.currentTime);
+};
 
 oscillator.frequency.setValueAtTime(440, audioCtx.currentTime);
 oscillator.connect(biquadFilter);

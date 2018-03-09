@@ -2,4 +2,4 @@ Fractals in the Complex Plane - 18 May, 2017 - anematode - 0001
 The Mandelbrot Set - 31 May, 2017 - anematode - 0002
 Base-Motif Fractals - 6 July, 2017 - anematode - 0003
 The Lévy C curve - 8 July, 2017 - anematode - 0004
-Is goto ever Justified? - 22 November, 2017 - anematode - 0005
+Is goto Ever Justified? - 22 November, 2017 - anematode - 0005
