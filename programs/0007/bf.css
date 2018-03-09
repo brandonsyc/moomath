@@ -1,53 +1,15 @@
-*::-webkit-scrollbar {
-	width: 8px;
-}
-*::-webkit-scrollbar-thumb {
-	background-color: #08b;
-	-webkit-box-shadow: inset 0 0 15px #eee;
-	box-shadow: inset 0 0 15px #eee;
-}
-*::-webkit-scrollbar-track {
-	background-color: #eee;
-}
-p,
-input,
-label,
-button,
-h1,
-h2,
-h3,
-h4,
-li {
-	font-family: Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, "sans-serif";
-}
-h1,
-h2,
-h4 {
-	font-weight: 400;
-	text-align: center;
-}
-h3 {
-	font-weight: 400;
-}
-p,
-li,
 code,
 pre {
 	margin: 10px;
 }
 pre {
-	border: 0.5px solid #bbb;
+	border: 1px solid #bbb;
 	padding: 10px;
-}
-a {
-	color: #08b;
-	text-decoration: none;
 }
 button {
 	background-color: rgba(0, 136, 187, 0.6);
 	border: none;
 	color: #fff;
-	padding: 10px;
 	transition: 0.2s;
 }
 button:hover {
@@ -59,18 +21,6 @@ button:active {
 button:focus {
 	outline: none;
 	transition: 0.1s;
-}
-input {
-	padding: 8px;
-}
-button,
-label,
-input {
-	margin: 10px 0;
-	vertical-align: middle;
-}
-label {
-	margin: 0 10px;
 }
 input[type="checkbox"] + label::before {
 	background-color: #bbb;
