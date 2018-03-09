@@ -1,7 +1,3 @@
-Square Graphing
-
-https://www.desmos.com/calculator/ujumozbybl 
-
 This article is about a concept I came up with for graphing functions in a new way. Graphing functions is cool, especially when asymptotes are involved. The problem with graphing is that functions are put on an graph of infinite size. Most functions go on forever to infinity. This means it’s impossible to see the entirety of the graph, no matter how far out you zoom.
 
 So, my idea was this: what if the function went to infinity as per the normal, but the graph on which the function is place on did not? In other words, what if zero, infinity, and every point in between were distinct points on a graphing square? This is not zooming, just a mere rescaling of the points on a graph. Every single point on a function is still represented somewhere on the square, because instead of points getting infinitely far away from the origin, they instead get infinitely close to the end of the square.
