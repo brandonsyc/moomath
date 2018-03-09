@@ -25,16 +25,19 @@ label {
 	white-space: nowrap;
 }
 input[type=text],
-input[type=number] {
+input[type=number],
+input[type=password] {
 	border: 1px solid #ddd;
 	padding: 15px;
 	transition: 0.2s;
 }
 input[type=text]:hover,
-input[type=number]:hover {
+input[type=number]:hover,
+input[type=password]:hover {
 	border: 1px solid #bbb;
 }
-button {
+button,
+input[type=submit] {
 	background-color: #fff;
 	border: 1px solid #ddd;
 	box-shadow: none;
@@ -42,10 +45,12 @@ button {
 	padding: 15px;
 	transition: 0.2s;
 }
-button:hover {
+button:hover,
+input[type=submit]:hover {
 	background-color: #eee;
 	color: #333;
 }
-button:active {
+button:active,
+input[type=submit]:active {
 	box-shadow: inset 0px 0px 5px #bbb;
 }
