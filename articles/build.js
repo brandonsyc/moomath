@@ -28,7 +28,7 @@ rawFile.onreadystatechange = function () {
 						document.head.appendChild(thing);
 						
 						var p = document.createElement("p");
-						p.innerHTML = "by <a href=\"https://github.com/" + sub[1] + "\" target=\"_blank\">" + sub[1] + "</a> &ndash; " + sub[2];
+						p.innerHTML = "by <a href=\"https://github.com/" + sub[0] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
 						header.appendChild(p);
 					}
 				}
