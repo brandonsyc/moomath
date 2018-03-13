@@ -16,13 +16,3 @@ For a complete catalog, go the [website](http://moomath.com).
 ## Contributing
 
 If you want to contribute through coding, fork this repository, do some commits, then make a pull request. If you've found an issue with something, please notify us. Assuming you have a GitHub account, you can add one on our [Issues](https://github.com/Nichodon/nichodon.github.io/issues) page. If not, just shoot Timothy an email at [timothy.herchen@gmail.com](mailto:timothy.herchen@gmail.com). Critical security issues should not be reported on the GitHub Issues page, as it is public.
-
-#### Language Skills
-
-Nichodon: HTML, CSS, JS, XSLT, Arduino, Python, Java, English
-
-anematode: HTML, JS, C, C++, Python, Java, x86 Assembly, English
-
-## Other Projects
-
-Udderly Web Design (a light-hearted collaborative web designing team)
