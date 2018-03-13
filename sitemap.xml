@@ -9,7 +9,7 @@
 			<image:loc>https://moomath.com/images/favicon.png</image:loc>
 		</image:image>
 		<image:image>
-			<image:loc>https://moomath.com/images/fractal.jpg</image:loc>
+			<image:loc>https://moomath.com/images/thumb.png</image:loc>
 		</image:image>
 	</url>
 	<url>
@@ -186,6 +186,10 @@
 		</image:image>
 	</url>
 	<url>
+		<loc>https://moomath.com/articles/0005</loc>
+		<lastmod>2017-11-22</lastmod>
+	</url>
+	<url>
 		<loc>https://moomath.com/programs</loc>
 		<priority>0.75</priority>
 	</url>
@@ -218,7 +222,19 @@
 		<lastmod>2017-08-26</lastmod>
 	</url>
 	<url>
+		<loc>https://moomath.com/programs/0008</loc>
+		<lastmod>2017-11-10</lastmod>
+	</url>
+	<url>
+		<loc>https://moomath.com/programs/0009</loc>
+		<lastmod>2017-11-17</lastmod>
+	</url>
+	<url>
 		<loc>https://moomath.com/about</loc>
 		<priority>1.0</priority>
+	</url>
+	<url>
+		<loc>https://moomath.com/other/0001</loc>
+		<lastmod>2017-06-19</lastmod>
 	</url>
 </urlset>
