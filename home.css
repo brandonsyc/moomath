@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 * {
-	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-family: "Open Sans";
 	font-size: 0;
 	font-weight: 100;
 	letter-spacing: 1px;

@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
 * {
-	font-family: "Trebuchet MS", Verdana, sans-serif;
+	font-family: "Open Sans";
 	font-weight: 100;
 }
 *::-webkit-scrollbar {
@@ -21,6 +22,7 @@ label {
 p {
 	line-height: 30px;
 	overflow-x: auto;
+	overflow-y: hidden;
 }
 a {
 	color: #08b;
