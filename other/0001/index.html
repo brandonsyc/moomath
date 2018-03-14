@@ -1,29 +1,33 @@
 <!doctype html>
-<html lang="en">
+<html>
 	<head>
 		<meta charset="utf-8">
 		<title>How to Embed Our Programs</title>
 		<link rel="stylesheet" type="text/css" href="../../sticky.css">
 		<link rel="stylesheet" type="text/css" href="../../article.css">
+		<link rel="stylesheet" type="text/css" href="../../program.css">
 		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 	</head>
+	
 	<body>
 		<div class="article">
 			<h1>How to Embed Our Programs</h1>
-			<p>19 July, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a></p>
-			
-			<p>If you would like to embed a program from our website, use this syntax (this feature uses <a href="https://en.wikipedia.org/wiki/Query_string" target="_blank">query strings</a>):</p>
-			
+			<p>
+				19 July, 2017 &ndash; <a href="https://github.com/Nichodon" target="_blank">Nichodon</a>
+			</p>
+			<p>
+				If you would like to embed a program from our website, use this syntax (this feature uses <a href="https://en.wikipedia.org/wiki/Query_string" target="_blank">query strings</a>):
+			</p>
 			<pre class="prettyprint">&lt;iframe src="https://moomath.com/programs/[id]/?embed=true"&gt;&lt;/iframe&gt;</pre>
-
-			<p>The [id] is a four-digit number (i.e. 0010). Note that you should set the width and height for the iframe. IDs of widgets can be found by hovering over them. Following the "?embed=true," there are additional settings you can change.<br><strong>Note</strong> that we are still developing this feature. More functionalities will be added soon!</p>
-
-			<p><strong>Disabled</strong> &ndash; contains a list of widget ids to be disabled, separated by commas.<br>Example: "?embed=true&amp;disabled=meter1,meter2"</p>
-
+			<p>
+				The [id] is a four-digit number (i.e. 0010). Note that you should set the width and height for the iframe. IDs of widgets can be found by hovering over them. Following the "?embed=true," there are additional settings you can change.<br><strong>Note</strong> that we are still developing this feature. More functionalities will be added soon!
+			</p>
+			<p>
+				<strong>Disabled</strong> &ndash; contains a list of widget ids to be disabled, separated by commas.<br>Example: "?embed=true&amp;disabled=meter1,meter2"
+			</p>
 			<h2>List of Tags Supported</h2>
-
 			<div class="code">
 				<table>
 					<tbody>
@@ -60,9 +64,7 @@
 					</tbody>
 				</table>
 			</div>
-
 			<p>Here is an example of an embed.</p>
-
 			<iframe src="https://moomath.com/programs/0002/?embed=true" width="100%" height="600px" style="border: none;"></iframe>
 		</div>
 

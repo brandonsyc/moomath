@@ -80,7 +80,7 @@ function prepareEmbed() {
 	box.insertBefore(credit, box.childNodes[0]);
 	
 	for (var i = 0; i < children.length; i++) {
-		if (!isDescendant(box, children[i]) && box !== children[i]) {
+		if (!isDescendant(box, children[i]) && box !== children[i] && children[i].tagName !== "HTML" && children[i].tagName !== "BODY") {
 			children[i].style.transition = "0s";
 			children[i].style.visibility = "hidden";
 			children[i].style.height = "0px";
