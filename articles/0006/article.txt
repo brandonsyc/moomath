@@ -1,4 +1,4 @@
-This article is about a concept I came up with for graphing functions in a new way. Graphing functions is cool, especially when asymptotes are involved. The problem with graphing is that functions are put on an graph of infinite size. Most functions go on forever to infinity. This means it’s impossible to see the entirety of the graph, no matter how far out you zoom.
+This article is about a concept I came up with for graphing functions in a new way. Graphing functions is cool, especially when asymptotes are involved. The problem with graphing is that functions are put on an graph of infinite size. Most functions go on forever to infinity. This means it's impossible to see the entirety of the graph, no matter how far out you zoom.
 
 So, my idea was this: what if the function went to infinity as per the normal, but the graph on which the function is place on did not? In other words, what if zero, \(\infty\), and every point in between were <em>distinct points</em> on a graphing square? This is not zooming, just a mere rescaling of the points on a graph. Every single point on a function is still represented somewhere on the square, because instead of points getting infinitely far away from the origin, they instead get <em>infinitely close</em> to the end of the square.
 
@@ -6,63 +6,61 @@ If you want to see how I got to the square and the functions involved, read on. 
 
 <h2>We Begin</h2>
 
-Actually, before we begin. I will be using the term “plane graph” to refer to the normal graph we all use, and “square graph” for the special square this article is about. So, we start with this. Now, I will be using Desmos because Desmos is cool [link to transforming functions].
+Actually, before we begin. I will be using the term "plane graph" to refer to the normal graph we all use, and "square graph" for the special square this article is about. So, we start with this. Now, I will be using Desmos because Desmos is cool [link to transforming functions].
 
 [grid with labels on infinity, one, and zero]
 
-This is the square that functions will be graphed on. Points behave the same exact way, \((x, y)\). Any real number can be put on this square; for example, \((2, 0)\) would be somewhere between 1 and \(\infty\), and \((3, 0)\) would be somewhere between 2 and \(\infty\). Note that the distance between \(x=0\) and \(x=1\) is <em>not</em> equal to the distance between \(x=1\) and \(x=2\), and that the distance between \(y=0\) and \(y=1\) is <em>not</em> equal to the distance between \(y=1\) and \(y=2)\. As x and y numbers increase, the distance between them gets smaller. This is what makes it possible to put infinity on a distinct point (I’ll be using the term “distinct point” a lot).
+This is the square that functions will be graphed on. Points behave the same exact way, \((x, y)\). Any real number can be put on this square; for example, \((2, 0)\) would be somewhere between 1 and \(\infty\), and \((3, 0)\) would be somewhere between 2 and \(\infty\). Note that the distance between \(x=0\) and \(x=1\) is <em>not</em> equal to the distance between \(x=1\) and \(x=2\), and that the distance between \(y=0\) and \(y=1\) is <em>not</em> equal to the distance between \(y=1\) and \(y=2)\. As x and y numbers increase, the distance between them gets smaller. This is what makes it possible to put infinity on a distinct point (I'll be using the term "distinct point" a lot).
 
-What is needed now is a way to transform a normal function onto this square. Let’s put this square on the plane. Let’s just say \(\pm\infty\) on the square is plus-minus 1 on the plane, and \((0, 0)\) is the origin on both graphs. All that is being done here is matching points on the square to their corresponding planar points. 
+What is needed now is a way to transform a normal function onto this square. Let's put this square on the plane. Let's just say \(\pm\infty\) on the square is plus-minus 1 on the plane, and \((0, 0)\) is the origin on both graphs. All that is being done here is matching points on the square to their corresponding planar points. 
 
 The function, then, is one that maps -1 to \(-\infty\), -0.5 to -1, 0 to 0, 0.5 to 1, and 1 to \(\infty\). That means this function needs to contain asymptotes at \(x=-1\) and \(x=1\) and the point \((0, 0)\). Asymptotes are equal to infinity for our purposes (more on this later).
 
 [graph with the points and asymptotes]
 
-One function that has this behavior is \(tan(x)\), and I’m choosing this because trig functions have some really interesting properties (I will explore other options later). And to fit the scale of our graph, \(tan(\frac{\pi}{2}x)\) is used because usually, \(tan(x)\) has asymptotes at \(x=-\frac{\pi}{2}\) and \(x=\frac{\pi}{2}\). The tangent function also has the added benefit of having 1 exactly halfway between \(\infty\) and 0 and -1 exactly halfway between \(-\infty\) and 0.
+One function that has this behavior is \(\tan(x)\), and I'm choosing this because trig functions have some really interesting properties (I will explore other options later). And to fit the scale of our graph, \(\tan(\frac{\pi}{2}x)\) is used because usually, \(\tan(x)\) has asymptotes at \(x=-\frac{\pi}{2}\) and \(x=\frac{\pi}{2}\). The tangent function also has the added benefit of having 1 exactly halfway between \(\infty\) and 0 and -1 exactly halfway between \(-\infty\) and 0.
 
-Time to apply the tangent function to the given function. This part is simple. Given \(f(x)\), the mapped version of \(f(x)\) is \(f(tan(\frac{\pi}{2}x))\). That’s just the tangent map inside the function.
+Time to apply the tangent function to the given function. This part is simple. Given \(f(x)\), the mapped version of \(f(x)\) is \(f(\tan(\frac{\pi}{2}x))\). That's just the tangent map inside the function.
 
 [show x^2 and x^2 remapped]
 
-We are halfway there! The x-axis mapping is done. Of course, the domain is restricted to \([-1, 1]\). Now the y-axis must be mapped. The way this is done is by using the inverse of the tangent function. Basically, what is needed is an \(arctan(x)\) function that has asymptotes at \(y=-1\) and \(y=1\) and the points \((-1, -0.5)\), \((0,0)\), \((1, 0.5)\). That function is \(\frac{2}{\pi}arctan(x)\). Just like with mapping the x-axis, the function \(f(tan(\frac{\pi}{2}x))\) is put in the arctangent function. This results in \(\frac{2}{\pi}arctan(f(tan(\frac{\pi}{2}x)))\). Pretty complex.
+We are halfway there! The x-axis mapping is done. Of course, the domain is restricted to \([-1, 1]\). Now the y-axis must be mapped. The way this is done is by using the inverse of the tangent function. Basically, what is needed is an \(\arctan(x)\) function that has asymptotes at \(y=-1\) and \(y=1\) and the points \((-1, -0.5)\), \((0,0)\), \((1, 0.5)\). That function is \(\frac{2}{\pi}\arctan(x)\). Just like with mapping the x-axis, the function \(f(\tan(\frac{\pi}{2}x))\) is put in the arctangent function. This results in \(\frac{2}{\pi}\arctan(f(\tan(\frac{\pi}{2}x)))\). Pretty complex.
 
 [show x^2 on the square]
 
-Bam! It’s a square graph!!! Notice how the \(x^2\) on the square is still the same function as the \(x^2\) on the plane. It goes to infinity on both sides. In the square that is represented by two endpoints at \((-\infty, \infty)\) and \((\infty, \infty)\). In the plane, the function merely goes on forever to \((-\infty, \infty)\) and \((\infty, \infty)\). As shown, the key difference is that \((-\infty, \infty)\) and \((\infty, \infty)\) are distinct points on the square. The x-intercept is the same, and all other points are the same.
+Bam! It's a square graph!!! Notice how the \(x^2\) on the square is still the same function as the \(x^2\) on the plane. It goes to infinity on both sides. In the square that is represented by two endpoints at \((-\infty, \infty)\) and \((\infty, \infty)\). In the plane, the function merely goes on forever to \((-\infty, \infty)\) and \((\infty, \infty)\). As shown, the key difference is that \((-\infty, \infty)\) and \((\infty, \infty)\) are distinct points on the square. The x-intercept is the same, and all other points are the same.
 
 Already there are interesting results with the square graph. We can now see where a parabola <em>ends</em>! The idea of a parabola <em>ending</em> is quite novel, though it should be pointed out that the actual shape of \(x^2\) on the square is not a conic section. It is one period of a sine-like wave, although it is not quite sinusoidal.
 
 <h2>Properties of the Square Graph</h2>
 
-Time to delve into the intricacies of the square graph. Firstly, let’s look at where numbers are at on the graph. Like I said before, numbers are not spaced out like one would expect. However, all real numbers are still in order and on the square.
+Time to delve into the intricacies of the square graph. Firstly, let's look at where numbers are at on the graph. Like I said before, numbers are not spaced out like one would expect. However, all real numbers are still in order and on the square.
 
 The idea of fitting an infinite amount of numbers on a finite line is not that revolutionary. In fact, we already do that. For example, between 0 and 1 are an infinite amount of numbers, 0.1, 0.01, 0.001, 0.0001, etc. The only difference here is that instead of putting these numbers between 0 and 1 the square graph puts the numbers between 0 and infinity.
 
-And here is the first cool property of the square. It turns out that  for any non-negative number n on the square, the reflection of n over x=1 is 1/n.
+And here is the first cool property of the square. It turns out that  for any non-negative number \(n\) on the square, the reflection of \(n\) over \(x=1\) is \(\frac{1}{n}\).
 
 [grid with intervals]
 
-Notice how 1.5_____ is the reciprocal of 0.67_____, 2.41_____ is the reciprocal of 0.41_____, and so on. This is true for non-positive numbers, except that numbers are reflected over x=-1.
+Notice how 1.5_____ is the reciprocal of 0.67_____, 2.41_____ is the reciprocal of 0.41_____, and so on. This is true for non-positive numbers, except that numbers are reflected over \(x=-1\).
 
-Here’s why. tan(x) is defined as sin(x)/cos(x), and sin^2(x)+cos^2(x)=1. Sine represents the y value of a triangle defined by an angle and cosine is the x. So that’s why tangent has the weird reciprocal property.
-
-Now it’s time for the fun stuff. Asymptotes (for the purposes of this article, “asymptote” will only refer to horizontal and vertical asymptotes. Slanted ones are not as fun on the square unfortunately). Asymptotes are what make the square cool because they are places in a normal graph where the function goes infinitely close to a line. Another way of looking at this is that the function goes to infinity.
+Now it's time for the fun stuff. Asymptotes (for the purposes of this article, "asymptote" will only refer to horizontal and vertical asymptotes. Slanted ones are not as fun on the square unfortunately). Asymptotes are what make the square cool because they are places in a normal graph where the function goes infinitely close to a line. Another way of looking at this is that the function goes to infinity.
 
 Going to infinity on a function in a normal plane graph means the function goes on forever at the asymptote, just like the ends of a parabola, because one can never see the point where the function hits infinity. But, the function on the square graph because, again, infinity is a distinct point! 
 
-Take for example 1/x. It has asymptotes at x=0 and y=0. No matter how far the graph is zoomed and panned, a point with x-value 0 will never be seen. However, on the square graph, there are points at (0, \infty), (0, -\infty), (-\infty, 0), and (\infty, 0). Distinct points!!! Also notice how the function is two straight lines because of the way reciprocals, 1/x, work on the square.
+Take for example \(\frac{1}{x}\). It has asymptotes at \(x=0\) and \(y=0\). No matter how far the graph is zoomed and panned, a point with x-value 0 will never be seen. However, on the square graph, there are points at \((0, \infty)\), \((0, -\infty)\), \((-\infty, 0)\), and \((\infty, 0)\). Distinct points!!! Also notice how the function is two straight lines because of the way reciprocals, \(\frac{1}{x}\), work on the square.
 
 [plane grid with 1/x]
 [square grid with 1/x]
 
-Now, that’s cool. But the asymptote x=0 on 1/x is of an odd degree. That means that one side of the asymptote is at \(-\infty\) and one side is at \(\infty\). It turns out that even degree asymptotes, where both sides of an asymptote have the same sign, look even more awesome than odd ones. 1/x^2 will be used.
+Now, that's cool. But the asymptote \(x=0\) on \(\frac{1}{x}\) is of an odd degree. That means that one side of the asymptote is at \(-\infty\) and one side is at \(\infty\). It turns out that even degree asymptotes, where both sides of an asymptote have the same sign, look even more awesome than odd ones. \(\frac{1}{x^2}\) will be used.
 
 [plane grid with 1/x^2]
 [square grid with 1/x^2]
 
-See that??? The function 1/x^2 is continuous on the square graph!!! It goes up to infinity then comes back down (my nerd level is so high right now)!!! 1/x^2 is one smooth curve!
+See that??? The function \(\frac{1}{x^2}\) is continuous on the square graph!!! It goes up to infinity then comes back down (my nerd level is <em>so</em> high right now)!!! \(\frac{1}{x^2}\) is one smooth curve!
 
-And it gets even better (the layers of awesomeness are just astonishing). Does that curve look familiar? It’s the same as x^2, except reflected over y=1! In fact, for all even numbers n, x^n is 1/x^n reflected over y=1. For odd numbers, it’s a bit trickier, positive x is reflected over y=1 and negative x is reflected over y=-1. Take a look at n=3 (x^3 and 1/x^3).
+And it gets even better (the layers of awesomeness are just astonishing). Does that curve look familiar? It's the same as \(x^2\), except reflected over \(y=1\)! In fact, for all even numbers \(n\), \(x^n\) is \(\frac{1}{x^n}\) reflected over \(y=1\). For odd numbers, it's a bit trickier, positive x is reflected over \(y=1\) and negative x is reflected over \(y=-1\). Take a look at \(n=3\) (\(x^3\) and \(\frac{1}{x^3}\)).
 
 [square grid with x^3 and 1/x^3]
 
@@ -70,25 +68,25 @@ And finally, we come to the most amazing aspect of square graphing. But before w
 
 Divided by Zero
 
-Think about a number line. It goes on forever. Now think about a number segment where the endpoints are -infinity and positive infinity. This is just like the square graph except in one less dimension. Now take that segment and join the end points, so that it’s now a number circle. Positive and negative infinity are equal! This concept actually makes a lot of sense.
+Think about a number line. It goes on forever. Now think about a number segment where the endpoints are -infinity and positive infinity. This is just like the square graph except in one less dimension. Now take that segment and join the end points, so that it's now a number circle. Positive and negative infinity are equal! This concept actually makes a lot of sense.
 
-We’ve all been taught that 1/0 is undefined. Or if you’re fancy, indeterminate. But in this article it equals to plus-minus infinity. Here’s some reasons.
+We've all been taught that 1/0 is undefined. Or if you're fancy, indeterminate. But in this article it equals to plus-minus infinity. Here's some reasons.
 
-Let’s have 1/n=x. N is some integer that will increase by one. Let’s start at one. 1/1=1, 1/2=0.5, 1/3=0.3_, 1/4=0.25, 1/5=0.2, 1/6=0.16_, 1/7=0.142857_, etc., 1/100000000=0.00000001. As n approaches infinity, x approaches 0. The same exact procedure works for negative numbers. As n approaches negative infinity, x approaches 0. That means 1/(plus-minus infinity)=0 and therefore, 0 is the reciprocal of plus-minus infinity, and plus-minus infinity is the reciprocal of 0. Therefore, 1/0=(plus-minus infinity).
+Let's have 1/n=x. N is some integer that will increase by one. Let's start at one. 1/1=1, 1/2=0.5, 1/3=0.3_, 1/4=0.25, 1/5=0.2, 1/6=0.16_, 1/7=0.142857_, etc., 1/100000000=0.00000001. As n approaches infinity, x approaches 0. The same exact procedure works for negative numbers. As n approaches negative infinity, x approaches 0. That means 1/(plus-minus infinity)=0 and therefore, 0 is the reciprocal of plus-minus infinity, and plus-minus infinity is the reciprocal of 0. Therefore, 1/0=(plus-minus infinity).
 
-Let’s also look at this graphically. Let’s again plot 1/x on the plane graph.
+Let's also look at this graphically. Let's again plot 1/x on the plane graph.
 
 [1/x again]
 
 When x approaches zero, y approaches both positive and negative infinity. So when x=0, y=(plus-minus infinity). Therefore, 1/0=(plus-minus infinity).
 
-And there’s yet another graphical proof. Back to the square. Previously, I showed that a non-negative number n reflected over x=1 is 1/n and that a non-positive number n reflected over x=-1 is also 1/n. Zero is both non-negative and non-positive. 0 reflected over x=1 is infinity, so 1/0 is infinity. 0 reflected over x=-1 is negative infinity, so 1/0 also is negative infinity. Therefore, infinity=1/0=-infinity.
+And there's yet another graphical proof. Back to the square. Previously, I showed that a non-negative number n reflected over x=1 is 1/n and that a non-positive number n reflected over x=-1 is also 1/n. Zero is both non-negative and non-positive. 0 reflected over x=1 is infinity, so 1/0 is infinity. 0 reflected over x=-1 is negative infinity, so 1/0 also is negative infinity. Therefore, infinity=1/0=-infinity.
 
-I could go on and on about 1/0 (I am very pedantic about this particular topic), but let’s just assume -infinity=infinity for the rest of the article (this isn’t really accepted in real math).
+I could go on and on about 1/0 (I am very pedantic about this particular topic), but let's just assume -infinity=infinity for the rest of the article (this isn't really accepted in real math).
 
 The Most Best Thing
 
-Now we get the the most best thing. Think about the number segment bending so that the endpoints meet to make a circle. Take the graphing square, and do the same thing. Bend it so that y=infinity is the same line as y=-infinity. It’s like taking a square piece of paper and making a cylinder. And that’s what it is. A graphing cylinder!!!
+Now we get the the most best thing. Think about the number segment bending so that the endpoints meet to make a circle. Take the graphing square, and do the same thing. Bend it so that y=infinity is the same line as y=-infinity. It's like taking a square piece of paper and making a cylinder. And that's what it is. A graphing cylinder!!!
 
 EXPLAIN HERE CYLINDER AND HOW TO GET TO IT
 POSSIBLE OTHER SECTION
@@ -97,15 +95,15 @@ Here is 1/x, yet again.
 
 [1/x on the graphing cylinder]
 
-It’s one long line! 1/x is one long line on the cylinder! Here are some more cool graphs for your enjoyment:
+It's one long line! 1/x is one long line on the cylinder! Here are some more cool graphs for your enjoyment:
 
 [(x^3+1)/x on plane]
 [(x^3+1)/x on square]
 [(x^3+1)/x on cylinder]
 
-That’s (x^3+1)/x. See how different the cylinder is from the plane? And yet both graphs are still exactly the same.
+That's (x^3+1)/x. See how different the cylinder is from the plane? And yet both graphs are still exactly the same.
 
-I’ve also simulated the repeating nature of the cylinder in the original Desmos graph by duplicating the square graph 8 more times. This creates some great curves that go back in forth between the squares. It really shows how fluid numbers really are.
+I've also simulated the repeating nature of the cylinder in the original Desmos graph by duplicating the square graph 8 more times. This creates some great curves that go back in forth between the squares. It really shows how fluid numbers really are.
 
 [(x^3+1)/x on the nine square]
 
@@ -113,11 +111,11 @@ Alternate Maps
 
 We have used tan(pi*x/2) because tangent has vertical asymptotes, which are necessary for having infinity. However, there are an infinite amount of other functions that fit the description of containing asymptotes at x=-1 and x=1 and the point (0,0). For example, instead of using tan(pi*x/2), tan(pi*x/2)/2 could be used, or tan(pi*x/2)*2.
 
-Really, there’s no need to go super into these maps because all it affects is the scaling. It’s not quite zoom though, because these are different functions. Anyway, here is -x/(x^2-1) and ln(x + 1) - ln(-x + 1).
+Really, there's no need to go super into these maps because all it affects is the scaling. It's not quite zoom though, because these are different functions. Anyway, here is -x/(x^2-1) and ln(x + 1) - ln(-x + 1).
 
 [show maps and map equations]
 
-What’s the Point?
+What's the Point?
 
 Why does this article need to exist? Sure, the square and the cylinder are fun to look at, but what mathematical advantages does it have over the plane? For comparing distances between functions and creating geometric shapes, the plane is definitely better because distance is skewed on the square.
 
