@@ -1,6 +1,6 @@
-//If embed is disired
 if (getParameterByName("embed") !== null) {
 	prepareEmbed();
+	
 	var start = 1;
 	if (getParameterByName("disabled") !== null) {
 		start = 2;
@@ -12,6 +12,7 @@ if (getParameterByName("embed") !== null) {
 			}
 		}
 	}
+	
 	var parameters = getUrlVars();
 	for (var i = start; i < parameters.length; i++) {
 		var element = document.getElementById(parameters[i]);
@@ -30,7 +31,7 @@ function getUrlVars() {
 	"use strict";
 	var vars = [], hash;
 	var hashes = window.location.href.slice(window.location.href.indexOf("?") + 1).split("&");
-	for(var i = 0; i < hashes.length; i++) {
+	for (var i = 0; i < hashes.length; i++) {
 		hash = hashes[i].split("=");
 		vars.push(hash[0]);
 		vars[hash[0]] = hash[1];
@@ -43,15 +44,16 @@ function getParameterByName(name, url) {
 	if (!url) {
 		url = window.location.href;
 	}
+	
 	name = name.replace(/[\[\]]/g, "\\$&");
 	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");
 	var results = regex.exec(url);
 	if (!results) {
 		return null;
-	}
-	if (!results[2]) {
+	} else if (!results[2]) {
 		return "";
 	}
+	
 	return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
@@ -70,13 +72,11 @@ function isDescendant(parent, child) {
 function prepareEmbed() {
 	"use strict";
 	var children = document.getElementsByTagName("*");
-	var box = document.getElementsByClassName("box")[0];
-	
-	box.insertBefore(document.createElement("br"), box.childNodes[0]);
+	var box = document.getElementsByClassName("content")[0];
 	
 	var credit = document.createElement("p");
 	credit.style.color = "#bbb";
-	credit.innerHTML = 'From Moomath; view original <a href="' + window.location.href.split("?")[0] + '" target="_blank">here</a>';
+	credit.innerHTML = 'From Moomath; view original <a href="' + window.location.href.split("?")[0] + '" target="_blank">here</a><br>';
 	box.insertBefore(credit, box.childNodes[0]);
 	
 	for (var i = 0; i < children.length; i++) {
@@ -85,7 +85,7 @@ function prepareEmbed() {
 			children[i].style.visibility = "hidden";
 			children[i].style.height = "0px";
 			children[i].style.position = "fixed";
-			children[i].style.top = "0px";
+			children[i].style.top = "0";
 		}
 	}
 }
