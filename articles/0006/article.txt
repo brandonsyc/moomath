@@ -1,38 +1,38 @@
 This article is about a concept I came up with for graphing functions in a new way. Graphing functions is cool, especially when asymptotes are involved. The problem with graphing is that functions are put on an graph of infinite size. Most functions go on forever to infinity. This means it’s impossible to see the entirety of the graph, no matter how far out you zoom.
 
-So, my idea was this: what if the function went to infinity as per the normal, but the graph on which the function is place on did not? In other words, what if zero, infinity, and every point in between were distinct points on a graphing square? This is not zooming, just a mere rescaling of the points on a graph. Every single point on a function is still represented somewhere on the square, because instead of points getting infinitely far away from the origin, they instead get infinitely close to the end of the square.
+So, my idea was this: what if the function went to infinity as per the normal, but the graph on which the function is place on did not? In other words, what if zero, \(\infty\), and every point in between were <em>distinct points</em> on a graphing square? This is not zooming, just a mere rescaling of the points on a graph. Every single point on a function is still represented somewhere on the square, because instead of points getting infinitely far away from the origin, they instead get <em>infinitely close</em> to the end of the square.
 
 If you want to see how I got to the square and the functions involved, read on. If you want to just see the cool aspects of graphing on a square, click here [link] to skip the boring part.
 
-We Begin
+<h2>We Begin</h2>
 
 Actually, before we begin. I will be using the term “plane graph” to refer to the normal graph we all use, and “square graph” for the special square this article is about. So, we start with this. Now, I will be using Desmos because Desmos is cool [link to transforming functions].
 
 [grid with labels on infinity, one, and zero]
 
-This is the square that functions will be graphed on. Points behave the same exact way, (x, y). Any real number can be put on this square. Note that the distance between x=0 and x=1 is not equal to the distance between x=1 and x=2, and that the distance between y=0 and y=1 is not equal to the distance between y=1 and y=2. As x and y numbers increase, the distance between them gets smaller. This is what makes it possible to put infinity on a distinct point (I’ll be using the term “distinct point” a lot).
+This is the square that functions will be graphed on. Points behave the same exact way, \((x, y)\). Any real number can be put on this square; for example, \((2, 0)\) would be somewhere between 1 and \(\infty\), and \((3, 0)\) would be somewhere between 2 and \(\infty\). Note that the distance between \(x=0\) and \(x=1\) is <em>not</em> equal to the distance between \(x=1\) and \(x=2\), and that the distance between \(y=0\) and \(y=1\) is <em>not</em> equal to the distance between \(y=1\) and \(y=2)\. As x and y numbers increase, the distance between them gets smaller. This is what makes it possible to put infinity on a distinct point (I’ll be using the term “distinct point” a lot).
 
-What is needed now is a way to transform a normal function onto this square. Let’s put this square on the plane. Let’s just say plus-minus infinity on the square is plus-minus 1 on the plane, and (0, 0) is the origin on both graphs. All that is being done here is matching points on the square to their corresponding planar points. 
+What is needed now is a way to transform a normal function onto this square. Let’s put this square on the plane. Let’s just say \(\pm\infty\) on the square is plus-minus 1 on the plane, and \((0, 0)\) is the origin on both graphs. All that is being done here is matching points on the square to their corresponding planar points. 
 
-The function, then, is one that maps -1 to -infinity, -0.5 to -1, 0 to 0, 0.5 to 1, and 1 to infinity. That means this function needs to contain asymptotes at x=-1 and x=1 and the point (0,0) . Asymptotes are equal to infinity for our purposes (more on this later).
+The function, then, is one that maps -1 to \(-\infty\), -0.5 to -1, 0 to 0, 0.5 to 1, and 1 to \(\infty\). That means this function needs to contain asymptotes at \(x=-1\) and \(x=1\) and the point \((0, 0)\). Asymptotes are equal to infinity for our purposes (more on this later).
 
 [graph with the points and asymptotes]
 
-One function that has this behavior is tan(x), and I’m choosing this because trig functions have some really interesting properties (I will explore other options later). And to fit the scale of our graph, tan(pi*x/2) is used because usually, tan(x) has asymptotes at x=-pi/2 and x=pi/2. The tangent function also has the added benefit of having 1 exactly halfway between infinity and 0 and -1 exactly halfway between -infinity and 0.
+One function that has this behavior is \(tan(x)\), and I’m choosing this because trig functions have some really interesting properties (I will explore other options later). And to fit the scale of our graph, \(tan(\frac{\pi}{2}x)\) is used because usually, \(tan(x)\) has asymptotes at \(x=-\frac{\pi}{2}\) and \(x=\frac{\pi}{2}\). The tangent function also has the added benefit of having 1 exactly halfway between \(\infty\) and 0 and -1 exactly halfway between \(-\infty\) and 0.
 
-Time to apply the tangent function to the given function. This part is simple. Given f(x), the mapped version of f(x) is f(tan(pi*x/2)). That’s just the tangent map inside the function.
+Time to apply the tangent function to the given function. This part is simple. Given \(f(x)\), the mapped version of \(f(x)\) is \(f(tan(\frac{\pi}{2}x))\). That’s just the tangent map inside the function.
 
 [show x^2 and x^2 remapped]
 
-We are halfway there! The x-axis mapping is done. Of course, the domain is restricted to [-1, 1]. Now the y-axis must be mapped. The way this is done is by using the inverse of the tangent function. Basically, what is needed is an arctan(x) function that has asymptotes at y=-1 and y=1 and the points (-1, -0.5), (0,0), (1, 0.5). That function is 2*arctan(x)/pi. Just like with mapping the x-axis, the function f(tan(pi*x/2)) is put in the arctangent function. This results in 2*arctan(f(tan(pi*x/2)))/pi. Pretty complex.
+We are halfway there! The x-axis mapping is done. Of course, the domain is restricted to \([-1, 1]\). Now the y-axis must be mapped. The way this is done is by using the inverse of the tangent function. Basically, what is needed is an \(arctan(x)\) function that has asymptotes at \(y=-1\) and \(y=1\) and the points \((-1, -0.5)\), \((0,0)\), \((1, 0.5)\). That function is \(\frac{2}{\pi}arctan(x)\). Just like with mapping the x-axis, the function \(f(tan(\frac{\pi}{2}x))\) is put in the arctangent function. This results in \(\frac{2}{\pi}arctan(f(tan(\frac{\pi}{2}x)))\). Pretty complex.
 
 [show x^2 on the square]
 
-Bam! It’s a square graph!!! Notice how the x^2 on the square is still the same function as the x^2 on the plane. It goes to infinity on both sides. In the square that is represented by two end points at (-infinity, infinity) and (infinity, infinity). In the plane, the function merely goes on forever to (-infinity, infinity) and (infinity, infinity). As shown, the key difference is that (-infinity, infinity) and (infinity, infinity) are distinct points on the square. The x-intercept is the same, and all other points are the same.
+Bam! It’s a square graph!!! Notice how the \(x^2\) on the square is still the same function as the \(x^2\) on the plane. It goes to infinity on both sides. In the square that is represented by two endpoints at \((-\infty, \infty)\) and \((\infty, \infty)\). In the plane, the function merely goes on forever to \((-\infty, \infty)\) and \((\infty, \infty)\). As shown, the key difference is that \((-\infty, \infty)\) and \((\infty, \infty)\) are distinct points on the square. The x-intercept is the same, and all other points are the same.
 
-Already there are interesting results with the square graph. We can now see where a parabola ends! The idea of a parabola ending is quite novel, though it should be pointed out that the actual shape of x^2 on the square is not a conic section. It is one period of a sine-like wave, although it is not quite sinusoidal.
+Already there are interesting results with the square graph. We can now see where a parabola <em>ends</em>! The idea of a parabola <em>ending</em> is quite novel, though it should be pointed out that the actual shape of \(x^2\) on the square is not a conic section. It is one period of a sine-like wave, although it is not quite sinusoidal.
 
-Properties of the Square Graph
+<h2>Properties of the Square Graph</h2>
 
 Time to delve into the intricacies of the square graph. Firstly, let’s look at where numbers are at on the graph. Like I said before, numbers are not spaced out like one would expect. However, all real numbers are still in order and on the square.
 
@@ -50,12 +50,12 @@ Now it’s time for the fun stuff. Asymptotes (for the purposes of this article,
 
 Going to infinity on a function in a normal plane graph means the function goes on forever at the asymptote, just like the ends of a parabola, because one can never see the point where the function hits infinity. But, the function on the square graph because, again, infinity is a distinct point! 
 
-Take for example 1/x. It has asymptotes at x=0 and y=0. No matter how far the graph is zoomed and panned, a point with x-value 0 will never be seen. However, on the square graph, there are points at (0, infinity), (0, -infinity), (-infinity, 0), and (infinity, 0). Distinct points!!! Also notice how the function is two straight lines because of the way reciprocals, 1/x, work on the square.
+Take for example 1/x. It has asymptotes at x=0 and y=0. No matter how far the graph is zoomed and panned, a point with x-value 0 will never be seen. However, on the square graph, there are points at (0, \infty), (0, -\infty), (-\infty, 0), and (\infty, 0). Distinct points!!! Also notice how the function is two straight lines because of the way reciprocals, 1/x, work on the square.
 
 [plane grid with 1/x]
 [square grid with 1/x]
 
-Now, that’s cool. But the asymptote x=0 on 1/x is of an odd degree. That means that one side of the asymptote is at -infinity and one side is at infinity. It turns out that even degree asymptotes, where both sides of an asymptote have the same sign, look even more awesome than odd ones. 1/x^2 will be used.
+Now, that’s cool. But the asymptote x=0 on 1/x is of an odd degree. That means that one side of the asymptote is at \(-\infty\) and one side is at \(\infty\). It turns out that even degree asymptotes, where both sides of an asymptote have the same sign, look even more awesome than odd ones. 1/x^2 will be used.
 
 [plane grid with 1/x^2]
 [square grid with 1/x^2]
