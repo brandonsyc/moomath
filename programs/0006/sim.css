@@ -14,10 +14,10 @@
 	width: 10px;
 }
 *::-webkit-scrollbar-thumb {
-	background-color: #999;
+	background-color: #333;
 }
 *::-webkit-scrollbar-track {
-	background-color: #ccc;	
+	background-color: #666;	
 }
 input[type=radio],
 input[type=checkbox] {
@@ -32,6 +32,7 @@ input[type=checkbox]:checked + label {
 }
 input[type=text] {
 	border: none;
+	border-radius: 5px;
 	color: #000;
 }
 label {
@@ -165,4 +166,7 @@ canvas {
 }
 .down p {
 	margin: 10px;
+}
+canvas:not(#text-canvas) {
+	background-color: #000;
 }
