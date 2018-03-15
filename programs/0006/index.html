@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title>3D Solar System</title>
 		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-		<link rel="stylesheet" type="text/css" href="3dsimulator.css">
+		<link rel="stylesheet" type="text/css" href="sim.css">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 		<script id="vertexShader" type="x-shader/x-vertex">
@@ -33,49 +33,46 @@
 	</head>
 
 	<body>
-		<div class="controls">
-			<a href="info/" target="_blank">
-				<button class="go">Info</button>
-			</a>
-			<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)" checked>
-			<label for="testp">Lock on Body</label>
-			<label for="goto">Find Object:</label>
-			<input type="text" id="goto" oninput="searchBody(this.value)">
-			<div class="wrapper">
-				<p>Settings</p>
-				<input type="radio" id="r1" name="testr" onclick="setSecondaryToVisual()">
-				<label for="r1">Visuals</label>
-				<input type="radio" id="r2" name="testr" onclick="setSecondaryToAudio()">
-				<label for="r2">Audio</label>
-				<input type="radio" id="r3" name="testr" onclick="setSecondaryToObjects()">
-				<label for="r3">Objects</label>
+		<div class="columns">
+			<div class="controls">
+				<a href="info" target="_blank" class="button">Info</a>
+				<input type="checkbox" id="testp" onclick="updateLockBody(this.checked)" checked>
+				<label for="testp">Lock on Body</label>
+				<label for="goto">Find Object:</label>
+				<input type="text" id="goto" oninput="searchBody(this.value)">
+				<div class="wrapper">
+					<p>Settings</p>
+					<input type="radio" id="r1" name="testr" onclick="setSecondaryToVisual()">
+					<label for="r1">Visuals</label>
+					<input type="radio" id="r2" name="testr" onclick="setSecondaryToAudio()">
+					<label for="r2">Audio</label>
+					<input type="radio" id="r3" name="testr" onclick="setSecondaryToObjects()">
+					<label for="r3">Objects</label>
+				</div>
 			</div>
-		</div>
-		<div class="second">
-			<ul id="search-results">
-			</ul>
-			<div id="other">
-		</div>
+			<div class="second">
+				<ul id="search-results"></ul>
+				<div id="other" class="other"></div>
+			</div>
 		</div>
 		<div class="side">
 			<h3>Sun</h3>
 			<p></p>
 		</div>
-
-		<div class="loading" id="loading">
-		</div>
-
-		<div class="thing">
-			<p class="above" id="time-disp">Frozen</p><br>
-			<button class="bslide" onMouseDown="press(3, -0.5)" onMouseUp="lift()">&laquo;</button>
-			<div class="slider">
-				<div class="bar" id="bar3"></div>
-				<p id="bar3-contents">Frozen</p>
+		<div class="loading" id="loading"></div>
+		<div class="columns down">
+			<p class="above" id="time-disp">Frozen</p>
+			<div class="thing">
+				<button class="bslide" onMouseDown="press(3, -0.5)" onMouseUp="lift()">&laquo;</button>
+				<div class="slider">
+					<div class="bar" id="bar3"></div>
+					<p id="bar3-contents">Frozen</p>
+				</div>
+				<button class="bslide right" onMouseDown="press(3, 0.5)" onMouseUp="lift()">&raquo;</button>
 			</div>
-			<button class="bslide right" onMouseDown="press(3, 0.5)" onMouseUp="lift()">&raquo;</button>
 		</div>
 		<div id="webgl-container">
-		<canvas id='text-canvas' width="640" height="320" style='position: absolute; top: 0px; left: 0px; zIndex:1; pointer-events:none;'></canvas>
+			<canvas id="text-canvas" width="640" height="320" style="position: absolute; top: 0px; left: 0px; zIndex:1; pointer-events:none;"></canvas>
 		</div>
 		<script>
 			playUpBoop = 0;

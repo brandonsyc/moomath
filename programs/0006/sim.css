@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+* {
+	align-items: center;
+	color: #fff;
+	font-family: "Open Sans";
+	font-size: 15px;
+	font-weight: 100;
+	margin: 0;
+	padding: 0;
+  	flex-shrink: 0;
+  	white-space: nowrap;
+}
+*::-webkit-scrollbar {
+	width: 10px;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #999;
+}
+*::-webkit-scrollbar-track {
+	background-color: #ccc;	
+}
+input[type=radio],
+input[type=checkbox] {
+	margin: 0;
+	padding: 0;
+	visibility: hidden;
+	width: 0;
+}
+input[type=radio]:checked + label,
+input[type=checkbox]:checked + label {
+	box-shadow: 0 2px 0 #fff;
+}
+input[type=text] {
+	border: none;
+	color: #000;
+}
+label {
+	transition: 0.25s;
+}
+h3 {
+	font-size: 24px;
+	font-weight: 900;
+}
+input:focus,
+button:focus {
+	outline: none;
+}
+canvas {
+	position: fixed;
+	left: 0;
+	top: 0;
+	pointer-events: none;
+}
+.columns {
+	display: flex;
+	flex-direction: column;
+	position: fixed;
+	width: 100%;
+	z-index: 1;
+}
+.controls *,
+.side *,
+.thing *,
+.second * {
+	margin: 5px;
+	padding: 5px;
+}
+.controls,
+.side,
+.second {
+	background-color: rgba(63, 127, 191, 0.5);
+	display: flex;
+	padding: 10px;
+}
+.second {
+	border-top: 2px solid #08b;
+	overflow-x: auto;
+}
+.second li {
+	border-radius: 5px;
+	display: inline;
+}
+.controls,
+.second,
+.thing {
+	width: 100%;
+}
+.controls,
+.thing {
+	justify-content: center;
+}
+.side {
+	align-items: flex-start;
+	flex-direction: column;
+	position: fixed;
+	right: 0;
+	transform: translate(0, -50%);
+	top: 50%;
+	width: 240px;
+}
+.side p {
+  	white-space: initial;
+}
+.wrapper,
+.wrapper2inner {
+	border-left: 2px solid #08b;
+	border-right: 2px solid #08b;
+	overflow-x: auto;
+}
+.wrapper,
+.other,
+.wrapper2inner,
+.wrapper2,
+.thing {
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+.button {
+	border: 2px solid #fff;
+	border-radius: 5px;
+	color: #fff;
+	text-decoration: none;
+}
+.sslider,
+.slider {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	width: 100px;
+}
+.slider {
+	width: 50%;
+}
+.bar {
+	background-color: rgba(63, 127, 191, 0.5);
+	border-radius: 5px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: -1;
+	margin: 0;
+	padding: 0;
+}
+.bslide {
+	background-color: rgba(63, 127, 191, 0.25);
+	border: none;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	margin-right: 0;
+}
+.right {
+	border-top-left-radius: 0;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 5px;
+	margin-left: 0;
+	margin-right: 5px;
+}
+.down {
+	background-color: rgba(63, 127, 191, 0.5);
+	bottom: 0;
+}
+.down p {
+	margin: 10px;
+}
