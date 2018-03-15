@@ -6,6 +6,33 @@ body {
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
+h1 {
+	font-size: 40px;
+	letter-spacing: 5px;
+}
+h2 {
+	font-size: 25px;
+	letter-spacing: 2px;
+}
+p {
+	font-size: 15px;
+	line-height: 30px;
+}
+a {
+	color: #08b;
+	text-decoration: none;
+}
+input {
+	border: none;
+	border-radius: 0;
+	font-size: 20px;
+	max-width: 920px !important;
+	padding: 20px;
+	width: 100%;
+}
+input:focus {
+	outline: none;
+}
 .header {
 	align-items: center;
 	background-position: center;
@@ -60,32 +87,6 @@ body {
 .more a:hover {
 	border-bottom: 5px solid #096;
 	border-top: 5px solid #096;
-}
-h1 {
-	font-size: 40px;
-	letter-spacing: 5px;
-}
-h2 {
-	font-size: 25px;
-	letter-spacing: 2px;
-}
-p {
-	font-size: 15px;
-	line-height: 30px;
-}
-a {
-	color: #08b;
-	text-decoration: none;
-}
-input {
-	border: none;
-	font-size: 20px;
-	max-width: 920px !important;
-	padding: 20px;
-	width: 100%;
-}
-input:focus {
-	outline: none;
 }
 .first {
 	display: none;

@@ -63,11 +63,9 @@ rawFile.send(null);
 function update(x) {
 	"use strict";
 	var children = document.getElementById("list").children;
-	var found = false;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].children[0].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
 			children[i].style.display = "initial";
-			found = true;
 			if (x === "") {
 				children[i].classList.remove("flex");
 				children[i].children[1].style.display = "initial";
@@ -76,11 +74,9 @@ function update(x) {
 				children[i].children[1].style.display = "none";
 			}
 		} else {
+			children[i].classList.remove("flex");
 			children[i].style.display = "none";
 		}
-	}
-	if (!found) {
-		
 	}
 }
 
