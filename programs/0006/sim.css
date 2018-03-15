@@ -50,7 +50,6 @@ canvas {
 	position: fixed;
 	left: 0;
 	top: 0;
-	pointer-events: none;
 }
 .columns {
 	display: flex;
@@ -98,6 +97,7 @@ canvas {
 	transform: translate(0, -50%);
 	top: 50%;
 	width: 240px;
+	z-index: 1;
 }
 .side p {
   	white-space: initial;
@@ -161,8 +161,7 @@ canvas {
 	margin-right: 5px;
 }
 .down {
-	background-color: rgba(63, 127, 191, 0.5);
-	bottom: 0;
+	bottom: 20px;
 }
 .down p {
 	margin: 10px;
