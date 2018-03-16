@@ -52,5 +52,5 @@ input[type=submit]:hover {
 }
 button:active,
 input[type=submit]:active {
-	box-shadow: inset 0px 0px 5px #bbb;
+	border: 1px solid #ccc;
 }

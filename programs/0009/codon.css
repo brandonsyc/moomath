@@ -1,11 +1,11 @@
 input {
 	border: 1px solid #ddd;
 	font-family: Consolas, monospace;
-	height: 35px;
+	height: 38px;
 	text-align: center;
 	margin: 0;
 	padding: 0 !important;
-	width: 17.25px;
+	width: 16.25px;
 	vertical-align: middle;
 }
 input:focus {
@@ -14,6 +14,7 @@ input:focus {
 .dna p {
 	display: inline-block;
 	font-family: Consolas, monospace !important;
+	margin: 0;
 	padding: 5px;
 	vertical-align: middle;
 }
