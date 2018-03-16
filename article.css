@@ -23,7 +23,7 @@ pre {
 	max-width: 910px;
 }
 pre span {
-	font-family: "Ludica Console", Monaco, monospace !important;
+	font-family: Consolas, monospace !important;
 	font-size: 15px;
 	letter-spacing: 0px !important;
 }

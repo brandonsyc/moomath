@@ -1,6 +1,6 @@
 input {
 	border: 1px solid #ddd;
-	font-family: "Ludica Console", Monaco, monospace;
+	font-family: Consolas, monospace;
 	height: 35px;
 	text-align: center;
 	margin: 0;
@@ -13,7 +13,7 @@ input:focus {
 }
 .dna p {
 	display: inline-block;
-	font-family: "Ludica Console", Monaco, monospace !important;
+	font-family: Consolas, monospace !important;
 	padding: 5px;
 	vertical-align: middle;
 }
