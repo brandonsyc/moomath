@@ -10,15 +10,17 @@
 				<title>Sitemap</title>
 				<link rel="stylesheet" type="text/css" href="sticky.css" />
 				<link rel="stylesheet" type="text/css" href="article.css" />
+				<link rel="stylesheet" type="text/css" href="program.css" />
 				<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 			</head>
 			<body>
 				<div class="article">
+					<h1>Sitemap</h1>
 					<xsl:for-each select="s:urlset/s:url">
 						<strong><xsl:value-of select="s:loc" /></strong>
 						<br />
-						Last modification: <xsl:value-of select="s:lastmod" />
+						Last Mod: <xsl:value-of select="s:lastmod" />
 						<br />
 						Priority: <xsl:value-of select="s:priority" />
 						<br />
@@ -30,6 +32,7 @@
 								</li>
 							</xsl:for-each>
 						</ol>
+						<br />
 					</xsl:for-each>
 				</div>
 				<script src="sticky.js" />
