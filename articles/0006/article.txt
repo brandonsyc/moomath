@@ -66,25 +66,21 @@ And it gets even better (the layers of awesomeness are just astonishing). Does t
 
 And finally, we come to the most amazing aspect of square graphing. But before we get there, I must share another cool concept.
 
-Divided by Zero
+<h2>Divided by Zero</h2>
 
 Think about a number line. It goes on forever. Now think about a number segment where the endpoints are -infinity and positive infinity. This is just like the square graph except in one less dimension. Now take that segment and join the end points, so that it's now a number circle. Positive and negative infinity are equal! This concept actually makes a lot of sense.
 
-We've all been taught that 1/0 is undefined. Or if you're fancy, indeterminate. But in this article it equals to plus-minus infinity. Here's some reasons.
+We've all (mostly) been taught that \(\frac{1}{0}\) is undefined. Or if you're fancy, indeterminate. But in this article it equals to \(\pm\infty\). Here's some reasons.
 
-Let's have 1/n=x. N is some integer that will increase by one. Let's start at one. 1/1=1, 1/2=0.5, 1/3=0.3_, 1/4=0.25, 1/5=0.2, 1/6=0.16_, 1/7=0.142857_, etc., 1/100000000=0.00000001. As n approaches infinity, x approaches 0. The same exact procedure works for negative numbers. As n approaches negative infinity, x approaches 0. That means 1/(plus-minus infinity)=0 and therefore, 0 is the reciprocal of plus-minus infinity, and plus-minus infinity is the reciprocal of 0. Therefore, 1/0=(plus-minus infinity).
+Let's have \(\frac{1}{n}=x\). \(n\) is some integer that will increase by one. Let's start at one. \(\frac{1}{1}=1\), \(\frac{1}{2}=0.5\), \(\frac{1}{3}=0.\overline{3}\), \(\frac{1}{4}=0.25\), \(\frac{1}{5}=0.2\), \(\frac{1}{6}=0.1\overline{6}\), \(\frac{1}{7}=0.\overline{142857}\), etc., \(\frac{1}{100000000}=0.00000001\). As \(n\) approaches \(\infty\), \(x\) approaches 0. The same exact procedure works for negative numbers. As \(n\) approaches \(-\infty\), \(x\) approaches zero. That means \(\frac{1}{\pm\infty}=0\) and therefore, zero is the reciprocal of \(\pm\infty\), and \(\pm\infty\) is the reciprocal of zero. Therefore, \(\frac{1}{0}=\pm\infty\).
 
-Let's also look at this graphically. Let's again plot 1/x on the plane graph.
+We can also see that graphically. Let's again plot \(\frac{1}{x}\) on the plane graph.
 
 [1/x again]
 
-When x approaches zero, y approaches both positive and negative infinity. So when x=0, y=(plus-minus infinity). Therefore, 1/0=(plus-minus infinity).
+I could go on and on about \(\frac{1}{0}\) (I am very pedantic about this particular topic), but let's just assume \(-\infty=\infty\) for the rest of the article (this isn't really accepted in real math).
 
-And there's yet another graphical proof. Back to the square. Previously, I showed that a non-negative number n reflected over x=1 is 1/n and that a non-positive number n reflected over x=-1 is also 1/n. Zero is both non-negative and non-positive. 0 reflected over x=1 is infinity, so 1/0 is infinity. 0 reflected over x=-1 is negative infinity, so 1/0 also is negative infinity. Therefore, infinity=1/0=-infinity.
-
-I could go on and on about 1/0 (I am very pedantic about this particular topic), but let's just assume -infinity=infinity for the rest of the article (this isn't really accepted in real math).
-
-The Most Best Thing
+<h2>The Most Best Thing</h2>
 
 Now we get the the most best thing. Think about the number segment bending so that the endpoints meet to make a circle. Take the graphing square, and do the same thing. Bend it so that y=infinity is the same line as y=-infinity. It's like taking a square piece of paper and making a cylinder. And that's what it is. A graphing cylinder!!!
 
