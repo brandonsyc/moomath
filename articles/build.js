@@ -1,7 +1,7 @@
 var path;
 
 var rawFile = new XMLHttpRequest();
-rawFile.open("GET", "https://nichodon.github.io/articles/" + path + "/article.txt", false);
+rawFile.open("GET", "https://moomath.com/articles/" + path + "/article.txt", false);
 rawFile.onreadystatechange = function () {
 	"use strict";
 	if (rawFile.readyState === 4) {
@@ -9,7 +9,7 @@ rawFile.onreadystatechange = function () {
 			var array = rawFile.responseText.split("\n");
 				
 			var rf2 = new XMLHttpRequest();
-			rf2.open("GET", "https://nichodon.github.io/articles/list.txt", false);
+			rf2.open("GET", "https://moomath.com/articles/list.txt", false);
 			rf2.onreadystatechange = function () {
 				if (rf2.readyState === 4) {
 					if (rf2.status === 200 || rf2.status === 0) {
