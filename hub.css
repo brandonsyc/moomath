@@ -11,8 +11,8 @@ h1 {
 	letter-spacing: 5px;
 }
 h2 {
-	font-size: 25px;
-	letter-spacing: 2px;
+	font-size: 20px;
+	letter-spacing: 1px;
 }
 p {
 	font-size: 15px;
@@ -61,32 +61,38 @@ input:focus {
 	align-items: center;
 	display: flex;
 	flex-direction: column;
-	margin-top: -5px;
-	min-height: 5px;
+	margin-top: -2px;
+	min-height: 2px;
 }
 .block {
-	align-items: center;
 	background-color: #fff;
-	border-top: 5px solid #ccc;
-	justify-content: space-between;
+	border-top: 2px solid #ccc;
+	display: flex;
 	max-width: 910px;
 	padding: 25px;
 	width: calc(100% - 50px);
 }
+.ta {
+	background-color: #eee;
+	flex: 0 0 200px;
+	margin-right: 20px;
+	padding: 10px;justify-content: space-between
+}
 .more {
 	flex-shrink: 0;
 	line-height: 75px;
+	margin: 0;
 }
 .more a {
-	border-bottom: 5px solid #ddd;
-	border-top: 5px solid #ddd;
+	border-bottom: 2px solid #999;
+	border-top: 2px solid #999;
 	color: #000;
-	padding: 15px;
 	transition: 0.1s;
+	padding: 10px;
 }
 .more a:hover {
-	border-bottom: 5px solid #096;
-	border-top: 5px solid #096;
+	border-bottom: 2px solid #096;
+	border-top: 2px solid #096;
 }
 .first {
 	display: none;
@@ -95,7 +101,29 @@ input:focus {
 	border-top: none;
 }
 .flex {
-	display: flex !important;
+	flex-direction: column;
+	padding: 5px;
+}
+.flex .ta {
+	background-color: #fff;
+	display: flex;
+	flex-basis: auto;
+	margin-right: 0;
+	padding: 0;
+}
+.flex .more {
+	margin: 0 20px;
+}
+.flex br {
+	display: none;
+}
+@media only screen and (max-width: 768px) {
+	.block {
+		flex-direction: column;
+	}
+	.block .ta {
+		margin-right: 0;
+	}
 }
 @media only screen and (max-width: 425px) {
 	.flex {

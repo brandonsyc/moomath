@@ -21,19 +21,24 @@ rawFile.onreadystatechange = function () {
 				list.appendChild(block);
 				
 				var ta = document.createElement("div");
+				ta.classList.add("ta");
 				block.appendChild(ta);
+				
+				var inner = document.createElement("div");
+				ta.appendChild(inner);
 
 				var title = document.createElement("h2");
 				title.innerHTML = sub[0];
-				ta.appendChild(title);
-				
-				var thing = document.createElement("title");
-				thing.innerHTML = sub[0];
-				document.head.appendChild(thing);
+				inner.appendChild(title);
 
 				var author = document.createElement("p");
-				author.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
-				ta.appendChild(author);
+				author.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a>, <br>" + sub[1];
+				inner.appendChild(author);
+
+				var more = document.createElement("p");
+				more.classList.add("more");
+				more.innerHTML = "<a href=\"" + sub[3] + "\">Read More</a>";
+				ta.appendChild(more);
 
 				var text = document.createElement("p");
 
@@ -49,11 +54,6 @@ rawFile.onreadystatechange = function () {
 				rf2.send(null);
 
 				block.appendChild(text);
-
-				var more = document.createElement("p");
-				more.classList.add("more");
-				more.innerHTML = "<a href=\"" + sub[3] + "\">Read More</a>";
-				block.appendChild(more);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ function update(x) {
 	var children = document.getElementById("list").children;
 	for (var i = 0; i < children.length; i++) {
 		if (children[i].children[0].children[0].innerHTML.toUpperCase().includes(x.toUpperCase())) {
-			children[i].style.display = "initial";
+			children[i].style.display = "flex";
 			if (x === "") {
 				children[i].classList.remove("flex");
 				children[i].children[1].style.display = "initial";
