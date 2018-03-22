@@ -14,7 +14,7 @@
 	<body>
 
 
-<p id="data">The Mandelbrot set; one of the most famous fractals (and, really, mathematical objects) of all time. It's striking, really, in how complex it is (pun not intended), yet how simple the rules are. Let's delve deeper into the Mandelbrot set and, hopefully, learn something new. If you're new to the ideas of fractals in the complex plane, you can see my intro <a href="../0001/">here</a>.
+<div id="data">The Mandelbrot set; one of the most famous fractals (and, really, mathematical objects) of all time. It's striking, really, in how complex it is (pun not intended), yet how simple the rules are. Let's delve deeper into the Mandelbrot set and, hopefully, learn something new. If you're new to the ideas of fractals in the complex plane, you can see my intro <a href="../0001/">here</a>.
 
 ::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
 
@@ -27,7 +27,6 @@ Let's get some idea of scale for the Mandelbrot set. Here's another image overla
 As we can see, the Mandelbrot set is relatively compact. The entire set lies within a radius of 2 of the origin (which we'll prove in a moment). The cardioid, or the sideways heart-like portion of the set, has height \(3\sqrt{3}/4\) and width \(9/8\), with its cusp at the point \((1/4,0)\). The circular portion to its left is just that -- a perfect circle -- with center \((-1,0)\) and radius \(1/4\). The largest (by far) "mini-brot" is centered at \((-7/4,0)\). There are many other shapes in the Mandelbrot set, but besides those in mini-brots, they are not easily described (i.e. have much less geometrical significance). For example, the shape just to the left of the circle is somewhat circular, but it is, in fact, not a circle.
 
 A couple basic physical properties of the Mandelbrot set:
-
 
 <div class="code">
 <table>
@@ -266,7 +265,7 @@ $$c=\frac{1}{6 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4
 $$c=\frac{1}{12 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25}} \left(8 \sqrt[3]{2} k^{2} - 8 \sqrt[3]{2} \sqrt{3} i k^{2} - 4 \sqrt[3]{2} k + 4 \sqrt[3]{2} \sqrt{3} i k + \left(- 12 k^{2} - 4 k + 2^{\frac{2}{3}} \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2^{\frac{2}{3}} \sqrt{3} i \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 8\right) \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2 \sqrt[3]{2} - 2 \sqrt[3]{2} \sqrt{3} i\right)$$
 $$c=\frac{1}{12 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25}} \left(8 \sqrt[3]{2} k^{2} + 8 \sqrt[3]{2} \sqrt{3} i k^{2} - 4 \sqrt[3]{2} k - 4 \sqrt[3]{2} \sqrt{3} i k + \left(- 12 k^{2} - 4 k + 2^{\frac{2}{3}} \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 2^{\frac{2}{3}} \sqrt{3} i \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 8\right) \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2 \sqrt[3]{2} + 2 \sqrt[3]{2} \sqrt{3} i\right)$$
 
-We wish to find all complex \(k\) such that \(\left|\frac{d}{dk}f_c(f_c(f_c(k)))\right|=1\). Expanding and evaluating, we see that we want \(k\) such that $$8 k (c + k^2) (c + (c + k^2)^2) = e^{i\theta}$$ for some angle \(\theta\). Now we must substitute each of our \(c\) values in turn.</p>
+We wish to find all complex \(k\) such that \(\left|\frac{d}{dk}f_c(f_c(f_c(k)))\right|=1\). Expanding and evaluating, we see that we want \(k\) such that $$8 k (c + k^2) (c + (c + k^2)^2) = e^{i\theta}$$ for some angle \(\theta\). Now we must substitute each of our \(c\) values in turn.</div>
 
 
 		<script>path = "0002";</script>
