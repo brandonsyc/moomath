@@ -84,15 +84,15 @@ input:focus {
 	margin: 0;
 }
 .more a {
-	border-bottom: 2px solid #999;
-	border-top: 2px solid #999;
 	color: #000;
-	transition: 0.1s;
-	padding: 10px;
 }
-.more a:hover {
-	border-bottom: 2px solid #096;
-	border-top: 2px solid #096;
+.more a:hover::after {
+	margin-left: 5px;
+}
+.more a::after {
+	content: " \0000bb";
+	margin: 0;
+	transition: 0.1s;
 }
 .first {
 	display: none;
