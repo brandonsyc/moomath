@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>3D Cool Stuff</title>
-		<style>*{margin:0}</style>
+		<style>*{margin:0}canvas{position: fixed}</style>
 	</head>
 	<body>
 		<script src="https://threejs.org/build/three.min.js"></script>
@@ -30,8 +30,8 @@
 			
 			var geometry = new THREE.SphereGeometry( 1, 32, 32 );
 			var material = new THREE.MeshPhongMaterial( {
-				//map: THREE.ImageUtils.loadTexture( 'jupiterTexture.jpg', THREE.SphericalRefractionMapping ) 
-				color: new THREE.Color( 0x0000ff )
+				map: THREE.ImageUtils.loadTexture( 'jupiterTexture.jpg', THREE.SphericalRefractionMapping ) 
+				//color: new THREE.Color( 0x0000ff )
 			} );
 			var sphere = new THREE.Mesh( geometry, material );
 			scene.add( sphere );
