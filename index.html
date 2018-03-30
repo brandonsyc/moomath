@@ -1,30 +1,60 @@
 <!doctype html>
 <html>
 	<head>
-		<meta charset="utf-8">
-		<title>Moomath</title>
+		<title>3D Cool Stuff</title>
 		<link rel="stylesheet" type="text/css" href="home.css">
-		<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
-
 	<body>
-		<div class="full">
-			<div id="full">
-				<h1>MOOMATH</h1>
-				<p>We are two high schoolers who love web design, programming, music, and other fun math things.</p>
-				<div class="list">
-					<a href="articles">Articles</a>
-					<a href="programs">Programs</a>
-					<a href="about">About</a>
-				</div>
+		<div id="full">
+			<h1>MOOMATH</h1>
+			<p>We are two high schoolers who love web design, programming, music, and other fun math things.</p>
+			<div class="list">
+				<a href="articles">Articles</a>
+				<a href="programs">Programs</a>
+				<a href="about">About</a>
 			</div>
 		</div>
-		
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script src="files/STLLoader.js"></script>
 		<script>
-			window.onload = function() {
-				document.getElementById("full").classList.add("fade");
-			}
+			
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			
+			camera.position.z = 2;
+
+			var renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			
+			var light = new THREE.PointLight( 0xffffff, 1, 100 );
+			scene.add( light );
+			light.position.set( 16, 0, 0 );
+			
+			var light = new THREE.PointLight( 0xffffff, 1, 20 );
+			scene.add( light );
+			light.position.set( 0, 0, 16 );
+			
+			
+			var geometry = new THREE.SphereGeometry( 1, 32, 32 );
+			var material = new THREE.MeshPhongMaterial( {
+				map: THREE.ImageUtils.loadTexture( 'images/jupiterTexture.jpg', THREE.SphericalRefractionMapping ) 
+				//color: new THREE.Color( 0x0000ff )
+			} );
+			var sphere = new THREE.Mesh( geometry, material );
+			scene.add( sphere );
+			
+			n = 0;
+
+			function draw() {
+				requestAnimationFrame( draw );
+				sphere.rotation.set( 0, n, 0 );
+				n += 0.001;
+				renderer.render( scene, camera );
+			};
+
+			draw();
 		</script>
 	</body>
 </html>
