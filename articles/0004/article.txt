@@ -1,0 +1,1 @@
+The Lévy C curve, also known as the Lévy Dragon, is a very interesting 2-dimensional fractal. Named after mathematician Paul Lévy and the vaguely C-shaped nature of the fractal, it is a very simple example of a base-motif fractal, like the ones we talked about in the <a href="https://nichodon.github.io/fractals/0003">previous article</a>.
