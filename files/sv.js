@@ -1,0 +1,1 @@
+document.querySelector("image").setAttributeNS("http://www.w3.org/1999/xlink", "xlink:href", document.location.href.split("?url=")[1]);
