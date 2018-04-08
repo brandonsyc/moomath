@@ -2,25 +2,43 @@
 <html>
 	<head>
 		<title>Awesomesauces</title>
+		<style>
+			@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+			/* I know. Im using a style tag. Atrocious. */
+			h1 {
+				color: rgba(0, 0, 0, 0.25);
+				font-family: 'Open Sans';
+				font-size: 100px;
+				position: fixed;
+				bottom: 0;
+				left: 50%;
+				transform: translate(-50%, 0);
+				z-index: 1;
+			}
+		</style>
 	</head>
 	<body>
+		<h1 id="text">HI</h1>
 		<script>
+			var text = document.getElementById("text");
 			if (navigator.mediaDevices) {
 				navigator.mediaDevices.getUserMedia ({audio: true}).then(function(stream) {
 					var mode = 0;
 
-					const audio = new Audio();
+					/*const audio = new Audio();
 					audio.src = 'https://moomath.com/files/proj15.mp3';
 					audio.crossOrigin = "anonymous";
 					audio.autoplay = true;
-					audio.preload = 'auto';
+					audio.preload = 'auto';*/
 
 					const context = new AudioContext();
+console.log(context.sampleRate);
 					const analyser = context.createAnalyser();
+					analyser.fftSize = 8192;
 					analyser.connect(context.destination);
 
-					const source = context.createMediaElementSource(audio);
-					//const source = context.createMediaStreamSource(stream);
+					//const source = context.createMediaElementSource(audio);
+					const source = context.createMediaStreamSource(stream);
 					
 var gainNode = context.createGain();
 source.connect(gainNode);
@@ -55,8 +73,10 @@ gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 						two.fillStyle = 'white';
 						two.fillRect(0, 0, canvas.width, canvas.height);
 
-						const width = (canvas.width / count) * 5;
+						const width = (canvas.width / (count / 4)) * 5;
 						let pos = 0;
+						let max = 0;
+						let pitch = 0;
 						for (let i = 0; i < count; i++) {
 							const height0 = i == 0 ? 0 : Math.pow(1.05, dataArray[i - 1] + 150) * 1.5;
 							const height1 = Math.pow(1.05, dataArray[i] + 150) * 1.5;
@@ -86,7 +106,15 @@ gainNode.gain.setTargetAtTime(0, context.currentTime + 1, 0.5);
 								two.fill();
 							}
 							pos += width;
+							if (pos > canvas.width) {
+								break;
+							}
+							if (height1 > max) {
+								max = height1;
+								pitch = i;
+							}
 						}
+						text.innerHTML = pitch;
 					};
 
 					draw();
