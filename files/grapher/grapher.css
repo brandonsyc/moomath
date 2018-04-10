@@ -1,0 +1,16 @@
+body,
+html,
+#plotter {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+}
+#plotter {
+	width: 100%;
+}
+#control {
+	position: fixed;
+}
+#control div {
+	display: flex;
+}
