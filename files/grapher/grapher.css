@@ -9,8 +9,33 @@ html,
 	width: 100%;
 }
 #control {
+	background-color: rgba(255, 255, 255, 0.8);
+	border: 1px solid #ccc;
+	bottom: -1px;
 	position: fixed;
+	left: -1px;
+	top: -1px;
 }
-#control div {
+#out {
 	display: flex;
+	flex-direction: column;
+}
+#out div {
+	align-items: center;
+	display: flex;
+	padding: 20px;
+}
+.math {
+	border: none !important;
+	border-bottom: 1px solid #999 !important;
+	box-shadow: none !important;
+	padding: 5px 20px;
+	transition: 0.1s;
+}
+.mq-focused {
+	border-bottom: 1px solid #666 !important;
+}
+label {
+	font-family: Consolas;
+	margin-right: 10px;
 }

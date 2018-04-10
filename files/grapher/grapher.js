@@ -51,6 +51,8 @@ line(0, y(0), plot.clientWidth, y(0), "#000", 0.2);
 
 var directrix = line(x(0), 0, x(0), plot.clientHeight, "#000", 0.5);
 var points = [];
+var xAxis;
+var yAxis = line(x(0), 0, x(0), plot.clientHeight, "#fd0", 0.9);
 
 function point(v) {
 	"use strict";
@@ -93,9 +95,9 @@ function point(v) {
 	points.push(line(x(0), y(v * yInt), x(0), y(-v * yInt), "#08b", 0.9));
 }
 
-function updir() {
+function updir(v) {
 	"use strict";
-	var v = Number(document.getElementById("dir").value);
+	v = Number(v.split("x=")[1]);
 	directrix.setAttribute("x1", x(v * xInt));
 	directrix.setAttribute("x2", x(v * xInt));
 	point(v);
