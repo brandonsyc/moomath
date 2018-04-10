@@ -22,7 +22,7 @@ rf2.onreadystatechange = function () {
 			document.head.appendChild(thing);
 
 			var p = document.createElement("p");
-			p.innerHTML = "by <a href=\"https://github.com/" + sub[0] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
+			p.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
 			header.appendChild(p);
 		}
 	}
