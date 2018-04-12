@@ -25,4 +25,9 @@ document.body.onscroll = function() {
 	} else {
 		sticky.style.opacity = 0;
 	}
+	if (document.getElementById("header") !== null) {
+		var h = document.getElementById("header");
+		var p = document.getElementById("parallax");
+		p.style.transform = "translate(0, " + ((h.getBoundingClientRect().top - h.offsetTop) * -50 / h.clientHeight) + "%)";
+	}
 };
