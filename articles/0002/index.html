@@ -223,41 +223,9 @@ Some basic properties of the main circle:
     </tr>
 </table>
 </div>
-
-<h2>Period Bulbs</h2>
-
-<h2>The Real Line &amp; Relation to the Logistic Map</h2>
-
-What points of the real line lie in the Mandelbrot set? It seems like a somewhat trivial question, but it leads to something pretty amazing, so let's figure it out.
-
-Let
-Every point on the real line in the range \(-2 \leq r &lt; 1/4\) lies inside the Mandelbrot set.
-
-<h2>3-cycles!</h2>
-
-Unique 3-cycles (i.e. those besides the ones corresponding to the main cardioid) correspond to three portions of the Mandelbrot set: the cardioid-like part of the largest mini-brot, and the two nearly circular objects at the top and bottom of the main cardioid. These areas are highlighted here:
-
-We'll proceed with the same process as before... but the algebraic manipulations here will get a little ridiculous, so hang tight.
-
-We wish to find \(k\) such that \(k=f_c(f_c(f_c(k)))\), since that will correspond to a cycle of length 3. Expanding out the polynomial, we see that we must solve the equation $$c^4 + 4 c^3 k^2 + 2 c^3 + 6 c^2 k^4 + 4 c^2 k^2 + c^2 + 4 c k^6 + 2 c k^4 + c + k^8 - k = 0.$$ Factoring the polynomial, we know that $$(c + k^2 - k) (c^3 + 3 c^2 k^2 + c^2 k + 2 c^2 + 3 c k^4 + 2 c k^3 + 3 c k^2 + 2 c k + c + k^6 + k^5 + k^4 + k^3 + k^2 + k + 1)=0.$$
-
-The \((c+k^2-k)\) term is our old friend, the main cardioid. The remaining cubic holds our three regions. We treat it as a cubic in \(c\) and rip out the cubic formula:
-
-$$c^3 + 3 c^2 k^2 + c^2 k + 2 c^2 + 3 c k^4 + 2 c k^3 + 3 c k^2 + 2 c k + c + k^6 + k^5 + k^4 + k^3 + k^2 + k + 1=0$$
-
-$$c^3 + (3k^2 + k + 2)c^2 + (3k^4 + 2k^3 + 3k^2 + 2k + 1)c + (k^6 + k^5 + k^4 + k^3 + k^2 + k + 1)=0$$
-
-Three possibilities (I'm so sorry, MathJax):
-
-$$c=\frac{1}{6 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25}} \left(- 8 \sqrt[3]{2} k^{2} + 4 \sqrt[3]{2} k - \left(6 k^{2} + 2 k + 2^{\frac{2}{3}} \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 4\right) \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 2 \sqrt[3]{2}\right)$$
-$$c=\frac{1}{12 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25}} \left(8 \sqrt[3]{2} k^{2} - 8 \sqrt[3]{2} \sqrt{3} i k^{2} - 4 \sqrt[3]{2} k + 4 \sqrt[3]{2} \sqrt{3} i k + \left(- 12 k^{2} - 4 k + 2^{\frac{2}{3}} \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2^{\frac{2}{3}} \sqrt{3} i \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 8\right) \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2 \sqrt[3]{2} - 2 \sqrt[3]{2} \sqrt{3} i\right)$$
-$$c=\frac{1}{12 \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25}} \left(8 \sqrt[3]{2} k^{2} + 8 \sqrt[3]{2} \sqrt{3} i k^{2} - 4 \sqrt[3]{2} k - 4 \sqrt[3]{2} \sqrt{3} i k + \left(- 12 k^{2} - 4 k + 2^{\frac{2}{3}} \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 2^{\frac{2}{3}} \sqrt{3} i \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} - 8\right) \sqrt[3]{- 16 k^{3} + 12 k^{2} + 6 k + 3 \sqrt{3} \sqrt{- 16 k^{4} - 16 k^{3} + 20 k^{2} + 12 k + 23} + 25} + 2 \sqrt[3]{2} + 2 \sqrt[3]{2} \sqrt{3} i\right)$$
-
-We wish to find all complex \(k\) such that \(\left|\frac{d}{dk}f_c(f_c(f_c(k)))\right|=1\). Expanding and evaluating, we see that we want \(k\) such that $$8 k (c + k^2) (c + (c + k^2)^2) = e^{i\theta}$$ for some angle \(\theta\). Now we must substitute each of our \(c\) values in turn.</div>
-
-
 		<script>path = "0002";</script>
 		<script src="../build.js"></script>
 		<script src="../../sticky.js"></script>
+</div>
 	</body>
 </html>
