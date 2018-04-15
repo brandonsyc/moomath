@@ -1,0 +1,56 @@
+hr {
+	border: 1px solid #666;
+}
+.content {
+	margin: auto;
+	max-width: 910px;
+	padding: 25px;
+}
+input:focus,
+button:focus {
+	outline: none;
+}
+input[type=radio] {
+	width: 0;
+	visibility: hidden;
+}
+input[type=radio]:checked+label {
+	border-bottom: 5px solid #08b;
+}
+label {
+	border-bottom: 0px solid #08b;
+	line-height: 50px;
+	padding: 10px;
+	transition: 0.2s;
+	white-space: nowrap;
+}
+input[type=text],
+input[type=number],
+input[type=password] {
+	border: 1px solid #ddd;
+	padding: 15px;
+	transition: 0.2s;
+}
+input[type=text]:hover,
+input[type=number]:hover,
+input[type=password]:hover {
+	border: 1px solid #bbb;
+}
+button,
+input[type=submit] {
+	background-color: #fff;
+	border: 1px solid #ddd;
+	box-shadow: none;
+	color: #333;
+	padding: 15px;
+	transition: 0.2s;
+}
+button:hover,
+input[type=submit]:hover {
+	background-color: #eee;
+	color: #333;
+}
+button:active,
+input[type=submit]:active {
+	border: 1px solid #ccc;
+}

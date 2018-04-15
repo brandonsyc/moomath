@@ -365,7 +365,7 @@ function updateSignature() {
     console.log(givenN);
 
     if (givenNumerators == false) {
-        document.getElementById("numerator").style.backgroundColor = "#FF9184";
+        document.getElementById("numerator").style.backgroundColor = "#ff99aa";
         return;
     } else {
         givenNumerators = givenNumerators.split(',')
@@ -408,14 +408,14 @@ function updateSignature() {
             document.getElementById("numerator").style.backgroundColor = "white";
             numerators.push(length);
         } else {
-            document.getElementById("numerator").style.backgroundColor = "#FF9184";
+            document.getElementById("numerator").style.backgroundColor = "#ff99aa";
         }
     }
 
     if (isNormalInteger(givenDenominator)) {
         givenDenominator = parseInt(givenDenominator);
     } else {
-        document.getElementById("denominator").style.backgroundColor = "#FF9184";
+        document.getElementById("denominator").style.backgroundColor = "#ff99aa";
         return;
     }
 
@@ -424,7 +424,7 @@ function updateSignature() {
         denominator = givenDenominator;
         document.getElementById("denominator").style.backgroundColor = "white";
     } else {
-        document.getElementById("denominator").style.backgroundColor = "#FF9184";
+        document.getElementById("denominator").style.backgroundColor = "#ff99aa";
     }
 
     if (play) togglePlayback();
@@ -600,7 +600,7 @@ function drawFilledCircle(coords,radius) {
     // Draws a circle with a certain radius at the coords
     ctx.beginPath();
     ctx.arc(coords[0], coords[1], radius, 0, 2*Math.PI);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#cc0033";
     ctx.fill();
     ctx.stroke();
     return;
@@ -805,6 +805,7 @@ function updatePlayNA() {
 function adjustNumeratorWidth() {
     // Dynamically adjust width of numerator
     var numeratorBox = document.getElementById("numerator");
+    var dbox = document.getElementById("denominator");
 
     var tmpItem = document.createElement("span");
     tmpItem.className = "input-element tmp-element";
@@ -814,7 +815,8 @@ function adjustNumeratorWidth() {
     document.body.removeChild(tmpItem);
 
     numeratorBox.style.width = Math.max(numWidth,80) + "px";
-    document.getElementById("signature").style.maxWidth = Math.max(numWidth,80) + "px";
+    dbox.style.width = Math.max(numWidth,80) + "px";
+    document.getElementById("signature").style.width = Math.max(numWidth,80) + "px";
 
     return;
 }

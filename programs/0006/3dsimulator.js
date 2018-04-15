@@ -2128,7 +2128,7 @@ var info = {
   '1 Ceres': `<h3>Ceres (1 Ceres)</h3>
 	<p>Ceres (designated name 1 Ceres) is the largest known object in the asteroid belt. \
 	It is classified as a dwarf planet. It is the only object in the asteroid belt to \
-	be rounded by its own gravity. The <i>Dawn</i> spacecraft visited Ceres in March 2015, \
+	be rounded by its own gravity. The <em>Dawn</em> spacecraft visited Ceres in March 2015, \
 	performing various surveys of the dwarf planet's surface.</p>`,
   '2 Pallas': `<h3>Pallas (2 Pallas)</h3>
 	<p>Pallas (designated name 2 Pallas) is the third most massive asteroid. With an \
@@ -2144,7 +2144,7 @@ var info = {
 	object in the asteroid belt. It is the brightest asteroid in Earth's sky, reaching \
 	an apparent magnitude of 5.1, which is within naked eye visibility. Fragments of \
 	Vesta's surface often fall to the Earth, a valuable source of information on Vesta's \
-	composition. It was visited by the <i>Dawn</i> spacecraft in July 2011.</p>`,
+	composition. It was visited by the <em>Dawn</em> spacecraft in July 2011.</p>`,
   '5 Astraea': `<h3>Astraea (5 Astraea)</h3>
 	<p>Astraea (designated name 5 Astraea) is a member of the asteroid belt. For 38 years, \
 	since the discovery of 4 Vesta, it was thought that only 4 asteroids existed in \
@@ -2213,19 +2213,19 @@ var info = {
 	<p>Toutatis (designated name 4179 Toutatis) is an asteroid with a chaotic orbit \
 	from a 3:1 resonance with Jupiter and an approximate 1:4 resonance with Earth. \
 	It crosses Mars's orbit, so it is a Mars-crosser asteroid. It was visited by the \
-	Chinese probe <i>Chang'e 2</i> in 2010.</p>`,
+	Chinese probe <em>Chang'e 2</em> in 2010.</p>`,
 	'433 Eros' : `<h3>Eros (433 Eros)</h3>
 	<p>Eros (designated name 433 Eros) is the second largest near-Earth object known, \
 	with a mean diameter of 16.8 km. It was the first near-Earth asteroid visited by a space probe, \
-	the American probe <i>NEAR Shoemaker</i>, which stands for <b>N</b>ear <b>E</b>arth \
-	<b>A</b>steroid <b>R</b>endezvous.</p>`,
+	the American probe <em>NEAR Shoemaker</em>, which stands for <strong>N</strong>ear <strong>E</strong>arth \
+	<strong>A</strong>steroid <strong>R</strong>endezvous.</p>`,
 	'253 Mathilde' : `<h3>Mathilde (253 Mathilde)</h3>
 	<p>Mathilde (designated name 253 Mathilde) is a main-belt asteroid with a mean diameter \
-	of 50 kilometers. It was visited by <i>NEAR Shoemaker</i> in June 1997.</p>`,
+	of 50 kilometers. It was visited by <em>NEAR Shoemaker</em> in June 1997.</p>`,
 	'21 Lutetia' : `<h3>Lutetia (21 Lutetia)</h3>
 	<p>Lutetia (designated name 21 Lutetia) is a large asteroid in the asteroid belt. It \
 	has a highly unusual spectrum than that expected of metal-rich asteroids. It was \
-	visited by the spacecraft <i>Rosetta</i> in July 2010.</p>`,
+	visited by the spacecraft <em>Rosetta</em> in July 2010.</p>`,
 	'16 Psyche' : `<h3>Psyche (16 Psyche)</h3>
 	<p>Psyche (designated name 16 Psyche) is a large asteroid in the asteroid belt. Its \
 	composition is very metal-rich, and is suspected to be the iron core of a protoplanet, \

@@ -3,19 +3,23 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Articles &ndash; Moomath</title>
-		<link rel="stylesheet" type="text/css" href="styles.css">
+		<link rel="stylesheet" type="text/css" href="../sticky.css">
+		<link rel="stylesheet" type="text/css" href="../hub.css">
 		<link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 
 	<body>
-		<div class="header">
+		<div id="header">
+			<div id="parallax" style="background-image: url(0003/images/thumb.png)"></div>
 			<div></div>
 			<h1>Moomath Articles</h1>
-			<p>This is where we post documents that delve into weird math and science topics at an obsessively nerdy level.</p>
-			<input type="text" placeholder="Search">
+			<p>This is where we post documents that delve into weird math and science things. The topics are usually very common in the math world, but we take things to an obsessively nerdy level.</p>
+			<input type="text" placeholder="Search" onKeyUp="check()" id="input">
 		</div>
 		<div class="list" id="list"></div>
-		<script src="sort.js"></script>
+		<script>type = "articles";</script>
+		<script src="../sort.js"></script>
+		<script src="../sticky.js"></script>
 	</body>
 </html>

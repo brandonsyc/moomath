@@ -12,13 +12,16 @@
 		<script>
 			
 			class Person {
-				constructor( x, z, dir, dx, dz, obj ) {
+				constructor( x, z, dir, dx, dz, obj, next, y ) {
 					this.x = x;
 					this.z = z;
 					this.dir = dir;
 					this.dx = dx;
 					this.dz = dz;
 					this.obj = obj;
+					this.next = next;
+					this.y = y;
+					this.moving = false;
 				}
 				
 				act() {
@@ -26,36 +29,43 @@
 						( this.dx == 0 && this.dz == 0 );
 
 					if ( center ) {
-						this.dir = next;
+						this.dir = this.next;
 						this.x = Math.round( this.x + this.dx );
 						this.z = Math.round( this.z + this.dz );
 						this.dx = 0;
 						this.dz = 0;
 					}
+					
+					this.moving = false;
+					
 					if ( this.dir === 0 ) {
 						if ( !matrix[this.x - 1] || !center || !matrix[this.x - 1][this.z] ) {
 							this.dx -= 0.05;
+							this.moving = true;
 						}
 					} else if ( this.dir === 1 ) {
 						if ( !matrix[this.x] || !center || !matrix[this.x][this.z - 1] ) {
 							this.dz -= 0.05;
+							this.moving = true;
 						}
 					} else if ( this.dir === 2 ) {
 						if ( !matrix[this.x + 1] || !center || !matrix[this.x + 1][this.z] ) {
 							this.dx += 0.05;
+							this.moving = true;
 						}
 					} else {
 						if ( !matrix[this.x] || !center || !matrix[this.x][this.z + 1] ) {
 							this.dz += 0.05;
+							this.moving = true;
 						}
 					}
 					
-					this.obj.position.set( this.x + this.dx, 1.5, this.z + this.dz );
+					this.obj.position.set( this.x + this.dx, this.y, this.z + this.dz );
 				}
 			}
 			
 			
-			var x = 0, z = 10, dir = 1, target = 0, next = 1, dx = 0, dz = 0, actual = 0;
+			var target = 0, actual = 0;
 			var colors = [0xff0000, 0xff99cc, 0x00ffff, 0xff9900];
 			
 			var code = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
@@ -66,13 +76,12 @@
 			for (var t = 0; t < data.length; t++) {
 				converted += ("00000" + code.indexOf(data.charAt(t)).toString(2)).slice(-5);
 			}
-			console.log(converted);
 			
 			var matrix = [];
 			var intersection = [];
 			
 			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
 			var renderer = new THREE.WebGLRenderer( { antialias: true } );
 			renderer.setSize( window.innerWidth, window.innerHeight );
@@ -96,7 +105,6 @@
 				}
 				matrix.push(row);
 				intersection.push(nope);
-				console.log(row);
 			}
 			
 			for ( var i = 0; i < 22; i++ ) {
@@ -116,16 +124,14 @@
 					}
 					intersection[i][j] = exits > 2 && !matrix[i][j];
 					if (intersection[i][j]) {
-						
-			var geometry = new THREE.BoxGeometry( 0.25, 0.25, 0.25 );
-			var material = new THREE.MeshPhongMaterial( { color: 0x000000 } );
-			var going = new THREE.Mesh( geometry, material );
-			scene.add( going );
+						var geometry = new THREE.BoxGeometry( 0.25, 0.25, 0.25 );
+						var material = new THREE.MeshPhongMaterial( { color: 0x000000 } );
+						var going = new THREE.Mesh( geometry, material );
+						scene.add( going );
 						going.position.set(i, 1, j);
 					}
 				}
 			}
-				console.log(intersection);
 			
 			var geometry = new THREE.BoxGeometry( 0.5, 0.25, 0.5 );
 			var material = new THREE.MeshPhongMaterial( { color: 0xffff00 } );
@@ -135,12 +141,23 @@
 			var light = new THREE.PointLight( 0xffffff, 1, 100 );
 			scene.add( light );
 			
-			var pacman = new Person(0, 10, 1, 0, 0, camera);
+			var geometry = new THREE.BoxGeometry( 0.75, 0.75, 0.75 );
+			var material = new THREE.MeshPhongMaterial( { color: 0xff0000 } );
+			var body = new THREE.Mesh( geometry, material );
+			scene.add( body );
+			
+			var pacman = new Person( 1, 1, 1, 0, 0, camera, 1, 1.5 );
+			var ghost = new Person( 1, 1, 3, 0, 0, body, 1, 1 ) ;
 
 			var animate = function () {
 				requestAnimationFrame( animate );
 				
+				if (!ghost.moving) {
+					ghost.next += ghost.dir === 3 ? -3 : 1;
+				}
+				
 				pacman.act();
+				ghost.act();
 				
 				light.position.set( pacman.x + pacman.dx, 1.5, pacman.z + pacman.dz );
 				
@@ -163,6 +180,10 @@
 				camera.rotation.y = target;
 
 				renderer.render(scene, camera);
+				
+				if (intersection[ghost.x][ghost.z]) {
+					console.log("a");
+				}
 			};
 
 			animate();
@@ -170,9 +191,9 @@
 			document.body.onkeydown = function() {
 				if (target === actual) {
 					if (window.event.keyCode === 37) {
-						next = (pacman.dir + 3) % 4;
+						pacman.next = (pacman.dir + 3) % 4;
 					} else if (window.event.keyCode === 39) {
-						next = (pacman.dir + 1) % 4;
+						pacman.next = (pacman.dir + 1) % 4;
 					}
 				}
 			}

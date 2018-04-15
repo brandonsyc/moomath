@@ -1,0 +1,1 @@
+You can play any time signature with this metronome, from 4/4 to 3+3+3+2+2/16. It has the same helpful visualization as the previous program and has lots of customization.<br><strong>Status</strong>: Done, maybe in the future a nicer visual and cleaned-up GUI.

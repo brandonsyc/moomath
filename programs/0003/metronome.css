@@ -1,13 +1,13 @@
 input {
-		vertical-align: middle;
+	vertical-align: middle;
 }
 input[type=checkbox] {
-		position: relative;
-		right: 20px;
+	position: relative;
+	right: 20px;
 }
 input[type=number] {
-		display: inline-block;
-		max-width: 50px;
+	display: inline-block;
+	max-width: 50px;
     text-align: center;
     font-size: 20px;
     padding: 1px;
@@ -35,12 +35,12 @@ input[type=checkbox] {
     margin-left: 20px;
 }
 .box p {
-		display: inline-block;
-		vertical-align: middle;
+	display: inline-block;
+	vertical-align: middle;
 }
 .box {
-		text-align: middle;
-		margin: auto;
+	text-align: middle;
+	margin: auto;
 }
 .signature {
     display: inline-block;
@@ -61,32 +61,32 @@ input[type=checkbox] {
     bottom: 20px;
 }
 input:not(.radio .text) {
-		border: 1px solid #ddd;
-		box-sizing: border-box;
-		font-size: 15px;
-		letter-spacing: 1px;
-		margin: 20px 0;
-		padding: 10px;
-		transition: 0.2s;
+	border: 1px solid #ddd;
+	box-sizing: border-box;
+	font-size: 15px;
+	letter-spacing: 1px;
+	margin: 20px 0;
+	padding: 10px;
+	transition: 0.2s;
 }
 input[type=radio]:hover {
-		border: 1px solid #bbb;
+	border: 1px solid #bbb;
 }
 input[type=radio] {
-		width: 0;
-		visibility: hidden;
+	width: 0;
+	visibility: hidden;
 }
 input[type=radio]:checked+label {
-		border-bottom: 5px solid #08b;
+	border-bottom: 5px solid #08b;
 }
 label {
-		border-bottom: 0px solid #08b;
-		padding: 10px;
-		transition: 0.2s;
+	border-bottom: 0px solid #08b;
+	padding: 10px;
+	transition: 0.2s;
 }
 .tmp-element {
     white-space: pre;
-		font-size: 20px;
+	font-size: 20px;
 }
 canvas {
 	width: 90%;

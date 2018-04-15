@@ -1,38 +1,26 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Home &ndash; Moomath</title>
-<link rel="stylesheet" type="text/css" href="../styles.css">
-<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Restart Server</title>
+		<link rel="stylesheet" type="text/css" href="../sticky.css">
+		<link rel="stylesheet" type="text/css" href="../article.css">
+		<link rel="stylesheet" type="text/css" href="../program.css">
+		<link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
 
-<div id="top"></div>
-
-<body>
-
-<div class="article">
-
-  <h1>Server Restart</h1>
-
-<div class="figure">
-<form action="restart.php" method="post">
-<p>Need to restart the server?</p>
-<p>Password</p> <input type="password" name="password" style="height: 20px">
-<br>
-<br>
-<input type="submit">
-</form>
-</div>
-</div>
-
-<br>
-<br>
-
-<div id="bottom"></div>
-
-<script src="../frame.js"></script>
-
-</body>
+	<body>
+		<div class="content">
+			<h1>Restart the Server</h1>
+			<div class="figure">
+				<form action="restart.php" method="post">
+					<p>Need to restart the server? Type the super-secret password below! <strong>Note</strong>: Don't do this unless you really know what you are doing and you have access to the server (a.k.a. only anematode).</p>
+					<input type="password" name="password">
+					<input type="submit">
+				</form>
+			</div>
+		</div>
+		<script src="../sticky.js"></script>
+	</body>
 </html>

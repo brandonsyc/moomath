@@ -1,0 +1,1 @@
+Put in some notes on a handy div keyboard and the program will tell you what chord it is (as long as it is a chord).<br><strong>Status</strong>: Done, possibly more chords.

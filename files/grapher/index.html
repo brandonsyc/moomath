@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Untitled Document</title>
+		<link rel="stylesheet" type="text/css" href="grapher.css">
+
+		<link rel="stylesheet" href="build/mathquill.css"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="build/mathquill.js"></script>
+		<script>
+			var MQ = MathQuill.getInterface(2);
+		</script>
+	</head>
+
+	<body>
+		<div id="control">
+			<div id="out">
+				<div>
+					<label>Directrix:</label>
+					<span id="dir" class="math">x=0</span>
+				</div>
+				<div>
+					<label>Focus:</label>
+					<span id="foc" class="math">(0, 0)</span>
+				</div>
+			</div>
+		</div>
+		<svg id="plotter"></svg>
+		<script src="grapher.js"></script>
+		
+		<script>
+			var dir = document.getElementById("dir");
+			var df = MQ.MathField(dir, {
+				handlers: {
+					edit: function() {
+						var data = df.latex();
+						updir(data);
+					}
+				}
+			});
+			var foc = document.getElementById("foc");
+			var ff = MQ.MathField(foc, {
+				handlers: {
+					edit: function() {
+						var data = ff.latex();
+					}
+				}
+			});
+		</script>
+	</body>
+</html>

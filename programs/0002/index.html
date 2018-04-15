@@ -1,29 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Polyrhythm Player</title>
+		<link rel="stylesheet" type="text/css" href="../../sticky.css">
+		<link rel="stylesheet" type="text/css" href="../../program.css">
+		<link rel="stylesheet" type="text/css" href="polyrhythm.css">
+		<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
 
-<head>
-	<meta charset="utf-8">
-	<title>Polyrhythm Player</title>
-	<link rel="stylesheet" type="text/css" href="../../styles.css">
-	<link rel="icon" href="../../images/favicon.png" sizes="16x16" type="image/png">
-	<link rel="stylesheet" type="text/css" href="polyrhythm.css">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+	<body>
+		<div class="content">
+			<h1>Polyrhythm Player</h1>
+			<p>19 June, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a></p>
 
-<body>
-
-	<div id="top"></div>
-
-	<div class="content">
-		<h1>Polyrhythm Player</h1>
-		<p>19 June, 2017 &ndash; <a href="https://github.com/anematode" target="_blank">anematode</a></p>
-
-		<div class="article">
 			<p id="output"></p>
 
 			<div class="box">
 				<p>This widget is a basic polyrhythm player.<br>Enter in the polyrhythm you wish to play and the bpm of the playback.</p><br>
-				<hr>
 				<p>Polyrhythm</p>
 				<input id="meter1" onKeyUp="updateRhythm()" onInput="updateRhythm()" type="number" min="1" max="32" value="5" class="embed" title="meter1">
 				<p>:</p>
@@ -37,28 +32,16 @@
 				<p>Show Metronome Line</p>
 				<br><br>
 				<button onclick="togglePlayback()" id="toggle">Play</button>
-				<hr>
+				<br><br>
 				<div class="">
 					<canvas class="shadow" id="beater" width="1500" height="200"></canvas>
 				</div>
 			</div>
-
-			<div class="separate"></div>
 		</div>
-	</div>
-
-	<div class="source-link">
-		<a href="polyrhythm.js" target="_blank">Program Source Code</a>
-		<div class="separate"></div>
-	</div>
-
-	<div id="bottom"></div>
-
-	<script src="../../frame.js"></script>
-	<script src="metronome.js"></script>
-	<script src="polyrhythm.js"></script>
-	<script src="../../querystring.js"></script>
-
-</body>
-
+		
+		<script src="metronome.js"></script>
+		<script src="polyrhythm.js"></script>
+		<script src="../../sticky.js"></script>
+		<script src="../../querystring.js"></script>
+	</body>
 </html>

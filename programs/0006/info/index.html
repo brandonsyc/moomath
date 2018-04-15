@@ -1,46 +1,32 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Info &ndash; 3D Solar System</title>
-<link rel="stylesheet" type="text/css" href="../../../styles.css">
-<link rel="icon" href="../../../images/favicon.png" sizes="16x16" type="image/png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML"></script>
-<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-</head>
-<body>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Info (3D Solar System Simulator)</title>
+		<link rel="stylesheet" type="text/css" href="../../../sticky.css">
+		<link rel="stylesheet" type="text/css" href="../../../program.css">
+		<link rel="icon" href="../../../images/favicon.png" sizes="16x16" type="image/png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
 
-<div id="top"></div>
-
-<div class="content">
-<div class="article">
-
-<h2>Controls</h2>
-
-<p>
-  To select a body, click on it. Scroll to zoom in or out on the body, and click and drag to shift the view.<br>
-  To make selecting a body and viewing a body's position easier, the bodies' sizes have been exaggerated which can be controlled with the "Planetary Size" slider.
-</p>
-
-<h2>Bodies</h2>
-
-<p>
-  Currently, the bodies we use are the objects in the Solar System above 450 kilometres and that have been imaged with high detail.<br>
-  The bodies exaggerated are the ones orbiting around the sun (above 450 km).<br><br>
-  <strong>Note</strong>: we have tried not to engage in any copyright infrigement. However, if you own one of the textures used, please contact us and we will remove it as soon as possible.<br>
-  We omit textures that have missing portions generally more than 50% (sorry Charon).<br>
-  Also, we try to use accurate maps that are as close to true color as possible.<br>
-  The general consensus on the Internet is that Eris is a <a href="https://www.google.com/search?tbm=isch&q=eris+texture+map" target="_blank">purple Ganymede</a>, which is why we don't have it yet.
-</p>
-
-<div class="separate"></div>
-</div>
-</div>
-
-<div id="bottom"></div>
-
-<script src="../../../frame.js"></script>
-
-</body>
+	<body>
+		<div class="content">
+			<h1>Info on 3D Planet Sim</h1>
+			<p>
+				Data is taken from the JPL database. Real time viewing is accurate to the highest degree of precision possible from a command line query. To select a body, click on it. Scroll to zoom in or out on the body, and click and drag to shift the view. To make selecting a body and viewing a body's position easier, the bodies' sizes have been exaggerated which can be controlled with the "Planetary Size" slider.
+			</p>
+			<h2>Bodies</h2>
+			<p>
+				Currently, the bodies we use are the objects in the Solar System with at least 450 kilometres and that have been imaged with high detail. Objects over 450 km but not imaged with high detail have a generic texture. Total, that is over <strong>100,000</strong> bodies. All bodies are spherical, because we are lazy. The bodies exaggerated are the ones orbiting around the sun (above 450 km).
+			</p>
+			<h2>Images</h2>
+			<p>
+				All images are from Google (lol), filted for labeled for reuse.
+				<strong>Note</strong>: we have tried not to engage in any copyright infrigement. However, if you own one of the textures used, please contact us and we will remove it as soon as possible. We omit textures that have missing portions generally more than 50% (sorry Charon). Also, we try to use accurate maps that are as close to true color as possible. The general consensus on the Internet is that Eris is a <a href="https://www.google.com/search?tbm=isch&q=eris+texture+map" target="_blank">purple Ganymede</a>, which is why we don't have it yet.
+			</p>
+		</div>
+		
+		<script src="../../../sticky.js"></script>
+		<script src="../../../querystring.js"></script>
+	</body>
 </html>

@@ -1,5 +1,3 @@
-$fn=65;
-
 //body
 color([1,0.875,0.75])
 difference() {

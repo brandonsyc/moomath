@@ -1,0 +1,1 @@
+The player accurately creates polyrhythms along with a nice visual that makes it easy to practice with.<br><strong>Status</strong>: Done, maybe in the future a nicer visual and cleaned-up GUI.

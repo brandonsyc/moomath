@@ -1,0 +1,1 @@
+This is a 3D model of the solar system. We have a catalog of over 100,000 asteroids and minor bodies, straight from JPL. All positions are accurate, meaning you can see where each planet is right now!<br><strong>Status</strong>: Done.

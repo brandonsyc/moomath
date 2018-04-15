@@ -1,0 +1,1 @@
+Made partly in C++, this program generates all 3x3x3 polycubes in 3D. The polycubes are separated into categories by number of units of volume.<br><strong>Status</strong>: Done.

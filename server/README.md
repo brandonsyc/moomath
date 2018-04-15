@@ -2,11 +2,11 @@
 
 If something needs to be compiled on the server, place it in build.sh. The git repository is checked every 5 seconds by the server computer, and if any changes are detected, all changes are downloaded, then build.sh is run. Note that build.sh is run with root privileges; be careful!
 
-If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](https://www.moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
+If you'd like to see the last time the website was updated (*not* the last time it was polled), go to [server/build.html](https://moomath.com/server/build.html), which contains the timestamp of the last time build.sh was run.
 
-Do not run this file if you are contributing to the repository! It will mess things up.
+Do not run this file if you are contributing to the repository or really, ever unless you really know exactly what is going on with the server! It will mess things up.
 
-# Hardware Information
+## Hardware Information
 
 | Property | Value |
 | --- | --- |
@@ -21,16 +21,16 @@ Do not run this file if you are contributing to the repository! It will mess thi
 | Average Download | 240 Mbps |
 | Average Upload | 12 Mbps |
 
-Yes, I'm aware this isn't the best computer out there (quite an understatement), but it does the job *fine*.
+Not the best computer of course but fine for our purposes.
 
-# Installed Tools
+## Installed Tools
 
+* git (duh)
 * Clang (gcc, g++)
 * Make
 * CMake
-* git (obviously)
 * Python
 * Node.js
 * Ruby
 
-Please request me (Timothy) if you need another tool or more information on specifics / how to use these tools through bash.
+Contact us if you need another tool or more information on specifics / how to use these tools through bash.

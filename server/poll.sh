@@ -4,7 +4,7 @@
 while :
 do
   git fetch > build_log.txt 2>&1
-  if [ -s build_log.txt]
+  if [ -s build_log.txt ]
   then
      echo "Changes detected, pulling... (overwriting all local changes)"
      git fetch --all

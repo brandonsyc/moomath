@@ -1,0 +1,1 @@
+Brainf*ck is a language that only has 8 characters to work with, but is still Turing-complete. There is also a mini-article attached explaining exactly how this confusing language works.<br><strong>Status</strong>: Done.

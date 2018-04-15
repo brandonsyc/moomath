@@ -1,117 +1,60 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Home &ndash; Moomath</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
-<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
+<html>
+	<head>
+		<title>Home &ndash; Moomath</title>
+		<link rel="stylesheet" type="text/css" href="home.css">
+		<link rel="icon" href="images/favicon.png" sizes="16x16" type="image/png">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<div id="full">
+			<h1>MOOMATH</h1>
+			<p>We are two high schoolers who love web design, programming, music, and other fun math things.</p>
+			<div class="list">
+				<a href="articles">Articles</a>
+				<a href="programs">Programs</a>
+				<a href="about">About</a>
+			</div>
+		</div>
+		<script src="https://threejs.org/build/three.min.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			
+			camera.position.z = 2;
 
-<div id="top"></div>
+			var renderer = new THREE.WebGLRenderer( { antialias: true } );
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			
+			
+			var light = new THREE.PointLight( 0xffffff, 1, 100 );
+			scene.add( light );
+			light.position.set( 16, 0, 0 );
+			
+			var light = new THREE.PointLight( 0xffffff, 1, 20 );
+			scene.add( light );
+			light.position.set( 0, 0, 16 );
+			
+			
+			var geometry = new THREE.SphereGeometry( 1, 32, 32 );
+			var material = new THREE.MeshPhongMaterial( {
+				map: THREE.ImageUtils.loadTexture( 'images/jupiterTexture.jpg', THREE.SphericalRefractionMapping ) 
+				//color: new THREE.Color( 0x0000ff )
+			} );
+			var sphere = new THREE.Mesh( geometry, material );
+			scene.add( sphere );
+			
+			n = 0;
 
-<div class="full">
-	<div class="gif">
-		<h1>MOOMATH</h1>
-		<p>Source: <a href="programs/0006/">3D Planet Simulator</a><br>Scroll down for more</p>
-	</div>
-</div>
+			function draw() {
+				requestAnimationFrame( draw );
+				sphere.rotation.set( 0, n, 0 );
+				n += 0.001;
+				renderer.render( scene, camera );
+			};
 
-<div class="parallax">
-	<div class="screen"></div>
-	<div class="layer" style="background-image: url(images/fractal.jpg);">
-		<h1>Featured Math Article</h1>
-		<p><strong>Base-Motif Fractals</strong><br>A Base-Motif Fractal is a self-similar shape, or fractal, determined by two shapes: a base curve, and a motif. The base curve is not a "curve" in the ordinary sense of a curve; in fact, it is composed of straight lines. To produce the associated fractal, we translate, rotate, and scale the motif, also composed of straight lines, and replace each of the lines in the base curve with a transformed, but geometrically similar, motif. We do the same thing with the resulting curve, again and again, to infinity. Let's see this process&hellip;</p>
-		<button onclick="location.href='fractals/0003'">Read More</button><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	</div>
-</div>
-
-<div class="parallax">
-	<div class="screen"></div>
-	<div class="layer" style="background-image: url(images/green.png);">
-		<h1>Featured Music Article</h1>
-		<p><strong>Time Signature Metronome</strong><br>This online metronome has the ability to play any time signature. Its capabilities include having different polymeters, different measures, and swung eighth notes.</p>
-		<button onclick="location.href='programs/0003'">To Program</button>
-	</div>
-</div>
-
-<div class="parallax">
-	<div class="screen"></div>
-	<div class="layer" style="background-image: url(images/team.jpg);">
-		<h1>Contribute!</h1>
-		<p>We would love if you want to contribute an article! You don't have to be an excellent programmer; novel ideas are appreciated. If you'd actually like to write or fix some code, please fork this the repository and make a pull request.</p>
-		<button onclick="location.href='https://github.com/Nichodon/nichodon.github.io'">Repository</button>
-	</div>
-</div>
-
-<div class="parallax">
-	<div class="screen"></div>
-	<div class="layer" style="background-image: url(programs/0006/images/marsTexture.jpg);">
-		<h1>Who We Are</h1>
-		<p>In this website, we post articles on various cool math things. We're two high school freshmen who share a love of programming, music, math, and, well, anything nerdy and our goal for this website is to provide nice visualizations for math and computer science. We wish to feature unique projects that no one else has done. </p>
-		<button onclick="location.href='about/'">About Us</button>
-	</div>
-</div>
-
-<div id="bottom"></div>
-
-<script src="frame.js"></script>
-
-<script>
-	var topnav = document.getElementsByClassName("topnav")[0];
-	topnav.style.display = "none";
-
-	var header = document.getElementsByClassName("header")[0];
-	header.style.display = "none";
-
-	var sticky = document.getElementById("sticky");
-	sticky.style.display = "inline";
-	sticky.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-
-	var gif = document.getElementsByClassName("gif")[0];
-	gif.childNodes[1].style.transform = "translate(0%, 50%)";
-	gif.childNodes[3].style.transform = "translate(0%, -10%)";
-	gif.childNodes[3].style.transition = "0.2s";
-	
-	var parallax = document.getElementsByClassName("parallax");
-
-	window.onscroll = function() {
-		sticky.style.display = "inline";
-		var rate = window.scrollY * 25 / gif.offsetHeight;
-		gif.style.transform = "translate(0%, " + rate + "%)";
-		
-		for (var i = 0; i < parallax.length; i++) {
-			var p = parallax[i];
-			var imageSrc = p.children[1].style.backgroundImage.replace(/url\((['"])?(.*?)\1\)/gi, '$2').split(',')[0];
-			var image = new Image();
-			image.src = imageSrc;
-			var imgc = image.height / image.width;
-			var winc = window.innerHeight / window.innerWidth;
-			if (winc < imgc) {
-				p.children[1].style.backgroundSize = "auto 100%";
-			} else {
-				p.children[1].style.backgroundSize = "100% auto";
-			}
-		}
-		
-		gif.childNodes[1].style.transform = "translate(0%, " + (50 - (rate * 1.5)) + "%)";
-		gif.childNodes[3].style.transform = "translate(0%, " + (-10 - (rate * 2)) + "%)";
-
-		if (window.scrollY === 0) {
-			gif.childNodes[3].style.opacity = 1;
-		}
-		else {
-			gif.childNodes[3].style.opacity = 0;
-		}
-		if (window.scrollY > gif.offsetHeight) {
-			sticky.style.backgroundColor = "#fff";
-		}
-		else {
-			sticky.style.backgroundColor = "rgba(255, 255, 255, 0.8)";
-		}
-	}
-</script>
-
-</body>
+			draw();
+		</script>
+	</body>
 </html>
