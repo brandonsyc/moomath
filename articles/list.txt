@@ -4,3 +4,4 @@ Base-Motif Fractals - 6 July, 2017 - anematode - 0003
 The Lévy C curve - 8 July, 2017 - anematode - 0004
 Is goto Ever Justified? - 22 November, 2017 - anematode - 0005
 Square Graphing - 9 March, 2018 - Nichodon - 0006
+Introduction to Temperament - 15 April, 2018 - anematode - 0007
