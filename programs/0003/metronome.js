@@ -147,10 +147,10 @@ function init() {
 
     bufferLoader = new BufferLoader(context,
                                     [
-                                     'https://nichodon.github.io/programs/0003/sounds/click1.wav',
-                                     'https://nichodon.github.io/programs/0003/sounds/click2.wav',
-                                     'https://nichodon.github.io/programs/0003/sounds/click3.wav',
-                                     'https://nichodon.github.io/programs/0003/sounds/accent1.wav'
+                                     'sounds/click1.wav',
+                                     'sounds/click2.wav',
+                                     'sounds/click3.wav',
+                                     'sounds/accent1.wav'
                                      ],
                                     finishedLoading
                                     );

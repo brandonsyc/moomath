@@ -90,33 +90,8 @@ Of course, a natural question is: what happens when you change the function \(f_
 
 ::fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
 
-Beautiful. They share certain characteristics... but they're all different. In our next article, we examine paths of iteration, fixed points, and other properties of various fractals.
-
-Now, let's see how these images were generated in code. My language of choice was <a href="http://www.cplusplus.com/" target="_blank">C++</a>, but any language with a complex number type will do with this method.
-
-First, we define our constants. These are 1. the image's height and width, 2. the bounds on the real axis, 3. the bounds on the imaginary axis, 4. the number of iterations to execute, and 5. the "escape radius," or the magnitude of the complex number where it is treated as if it will go to infinity. For taking a picture of the Mandelbrot set, the following settings are suitable, but you may want to adjust them for greater accuracy. For example, if the fractal boundary is too smooth, increasing the iteration count might help. For most fractals, an escape radius of 2 is too small, so set it to some number like 50 for fractals besides the Mandelbrot set. Changing the real and imaginary boundaries allow us to look at different parts of a fractal, including creating zooms into fractals, which we will consider in another article.
-
-::code::
-const int w = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Width, in pixels, of the output image
-const int h = 2048; &nbsp; &nbsp; &nbsp; &nbsp; // Height, in pixels, of the output image
-
-const float re_min = -2.5;&nbsp; // Real value of the left edge of the image
-const float re_max = 1.5; &nbsp; // Real value of the right edge of the image
-const float im_min = -2; &nbsp;&nbsp; // Imaginary value of the bottom edge of the image
-const float im_max = 2; &nbsp; &nbsp; // Imaginary value of the top edge of the image
-
-const int iterations = 255; // Number of iterations required to assume boundedness under iteration
-const int escaperadius = 2; // Critical radius determining non-boundedness under iteration
-::
-
-Now, we define two constants that will be used later in the program. Color decrement decreases the color intensity by the appropriate amount such that by the end of all iterations, if the number is in the fractal, the intensity will be 0.
-
-::code::
-const float colordecrement = 250.0/iterations; &nbsp; &nbsp; &nbsp; &nbsp; // Change in pixel darkness after each iteration
-const int radiussquared = escaperadius * escaperadius;
-::
-
-Hopefully this has been a good introduction to fractals in the complex plane!</div>
+Beautiful. They share certain characteristics... but they're all different.
+</div>
 
 
 		<script>path = "0001";</script>
