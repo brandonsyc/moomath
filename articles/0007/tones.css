@@ -1,22 +1,14 @@
 .middle {
-    margin: 0 auto;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
-
-.content-f {
-    overflow: visible;
+.staff-cf {
+	align-items: center;
+	display: flex;
+	justify-content: center;
 }
-
-.staff-play {
-    display: inline-block;
-}
-
-.sound-vis {
-    float: right;
-}
-
 .staff {
-    display: inline-flex;
+	margin-right: 50px;
 }

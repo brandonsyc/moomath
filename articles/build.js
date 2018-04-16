@@ -2,7 +2,7 @@ var path;
 var array = document.getElementById("data").innerHTML.split("\n");
 
 var rf2 = new XMLHttpRequest();
-rf2.open("GET", "/articles/list.txt", false);
+rf2.open("GET", "https://moomath.com/articles/list.txt", false);
 rf2.onreadystatechange = function () {
 	"use strict";
 	if (rf2.readyState === 4) {
