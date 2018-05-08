@@ -70,23 +70,23 @@
             </div>
             <div>
                 <p>Source X Offset:</p>
-                <input type="number" onInput="sx(this)">
+                <input type="number" onInput="sx(this)" step="10" value="0">
                 <p>Source Y Offset:</p>
-                <input type="number" onInput="sy(this)">
+                <input type="number" onInput="sy(this)" step="10" value="0">
                 <p>Source Scale (%):</p>
-                <input type="number" onInput="sd(this)">
+                <input type="number" onInput="sd(this)" value="100">
             </div>
             <div>
                 <p>Hand X Offset:</p>
-                <input type="number" onInput="hx(this)">
+                <input type="number" onInput="hx(this)" step="10" value="0">
                 <p>Hand Y Offset:</p>
-                <input type="number" onInput="hy(this)">
+                <input type="number" onInput="hy(this)" step="10" value="0">
                 <p>Hand Scale (%):</p>
-                <input type="number" onInput="hd(this)">
+                <input type="number" onInput="hd(this)" value="100">
             </div>
             <div>
                 <p>Output Size:</p>
-                <input type="number" onInput="dilate(this)">
+                <input type="number" onInput="dilate(this)" value="128">
             </div>
         </div>
         <canvas width="256" height="256" id="canvas"></canvas>
