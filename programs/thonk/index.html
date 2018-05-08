@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Untitled Document</title>
+        
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Open+Sans');
+            * {
+                font-family: "Open Sans";
+                font-size: 14px;
+                margin: 0;
+            }
+            .controls {
+                display: flex;
+                padding: 10px;
+            }
+            .controls * {
+                margin-right: 5px;
+            }
+            p {
+                align-self: center;
+            }
+            input[type=file] {
+                display: none;
+            }
+            input[type=number] {
+                padding-left: 5px;
+                width: 50px;
+            }
+            button {
+                border: none;
+            }
+            label,
+            button {
+                background-color: #08b;
+                color: #fff;
+                padding: 10px;
+                transition: 0.1s;
+            }
+            label:hover,
+            button:hover {
+                background-color: #07a;
+            }
+            canvas {
+                border: 1px solid black;
+                margin-left: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="controls">
+            <input type="file" onChange="thing()" id="file">
+            <label for="file">Change Source</label>
+            <button onClick="change()">Flip Source</button>
+            <button onClick="th()">Toggle Hand</button>
+            <button onClick="tf()">Toggle Face</button>
+            <p>Source X Offset:</p>
+            <input type="number" onInput="sx(this)">
+            <p>Source Y Offset:</p>
+            <input type="number" onInput="sy(this)">
+            <p>Output Size:</p>
+            <input type="number" onInput="dilate(this)">
+        </div>
+        <canvas width="256" height="256" id="canvas"></canvas>
+        <script>
+            var size = 256;
+            
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            
+            var hand = new Image();
+            hand.src = "hand.png";
+            
+            var face = new Image();
+            face.src = "face.png";
+            
+            var flipped = false;
+            var toggle = [true, false];
+            var offset = [[0, 0], [0, 0], [0, 0]];
+            
+            var img = new Image();
+            
+            function update() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                flip(img);
+                if (toggle[0]) {
+                    ctx.drawImage(hand, 0, 0, size, size);
+                }
+                if (toggle[1]) {
+                    ctx.drawImage(face, 0, 0, size, size);
+                }
+            }
+            
+            function thing() {
+                var file = document.getElementById("file").files[0];
+                var reader = new FileReader();
+
+                reader.onloadend = function() {
+                    img.src = reader.result;
+                    img.onload = function() {
+                        update();
+                    }
+                };
+
+                if (file) {
+                    reader.readAsDataURL(file);
+                }
+            }
+            
+            function flip(i) {
+                if (flipped) {
+                    ctx.save();
+                    ctx.scale(-1, 1);
+                    ctx.drawImage(i, offset[0][0], offset[0][1], -size, size);
+                    ctx.restore();
+                }
+                else {
+                    ctx.drawImage(i, offset[0][0], offset[0][1], size, size);
+                }
+            }
+            
+            function change() { flipped = !flipped; update(); }
+            function th() { toggle[0] = !toggle[0]; update(); }
+            function tf() { toggle[1] = !toggle[1]; update(); }
+            
+            function sx(e) { offset[0][0] = e.value; update(); }
+            function sy(e) { offset[0][1] = e.value; update(); }
+            
+            function dilate(e) {
+                if (e.value > 0 && e.value <= 1028) {
+                    canvas.width = e.value;
+                    canvas.height = e.value;
+                    size = e.value;
+                    update();
+                }
+            }
+        </script>
+    </body>
+</html>
