@@ -55,11 +55,14 @@
             <label for="file">Change Source</label>
             <button onClick="change()">Flip Source</button>
             <button onClick="th()">Toggle Hand</button>
-            <button onClick="tf()">Toggle Face</button>
             <p>Source X Offset:</p>
             <input type="number" onInput="sx(this)">
             <p>Source Y Offset:</p>
             <input type="number" onInput="sy(this)">
+            <p>Hand X Offset:</p>
+            <input type="number" onInput="hx(this)">
+            <p>Hand Y Offset:</p>
+            <input type="number" onInput="hy(this)">
             <p>Output Size:</p>
             <input type="number" onInput="dilate(this)">
         </div>
@@ -86,7 +89,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 flip(img);
                 if (toggle[0]) {
-                    ctx.drawImage(hand, 0, 0, size, size);
+                    ctx.drawImage(hand, offset[1][0], offset[1][1], size, size);
                 }
                 if (toggle[1]) {
                     ctx.drawImage(face, 0, 0, size, size);
@@ -127,6 +130,9 @@
             
             function sx(e) { offset[0][0] = e.value; update(); }
             function sy(e) { offset[0][1] = e.value; update(); }
+            
+            function hx(e) { offset[1][0] = e.value; update(); }
+            function hy(e) { offset[1][1] = e.value; update(); }
             
             function dilate(e) {
                 if (e.value > 0 && e.value <= 1028) {
