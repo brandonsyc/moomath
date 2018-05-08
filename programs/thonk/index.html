@@ -86,8 +86,16 @@
                 <input type="number" onInput="hd(this)" value="100">
             </div>
             <div>
+                <p>Face X Offset:</p>
+                <input type="number" onInput="fx(this)" step="10" value="0">
+                <p>Face Y Offset:</p>
+                <input type="number" onInput="fy(this)" step="10" value="0">
+                <p>Face Scale (%):</p>
+                <input type="number" onInput="fd(this)" value="100">
+            </div>
+            <div>
                 <p>Output Size:</p>
-                <input type="number" onInput="dilate(this)" value="128">
+                <input type="number" onInput="dilate(this)" value="256">
             </div>
         </div>
         <canvas width="256" height="256" id="canvas"></canvas>
@@ -99,6 +107,9 @@
             
             var hand = new Image();
             hand.src = "hand.png";
+            hand.onload = function() {
+                update();
+            };
             
             var face = new Image();
             face.src = "face.png";
@@ -112,11 +123,11 @@
             function update() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 flip(img);
+                if (toggle[1]) {
+                    ctx.drawImage(face, offset[2][0], offset[2][1], size * offset[2][2] / 100, size * offset[2][2] / 100);
+                }
                 if (toggle[0]) {
                     ctx.drawImage(hand, offset[1][0], offset[1][1], size * offset[1][2] / 100, size * offset[1][2] / 100);
-                }
-                if (toggle[1]) {
-                    ctx.drawImage(face, 0, 0, size, size);
                 }
             }
             
@@ -159,6 +170,10 @@
             function hx(e) { offset[1][0] = e.value; update(); }
             function hy(e) { offset[1][1] = e.value; update(); }
             function hd(e) { offset[1][2] = e.value; update(); }
+            
+            function fx(e) { offset[2][0] = e.value; update(); }
+            function fy(e) { offset[2][1] = e.value; update(); }
+            function fd(e) { offset[2][2] = e.value; update(); }
             
             function dilate(e) {
                 if (e.value > 0 && e.value <= 1028) {
