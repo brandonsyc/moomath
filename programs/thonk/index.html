@@ -13,18 +13,24 @@
             }
             .controls {
                 display: flex;
+                flex-direction: column;
                 padding: 10px;
             }
             .controls * {
                 margin-right: 5px;
             }
-            p {
+            .controls div {
+                display: flex;
+                margin: 5px 0;
+            }
+            .controls div p {
                 align-self: center;
             }
             input[type=file] {
                 display: none;
             }
             input[type=number] {
+                height: 39px;
                 padding-left: 5px;
                 width: 50px;
             }
@@ -46,25 +52,42 @@
                 border: 1px solid black;
                 margin-left: 10px;
             }
+            br { 
+                display: block;
+                width: 100%;
+            }
         </style>
     </head>
 
     <body>
         <div class="controls">
-            <input type="file" onChange="thing()" id="file">
-            <label for="file">Change Source</label>
-            <button onClick="change()">Flip Source</button>
-            <button onClick="th()">Toggle Hand</button>
-            <p>Source X Offset:</p>
-            <input type="number" onInput="sx(this)">
-            <p>Source Y Offset:</p>
-            <input type="number" onInput="sy(this)">
-            <p>Hand X Offset:</p>
-            <input type="number" onInput="hx(this)">
-            <p>Hand Y Offset:</p>
-            <input type="number" onInput="hy(this)">
-            <p>Output Size:</p>
-            <input type="number" onInput="dilate(this)">
+            <p><br>Hi! This is Nichodon from Moomath. Here I've created something a bit... different :P.<br>It's a thinker machine! Right click on the final image to save.<br><br></p>
+            <div>
+                <input type="file" onChange="thing()" id="file">
+                <label for="file">Change Source</label>
+                <button onClick="change()">Flip Source</button>
+                <button onClick="th()">Toggle Hand</button>
+            </div>
+            <div>
+                <p>Source X Offset:</p>
+                <input type="number" onInput="sx(this)">
+                <p>Source Y Offset:</p>
+                <input type="number" onInput="sy(this)">
+                <p>Source Scale (%):</p>
+                <input type="number" onInput="sd(this)">
+            </div>
+            <div>
+                <p>Hand X Offset:</p>
+                <input type="number" onInput="hx(this)">
+                <p>Hand Y Offset:</p>
+                <input type="number" onInput="hy(this)">
+                <p>Hand Scale (%):</p>
+                <input type="number" onInput="hd(this)">
+            </div>
+            <div>
+                <p>Output Size:</p>
+                <input type="number" onInput="dilate(this)">
+            </div>
         </div>
         <canvas width="256" height="256" id="canvas"></canvas>
         <script>
@@ -81,7 +104,7 @@
             
             var flipped = false;
             var toggle = [true, false];
-            var offset = [[0, 0], [0, 0], [0, 0]];
+            var offset = [[0, 0, 100], [0, 0, 100], [0, 0, 100]];
             
             var img = new Image();
             
@@ -89,7 +112,7 @@
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 flip(img);
                 if (toggle[0]) {
-                    ctx.drawImage(hand, offset[1][0], offset[1][1], size, size);
+                    ctx.drawImage(hand, offset[1][0], offset[1][1], size * offset[1][2] / 100, size * offset[1][2] / 100);
                 }
                 if (toggle[1]) {
                     ctx.drawImage(face, 0, 0, size, size);
@@ -130,9 +153,11 @@
             
             function sx(e) { offset[0][0] = e.value; update(); }
             function sy(e) { offset[0][1] = e.value; update(); }
+            function sd(e) { offset[0][2] = e.value; update(); }
             
             function hx(e) { offset[1][0] = e.value; update(); }
             function hy(e) { offset[1][1] = e.value; update(); }
+            function hd(e) { offset[1][2] = e.value; update(); }
             
             function dilate(e) {
                 if (e.value > 0 && e.value <= 1028) {
