@@ -139,7 +139,7 @@ TONES = (function(exports) {
         oscillatorGainNode.connect(gainNode);
 
         oscillator.frequency.setValueAtTime(frequency, curr);
-        oscillator.start(curr + start - padding);
+        oscillator.start(curr + start);
 
         oscillatorGainNode.gain.setTargetAtTime(0, curr, 0);
         oscillatorGainNode.gain.setTargetAtTime(0.3, curr + start, padding);
@@ -161,10 +161,12 @@ TONES = (function(exports) {
 
     function setNoteColor(note, color) {
         return function() {
-            children = note.attrs.el.children[0].children;
-            for (var s = 0; s < children.length; s++) {
-                children[s].children[0].setAttribute('fill', color);
-            }
+            try {
+                children = note.attrs.el.children[0].children;
+                for (var s = 0; s < children.length; s++) {
+                    children[s].children[0].setAttribute('fill', color);
+                }
+            } catch (e) {}
         }
     }
 
