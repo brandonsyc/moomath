@@ -60,17 +60,18 @@ add(0, 15, 0, -0.15, -0.1, 0.5, 1, 1, 0x00ff00);
 add(50, 0, 0, 0.05, -0.015, 0.4, 0, 0.5, 0xff0000);
 add(40, 0, 0, 0.05, 0.01, 0.5, 0, 0.5, 0xff0000);THREE.ImageUtils.crossOrigin = '';
 
-    var geometry = new THREE.SphereGeometry( 100, 32, 32 );
+    var geometry = new THREE.SphereGeometry( 1000, 32, 32 );
     var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'https://nichodon.github.io/programs/extremethreed/map.jpg')  } );
-    var sphere = new THREE.Mesh( geometry, material );
-    sphere.material.side = THREE.BackSide;
-    scene.add( sphere );
+    var sky = new THREE.Mesh( geometry, material );
+    sky.material.side = THREE.BackSide;
+    scene.add( sky );
 
 function animate() {
     "use strict";
 	requestAnimationFrame( animate );
     
     light.position.copy( camera.position );
+    sky.position.copy( camera.position );
     
     for (var i = 0; i < bodies.length; i++) {
         var body = bodies[i];
