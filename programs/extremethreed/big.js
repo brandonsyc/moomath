@@ -44,6 +44,7 @@ function calc(b1, b2) {
 }
 
 var bodies = [];
+var selected;
 
 function add(px, py, pz, vx, vy, vz, mass, size, color) {
     "use strict";
@@ -58,18 +59,23 @@ function add(px, py, pz, vx, vy, vz, mass, size, color) {
 add(0, 0, 0, 0.015, 0.01, -0.05, 10, 2, 0x00ffff);
 add(0, 15, 0, -0.15, -0.1, 0.5, 1, 1, 0x00ff00);
 add(50, 0, 0, 0.05, -0.015, 0.4, 0, 0.5, 0xff0000);
-add(40, 0, 0, 0.05, 0.01, 0.5, 0, 0.5, 0xff0000);THREE.ImageUtils.crossOrigin = '';
+add(40, 0, 0, 0.05, 0.01, 0.5, 0, 0.5, 0xff0000);
+selected = bodies[0].obj;
 
-    var geometry = new THREE.SphereGeometry( 1000, 32, 32 );
-    var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'https://nichodon.github.io/programs/extremethreed/map.jpg')  } );
-    var sky = new THREE.Mesh( geometry, material );
-    sky.material.side = THREE.BackSide;
-    scene.add( sky );
+THREE.ImageUtils.crossOrigin = '';
+
+var geometry = new THREE.SphereGeometry( 1000, 32, 32 );
+var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'https://nichodon.github.io/programs/extremethreed/map.jpg'), opacity: 0.5, transparent: true  } );
+var sky = new THREE.Mesh( geometry, material );
+sky.material.side = THREE.BackSide;
+scene.add( sky );
 
 function animate() {
     "use strict";
 	requestAnimationFrame( animate );
     
+    controls.target = selected.position;
+    controls.update();
     light.position.copy( camera.position );
     sky.position.copy( camera.position );
     
