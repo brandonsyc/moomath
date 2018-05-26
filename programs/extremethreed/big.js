@@ -1,7 +1,9 @@
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-camera.position.z = 100;
+camera.position.y = 50;
+
+var controls = new THREE.OrbitControls( camera );
 
 var renderer = new THREE.WebGLRenderer( { antialias: true } );
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -58,10 +60,17 @@ add(0, 15, 0, -0.15, -0.1, 0.5, 1, 1, 0x00ff00);
 add(50, 0, 0, 0.05, -0.015, 0.4, 0, 0.5, 0xff0000);
 add(40, 0, 0, 0.05, 0.01, 0.5, 0, 0.5, 0xff0000);THREE.ImageUtils.crossOrigin = '';
 
+    var geometry = new THREE.SphereGeometry( 100, 32, 32 );
+    var material = new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'https://nichodon.github.io/programs/extremethreed/map.jpg')  } );
+    var sphere = new THREE.Mesh( geometry, material );
+    sphere.material.side = THREE.BackSide;
+    scene.add( sphere );
 
 function animate() {
     "use strict";
 	requestAnimationFrame( animate );
+    
+    light.position.copy( camera.position );
     
     for (var i = 0; i < bodies.length; i++) {
         var body = bodies[i];
@@ -70,7 +79,7 @@ function animate() {
         body.obj.position.z = body.pz;
     
         for (var j = 0; j < bodies.length; j++) {
-            if (j != i) {
+            if (j != i && bodies[j].mass > 0) {
                 calc(body, bodies[j]);
             }
         }
