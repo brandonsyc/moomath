@@ -43,19 +43,21 @@ function calc(b1, b2) {
 
 var bodies = [];
 
-var geometry = new THREE.SphereGeometry( 5, 32, 32 );
-var material = new THREE.MeshPhongMaterial( {color: 0x00ffff} );
-var sphere = new THREE.Mesh( geometry, material );
-scene.add( sphere );
+function add(px, py, pz, vx, vy, vz, mass, size, color) {
+    "use strict";
+    var geometry = new THREE.SphereGeometry( size, 32, 32 );
+    var material = new THREE.MeshLambertMaterial( {color: color} );
+    var sphere = new THREE.Mesh( geometry, material );
+    scene.add( sphere );
 
-bodies.push(new Body(0, 0, 0, 0.01, 0, -0.015, 10, sphere));
+    bodies.push(new Body(px, py, pz, vx, vy, vz, mass, sphere));
+}
 
-var geometry = new THREE.SphereGeometry( 2, 32, 32 );
-var material = new THREE.MeshPhongMaterial( {color: 0x00ff00} );
-var sphere = new THREE.Mesh( geometry, material );
-scene.add( sphere );
+add(0, 0, 0, 0.015, 0.01, -0.05, 10, 2, 0x00ffff);
+add(0, 15, 0, -0.15, -0.1, 0.5, 1, 1, 0x00ff00);
+add(50, 0, 0, 0.05, -0.015, 0.4, 0, 0.5, 0xff0000);
+add(40, 0, 0, 0.05, 0.01, 0.5, 0, 0.5, 0xff0000);THREE.ImageUtils.crossOrigin = '';
 
-bodies.push(new Body(0, 60, 0, -0.1, 0, 0.15, 1, sphere));
 
 function animate() {
     "use strict";
