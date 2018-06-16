@@ -1,3 +1,4 @@
+const atoms = ['H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Nh', 'Fl', 'Mc', 'Lv', 'Ts', 'Og'];
 const gaps = [Array.from(new Array(17), (x,i) => i + 1),
               Array.from(new Array(11), (x,i) => i + 2),
               Array.from(new Array(11), (x,i) => i + 2),
@@ -8,6 +9,7 @@ const gaps = [Array.from(new Array(17), (x,i) => i + 1),
 console.log(gaps);
 
 const svgns = "http://www.w3.org/2000/svg";
+let n = 0;
 for (let i = 0; i < 10; i++) {
     for (let j = 0; j < 19; j++) {
         if (gaps[i].indexOf(j) < 0) {
@@ -40,6 +42,24 @@ for (let i = 0; i < 10; i++) {
             }
             rect.setAttributeNS(null, 'fill', '#' + color.toString(16).padStart(6, '0'));
             document.getElementById('table').appendChild(rect);
+            
+            let text = document.createElementNS(svgns, 'text');
+            text.setAttributeNS(null, 'x', j * 100 + 50);
+            text.setAttributeNS(null, 'y', i * 100 + 50);
+            text.setAttributeNS(null, 'alignment-baseline', 'middle');
+            text.setAttributeNS(null, 'text-anchor', 'middle');
+            text.textContent = atoms[n];
+            document.getElementById('table').appendChild(text);
+            
+            if (j === 2 && (i === 5 || i === 6)) {
+                n += 15;
+            } else if (j === 17 && i === 8) {
+                n = 89;
+            } else if (n === 117) {
+                n = 57;
+            } else {
+                n++;
+            }
         }
     }
 }
