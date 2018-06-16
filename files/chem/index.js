@@ -24,9 +24,13 @@ request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%
         request(url, function(error, response) {
             let nested = JSON.parse(response.body)
             let wiki = nested['entities'][url.split('/')[4]]['claims']
+
             let keys = Object.keys(props)
             let inside = {}
             let valid = true
+            
+            let name = nested['entities'][url.split('/')[4]]['labels']['en']['value']
+
             for (let j = 0; j < keys.length; j++) {
                 if (wiki[keys[j]] === undefined) {
                     if (all.indexOf(keys[j]) >= 0) {
@@ -44,15 +48,20 @@ request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%
                             let u2 = value['unit']
                             request(u2, function(e2, r2) {
                                 let n2 = JSON.parse(r2.body)
+                                let w2 = n2['entities'][u2.split('/')[4]]['claims']['P2370'][0]['mainsnak']['datavalue']['value']['amount']
+                                inside['HLU'] = w2
+                                edit(name, inside)
                             })
+
                         }
                     }
                 }
             }
             if (valid) {
-                edit(nested['entities'][url.split('/')[4]]['labels']['en']['value'], inside)
+                edit(name, inside)
             }
         })
+
     }
 })
 
