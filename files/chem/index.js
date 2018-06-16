@@ -42,9 +42,22 @@ request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%
                         inside[props[keys[j]]] = ''
                     } else {
                         let value = wiki[keys[j]][0]['mainsnak']['datavalue']['value']
-                        inside[props[keys[j]]] = value['id'] || value['amount']
-                        if (keys[j] == 'P2114') {
-                            inside['HLU'] = value['unit']
+                        if (keys[j] === 'P816') {
+
+                            let u2 = 'http://www.wikidata.org/entity/' + value['id']
+                            request(u2, function(e2, r2) {
+                                let n2 = JSON.parse(r2.body)
+                                let w2 = n2['entities'][value['id']]['labels']['en']['value']
+                                inside['Daughter'] = w2
+                                edit(name, inside)
+                            })
+
+                        } else {
+                            inside[props[keys[j]]] = value['amount']
+                        }
+
+                        if (keys[j] === 'P2114') {
+
                             let u2 = value['unit']
                             request(u2, function(e2, r2) {
                                 let n2 = JSON.parse(r2.body)
