@@ -45,14 +45,26 @@ for (let i = 0; i < 10; i++) {
             rect.setAttributeNS(null, 'fill', '#' + color.toString(16).padStart(6, '0'));
             document.getElementById('table').appendChild(rect);
             
-            let text = document.createElementNS(svgns, 'text');
-            text.setAttributeNS(null, 'x', j * 100 + 50);
-            text.setAttributeNS(null, 'y', i * 100 + 50);
-            text.setAttributeNS(null, 'opacity', 0.9);
-            text.setAttributeNS(null, 'alignment-baseline', 'middle');
-            text.setAttributeNS(null, 'text-anchor', 'middle');
-            text.textContent = atoms[n];
+            let text = tt(j * 100 + 10, i * 100 + 40, atoms[n], 'start');
             document.getElementById('table').appendChild(text);
+            text.classList.add('huge');
+            
+            let state = '';
+            if (n > 98) {
+                state = '?';
+            } else if ((j === 12 && i === 5) || (j === 17 && i === 3)) {
+                state = 'Liquid';
+            } else if (j - i > 14 || (j === 0 && i === 0) || (j === 15 && i === 1) || j === 18) {
+                state = 'Gas';
+            } else {
+                state = 'Solid';
+            }
+            let second = tt(j * 100 + 90, i * 100 + 90, state, 'end');
+            document.getElementById('table').appendChild(second);
+            second = tt(j * 100 + 90, i * 100 + 70, state, 'end');
+            document.getElementById('table').appendChild(second);
+            second = tt(j * 100 + 90, i * 100 + 50, state, 'end');
+            document.getElementById('table').appendChild(second);
             
             if (j === 2 && (i === 5 || i === 6)) {
                 n += 15;
@@ -65,4 +77,13 @@ for (let i = 0; i < 10; i++) {
             }
         }
     }
+}
+
+function tt(x, y, t, a) {
+    let out = document.createElementNS(svgns, 'text');
+    out.setAttributeNS(null, 'x', x);
+    out.setAttributeNS(null, 'y', y);
+    out.textContent = t;
+    out.setAttributeNS(null, 'text-anchor', a);
+    return out;
 }
