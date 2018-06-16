@@ -3,7 +3,7 @@
 server/build.html
 programs/0006/server/astSearch
 *.pyc
-.idea/misc.xml
-.idea/modules.xml
-.idea/nichodon.github.io.iml
-.idea/workspace.xml
+
+.idea/*
+files/chem/node_modules
+files/chem/*.json
