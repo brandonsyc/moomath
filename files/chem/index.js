@@ -3,10 +3,21 @@ let query = 'Q556'
 const fs = require('fs')
 
 let thing
+let props = {
+    'P816': 'Daughter',
+    'P1086': 'Protons',
+    'P1122': 'Spin',
+    'P1123': 'Parity',
+    'P1148': 'Neutrons',
+    'P2067': 'Mass',
+    'P2114': 'Half-Life',
+    'P2374': 'Abundance'
+}
 
 fs.readFile("props.json", function(e, data) {
   thing = JSON.parse(data)
 })
+let all = ['P1086', 'P1148', 'P2067']
 
 const request = require('request')
 
