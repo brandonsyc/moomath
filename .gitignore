@@ -7,3 +7,4 @@ programs/0006/server/astSearch
 .idea/*
 files/chem/node_modules
 files/chem/*.json
+files/chem/data
