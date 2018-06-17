@@ -17,20 +17,40 @@ let queries = []
 const request = require('request')
 const fs = require('fs')
 
-request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP31%20wd%3AQ11344.%20%7D&format=json', function(error, response) {
-    let json = JSON.parse(response.body)
-    for (let i = 0; i < 5; i++) {
-        generate(json['results']['bindings'][i]['a']['value'].split('/')[4])
-    }
-})
+function wait() { 
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve()
+      }, 100)
+    })
+}
 
-function generate(q) {
+function start() {
+    request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP31%20wd%3AQ11344.%20%7D&format=json', async function(error, response) {
+        let json = JSON.parse(response.body)
+        for (let i = 0; i < 118; i++) {
+            generate(json['results']['bindings'][i]['a']['value'].split('/')[4], i + 1)
+            await wait()
+        }
+    })
+}
+
+start()
+
+function generate(q, n) {
+    console.log('Generating ' + n + ': ' + q + '...')
     request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP279%20wd%3A' + q + '.%20%7D&format=json', function(error, response) {
+        if (response === undefined) {
+            return
+        }
         let json = JSON.parse(response.body)
         for (let i = 0; i < json['results']['bindings'].length; i++) {
             
             let url = json['results']['bindings'][i]['a']['value']
             request(url, function(error, response) {
+                if (response === undefined || response.body.startsWith('<') || response.body.startsWith('[')) {
+                    return
+                }
                 let nested = JSON.parse(response.body)
                 let wiki = nested['entities'][url.split('/')[4]]['claims']
 
@@ -38,7 +58,13 @@ function generate(q) {
                 let inside = {}
                 let valid = true
                 
-                let name = nested['entities'][url.split('/')[4]]['labels']['en']['value']
+                let name = ''
+                if (nested['entities'][url.split('/')[4]]['labels']['en'] === undefined) {
+                    console.log(q)
+                    return
+                } else {
+                    name = nested['entities'][url.split('/')[4]]['labels']['en']['value']
+                }
 
                 for (let j = 0; j < keys.length; j++) {
                     if (wiki[keys[j]] === undefined) {
@@ -55,10 +81,13 @@ function generate(q) {
 
                                 let u2 = 'http://www.wikidata.org/entity/' + value['id']
                                 request(u2, function(e2, r2) {
+                                    if (r2 === undefined || r2.body.startsWith('<') || r2.body.startsWith('[')) {
+                                        return
+                                    }
                                     let n2 = JSON.parse(r2.body)
                                     let w2 = n2['entities'][value['id']]['labels']['en']['value']
                                     inside['Daughter'] = w2
-                                    edit(name, inside)
+                                    edit(name, inside, n)
                                 })
 
                             } else {
@@ -68,11 +97,14 @@ function generate(q) {
                             if (keys[j] === 'P2114') {
 
                                 let u2 = value['unit']
-                                request(u2, function(e2, r2) {
+                                request(u2, function(e2, r2, b2) {
+                                    if (r2 === undefined || r2.body.startsWith('<') || r2.body.startsWith('[')) {
+                                        return
+                                    }
                                     let n2 = JSON.parse(r2.body)
                                     let w2 = n2['entities'][u2.split('/')[4]]['claims']['P2370'][0]['mainsnak']['datavalue']['value']['amount']
                                     inside['HLU'] = w2
-                                    edit(name, inside)
+                                    edit(name, inside, n)
                                 })
 
                             }
@@ -80,7 +112,7 @@ function generate(q) {
                     }
                 }
                 if (valid) {
-                    edit(name, inside)
+                    edit(name, inside, n)
                 }
             })
 
@@ -88,9 +120,12 @@ function generate(q) {
     })
 }
 
-function edit(k, v) {
-    data[k] = v
+function edit(k, v, n) {
+    if (!data[n]) {
+        data[n] = {}
+    }
+    data[n][k] = v
 
-    let jjjj = JSON.parse(JSON.stringify(data))
-    fs.writeFile("test.json", JSON.stringify(jjjj, null, '\t'), function(err) {})
+    let jjjj = JSON.parse(JSON.stringify(data[n]))
+    fs.writeFile('data/' + n + '.json', JSON.stringify(jjjj, null, '\t'), function(err) {})
 }
