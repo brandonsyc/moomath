@@ -25,12 +25,26 @@ function wait() {
     })
 }
 
+let index = {}
+
 function start() {
-    request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP31%20wd%3AQ11344.%20%7D&format=json', async function(error, response) {
+    request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP31%20wd%3AQ11344.%20%7D&format=json', function(error, response) {
         let json = JSON.parse(response.body)
-        for (let i = 0; i < 118; i++) {
-            generate(json['results']['bindings'][i]['a']['value'].split('/')[4], i + 1)
-            await wait()
+        for (let i = 0; i < json['results']['bindings'].length; i++) {
+            let url = json['results']['bindings'][i]['a']['value']
+            request(url, async function(error, response) {
+                let nested = JSON.parse(response.body)
+                let bigZ = parseInt(nested['entities'][url.split('/')[4]]['claims']['P1086'][0]['mainsnak']['datavalue']['value']['amount'])
+                if (bigZ < 119 && bigZ > 0) {
+                    index[bigZ] = json['results']['bindings'][i]['a']['value'].split('/')[4]
+                    if (Object.keys(index).length === 118) {
+                        for (let j = 0; j < 118; j++) {
+                            generate(index[j], j + 1)
+                            await wait()
+                        }
+                    }
+                }
+            })
         }
     })
 }
