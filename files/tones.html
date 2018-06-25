@@ -7,10 +7,41 @@
 
     <body>
     <p>Try pressing the keys with audio on! The key mapping is very similar to FL Studio.</p>
+    <p>Unison</p>
+    <input type="number" min="1" max="16" id="unison_input" value="8" step="1">
+    <p>Detune</p>
+    <input type="range" min="0" max="2000" value="200" id="detune_input">
+    <p>Blend</p>
+    <input type="range" min="0", max="1000" value="500" id="blend_input">
+    <p>Waveform</p>
+    <input type="radio" id="sine" name="waveform">
+    <label for="sine">Sine</label>
+    <input type="radio" id="square" name="waveform" checked>
+    <label for="square">Square</label>
+    <input type="radio" id="sawtooth" name="waveform">
+    <label for="sawtooth">Sawtooth</label>
+    <input type="radio" id="triangle" name="waveform">
+    <label for="triangle">Triangle</label>
+    <p>Temperament File (.scl):</p>
+    <input type="file" id="scala_file_input" multiple>
+    <p>Base Note:</p>
+    <input type="text" id="base_note_input" value="A4">
+    <p>Base Frequency:</p>
+    <input type="number" id="base_frequency_input" value="440">
+    <p>Lowpass Filter Value:</p>
+    <input type="range" id="lowpass_input" value="1100" min="500" max="1442">
+    <p>Attack</p>
+    <input type="range" id="attack_input" value="50" min="1" max="500">
+    <p>Decay</p>
+    <input type="range" id="decay_input" value="400" min="1" max="700">
+    <p>Sustain Value</p>
+    <input type="range" id="sustain_input" value="20" min="1" max="100">
+    <p>Release</p>
+    <input type="range" id="release_input" value="55" min="1" max="700">
     </body>
-
+    
     <script>
-    (function (global, factory) {
+        (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
     (factory((global.TONES = {})));
@@ -121,18 +152,16 @@
     }
 
     class Instrument {
-        constructor(destinationNode = masterEntryNode) {
+        constructor() {
             this.panNode = exports.Context.createStereoPanner();
             this.gainNode = exports.Context.createGain();
             this.analyzerNode = exports.Context.createAnalyser();
             this.entryNode = exports.Context.createGain();
-            this.destinationNode = destinationNode;
 
             chainNodes([
                 this.entryNode,
                 this.gainNode,
-                this.panNode,
-                destinationNode
+                this.panNode
             ]);
 
             this.panNode.connect(this.analyzerNode);
@@ -146,6 +175,10 @@
             this.gainNode.gain = gain;
         }
 
+        setVolume(volume) {
+            this.volume = volume;
+        }
+
         get volume() {
             return this.gainNode.gain;
         }
@@ -157,6 +190,14 @@
 
         unmute() {
             this.setVolume(this.volume);
+        }
+
+        connect(node) {
+            this.panNode.connect(node);
+        }
+
+        disconnect() {
+            this.panNode.disconnect();
         }
     }
 
@@ -174,6 +215,8 @@
             }
         }
     }
+
+    // TODO: Allow 0 attack length, etc.
 
 
     // Horizontal functions / constructors
@@ -316,6 +359,11 @@
         }
 
         apply(audioParam, samples = 50, h_apply = EnvelopeHorizontal.offset_current_time, v_apply = EnvelopeVertical.vertical_idempotent) {
+            if (this.p1.x === this.p2.x) {
+                audioParam.setValueAtTime(Math.max(v_apply(this.p1.y, this.p2.y), h_apply(this.p1.x)));
+                return;
+            }
+
             audioParam.setValueCurveAtTime(this.sample(samples, v_apply),
                 h_apply(this.minX()),
                 h_apply(this.maxX()) - h_apply(this.minX()));
@@ -715,14 +763,14 @@
     };
 
     function _isKeyboardNoteInstance(note) {
-        return (note instanceof KeyboardNote);
+        return (note instanceof KeyboardPitch);
     }
 
     function _isKeyboardIntervalInstance(interval) {
         return (interval instanceof KeyboardInterval);
     }
 
-    class KeyboardNote {
+    class KeyboardPitch {
         constructor(note) {
             if (isNumber$1(note)) {
                 this.value = note;
@@ -733,17 +781,16 @@
             }
         }
 
-        subtract(note) {
+        subtract(note) { // or Interval
             if (_isKeyboardNoteInstance(note) || isNumber$1(note)) {
-                return new KeyboardInterval(this.value - new KeyboardNote(note).value);
+                return new KeyboardInterval(this.value - new KeyboardPitch(note).value);
             } else if (_isKeyboardIntervalInstance(note)) {
-                let interval = note;
-                return new KeyboardNote(this.value - interval.value);
+                return new KeyboardPitch(this.value - note.value);
             }
         }
 
         add(interval) {
-            return new KeyboardNote(this.value + interval.value);
+            return new KeyboardPitch(this.value + interval.value);
         }
 
         name() {
@@ -755,8 +802,8 @@
         }
     }
 
-    function makeNote(...args) {
-        return new KeyboardNote(...args);
+    function makeKeyboardPitch(...args) {
+        return new KeyboardPitch(...args);
     }
 
     class KeyboardInterval {
@@ -764,7 +811,7 @@
             if (isNumber$1(arg1) && arg2 === undefined) {
                 this.value = arg1;
             } else if (arg2 !== undefined) {
-                this.value = new KeyboardNote(arg2).subtract(new KeyboardNote(arg1)).value;
+                this.value = new KeyboardPitch(arg2).subtract(new KeyboardPitch(arg1)).value;
             } else if (_isKeyboardIntervalInstance(arg1)) {
                 this.value = arg1.value;
             } else if (typeof arg1 === "string") {
@@ -784,8 +831,12 @@
             return new KeyboardInterval(-this.value)
         }
 
-        twelveTETCents() {
+        cents() { // 12-TET
             return this.value * 100;
+        }
+
+        ratio() {
+            return Math.pow(2, this.value / 12);
         }
 
         name() {
@@ -793,7 +844,7 @@
         }
     }
 
-    function makeInterval(...args) {
+    function makeKeyboardInterval(...args) {
         return new KeyboardInterval(...args);
     }
 
@@ -803,16 +854,16 @@
 
     Object.freeze(KeyboardIntervals);
 
-    const KeyboardNotes = {};
+    const KeyboardPitches = {};
 
     for (let i = 12; i < 128; i++) { // C0 to G9, notes for easy access
-        let note = new KeyboardNote(i);
+        let note = new KeyboardPitch(i);
 
-        KeyboardNotes[note.name().replace("#", "s")] = note;
+        KeyboardPitches[note.name().replace("#", "s")] = note;
     }
 
     class KeyboardMapping {
-        constructor(dict, func) { // Key pathway: (keypress / keyup) -> dict -> func call (KeyboardNote, bool pressed)
+        constructor(dict, func) { // Key pathway: (keypress / keyup) -> dict -> func call (KeyboardPitch, bool pressed)
             this.keydict = dict;
             this.func = func;
             this.enabled = false;
@@ -867,7 +918,7 @@
         }
     }
 
-    let N = KeyboardNotes;
+    let N = KeyboardPitches;
 
     let _DefaultKeyboardMapping = {
         "z" : N.C3,
@@ -905,7 +956,7 @@
         "0" : N.Ds5,
         "p" : N.E5,
         "[" : N.F5,
-        "+" : N.Fs5,
+        "=" : N.Fs5,
         "]" : N.G5
     };
 
@@ -914,9 +965,8 @@
     }
 
     class KeyboardInstrument extends Instrument {
-        constructor(destinationNode = masterEntryNode) {
-            super(destinationNode);
-
+        constructor() {
+            super();
 
             this.keyboard = {};
             for (let i = 0; i < 128; i++) {
@@ -925,6 +975,7 @@
         }
 
         play(note) {
+            note = new KeyboardPitch(note);
             if (!this.keyboard[note.value]) {
                 this.keyboard[note.value] = true;
                 this.onplay(note);
@@ -932,6 +983,7 @@
         }
 
         release(note) {
+            note = new KeyboardPitch(note);
             if (this.keyboard[note.value]) {
                 this.keyboard[note.value] = false;
                 this.onrelease(note);
@@ -940,43 +992,879 @@
 
         releaseAll(notes) {
             for (let i = 0; i < 128; i++) {
-                release(i);
+                this.release(i);
             }
         }
     }
 
+    function clamp(value, min, max, name) {
+        if (value > max) {
+            console.warn(`Value ${name} outside nominal range [${min}, ${max}]; value will be clamped.`);
+            return max;
+        } else if (value < min) {
+            console.warn(`Value ${name} outside nominal range [${min}, ${max}]; value will be clamped.`);
+            return min;
+        } else {
+            return value;
+        }
+    }
+
+    const MAX_DETUNE_CENTS = 200;
+    const MIN_FREQUENCY = -22050;
+    const MAX_FREQUENCY = 22050;
+    const MIN_BLEND = 0;
+    const MAX_BLEND = 1;
+    const MAX_UNISON = 16;
+
+    function blendMapping(x) {
+        if (x === 0) {
+            return 0;
+        } else if (0 < x && x <= 1) {
+            return x - 1;
+        } else {
+            return x + 1;
+        }
+    }
+
+    class UnisonOscillator {
+        constructor(parameters = {}) {
+
+            this._frequency = clamp(parameters.frequency || 440, MIN_FREQUENCY, MAX_FREQUENCY, "frequency"); // frequency of average oscillation
+            this._detune = clamp((parameters.detune === 0) ? 0 : (parameters.detune || 20), 0, MAX_DETUNE_CENTS, "detune"); // spread width of oscillators (symmetric)
+            this._unison_obj = {value : clamp((parameters.unison || 4), 2, MAX_UNISON)}; // Number of oscillators
+
+            Object.freeze(this._unison_obj);
+            this._blend = clamp((parameters.blend === 0) ? 0 : (parameters.blend || 0.5), MIN_BLEND, MAX_BLEND, "blend"); // ratio (gain of centermost oscillators) / (gain of peripheral oscillators)
+            this._type = parameters.type || "triangle"; // type of waveform
+
+            this._context = exports.Context;
+            this.exit_node = exports.Context.createGain();
+            // this.exit_node.gain.setValueAtTime(1 / this.unison, 0);
+            this.oscillators = [];
+
+            let unison = this.unison;
+
+            if (unison % 2 === 0) {
+                let centerBlend = this._blend;
+                let peripheralBlend = 1 - this._blend;
+                let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                this.exit_node.gain.value = 1 / loudness;
+
+                for (let i = 0; i < unison; i++) {
+                    let series = {d: (i - unison / 2 + 1 / 2) / (unison - 1),
+                        o: exports.Context.createOscillator(),
+                        g: exports.Context.createGain(),
+                        delay: exports.Context.createDelay(),
+                        pan: exports.Context.createStereoPanner()
+                    };
+
+                    series.o.frequency.setValueAtTime(this._frequency, 0);
+                    series.o.detune.setValueAtTime(series.d * this._detune, 0);
+                    series.o.type = this._type;
+                    series.delay.delayTime.setValueAtTime(1 / this._frequency * Math.random(), 0);
+
+                    if (unison === 2) {
+                        series.pan.pan.setValueAtTime(series.d * 2, 0);
+                    } else {
+                        series.pan.pan.setValueAtTime(blendMapping(series.d * 2), 0);
+                    }
+
+                    if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                        series.g.gain.setValueAtTime(centerBlend, 0);
+                    } else {
+                        series.g.gain.setValueAtTime(peripheralBlend, 0);
+                    }
+
+                    chainNodes([
+                        series.o,
+                        series.delay,
+                        series.g,
+                        series.pan,
+                        this.exit_node
+                    ]);
+
+                    this.oscillators.push(series);
+                }
+            } else {
+                let centerBlend = this._blend;
+                let peripheralBlend = 1 - this._blend;
+                let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                this.exit_node.gain.value = 1 / loudness;
+
+                for (let i = 0; i < unison; i++) {
+                    let series = {d: (i - unison / 2 + 1 / 2) / (unison - 1),
+                        o: exports.Context.createOscillator(),
+                        g: exports.Context.createGain(),
+                        delay: exports.Context.createDelay(),
+                        pan: exports.Context.createStereoPanner()
+                    };
+
+                    series.o.frequency.setValueAtTime(this._frequency, 0);
+                    series.o.detune.setValueAtTime(series.d * this._detune, 0);
+                    series.o.type = this._type;
+                    series.delay.delayTime.setValueAtTime(1 / this._frequency * Math.random(), 0);
+
+                    if (unison === 3) {
+                        series.pan.pan.setValueAtTime(series.d * 2, 0);
+                    } else {
+                        series.pan.pan.setValueAtTime(blendMapping(series.d * 2), 0);
+                    }
+
+                    if (i === (unison - 1) / 2) {
+                        series.g.gain.setValueAtTime(centerBlend, 0);
+                    } else {
+                        series.g.gain.setValueAtTime(peripheralBlend, 0);
+                    }
+
+                    chainNodes([
+                        series.o,
+                        series.delay,
+                        series.g,
+                        series.pan,
+                        this.exit_node
+                    ]);
+
+                    this.oscillators.push(series);
+                }
+            }
+
+            this.channelCount = 2;
+            this.channelCountMode = "max";
+            this.channelInterpretation = "speakers";
+
+            let that = this;
+
+            this.frequency = {
+                setValueAtTime: (value, time) => {
+                    value = clamp(value, MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.setValueAtTime(value, time);
+                    }
+                },
+                linearRampToValueAtTime: (value, time) => {
+                    value = clamp(value, MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.linearRampToValueAtTime(value, time);
+                    }
+                },
+                exponentialRampToValueAtTime: (value, time) => {
+                    value = clamp(value, MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.exponentialRampToValueAtTime(value, time);
+                    }
+                },
+                setTargetAtTime: (value, startTime, constantTime) => {
+                    value = clamp(value, MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.setTargetAtTime(value, startTime, constantTime);
+                    }
+                },
+                setValueCurveAtTime: (table, startTime, endTime) => {
+                    for (let i = 0; i < table.length; i++) {
+                        table[i] = clamp(table[i], MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    }
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.setValueCurveAtTime(table, startTime, endTime);
+                    }
+                },
+                cancelScheduledValues: () => {
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.frequency.cancelScheduledValues();
+                    }
+                },
+                get value() {
+                    return that.oscillators[0].o.frequency.value;
+                },
+                set value(value) {
+                    value = clamp(value, MIN_FREQUENCY, MAX_FREQUENCY, "frequency");
+                    for (let i = 0; i < that.unison; i++) {
+                        that.oscillators[i].o.frequency.value = value;
+                    }
+                }
+            };
+
+            Object.defineProperties(this.frequency, {
+                minValue: {
+                    value: MIN_FREQUENCY,
+                    writable: false
+                },
+                maxValue: {
+                    value: MAX_FREQUENCY,
+                    writable: false
+                },
+                defaultValue: {
+                    value: 440,
+                    writable: false
+                }
+            });
+
+            this.detune = {
+                setValueAtTime: (value, time) => {
+                    value = clamp(value, 0, that.detune.maxValue, "detune");
+
+                    for (let i = 0; i < this.unison; i++) {
+                        let series = this.oscillators[i];
+                        series.o.detune.setValueAtTime(series.d * value, time);
+                    }
+                },
+                linearRampToValueAtTime: (value, time) => {
+                    value = clamp(value, 0, that.detune.maxValue, "detune");
+
+                    for (let i = 0; i < this.unison; i++) {
+                        let series = this.oscillators[i];
+                        series.o.detune.linearRampToValueAtTime(series.d * value, time);
+                    }
+                },
+                exponentialRampToValueAtTime: (value, time) => {
+                    value = clamp(value, 0, that.detune.maxValue, "detune");
+
+                    for (let i = 0; i < this.unison; i++) {
+                        let series = this.oscillators[i];
+                        series.o.detune.exponentialRampToValueAtTime(series.d * value, time);
+                    }
+                },
+                setTargetAtTime: (value, startTime, constantTime) => {
+                    value = clamp(value, 0, that.detune.maxValue, "detune");
+
+                    for (let i = 0; i < this.unison; i++) {
+                        let series = this.oscillators[i];
+                        series.o.detune.setTargetAtTime(series.d * value, startTime, constantTime);
+                    }
+                },
+                setValueCurveAtTime: (table, startTime, endTime) => {
+                    for (let i = 0; i < table.length; i++) {
+                        table[i] = clamp(table[i], 0, that.detune.maxValue, "detune");
+                    }
+                    for (let i = 0; i < this.unison; i++) {
+                        let series = this.oscillators[i];
+                        let newTable = table.slice();
+
+                        for (let j = 0; j < newTable.length; j++) {
+                            newTable[j] = series.d * newTable[j];
+                        }
+
+                        series.o.detune.setValueCurveAtTime(newTable, startTime, endTime);
+                    }
+                },
+                cancelScheduledValues: () => {
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].o.detune.cancelScheduledValues();
+                    }
+                },
+                get value() {
+                    return that.oscillators[0].o.detune.value / that.oscillators[0].d;
+                },
+                set value(value) {
+                    value = clamp(value, 0, that.detune.maxValue, "detune");
+
+                    for (let i = 0; i < that.unison; i++) {
+                        let series = that.oscillators[i];
+                        series.o.detune.value = series.d * value;
+                    }
+                }
+            };
+
+            Object.defineProperties(this.detune, {
+                minValue: {
+                    value: 0,
+                    writable: false
+                },
+                maxValue: {
+                    value: MAX_DETUNE_CENTS,
+                    writable: false
+                },
+                defaultValue: {
+                    value: 50,
+                    writable: false
+                }
+            });
+
+            // TODO: Allow blend enveloping and such, not trivial, might not actually do it
+            this.blend = {
+                get value() {
+                    if (that.unison % 2 === 0) {
+                        return that.oscillators[that.unison / 2].g.gain.value;
+                    } else {
+                        return that.oscillators[(that.unison - 1) / 2].g.gain.value;
+                    }
+                },
+                set value(value) {
+                    value = clamp(value, MIN_BLEND, MAX_BLEND, "blend");
+                    if (that.unison % 2 === 0) {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                        that.exit_node.gain.value = 1 / loudness;
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.value = centerBlend;
+                            } else {
+                                series.g.gain.value = peripheralBlend;
+                            }
+                        }
+                    } else {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                        that.exit_node.gain.value = 1 / loudness;
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.setValueAtTime(centerBlend, 0);
+                            } else {
+                                series.g.gain.setValueAtTime(peripheralBlend, 0);
+                            }
+                        }
+                    }
+                },
+                setValueAtTime(value, time) {
+                    value = clamp(value, MIN_BLEND, MAX_BLEND, "blend");
+                    if (that.unison % 2 === 0) {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                        that.exit_node.gain.setValueAtTime(1 / loudness, time);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.setValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.setValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    } else {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                        that.exit_node.gain.setValueAtTime(1 / loudness, time);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.setValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.setValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    }
+                },
+                linearRampToValueAtTime: (value, time) => {
+                    value = clamp(value, MIN_BLEND, MAX_BLEND, "blend");
+                    if (that.unison % 2 === 0) {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                        that.exit_node.gain.linearRampToValueAtTime(1 / loudness, time);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.linearRampToValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.linearRampToValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    } else {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                        that.exit_node.gain.linearRampToValueAtTime(1 / loudness, time);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.linearRampToValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.linearRampToValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    }
+                },
+                exponentialRampToValueAtTime: (value, time) => {
+                    console.warn("exponentialRampToValueAtTime for UnisonOscillator.blend does not work well.");
+
+                    value = clamp(value, MIN_BLEND, MAX_BLEND, "blend");
+
+                    if (that.unison % 2 === 0) {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                        that.exit_node.gain.exponentialRampToValueAtTime(1 / loudness, time);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.exponentialRampToValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.exponentialRampToValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    } else {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                        that.exit_node.gain.value = 1 / loudness;
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.exponentialRampToValueAtTime(centerBlend, time);
+                            } else {
+                                series.g.gain.exponentialRampToValueAtTime(peripheralBlend, time);
+                            }
+                        }
+                    }
+                },
+                setTargetAtTime: (value, startTime, constantTime) => {
+                    value = clamp(value, MIN_BLEND, MAX_BLEND, "blend");
+                    if (that.unison % 2 === 0) {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = 2 * centerBlend + (unison - 2) * peripheralBlend;
+
+                        that.exit_node.gain.setTargetAtTime(1 / loudness, startTime, constantTime);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.setTargetAtTime(centerBlend, startTime, constantTime);
+                            } else {
+                                series.g.gain.setTargetAtTime(peripheralBlend, startTime, constantTime);
+                            }
+                        }
+                    } else {
+                        let centerBlend = value;
+                        let peripheralBlend = 1 - value;
+                        let loudness = centerBlend + (unison - 1) * peripheralBlend;
+
+                        that.exit_node.gain.linearRampToValueAtTime(1 / loudness, startTime, constantTime);
+
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.setTargetAtTime(centerBlend, startTime, constantTime);
+                            } else {
+                                series.g.gain.setTargetAtTime(peripheralBlend, startTime, constantTime);
+                            }
+                        }
+                    }
+                },
+                setValueCurveAtTime: (table, startTime, endTime) => {
+                    for (let i = 0; i < table.length; i++) {
+                        table[i] = clamp(table[i], MIN_BLEND, MAX_BLEND, "blend");
+                    }
+                    let centerBlendTable = new Float32Array(table.length);
+                    let peripheralBlendTable = centerBlendTable.slice();
+                    let loudnessTable = centerBlendTable.slice();
+
+                    for (let i = 0; i < table.length; i++) {
+                        let value = i;
+                        if (that.unison % 2 === 0) {
+                            var centerBlend_ = value;
+                            var peripheralBlend_ = 1 - value;
+                            var loudness_ = 2 * centerBlend_ + (unison - 2) * peripheralBlend_;
+                        } else {
+                            var centerBlend_ = value;
+                            var peripheralBlend_ = 1 - value;
+                            var loudness_ = centerBlend_ + (unison - 1) * peripheralBlend_;
+                        }
+
+                        centerBlendTable[i] = centerBlend_;
+                        peripheralBlendTable[i] = peripheralBlend_;
+                        loudnessTable[i] = 1 / loudness_;
+                    }
+
+                    if (that.unison % 2 === 0) {
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                             if (i === unison / 2 - 1 || i === unison / 2 || unison === 2) {
+                                series.g.gain.setValueCurveAtTime(centerBlendTable, startTime, endTime);
+                            } else {
+                                series.g.gain.setValueCurveAtTime(peripheralBlendTable, startTime, endTime);
+                            }
+                        }
+                    } else {
+                        for (let i = 0; i < that.unison; i++) {
+                            let series = that.oscillators[i];
+
+                            if (i === (unison - 1) / 2) {
+                                series.g.gain.setValueCurveAtTime(centerBlendTable, startTime, endTime);
+                            } else {
+                                series.g.gain.setValueCurveAtTime(peripheralBlendTable, startTime, endTime);
+                            }
+                        }
+                    }
+
+                    this.exit_node.gain.setValueCurveAtTime(loudnessTable, startTime, endTime);
+                },
+                cancelScheduledValues: () => {
+                    for (let i = 0; i < this.unison; i++) {
+                        this.oscillators[i].g.gain.cancelScheduledValues();
+                    }
+                }
+            };
+
+            Object.defineProperties(this.blend, {
+                minValue: {
+                    value: MIN_BLEND,
+                    writable: false
+                },
+                maxValue: {
+                    value: MAX_BLEND,
+                    writable: false
+                },
+                defaultValue: {
+                    value: 0.5,
+                    writable: false
+                }
+            });
+
+            delete this._frequency;
+            delete this._detune;
+            delete this._blend;
+        }
+
+        get unison() {
+            return this._unison_obj.value;
+        }
+
+        get type() {
+            return this._type;
+        }
+
+        set type(value) {
+            this._type = value;
+            for (let i = 0; i < this.unison; i++) {
+                this.oscillators[i].o.type = value;
+            }
+        }
+
+        static get numberOfInputs() {
+            return 0;
+        }
+
+        static get numberOfOutputs() {
+            return 1;
+        }
+
+        static get context() {
+            return this._context;
+        }
+
+        connect(node) {
+            this.exit_node.connect(node);
+        }
+
+        disconnect() {
+            this.exit_node.disconnect();
+        }
+
+        start(time = this._context.currentTime) {
+            for (let i = 0; i < this.oscillators.length; i++) {
+                let series = this.oscillators[i];
+
+                series.o.start(time);
+            }
+        }
+
+        stop(time = this._context.currentTime) {
+            for (let i = 0; i < this.oscillators.length; i++) {
+                let series = this.oscillators[i];
+
+                series.o.stop(time);
+            }
+        }
+    }
+
+    // Hz is associated with Frequencies
+    // ratio is associated with Intervals
+
+    function _isFrequency(obj) {
+        return !!obj.Hz;
+    }
+
+    function _isInterval(obj) {
+        return !!obj.ratio;
+    }
+
+    class Pitch {
+        constructor(value) {
+            if (_isFrequency(value)) {
+                this.value = value.value;
+            } else if (value instanceof KeyboardPitch) {
+                this.value = value.twelveTETFrequency();
+            } else {
+                this.value = value; // value is in Hz
+            }
+        }
+
+        Hz() { // Hz
+            return this.value;
+        }
+
+        period() { // seconds
+            return 1 / this.value;
+        }
+
+        add(interval) {
+            return new Pitch(this.value * interval.ratio());
+        }
+
+        subtract(note) {
+            if (note.ratio) { // subtracting interval
+                return new Pitch(this.value / interval.ratio());
+            } else {
+                return new Interval(note.value / this.value);
+            }
+        }
+    }
+
+    function isNumber$2(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    let intervalUnits = {
+        cents : 1.000577789506554859297,
+        schismas : 1.001129150390625,
+        semitones : 1.059463094359295264562,
+        tones: 1.122462048309372981434,
+        tritones: 1.414213562373095048802,
+        octaves: 2,
+        millioctaves: 1.000693387462580632538,
+        savarts: 1.002305238077899671915,
+        decades: 10,
+        merides: 1.016248692870695627673,
+        heptamerides: 1.002305238077899671915,
+        demiheptamerides: 1.001151955538168876984,
+        decamerides: 1.000230285020824752684,
+        jots: 1.000023026116026880671,
+        syntonic_commas: 81/80,
+        pythagorean_commas: 531441 / 524288
+    };
+
+    function getIntervalFromObj(obj) {
+        let interval_out = new Interval(1);
+
+        for (let key in intervalUnits) {
+            if (obj[key]) {
+                interval_out = interval_out.add(intervalUnits[key].stack(obj[key]));
+            }
+        }
+
+        return interval_out;
+    }
+
+    class Interval {
+        constructor(arg1, arg2) {
+            if (arg1 && arg2) { // difference between two frequency
+                arg1 = new Pitch(arg1);
+                arg2 = new Pitch(arg2);
+
+                this.value = arg2.Hz() / arg1.Hz();
+            } else if (arg1) {
+                if (isNumber$2(arg1)) {
+                    this.value = arg1;
+                } else if (_isInterval(arg1)) {
+                    this.value = arg1.value;
+                } else {
+                    if (arg1 instanceof KeyboardInterval) {
+                        this.value = arg1.ratio();
+                    } else {
+                        this.value = getIntervalFromObj(arg1).value;
+                    }
+                }
+            }
+        }
+
+        reverse() {
+            return new Interval(1 / this.value);
+        }
+
+        subtract(interval, times = 1) {
+            return new Interval(this.value / interval.stack(times).value);
+        }
+
+        add(interval, times = 1) {
+            return new Interval(this.value * interval.stack(times).value);
+        }
+
+        divideByInterval(interval) {
+            return Math.log(this.value, interval.value);
+        }
+
+        divide(number) {
+            return new Interval(Math.pow(this.value, 1 / number));
+        }
+
+        stack(times = 1) {
+            return new Interval(Math.pow(this.value, times));
+        }
+
+        ratio() {
+            return this.value;
+        }
+    }
+
+    for (let key in intervalUnits) {
+        intervalUnits[key] = new Interval(intervalUnits[key]);
+    }
+
+    function makePitch(...args) {
+        return new Pitch(...args);
+    }
+
+    function makeInterval(...args) {
+        return new Interval(...args);
+    }
+
+    let TwelveTETIntervals = {
+        unison: 1,
+        minor_second: {cents: 100},
+        semitone: {cents : 100},
+        major_second: {cents : 200},
+        tone: {cents: 200},
+        whole_tone : {cents: 200},
+        minor_third: {cents: 300},
+        major_third: {cents: 400},
+        perfect_fourth: {cents: 500},
+        tritone: {cents: 600},
+        perfect_fifth: {cents: 700},
+        minor_sixth : {cents: 800},
+        major_sixth : {cents: 900},
+        minor_seventh: {cents: 1000},
+        major_seventh: {cents: 1100},
+        octave: 2
+    };
+
+    class PitchMapping {
+        constructor(pitchDict, pitchMap = (x => x), kPitchMap = (x => x)) {
+            this.dict = pitchDict;
+            this.pitchMap = pitchMap; // Changing a frequency
+            this.kPitchMap = kPitchMap; // Changing the nominal meaning of a keyboard pitch
+        }
+
+        transform(keyboardPitch) {
+            return this.pitchMap(this.dict[this.kPitchMap(keyboardPitch.value)]);
+        }
+
+        dictApply(func) {
+            for (let key in this.dict) {
+                this.keydict[key] = func(this.keydict[key]);
+            }
+        }
+    }
+
+    let twelveTETDict = {};
+
+    for (let i = 0; i < 128; i++) {
+        twelveTETDict[i] = (new KeyboardPitch(i)).twelveTETFrequency();
+    }
+
+    let twelveTETMapping = new PitchMapping(twelveTETDict);
+
+    let PitchMappings = {
+        ET12 : twelveTETMapping
+    };
+
+    function pitchMappingFromScale(scale, baseNote = Tones.KeyboardPitches.C4, baseFrequency) {
+        // scale is array of intervals or single arguments to an interval constructor
+
+        scale = scale.map(f => new Interval(f));
+
+        let scale_length = scale.length;
+        let scale_repeating_interval = scale[scale_length - 1];
+        baseFrequency = new Pitch(baseFrequency || baseNote.twelveTETFrequency());
+
+        let dict = {};
+
+        let scaleRepeats = Math.ceil((baseNote.value + 1) / scale_length);
+        let bottom = baseNote.value - scaleRepeats * scale_length;
+
+        for (let offset = bottom, scaleR = -scaleRepeats; offset < 129; offset += scale_length, scaleR++) {
+            for (let i = offset + 1, j = 0; j < scale_length; i++, j++) {
+                dict[i] = baseFrequency.add(scale[j]).add(scale_repeating_interval.stack(scaleR)).Hz();
+            }
+        }
+
+        return new PitchMapping(dict);
+    }
+
+    let a = new EnvelopeSegment([0,0], [0.01,1]);
+    let b = new EnvelopeSegment(a.p2, [1, 0.2], 0.4);
+
+    const DefaultAttackEnvelope = new Envelope([a,b]);
+
     class SimpleInstrument extends KeyboardInstrument {
-        constructor(dict, destinationNode = masterEntryNode) {
-            super(destinationNode);
+        constructor(parameters = {}) {
+            super();
+
+            this.params = {};
+
+            this.params.unison = parameters.unison || 8; // Unison (integer >= 1)
+            this.params.detune = (parameters.detune === 0) ? 0 : (parameters.detune || 20); // Spread of detune (cents)
+            this.params.blend = (parameters.blend === 0) ? 0 : (parameters.blend || 0.6); // Blend between central and peripheral oscillators
+            this.params.release_length = (parameters.release_length === 0) ? 0 : (parameters.release_length || 0.1); // Decay (sec)
+            this.params.attack_envelope = (parameters.attack_envelope || DefaultAttackEnvelope);
+            this.params.waveform = parameters.waveform || "square";
+
+            if (parameters.destinationNode) {
+                this.connect(parameters.destinationNode);
+            }
 
             this.oscillators = {};
             for (let i = 0; i < 128; i++) {
                 this.oscillators[i] = null;
             }
 
-            let a = new EnvelopeSegment([0,0], [0.01,1]);
-            let b = new EnvelopeSegment(a.p2, [1, 0.2], 0.4);
-
-            this.attackenvelope = new Envelope([a,b]);
-            this.decaylength = 0.1;
-
-            this.createDecayEnvelope = (gain_value) => {
-                return new Envelope([new EnvelopeSegment([0, gain_value], [this.decaylength, 0])]);
+            this.createReleaseEnvelope = (gain_value) => {
+                return new Envelope([new EnvelopeSegment([0, gain_value], [this.params.release_length, 0])]);
             };
 
-            this.mapping = new KeyboardMapping(dict, (note, pressing) => {
-                if (!note) return;
-                if (pressing) {
-                    this.play(note);
-                } else {
-                    this.release(note);
-                }
+            this.keyboard_mapping = new KeyboardMapping(parameters.keyboard_dict || getDefaultKeyboardDict(),
+                (note, pressing) => {
+                    if (!note) return;
+                    if (pressing) {
+                        this.play(note);
+                    } else {
+                        this.release(note);
+                    }
             });
+
+            this.pitch_mapping = parameters.pitch_mapping || PitchMappings.ET12;
         }
 
         onplay(note) {
-            console.log(note.name(), "play");
-            let tone = exports.Context.createOscillator();
+            if (this.params.unison === 1) {
+                var tone = exports.Context.createOscillator();
+            } else {
+                var tone = new UnisonOscillator(this.params);
+            }
+
             let tone_gain = exports.Context.createGain();
 
             chainNodes([
@@ -984,12 +1872,13 @@
                 tone_gain,
                 this.entryNode]);
 
-            tone.type = 'square';
-            tone.frequency.value = note.twelveTETFrequency();
+
+            tone.type = this.waveform;
+            tone.frequency.value = this.pitch_mapping.transform(note);
             tone_gain.gain.setValueAtTime(0, 0);
             tone.start();
 
-            this.attackenvelope.apply(tone_gain.gain,
+            this.params.attack_envelope.apply(tone_gain.gain,
                 EnvelopeHorizontal.offset_current_time,
                 EnvelopeVertical.vertical_exp);
 
@@ -997,7 +1886,222 @@
         }
 
         onrelease(note) {
-            console.log(note.name(), "release");
+            let group = this.oscillators[note.value];
+
+            group.tone_gain.gain.cancelScheduledValues(0);
+            this.createReleaseEnvelope(
+                EnvelopeVerticalInverse.vertical_exp(group.tone_gain.gain.value)
+                // We invert the value because it was transformed by EnvelopeVertical.vertical_exp
+            ).apply(group.tone_gain.gain,
+                EnvelopeHorizontal.offset_current_time,
+                EnvelopeVertical.vertical_exp);
+
+            this.oscillators[note.value] = null;
+            let toneGain = group.tone_gain;
+            let tone = group.tone;
+            removeNodesTimeout([toneGain, tone], this.params.release_length + 0.1);
+        }
+
+        get keyboardPlayEnabled() {
+            return this.keyboard_mapping.enabled;
+        }
+
+        set keyboardPlayEnabled(boolean) {
+            if (boolean) {
+                enableKeyboardPlay();
+            } else {
+                disableKeybordPlay();
+            }
+        }
+
+        enableKeyboardPlay() {
+            this.keyboard_mapping.enable();
+        }
+
+        disableKeyboardPlay() {
+            this.keyboard_mapping.disable();
+            this.releaseAll();
+        }
+
+        oscillatorApply(func) {
+            for (let i = 0; i < 128; i++) {
+                if (this.oscillators[i]) {
+                    func(this.oscillators[i], i);
+                }
+            }
+        }
+
+        set detune(value) {
+            this.params.detune = value;
+            this.oscillatorApply(function(x) {
+                x.tone.detune.value = value;
+            });
+        }
+
+        get detune() {
+            return this.params.detune;
+        }
+
+        set blend(value) {
+            this.params.blend = value;
+            this.oscillatorApply(function(x) {
+                x.tone.blend.value = value;
+            });
+        }
+
+        get blend() {
+            return this.params.blend;
+        }
+
+        set waveform(value) {
+            this.params.waveform = value;
+            this.oscillatorApply(function(x) {
+                x.tone.type = value;
+            });
+        }
+
+        get waveform() {
+            return this.params.waveform;
+        }
+    }
+
+    let a$1 = new EnvelopeSegment([0,0], [0.005,1], 0.9);
+    let b$1 = new EnvelopeSegment(a$1.p2, [2.4, 0.2], 0.5);
+    let c = new EnvelopeSegment(b$1.p2, [20, 0], 0.1);
+
+    const DefaultAttackEnvelope$1 = new Envelope([a$1,b$1,c]);
+
+    const real = new Float32Array([0,0,1,0,1]);
+    const imag = new Float32Array(real.length);
+    const pianoWave = exports.Context.createPeriodicWave(real,imag);
+
+    class PianoOscillator {
+        constructor(frequency) {
+            this.oscillator_count = 15;
+
+            this.oscillators = [];
+            this.exit_node = exports.Context.createGain();
+
+            let r = 0.7; // radius of string, mm
+            let E = 200000; // Young's modulus of string, Newtons / (mm) ^ 2
+            let T = 1600; // Tension of string, newtons
+            let L = 1000; // Length of string, mm
+
+
+            let A = Math.pow(Math.PI, 3) * r * r * r * r * E / 8 / T / L / L;
+
+            let partials = [
+                1.7202996385444569, 1.4300663282061981, 1.1597951953657128, 0.58661553936616362, 0.33257550015829651, 0.32094063539074608, 0.15592066374569108, 0.17132499997971729, 0.14850610765546846, 0.1738548266767786, 0.034705710530054883, 0.012656264005633504, 0.02067379392384007, 0.0052896371953956084, 0.067187378351302077, 0.0033300110566908026, 0.004430089629984711, 0.00077412060834818562, 0.00090773026428330383, 0.00076213801712951763, 0.00072315653323779948, 0.0009126541447556396, 0.00074440438139133089, 0.0004686624661097702
+                ];
+            let volume = 0;
+
+            for (let i = 1; i < this.oscillator_count + 1; i++) {
+                let series = {
+                    o: exports.Context.createOscillator(),
+                    g: exports.Context.createGain(),
+                    d: exports.Context.createDelay(),
+                    pan: exports.Context.createStereoPanner()
+                };
+
+                series.o.frequency.value = i * frequency * Math.sqrt(1 + A * i * i);
+                series.g.gain.value = partials[i];
+                volume += partials[i];
+                series.d.delayTime.value = Math.random() / i / frequency;
+                series.pan.pan.value = Math.random() / 2;
+
+                chainNodes([series.o, series.g, series.d, series.pan, this.exit_node]);
+
+                this.oscillators.push(series);
+            }
+
+            this.exit_node.gain.value = 1 / volume;
+        }
+
+        connect(node) {
+            this.exit_node.connect(node);
+        }
+
+        start() {
+            for (let i = 0; i < this.oscillator_count; i++) {
+                this.oscillators[i].o.start();
+            }
+        }
+
+        stop() {
+            for (let i = 0; i < this.oscillator_count; i++) {
+                this.oscillators[i].o.stop();
+            }
+        }
+
+        disconnect() {
+            this.exit_node.disconnect();
+        }
+    }
+
+    class Piano extends KeyboardInstrument {
+        constructor(parameters = {}) {
+            super();
+
+            this.params = {};
+
+            this.params.unison = parameters.unison || 8; // Unison (integer > 1)
+            this.params.detune = (parameters.detune === 0) ? 0 : (parameters.detune || 20); // Spread of detune (cents)
+            this.params.blend = (parameters.blend === 0) ? 0 : (parameters.blend || 0.6); // Blend between central and peripheral oscillators
+            this.params.release_length = (parameters.release_length === 0) ? 0 : (parameters.release_length || 0.1); // Decay (sec)
+            this.params.attack_envelope = (parameters.attack_envelope || DefaultAttackEnvelope$1);
+
+            if (parameters.destinationNode) {
+                this.connect(parameters.destinationNode);
+            }
+
+            this.oscillators = {};
+            for (let i = 0; i < 128; i++) {
+                this.oscillators[i] = null;
+            }
+
+            this.createDecayEnvelope = (gain_value) => {
+                return new Envelope([new EnvelopeSegment([0, gain_value], [this.params.release_length, 0])]);
+            };
+
+            this.keyboard_mapping = new KeyboardMapping(parameters.keyboard_dict || getDefaultKeyboardDict(),
+                (note, pressing) => {
+                    if (!note) return;
+                    if (pressing) {
+                        this.play(note);
+                    } else {
+                        this.release(note);
+                    }
+                });
+
+            this.pitch_mapping = parameters.pitch_mapping || PitchMappings.ET12;
+        }
+
+        onplay(note) {
+            try {
+                let tone = new PianoOscillator(this.pitch_mapping.transform(note));
+                // let tone = audio.Context.createOscillator();
+                let tone_gain = exports.Context.createGain();
+
+                chainNodes([
+                    tone,
+                    tone_gain,
+                    this.entryNode
+                ]);
+
+                tone_gain.gain.setValueAtTime(0, 0);
+                tone.start();
+
+                this.params.attack_envelope.apply(tone_gain.gain,
+                    EnvelopeHorizontal.offset_current_time,
+                    EnvelopeVertical.vertical_exp);
+
+                this.oscillators[note.value] = {tone: tone, tone_gain: tone_gain};
+            } catch (e) {
+                console.log(e);
+            }
+        }
+
+        onrelease(note) {
             let group = this.oscillators[note.value];
 
             group.tone_gain.gain.cancelScheduledValues(0);
@@ -1011,19 +2115,198 @@
             this.oscillators[note.value] = null;
             let toneGain = group.tone_gain;
             let tone = group.tone;
-            removeNodesTimeout([toneGain, tone], this.decaylength + 0.1);
+            removeNodesTimeout([toneGain, tone], this.params.release_length + 0.1);
         }
 
         get keyboardPlayEnabled() {
-            return this.mapping.enabled;
+            return this.keyboard_mapping.enabled;
         }
 
         enableKeyboardPlay() {
-            this.mapping.enable();
+            this.keyboard_mapping.enable();
         }
 
         disableKeyboardPlay() {
-            this.mapping.disable();
+            this.keyboard_mapping.disable();
+        }
+
+        oscillatorApply(func) {
+            for (let i = 0; i < 128; i++) {
+                if (this.oscillators[i]) {
+                    func(this.oscillators[i], i);
+                }
+            }
+        }
+    }
+
+    function parseSclExpression(line) {
+        line = line.trim().replace(/\s/g, '');
+
+        for (let i = line.length; i > 0; i--) {
+            let cut_line = line.slice(0, i);
+
+            if (cut_line.includes(".")) { // value is in cents
+                let value = parseFloat(cut_line);
+
+                if (!isNaN(value)) {
+                    return new Interval({cents: value});
+                }
+            } else if (cut_line.includes("/")) { // value is a ratio
+                let fraction = cut_line.split("/");
+
+                if (fraction.length === 2) {
+                    let num = parseInt(fraction[0]), din = parseInt(fraction[1]);
+
+                    if (!isNaN(num) && !isNaN(din) && num > 0 && din > 0) {
+                        return new Interval(num / din);
+                    }
+                }
+            } else { // Value is an integer
+                let value = parseInt(cut_line);
+
+                if (!isNaN(value)) {
+                    return new Interval(value);
+                }
+            }
+        }
+
+        console.log(line);
+
+        throw new Error(`parseSclExpression: Invalid expression ${line}`);
+    }
+
+    function sclFileToScale(file_content) {
+        return parseSclFile(file_content).scale;
+    }
+
+    function parseSclFile(file_content) {
+        let file_lines = file_content.split('\n');
+        let description = null;
+        let note_count = null;
+        let notes_in = 0;
+
+        let notes = [];
+
+        for (let i = 0; i < file_lines.length; i++) {
+            if (file_lines[i][0] === "!") {
+                continue;
+            }
+
+
+            if (description === null) {
+                description = file_lines[i];
+            } else if (note_count === null) {
+                try {
+                    note_count = parseInt(file_lines[i]);
+                } catch (e) {
+                    throw new Error("sclFileToScale: second non-comment line of file should be number of notes in scale");
+                }
+            } else {
+                if (note_count !== null) {
+                    notes.push(parseSclExpression(file_lines[i]));
+                    notes_in += 1;
+
+                    if (notes_in >= note_count) {
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        if (notes.length !== note_count) {
+            throw new Error("sclFileToScale: scale size and given scale do not match in size");
+        }
+
+        return {desc: description, scale: notes};
+    }
+
+    function sclFileToPitchMapping(file_content, baseNote = KeyboardPitches.C4, baseFrequency) {
+        baseFrequency = baseFrequency || new Pitch(baseNote.twelveTETFrequency());
+
+        return pitchMappingFromScale(sclFileToScale(file_content), baseNote, baseFrequency);
+    }
+
+    class ScalaReader {
+        constructor(giveScalaFile, params = {}) {
+            let that = this;
+
+            params.domElement = params.domElement || null;
+            params.allowMultiple = (params.allowMultiple === undefined) ? true : params.allowMultiple;
+            params.requireExtension = (params.requireExtension === undefined) ? true : params.requireExtension;
+            params.onerror = params.onerror || (() => null);
+
+            this.params = params;
+
+            this.giveScalaFile = giveScalaFile; // arg1 -> content, arg2 -> name of file
+
+            this.onchange = function() {
+                let files = this.files;
+
+                if (!that.params.allowMultiple && files.length > 1) {
+                    that.params.onerror(new Error("Only one file allowed."));
+                }
+
+                for (let i = 0; i < files.length; i++) {
+                    let file = files[i];
+
+                    if (!file) {
+                        that.params.onerror(new Error("No file selected."));
+                    }
+
+                    if (that.params.requireExtension && !file.name.endsWith(".scl")) {
+                        that.params.onerror(new Error("Invalid file extension."));
+                    }
+
+                    let reader = new FileReader();
+                    reader.addEventListener("loadend", function () {
+                        that.giveScalaFile(reader.result, file.name);
+                    });
+                    reader.readAsText(file);
+                }
+            };
+
+            if (params.domElement) {
+                this.addTo(params.domElement);
+            }
+        }
+
+        addTo(domElement) {
+            if (!this.domElement) {
+                domElement.addEventListener("change", this.onchange);
+                this.domElement = domElement;
+            }
+        }
+
+        remove() {
+            this.domElement.removeEventListener("change", this.onchange);
+        }
+    }
+
+    // A scale is just an array of intervals, starting on the first pitch above the unison and ending with the repeating note, usually the octave
+
+    const Scales = {
+        ET12: [
+            {cents: 100},
+            {cents: 200},
+            {cents: 300},
+            {cents: 400},
+            {cents: 500},
+            {cents: 600},
+            {cents: 700},
+            {cents: 800},
+            {cents: 900},
+            {cents: 1000},
+            {cents: 1100},
+            2/1,
+        ]
+    };
+
+    for (let scaleKey in Scales) {
+        let scale = Scales[scaleKey];
+
+        for (let i = 0; i < scale.length; i++) {
+            scale[i] = new Interval(scale[i]);
         }
     }
 
@@ -1051,15 +2334,31 @@
     exports.EnvelopeVerticalInverse = EnvelopeVerticalInverse;
     exports.noteToName = noteToName;
     exports.nameToNote = nameToNote;
-    exports.KeyboardNote = KeyboardNote;
+    exports.KeyboardPitch = KeyboardPitch;
     exports.KeyboardInterval = KeyboardInterval;
     exports.KeyboardIntervals = KeyboardIntervals;
-    exports.KeyboardNotes = KeyboardNotes;
-    exports.makeNote = makeNote;
-    exports.makeInterval = makeInterval;
+    exports.KeyboardPitches = KeyboardPitches;
+    exports.makeKeyboardPitch = makeKeyboardPitch;
+    exports.makeKeyboardInterval = makeKeyboardInterval;
     exports.KeyboardMapping = KeyboardMapping;
     exports.getDefaultKeyboardDict = getDefaultKeyboardDict;
     exports.SimpleInstrument = SimpleInstrument;
+    exports.UnisonOscillator = UnisonOscillator;
+    exports.Pitch = Pitch;
+    exports.Interval = Interval;
+    exports.makePitch = makePitch;
+    exports.makeInterval = makeInterval;
+    exports.TwelveTETIntervals = TwelveTETIntervals;
+    exports.PitchMapping = PitchMapping;
+    exports.PitchMappings = PitchMappings;
+    exports.pitchMappingFromScale = pitchMappingFromScale;
+    exports.Piano = Piano;
+    exports.sclFileToScale = sclFileToScale;
+    exports.parseSclExpression = parseSclExpression;
+    exports.sclFileToPitchMapping = sclFileToPitchMapping;
+    exports.ScalaReader = ScalaReader;
+    exports.parseSclFile = parseSclFile;
+    exports.Scales = Scales;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -1068,16 +2367,169 @@
     </script>
     
     <script>
-    let lowpass_filter = TONES.Context.createBiquadFilter();
+        let lowpass_filter = TONES.Context.createBiquadFilter();
 
 lowpass_filter.type = "lowpass";
-lowpass_filter.frequency.setValueAtTime(2000, 0);
+lowpass_filter.frequency.setValueAtTime(2048, 0);
 
 lowpass_filter.connect(TONES.masterEntryNode);
 
-let instrument = new TONES.SimpleInstrument(TONES.getDefaultKeyboardDict(), lowpass_filter);
+let instrument = new TONES.SimpleInstrument({
+    unison: 8,
+    detune: 20,
+    blend: 0.5,
+    waveform: "square"
+});
 
+instrument.connect(lowpass_filter);
 instrument.enableKeyboardPlay();
+
+let tParams = {
+    scale: TONES.Scales.ET12,
+    baseNote: TONES.KeyboardPitches.A4,
+    baseFrequency: 440,
+    unison: 8,
+    detune: 20,
+    blend: 0.5,
+    waveform: "square",
+    attack: 0.01,
+    decay: 1,
+    sustain: 0.2,
+    release: 0.1
+};
+
+function refreshInst() {
+    let keyboardPlay = instrument.keyboardPlayEnabled;
+
+    instrument.params.unison = tParams.unison;
+    instrument.detune = tParams.detune;
+    instrument.blend = tParams.blend;
+    instrument.waveform = tParams.waveform;
+
+    instrument.pitch_mapping = TONES.pitchMappingFromScale(tParams.scale, tParams.baseNote, tParams.baseFrequency);
+
+    let a = new TONES.EnvelopeSegment([0,0], [tParams.attack,1]);
+    let b = new TONES.EnvelopeSegment(a.p2, [tParams.decay + tParams.attack, tParams.sustain]);
+    let attack_env = new TONES.Envelope([a,b]);
+
+    instrument.params.attack_envelope = attack_env;
+    instrument.params.release_length = tParams.release;
+}
+
+let baseNoteInput = document.getElementById("base_note_input");
+let baseFrequencyInput = document.getElementById("base_frequency_input");
+let unisonInput = document.getElementById("unison_input");
+let detuneInput = document.getElementById("detune_input");
+let blendInput = document.getElementById("blend_input");
+
+document.getElementById("sine").onclick = function() {
+    tParams.waveform = "sine";
+    refreshInst();
+};
+
+document.getElementById("square").onclick = function() {
+    tParams.waveform = "square";
+    refreshInst();
+};
+
+document.getElementById("sawtooth").onclick = function() {
+    tParams.waveform = "sawtooth";
+    refreshInst();
+};
+
+document.getElementById("triangle").onclick = function() {
+    tParams.waveform = "triangle";
+    refreshInst();
+};
+
+baseNoteInput.oninput = function(evt) {
+    let value = this.value;
+    try {
+
+        tParams.baseNote = TONES.makeKeyboardPitch(value);
+
+        baseFrequencyInput.value = tParams.baseNote.twelveTETFrequency().toFixed(5);
+        tParams.baseFrequency = tParams.baseNote.twelveTETFrequency();
+
+        refreshInst();
+        this.style.backgroundColor = "#FFFFFF";
+
+    } catch (e) {
+        this.style.backgroundColor = "#FA8072";
+    }
+};
+
+baseFrequencyInput.oninput = function(evt) {
+    let value = this.value;
+
+    if (value > 0) {
+        tParams.baseFrequency = value;
+        refreshInst();
+        this.style.backgroundColor = "#FFFFFF";
+    } else {
+        this.style.backgroundColor = "#FA8072";
+    }
+};
+
+unisonInput.oninput = function(evt) {
+    tParams.unison = parseFloat(this.value);
+
+    refreshInst();
+};
+
+detuneInput.oninput = function(evt) {
+    tParams.detune = parseFloat(this.value) / 10;
+    refreshInst();
+};
+
+blendInput.oninput = function(evt) {
+    tParams.blend = parseFloat(this.value) / 1000;
+    refreshInst();
+};
+
+baseFrequencyInput.onblur = baseNoteInput.onblur = unisonInput.onblur = function() {
+    instrument.enableKeyboardPlay();
+};
+
+baseFrequencyInput.onfocus = baseNoteInput.onfocus = unisonInput.onfocus = function () {
+    instrument.disableKeyboardPlay();
+};
+
+document.getElementById("lowpass_input").oninput = function() {
+    let value = Math.pow(2, this.value / 100);
+
+    lowpass_filter.frequency.value = value;
+};
+
+document.getElementById("attack_input").oninput = function() {
+    let value = Math.pow(2, this.value / 400) - 1;
+    tParams.attack = value;
+    refreshInst();
+};
+
+document.getElementById("decay_input").oninput = function() {
+    let value = Math.pow(2, this.value / 400) - 1;
+    tParams.decay = value;
+    refreshInst();
+};
+
+document.getElementById("sustain_input").oninput = function() {
+    let value = this.value / 100;
+    tParams.sustain = value;
+    refreshInst();
+};
+
+document.getElementById("release_input").oninput = function() {
+    let value = Math.pow(2, this.value / 400) - 1;
+    tParams.release = value;
+    refreshInst();
+};
+
+let reader = new TONES.ScalaReader(function(scalaFile) {
+    scale = TONES.sclFileToScale(scalaFile);
+    tParams.scale = scale;
+    refreshInst();
+}, {domElement: document.getElementById("scala_file_input")});
     </script>
 <body>
 
