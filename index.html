@@ -9,7 +9,7 @@
 	<body>
 		<div id="full">
 			<h1>MOOMATH</h1>
-			<p>We are two high schoolers who love web design, programming, music, and other fun math things.</p>
+			<p>We are two high schoolers who love cows (of course), web design, programming, music, and other fun math things.</p>
 			<div class="list">
 				<a href="articles">Articles</a>
 				<a href="programs">Programs</a>
@@ -55,6 +55,12 @@
 			};
 
 			draw();
+            
+            window.addEventListener('resize', function () {
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+            });
 		</script>
 	</body>
 </html>
