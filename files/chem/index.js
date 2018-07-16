@@ -27,7 +27,12 @@ function wait() {
 
 let index = {}
 
+let errors = ''
+
+let bound = [0, 20]
+
 function start() {
+    log('')
     request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP31%20wd%3AQ11344.%20%7D&format=json', function(error, response) {
         let json = JSON.parse(response.body)
         for (let i = 0; i < json['results']['bindings'].length; i++) {
@@ -38,8 +43,8 @@ function start() {
                 if (bigZ < 119 && bigZ > 0) {
                     index[bigZ] = json['results']['bindings'][i]['a']['value'].split('/')[4]
                     if (Object.keys(index).length === 118) {
-                        for (let j = 0; j < 118; j++) {
-                            generate(index[j], j + 1)
+                        for (let j = bound[0]; j < bound[1]; j++) {
+                            generate(index[j + 1], j + 1)
                             await wait()
                         }
                     }
@@ -51,18 +56,30 @@ function start() {
 
 start()
 
+let pings = 0
+let pongs = 0
+
 function generate(q, n) {
     console.log('Generating ' + n + ': ' + q + '...')
     request('https://query.wikidata.org/sparql?query=SELECT%20%3Fa%20WHERE%20%7B%20%3Fa%20wdt%3AP279%20wd%3A' + q + '.%20%7D&format=json', function(error, response) {
         if (response === undefined) {
+            console.log(q + ' is undefined.')
             return
         }
         let json = JSON.parse(response.body)
         for (let i = 0; i < json['results']['bindings'].length; i++) {
             
             let url = json['results']['bindings'][i]['a']['value']
+
+            pings++
+            output(url)
             request(url, function(error, response) {
                 if (response === undefined || response.body.startsWith('<') || response.body.startsWith('[')) {
+                    if (response === undefined) {
+                        log(url + ' is undefined')
+                    } else {
+                        log(url + ' is invalid')
+                    }
                     return
                 }
                 let nested = JSON.parse(response.body)
@@ -94,6 +111,8 @@ function generate(q, n) {
                             if (keys[j] === 'P816') {
 
                                 let u2 = 'http://www.wikidata.org/entity/' + value['id']
+                                pings++
+                                output(u2)
                                 request(u2, function(e2, r2) {
                                     if (r2 === undefined || r2.body.startsWith('<') || r2.body.startsWith('[')) {
                                         return
@@ -111,6 +130,8 @@ function generate(q, n) {
                             if (keys[j] === 'P2114') {
 
                                 let u2 = value['unit']
+                                pings++
+                                output(u2)
                                 request(u2, function(e2, r2, b2) {
                                     if (r2 === undefined || r2.body.startsWith('<') || r2.body.startsWith('[')) {
                                         return
@@ -135,6 +156,7 @@ function generate(q, n) {
 }
 
 function edit(k, v, n) {
+    pongs++
     if (!data[n]) {
         data[n] = {}
     }
@@ -142,4 +164,14 @@ function edit(k, v, n) {
 
     let jjjj = JSON.parse(JSON.stringify(data[n]))
     fs.writeFile('data/' + n + '.json', JSON.stringify(jjjj, null, '\t'), function(err) {})
+}
+
+function log(v) {
+    errors += v + '\n'
+    fs.writeFile('errors.txt', errors, function(err) {})
+}
+
+function output(v) {
+    let percent = 100 * pongs / pings
+    fs.writeFile('completed.txt', pongs + '/' + pings + ' (' + percent + ')\n' + v, function(err) {})
 }
