@@ -3,3 +3,8 @@
 server/build.html
 programs/0006/server/astSearch
 *.pyc
+
+.idea/*
+files/chem/node_modules
+files/chem/*.json
+files/chem/data
