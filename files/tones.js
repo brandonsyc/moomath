@@ -2441,7 +2441,9 @@
 
                 let blend_multiplier;
 
-                if (unison % 2 === 0) {
+                if (unison === 2) {
+                    blend_multiplier = new ParameterValue(0.5);
+                } else if (unison % 2 === 0) {
                     if (i === unison / 2 || i === unison / 2 - 1) {
                         blend_multiplier = new ParameterConstantMultiply(center, 0.5);
                     } else {
@@ -5009,10 +5011,6 @@ vec4 getValueFromTexture(float index) {
 
     const SVGNS = "http://www.w3.org/2000/svg";
 
-    function svgClassFactory(group, class_, ...args) {
-        return new class_(group, ...args);
-    }
-
     // Class which allows modification of parents by setting "propagators"
     class ChildUpdater {
         constructor() {
@@ -5060,7 +5058,6 @@ vec4 getValueFromTexture(float index) {
             }, this._id);
 
             this.updateTransform();
-            this.set("class", ""); // TODO stop this
         }
 
         updateTransform() {
@@ -5118,6 +5115,8 @@ vec4 getValueFromTexture(float index) {
         remove() {
             this.element.remove();
             this.parent.removeChild(this);
+
+            this.removeChildDefs();
         }
 
         get(attribute) {
@@ -5173,14 +5172,16 @@ vec4 getValueFromTexture(float index) {
             return this.element.removeEventListener(...args);
         }
 
-        getClasses() {
-            let classes = this.get("class");
+        getClasses(asArray = true) {
+            let classes;
+
+            classes = this.get("class");
 
             if (!classes) {
-                return [];
+                return asArray ? [] : "";
             }
 
-            return classes.split('\n');
+            return asArray ? classes.split(' ') : classes;
         }
 
         addClass(x) {
@@ -5192,7 +5193,7 @@ vec4 getValueFromTexture(float index) {
                 if (x === Class) return;
             }
 
-            this.set("class", this.get("class") + x);
+            this.set("class", this.getClasses(false) + x);
             return this;
         }
 
@@ -5220,6 +5221,40 @@ vec4 getValueFromTexture(float index) {
 
         show() {
             this.set("display", "");
+        }
+
+        addChildDef(id, tag) {
+            let defs = this.context.definitions;
+
+            let elem = defs.addGroup({tag, id});
+
+            if (this.child_defs === undefined)
+                this.child_defs = [];
+
+            this.child_defs.push(elem);
+
+            return elem;
+        }
+
+        removeChildDef(id) {
+            this.child_defs.forEach(x => {
+                let eid = x.get("id");
+
+                if (id === eid)
+                    x.destroy();
+            });
+        }
+
+        removeChildDefs() {
+            if (this.child_defs) {
+                this.child_defs.forEach(x => {
+                    try {
+                        x.destroy();
+                    } catch (e) {
+
+                    }
+                });
+            }
         }
     }
 
@@ -5270,7 +5305,7 @@ vec4 getValueFromTexture(float index) {
         }
 
         makeGroup(attribs = {}, append = false) {
-            let elem = document.createElementNS(SVGNS, 'g');
+            let elem = document.createElementNS(SVGNS, attribs.tag || 'g');
 
             Object.keys(attribs).forEach((key) => {
                 elem.setAttributeNS(null, key, attribs[key]);
@@ -5328,21 +5363,25 @@ vec4 getValueFromTexture(float index) {
         }
 
         removeIf(func, recursive = false) {
+            let count = 0;
 
             for (let i = 0; i < this.children.length; i++) {
                 let child = this.children[i];
 
                 if (recursive && child.removeIf) {
                     let res = child.removeIf(func, recursive);
+                    count += res;
                 }
 
                 if (func(child)) {
-                    this.children[i].destroy();
-                    this.children.splice(i--, 1);
+                    child.destroy();
+                    i--;
+
+                    count += 1;
                 }
             }
 
-            return 0;
+            return count;
         }
 
         destroy() {
@@ -5352,6 +5391,77 @@ vec4 getValueFromTexture(float index) {
 
             this.remove();
             this._id = -1;
+        }
+
+        select(func, recursive = false) {
+            let ret = [];
+
+            for (let i = 0; i < this.children.length; i++) {
+                let child = this.children[i];
+
+                if (recursive && child.select) {
+                    let res = child.select(func, recursive);
+                    ret.push(...res);
+                }
+
+                if (func(child)) {
+                    ret.push(child);
+                }
+            }
+
+            return ret;
+        }
+
+        getChild(child, recursive = false) {
+            let id;
+            if (child._id) {
+                id = child._id;
+            } else {
+                id = child;
+            }
+
+            let found = this.select((x) => x._id === id, recursive);
+
+            if (found.length === 0)
+                return null;
+            return found[0];
+        }
+
+        isChild(child, recursive = false) {
+            return !!this.getChild(child, recursive);
+        }
+
+        getChildIndex(child) {
+            let id;
+            if (child._id) {
+                id = child._id;
+            } else {
+                id = child;
+            }
+
+            for (let i = 0; i < this.children.length; i++) {
+                let child = this.children[i];
+
+                if (child._id === id)
+                    return i;
+            }
+
+            return -1;
+        }
+
+        swapIndices(i1, i2) {
+            let c1 = this.children[i1];
+            let c2 = this.children[i2];
+
+            this.element.replaceChild(c1.element, c2.element);
+            this.element.insertBefore(c2.element, c1.element);
+
+            this.children[i1] = c2;
+            this.children[i2] = c1;
+        }
+
+        swap(c1, c2) {
+            this.swapIndices(this.getChildIndex(c1), this.getChildIndex(c2));
         }
     }
 
@@ -5373,6 +5483,7 @@ vec4 getValueFromTexture(float index) {
             this._id = getID$1();
 
             this.element.setAttributeNS(null, "_id", this._id);
+            this.definitions = this.addGroup({tag: "defs"});
         }
 
         get width() {
@@ -5389,10 +5500,6 @@ vec4 getValueFromTexture(float index) {
 
         set height(value) {
             this.element.setAttributeNS(SVGNS, "height", value);
-        }
-
-        makeCircle(cx = 0, cy = 0, r = 0) {
-            return svgClassFactory(this, Circle, 'circle', cx, cy, r);
         }
     }
 
@@ -5714,17 +5821,17 @@ vec4 getValueFromTexture(float index) {
 
         set cx(value) {
             this._cx = value;
-            this.updateSVG();
+            this.set("cx", this._cx);
         }
 
         set cy(value) {
             this._cy = value;
-            this.updateSVG();
+            this.set("cy", this._cy);
         }
 
         set r(value) {
             this._r = value;
-            this.updateSVG();
+            this.set("r", this._r);
         }
 
         area() {
@@ -5775,7 +5882,7 @@ vec4 getValueFromTexture(float index) {
 
         set width(value) {
             this._width = value;
-            this.updateSVG();
+            this.set("width", this._width);
         }
 
         get height() {
@@ -5784,7 +5891,7 @@ vec4 getValueFromTexture(float index) {
 
         set height(value) {
             this._height = value;
-            this.updateSVG();
+            this.set("height", this._height);
         }
 
         get x() {
@@ -5793,7 +5900,7 @@ vec4 getValueFromTexture(float index) {
 
         set x(value) {
             this._x = value;
-            this.updateSVG();
+            this.set("x", this._x);
         }
 
         get y() {
@@ -5802,7 +5909,7 @@ vec4 getValueFromTexture(float index) {
 
         set y(value) {
             this._y = value;
-            this.updateSVG();
+            this.set("y", this._y);
         }
 
         get rx() {
@@ -5811,7 +5918,7 @@ vec4 getValueFromTexture(float index) {
 
         set rx(value) {
             this._rx = value;
-            this.updateSVG();
+            this.set("rx", this._rx);
         }
 
         get ry() {
@@ -5820,7 +5927,7 @@ vec4 getValueFromTexture(float index) {
 
         set ry(value) {
             this._ry = value;
-            this.updateSVG();
+            this.set("ry", this._ry);
         }
 
         static tag() {
@@ -5983,6 +6090,54 @@ vec4 getValueFromTexture(float index) {
         static tag() {
             return "path";
         }
+    }
+
+    class Line extends SVGElement {
+        constructor(parent, params = {}) {
+            super(parent, 'line');
+
+            this.x1 = select(params.x1, 0);
+            this.x2 = select(params.x2, 0);
+            this.y1 = select(params.y1, 0);
+            this.y2 = select(params.y2, 0);
+        }
+
+        get x1() {
+            return this._x1;
+        }
+
+        get x2() {
+            return this._x2;
+        }
+
+        get y1() {
+            return this._y1;
+        }
+
+        get y2() {
+            return this._y2;
+        }
+
+        set x1(value) {
+            this._x1 = value;
+            this.set("x1", value);
+        }
+
+        set x2(value) {
+            this._x2 = value;
+            this.set("x2", value);
+        }
+
+        set y1(value) {
+            this._y1 = value;
+            this.set("y1", value);
+        }
+
+        set y2(value) {
+            this._y2 = value;
+            this.set("y2", value);
+        }
+
     }
 
     class Polygon extends SVGElement {
@@ -8761,6 +8916,29 @@ vec4 getValueFromTexture(float index) {
         ctx.fillRect(x1, y1, width, height);
     }
 
+    function setRect(rect, x1, y1, x2, y2) {
+        if (x1 > x2) {
+            let t = x2;
+            x2 = x1;
+            x1 = t;
+        }
+
+        if (y1 > y2) {
+            let t = y2;
+            y2 = y1;
+            y1 = t;
+        }
+
+        let width = x2 - x1;
+        let height = y2 - y1;
+
+        rect.x = x1;
+        rect.y = y1;
+
+        rect.width = width;
+        rect.height = height;
+    }
+
     //https://stackoverflow.com/questions/1669190/find-the-min-max-element-of-an-array-in-javascript/40026552
     function arrayMin(arr) {
         let len = arr.length, min = Infinity;
@@ -8789,7 +8967,7 @@ vec4 getValueFromTexture(float index) {
     /*
     Quite useful for audio visualization
      */
-    class AudioLevelVisualizer extends EndingNode {
+    class CanvasLevelVisualizer extends EndingNode {
         static get Type() {
             return AudioLevelVisualizerType;
         }
@@ -9333,6 +9511,743 @@ vec4 getValueFromTexture(float index) {
         }
     }
 
+    class SVGLevelVisualizer extends EndingNode {
+        static get Type() {
+            return AudioLevelVisualizerType;
+        }
+
+        static get Orient() {
+            return AudioLevelVisualizerOrientation;
+        }
+
+        constructor(parent, params = {}) {
+            super();
+
+            ["width", "height", "line_width", "line_color", "background_color", "text_color", "font", "split_lines", "font_size", "show_decibels", "show_lines"].forEach(x => this.addBGParam(x));
+            ["warning_gain", "peak_gain", "normal_color", "warning_color", "peak_color", "trans_thickness"].forEach(x => this.addGradientParam(x));
+
+            this.translation = new Translation();
+
+            this.x = select(params.x, 0); // x position of top left corner
+            this.y = select(params.y, 0); // y position of top left corner
+
+            this.width = select(params.width, 100); // width of visualizer
+            this.height = select(params.height, 600); // height of visualizer
+
+            this.element = new SVGGroup(parent); // visualizer element
+            this.background = new SVGGroup(this.element); // visualizer background element
+            this.levels = new SVGGroup(this.element); // visualizer foreground element (levels, bars)
+
+            this.element.addTransform(this.translation);
+
+            if (params.node)
+                this.connectFrom(params.node); // audio node to connect to
+
+            this.type = select(params.type, "s"); // type of visualization, "s" for stereo and "m" for mono
+            this.orient = select(params.orient, "up"); // orientation of visualization, out of "up", "down", "left", "right"
+            this.blocksize = select(params.blocksize, 1024); // size of each processed audio block, power of two required, 1024 recommended
+            this.track_max = select(params.track_max, 200); // time in frames until the bars start to drop
+
+            this.line_width = select(params.line_width, 1); // width of the decibel marking lines
+            this.line_color = select(params.line_color, "#9a9"); // color of the decibel marking lines
+
+            this.show_lines = select(params.show_lines, true); // should the decibel marking lines be shown
+            this.show_decibels = select(params.show_decibels, true); // should the decibal marking lines text be shown
+
+            this.bar_width = select(params.bar_width, 3); // width of the level bar
+            this.bar_descent_rate = select(params.bar_descent, params.bar_descent_rate, 0.04); // how fast does the bar "fall"
+
+            this.warning_gain = select(params.warning_gain, 0.5); // gain value where yellow should appear
+            this.peak_gain = select(params.peak_gain, 1); // gain value where red should appear
+
+            this.normal_color = select(params.normal_color, "#096"); // color of normal audio values (in green range)
+            this.warning_color = select(params.warning_color, "#ea4"); // color of loud/warning audio values
+            this.peak_color = select(params.peak_color, "#e42"); // color of peak audio values
+
+            this.trans_thickness = select(params.trans_thickness, 0); // thickness of the gradient between colors
+
+            this.background_color = select(params.background_color, "#ccc"); // background color of visualization
+
+            this.text_color = select(params.text_color, "#222"); // color of decibel marking text
+            this.font = select(params.font, "Open Sans"); // font of decibel marking text
+            this.font_size = select(params.font_size, "15px"); // size of decibel marking text font
+
+            /*
+            Heights (or x values, if the orientation is "right" or "left") at which to draw the decibel marking lines
+            The corresponding text for each height may not be drawn if it detects the text will get too cramped
+             */
+            this.line_heights = select(params.line_heights, [...Array(11).keys()].map(x => 3 * x - 27));
+
+            this.split_lines = true; // if true, draw two decibel markers for the graphic in stereo mode, if false, draw one
+
+            // Internal parameters
+            this.enabled = false; // is the draw loop enabled
+            this.needs_bg_redraw = true; // does the background need to be redrawn
+            this.needs_gr_recalc = true; // does the gradient element created in <defs> need to be recalculated
+            this.destroyed = false; // is the object destroyed
+        }
+
+        addBGParam(name) {
+            this.checkDestroyed();
+
+            let privatev;
+            let that = this;
+
+            Object.defineProperty(this, name, {
+                set(v) {
+                    if (!equal(privatev, v))
+                        that.needs_bg_redraw = true;
+                    privatev = v;
+                },
+                get() {
+                    return privatev;
+                }
+            });
+        }
+
+        addGradientParam(name) {
+            this.checkDestroyed();
+
+            let privatev;
+            let that = this;
+
+            Object.defineProperty(this, name, {
+                set(v) {
+                    if (!equal(privatev, v))
+                        that.needs_gr_recalc = true;
+                    privatev = v;
+                },
+                get() {
+                    return privatev;
+                }
+            });
+        }
+
+        get x() {
+            this.checkDestroyed();
+            return this.translation.x;
+        }
+
+        set x(value) {
+            this.checkDestroyed();
+            this.translation.x = value;
+        }
+
+        get y() {
+            this.checkDestroyed();
+            return this.translation.y;
+        }
+
+        set y(value) {
+            this.checkDestroyed();
+            this.translation.y = value;
+        }
+
+        checkDestroyed() {
+            if (this.destroyed)
+                throw new Error("The visualizer is destroyed and can no longer be used");
+        }
+
+        destroy() {
+            this.checkDestroyed();
+
+            this.stop();
+            this.element.destroy();
+
+            this.destroyed = true;
+        }
+
+        get orient() {
+            this.checkDestroyed();
+            return this._orient;
+        }
+
+        set orient(value) {
+            this.checkDestroyed();
+            assert(Object.values(AudioLevelVisualizerOrientation).includes(value));
+
+            if (value !== this._orient) {
+                this._orient = value;
+
+                this.needs_gr_recalc = true;
+                this.needs_bg_redraw = true;
+            }
+        }
+
+        get type() {
+            this.checkDestroyed();
+            return this._type;
+        }
+
+        get blocksize() {
+            this.checkDestroyed();
+            if (this.analyzerCount === 1) {
+                return this.analyzer.fftSize;
+            } else if (this.analyzerCount === 2) {
+                return this.l_analyzer.fftSize;
+            }
+        }
+
+        set blocksize(value) {
+            this.checkDestroyed();
+            if (this.analyzerCount === 1) {
+                this.analyzer.fftSize = value;
+            } else if (this.analyzerCount === 2) {
+                this.l_analyzer.fftSize = value;
+                this.r_analyzer.fftSize = value;
+            }
+        }
+
+        getTransforms() {
+            this.checkDestroyed();
+            let width = this.width;
+            let height = this.height;
+
+            let fr;
+
+            switch (this.orient) {
+                case "up":
+                    fr = (x, y) => [width * x, (1 - y) * height];
+                    break;
+                case "down":
+                    fr = (x, y) => [width * x, y * height];
+
+                    break;
+                case "right":
+                    fr = (x, y) => [width * y, height * x];
+
+                    break;
+                case "left":
+                    fr = (x, y) => [width * (1 - y), height * (1 - x)];
+
+                    break;
+                default:
+                    throw new Error(`Unknown orientation ${this.orient}`);
+            }
+
+            let gr = y => (Math.log10(y / 1.75 + .1) + 1) / (Math.log10(1.1) + 1);
+
+            // gain to position
+            let tr = (x, y) => fr(x, gr(y));
+
+            // decibel to position
+            let dr = (x, y) => tr(x, Math.pow(10, y / 20));
+
+            return {fr, tr, dr, gr};
+        }
+
+        drawBackground(transforms) {
+            this.checkDestroyed();
+
+            if (!this.enabled)
+                return;
+
+            let oparams = this.line_heights;
+
+            if (!this.needs_bg_redraw && equal(oparams, this._last_oparams))
+                return;
+
+            this._last_oparams = oparams.slice();
+
+            this.drawBackgroundRect(transforms);
+            this.drawBackgroundLines(transforms);
+
+            this.needs_bg_redraw = false;
+        }
+
+        drawBackgroundRect() {
+            this.checkDestroyed();
+
+            if (!this.background.background_rect)
+                this.background.background_rect = new Rectangle(this.background);
+
+            let rect = this.background.background_rect;
+
+            rect.set("fill", this.background_color);
+            rect.width = this.width;
+            rect.height = this.height;
+        }
+
+        drawBackgroundLines(transforms) {
+            this.checkDestroyed();
+            if (this.background.background_lines === undefined)
+                this.background.background_lines = new SVGGroup(this.background);
+            if (this.background.background_texts === undefined)
+                this.background.background_texts = new SVGGroup(this.background);
+
+            let dr = transforms.dr;
+
+            let index = 0;
+            let line_index = 0;
+            let lines = this.background.background_lines.children;
+
+            let texts = this.background.background_texts.children;
+            let rectangles = [];
+
+            let drawMarker = (y, start_x, end_x) => {
+                if (this.show_lines) {
+                    let path;
+
+
+                    if (line_index >= lines.length) {
+                        path = new Path(this.background.background_lines);
+                    } else {
+                        path = lines[line_index];
+                    }
+
+                    let p1 = dr(start_x, y);
+                    let p2 = dr(end_x, y);
+
+                    path.d = `M ${p1.join(' ')} L ${p2.join(' ')}`;
+                    path.set("stroke", this.line_color);
+
+                    line_index++;
+                }
+
+                if (this.show_decibels) {
+                    let text_obj;
+
+                    if (index >= texts.length) {
+                        text_obj = new SVGGroup(this.background.background_texts);
+                    } else {
+                        text_obj = texts[index];
+                    }
+
+                    if (!text_obj.obscure)
+                        text_obj.obscure = new Rectangle(text_obj);
+                    if (!text_obj.text)
+                        text_obj.text = new Text(text_obj);
+
+                    let text = text_obj.text;
+
+                    let m1 = dr((start_x + end_x) / 2, y);
+
+                    text.text = y.toString();
+                    text.x = m1[0];
+                    text.y = m1[1];
+
+                    text.set("text-anchor", "middle");
+                    text.set("alignment-baseline", "middle");
+                    text.set("font-family", this.font);
+                    text.set("font-size", this.font_size);
+
+                    let bbox = text.getBBox();
+
+                    let text_rect = {x1: bbox.x - 1.5, x2: bbox.x + bbox.width + 1.5, y1: bbox.y, y2: bbox.y + bbox.height}; // bounding rect of text
+                    let obscure = text_obj.obscure;
+
+                    if (rectangles.some(rect => rectIntersect(rect, text_rect))) {
+                        text.text = "";
+                        obscure.width = 0;
+                        obscure.height = 0;
+
+                    } else {
+                        rectangles.push(text_rect);
+
+                        obscure.x = bbox.x - 1;
+                        obscure.y = bbox.y;
+                        obscure.width = bbox.width + 2;
+                        obscure.height = bbox.height + 2;
+
+                        obscure.set("fill", this.background_color);
+                    }
+
+                    index++;
+                }
+            };
+
+            if (this.split_lines && this._type === "s") {
+                this.line_heights.forEach(i => [0, 0.535].forEach(x => {
+                    drawMarker(i, x, x + 0.465);
+                }));
+            } else {
+                this.line_heights.forEach(i => {
+                    drawMarker(i, 0, 1);
+                });
+            }
+
+            lines.slice(line_index).forEach(x => x.destroy());
+            lines.length = line_index;
+
+            texts.slice(index).forEach(x => x.destroy());
+            texts.length = index;
+        }
+
+        calculateGradient(transforms) {
+            this.checkDestroyed();
+
+            if (!this.needs_gr_recalc) {
+                return;
+            }
+
+            if (!this.gradient) {
+                this.gradient = this.element.addChildDef(this.element._id + "grad", "linearGradient");
+
+                let g = this.gradient;
+
+                g.normal_s = this.gradient.addElement("stop");
+                g.normal_e = this.gradient.addElement("stop");
+
+                g.warn_s = this.gradient.addElement("stop");
+                g.warn_e = this.gradient.addElement("stop");
+
+                g.peak_s = this.gradient.addElement("stop");
+                g.peak_e = this.gradient.addElement("stop");
+
+                this.gradient.set("gradientUnits", "userSpaceOnUse");
+            }
+
+            let g = this.gradient;
+
+            [g.normal_s, g.normal_e].forEach(x => x.set("stop-color", this.normal_color));
+            [g.warn_s, g.warn_e].forEach(x => x.set("stop-color", this.warning_color));
+            [g.peak_s, g.peak_e].forEach(x => x.set("stop-color", this.peak_color));
+
+            let w_thresh = transforms.gr(this.warning_gain);
+            let p_thresh = transforms.gr(this.peak_gain);
+
+            g.normal_s.set("offset", "0");
+            g.normal_e.set("offset", (w_thresh - this.trans_thickness) + "");
+            g.warn_s.set("offset", (w_thresh + this.trans_thickness) + "");
+            g.warn_e.set("offset", (p_thresh - this.trans_thickness) + "");
+            g.peak_s.set("offset", (p_thresh + this.trans_thickness) + "");
+            g.peak_e.set("offset", "1");
+
+            let gradient_t_index = {left: 0, right: 1, down: 3, up: 2}[this.orient];
+
+            ["x1", "x2", "y1", "y2"].forEach((x, i) => {
+                let v;
+                if (i === gradient_t_index) {
+                    v = (i < 2) ? this.width : this.height;
+                } else {
+                    v = 0;
+                }
+                this.gradient.set(x, v);
+            });
+
+            this.needs_gr_recalc = false;
+        }
+
+        drawFront(transforms) {
+            this.checkDestroyed();
+            this.calculateGradient(transforms);
+
+            let gradient_id = this.gradient.get("id");
+            let g = this.gradient;
+
+            let tr = transforms.tr;
+
+            switch (this._type) {
+                case "m": {
+                    this.getLevel();
+
+                    let levels = this.levels;
+
+                    if (!levels.level) {
+                        levels.level = new Rectangle(levels);
+                        levels.level.set("fill", `url(#${gradient_id})`);
+                    }
+
+                    if (this.bar_mod_last > this.track_max) {
+                        let reduce = Math.pow(1 - this.bar_descent_rate, (this.bar_mod_last - this.track_max) / 60);
+                        this.bar *= reduce;
+                    }
+
+                    let max = arrayMax(this._level);
+                    let min = arrayMin(this._level);
+
+                    let all_max = Math.max(Math.abs(max), Math.abs(min));
+
+                    if (this.bar <= all_max) {
+                        this.bar = all_max;
+                        this.bar_mod_last = 0;
+                    }
+
+                    this.bar_mod_last++;
+
+
+                    setRect(levels.level, ...tr(0, 0), ...tr(1, all_max));
+
+                    if (!levels.bar) {
+                        levels.bar = new Line(levels);
+                        levels.bar.set("stroke", `url(#${gradient_id})`);
+                    }
+
+                    let rs = tr(0, this.bar);
+                    let re = tr(1, this.bar);
+
+                    if (rs[0] === this._last_bar_x1 && re[0] === this._last_bar_x2) {
+                        levels.bar.y1 = rs[1];
+                        levels.bar.y2 = re[1];
+                    } else {
+                        [levels.bar.x1, levels.bar.y1] = rs;
+                        [levels.bar.x2, levels.bar.y2] = re;
+                    }
+
+                    this._last_bar_x1 = rs[0];
+                    this._last_bar_x2 = re[0];
+
+                    if (this._last_bar_width !== this.bar_width)
+                        levels.bar.set("stroke-width", `${this.bar_width}px`);
+
+                    this._last_bar_width = this.bar_width;
+                }
+                    break;
+                case "s":
+                    this.getLLevel();
+                    this.getRLevel();
+
+                    if (!this.l_bar)
+                        this.l_bar = 0;
+                    if (!this.r_bar)
+                        this.r_bar = 0;
+                    if (!this.bar_mod_last)
+                        this.bar_mod_last = 0;
+
+                    if (this.bar_mod_last > this.track_max) {
+                        let reduce = Math.pow(1 - this.bar_descent_rate, (this.bar_mod_last - this.track_max) / 60);
+                        this.l_bar *= reduce;
+                        this.r_bar *= reduce;
+                    }
+
+                    let max = arrayMax(this._l_level);
+                    let min = arrayMin(this._l_level);
+
+                    let all_max = Math.max(Math.abs(max), Math.abs(min));
+
+                    if (this.l_bar <= all_max) {
+                        this.l_bar = all_max;
+                        this.bar_mod_last = 0;
+                    }
+
+                    let levels = this.levels;
+
+                    if (!levels.l_level) {
+                        levels.l_level = new Rectangle(levels);
+                        levels.l_level.set("fill", `url(#${gradient_id})`);
+                    }
+
+                    if (!levels.l_bar) {
+                        levels.l_bar = new Line(levels);
+                        levels.l_bar.set("stroke", `url(#${gradient_id})`);
+                    }
+
+                    setRect(levels.l_level, ...tr(0, 0), ...tr(0.465, all_max));
+
+                    let ls = tr(0, this.l_bar);
+                    let le = tr(0.465, this.l_bar);
+
+                    if (ls[0] === this._last_l_bar_x1 && le[0] === this._last_l_bar_x2) {
+                        levels.l_bar.y1 = ls[1];
+                        levels.l_bar.y2 = le[1];
+                    } else {
+                        [levels.l_bar.x1, levels.l_bar.y1] = ls;
+                        [levels.l_bar.x2, levels.l_bar.y2] = le;
+                    }
+
+                    this._last_l_bar_x1 = ls[0];
+                    this._last_l_bar_x2 = le[0];
+
+                    max = arrayMax(this._r_level);
+                    min = arrayMin(this._r_level);
+
+                    all_max = Math.max(Math.abs(max), Math.abs(min));
+
+                    if (this.r_bar <= all_max) {
+                        this.r_bar = all_max;
+                        this.bar_mod_last = 0;
+                    }
+
+                    this.bar_mod_last++;
+
+                    if (!levels.r_level) {
+                        levels.r_level = new Rectangle(levels);
+                        levels.r_level.set("fill", `url(#${gradient_id})`);
+                    }
+
+                    if (!levels.r_bar) {
+                        levels.r_bar = new Line(levels);
+                        levels.r_bar.set("stroke", `url(#${gradient_id})`);
+                    }
+
+                    setRect(levels.r_level, ...tr(.535, 0), ...tr(1, all_max));
+
+                    let rs = tr(.535, this.r_bar);
+                    let re = tr(1, this.r_bar);
+
+                    if (rs[0] === this._last_r_bar_x1 && re[0] === this._last_r_bar_x2) {
+                        levels.r_bar.y1 = rs[1];
+                        levels.r_bar.y2 = re[1];
+                    } else {
+                        [levels.r_bar.x1, levels.r_bar.y1] = rs;
+                        [levels.r_bar.x2, levels.r_bar.y2] = re;
+                    }
+
+                    this._last_r_bar_x1 = ls[0];
+                    this._last_r_bar_x2 = le[0];
+
+                    if (this._last_bar_width !== this.bar_width) {
+                        levels.r_bar.set("stroke-width", `${this.bar_width}px`);
+                        levels.l_bar.set("stroke-width", `${this.bar_width}px`);
+                    }
+
+                    this._last_bar_width = this.bar_width;
+
+                    break;
+            }
+        }
+
+        getLLevel() {
+            this.checkDestroyed();
+            assert(this.l_analyzer, "Incorrect mode for getLLevel call");
+
+            if (!this._l_level || this._l_level.length !== this.l_analyzer.fftSize)
+                this._l_level = new Float32Array(this.l_analyzer.fftSize);
+
+            this.l_analyzer.getFloatTimeDomainData(this._l_level);
+        }
+
+        getRLevel() {
+            this.checkDestroyed();
+            assert(this.r_analyzer, "Incorrect mode for getRLevel call");
+
+            if (!this._r_level || this._r_level.length !== this.r_analyzer.fftSize)
+                this._r_level = new Float32Array(this.r_analyzer.fftSize);
+
+            this.r_analyzer.getFloatTimeDomainData(this._r_level);
+        }
+
+        getLevel() {
+            this.checkDestroyed();
+            assert(this.analyzer, "Incorrect mode for getLevel call");
+
+            if (!this._level || this._level.length !== this.analyzer.fftSize)
+                this._level = new Float32Array(this.analyzer.fftSize);
+
+            this.analyzer.getFloatTimeDomainData(this._level);
+        }
+
+        drawLoop() {
+            this.checkDestroyed();
+            if (!this.enabled)
+                return;
+
+            let transforms = this.getTransforms();
+
+            this.drawBackground(transforms);
+            this.drawFront(transforms);
+
+            requestAnimationFrame(() => this.drawLoop());
+        }
+
+        set type(value) {
+            this.checkDestroyed();
+            assert(Object.values(AudioLevelVisualizerType).includes(value));
+
+            this._type = value;
+
+            switch (value) {
+                case "m":
+                    if (this.analyzerCount === 1)
+                        return;
+                    else if (this.analyzerCount === 2) {
+                        this.splitter.disconnect(this.l_analyzer);
+                        this.splitter.disconnect(this.r_analyzer);
+
+                        this.entry.disconnect(this.splitter);
+
+                        this.l_analyzer = undefined;
+                        this.r_analyzer = undefined;
+
+                        this.splitter = undefined;
+                    }
+
+                    this.analyzer = exports.Context.createAnalyser();
+
+                    this.entry.connect(this.analyzer);
+
+                    this.analyzerCount = 1;
+                    break;
+                case "s":
+                    if (this.analyzerCount === 2)
+                        return;
+                    else if (this.analyzerCount === 1) {
+                        this.entry.disconnect(this.analyzer);
+
+                        this.analyzer = undefined;
+                    }
+
+                    this.l_analyzer = exports.Context.createAnalyser();
+                    this.r_analyzer = exports.Context.createAnalyser();
+
+                    this.splitter = exports.Context.createChannelSplitter(2);
+
+                    this.entry.connect(this.splitter);
+
+                    this.splitter.connect(this.l_analyzer, 0);
+                    this.splitter.connect(this.r_analyzer, 1);
+
+                    this.analyzerCount = 2;
+                    break;
+            }
+
+            this.reset();
+        }
+
+        reset() {
+            this.checkDestroyed();
+            switch (this._type) {
+                case "m":
+                    this.bar = 0;
+                    if (this._level)
+                        this._level.fill(0);
+                    break;
+                case "s":
+                    this.l_bar = 0;
+                    this.r_bar = 0;
+                    if (this._l_level) {
+                        this._l_level.fill(0);
+                        this._r_level.fill(0);
+                    }
+                    break;
+            }
+
+            this.levels.remove();
+            this.background.remove();
+
+            this.background = new SVGGroup(this.element);
+            this.levels = new SVGGroup(this.element);
+
+            this.needs_gr_recalc = true;
+            this.needs_bg_redraw = true;
+        }
+
+        drawBlank() {
+            this.checkDestroyed();
+            this.enabled = true;
+
+            this.reset();
+
+            this.drawLoop();
+            this.enabled = false;
+        }
+
+        start() {
+            this.checkDestroyed();
+            this.enabled = true;
+
+            this.drawLoop();
+        }
+
+        stop() {
+            this.checkDestroyed();
+            this.enabled = false;
+
+            this.reset();
+            this.drawBackground(this.getTransforms());
+        }
+    }
+
     // Polyfills
 
     exports.utils = utils;
@@ -9440,6 +10355,7 @@ vec4 getValueFromTexture(float index) {
     exports.ScaleTransform = ScaleTransform;
     exports.Rotation = Rotation;
     exports.ChildUpdater = ChildUpdater;
+    exports.Line = Line;
     exports.SVGNS = SVGNS;
     exports.Score = Score;
     exports.Staff = Staff;
@@ -9463,7 +10379,8 @@ vec4 getValueFromTexture(float index) {
     exports.makeAccidental = makeAccidental;
     exports.makeShape = makeShape;
     exports.SHAPES = SHAPES;
-    exports.AudioLevelVisualizer = AudioLevelVisualizer;
+    exports.CanvasLevelVisualizer = CanvasLevelVisualizer;
+    exports.SVGLevelVisualizer = SVGLevelVisualizer;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
