@@ -8,3 +8,4 @@ programs/0006/server/astSearch
 files/chem/node_modules
 files/chem/*.json
 files/chem/data
+files/chem/*.txt
