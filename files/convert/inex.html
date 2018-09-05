@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Untitled Document</title>
+    </head>
+
+    <body>
+        <script src="moonit.js"></script>
+        <script>
+            let energy = new Moonit();
+            energy.mode('length');
+            energy.onready = function() {
+                console.log(energy.convert(5280, 'foot', 'mile'));
+            };
+        </script>
+    </body>
+</html>
