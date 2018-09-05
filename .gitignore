@@ -9,3 +9,6 @@ files/chem/node_modules
 files/chem/*.json
 files/chem/data
 files/chem/*.txt
+
+files/convert/request/node_modules
+files/convert/request/*.json
