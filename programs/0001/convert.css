@@ -22,6 +22,9 @@ input[type=number] {
 .mbut {
 	border: none;
 }
+.mbut:active {
+    border: none;
+}
 .most {
 	transition: max-height 0.5s, opacity 0.2s 0.5s;
 	opacity: 1;
