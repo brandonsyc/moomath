@@ -16,6 +16,16 @@ class Moonit {
     convert(v, a, b) {
         return v * data[a] / data[b];
     }
+    
+    load() {
+        let req = new XMLHttpRequest();
+        let self = this;
+        req.onload = function() {
+            console.log(this.responseText);
+        };
+        req.open('get', 'request/data.json');
+        req.send();
+    }
 }
 
 class Unit {

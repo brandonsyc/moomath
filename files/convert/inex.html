@@ -9,7 +9,7 @@
         <script src="moonit.js"></script>
         <script>
             let energy = new Moonit();
-            energy.mode('length');
+            energy.load();
             energy.onready = function() {
                 console.log(energy.convert(5280, 'foot', 'mile'));
             };

@@ -3,9 +3,11 @@ const fs = require('fs')
 
 let data = {};
 let aliases = {};
+let duplicates = {};
 
 function format(x) {
     let out = x
+    out = out.split("''").join('')
     out = out.split('&amp;nbsp;').join('\u00A0')
     out = out.split('&amp;thinsp;').join('\u2009')
     out = out.split('&amp;#8209;').join('\u2011')
@@ -47,6 +49,15 @@ request('https://en.wikipedia.org/wiki/Module:Convert/data', function(error, res
             }
         })
         let name = values['name1'] || values['name1_us'] || initial
+        if (values['utype']) {
+            if (!duplicates[values['utype']]) {
+                duplicates[values['utype']] = {
+                    values['scale'] = format(name)
+                }
+            } else if (duplicates[values['scale']]) {
+
+            }
+        }
         if (!values['scale']) {
             if (values['target']) {
                 aliases[format(name)] = values['target']
@@ -57,8 +68,7 @@ request('https://en.wikipedia.org/wiki/Module:Convert/data', function(error, res
             }
             data[values['utype']][format(name)] = {
                 'scale': values['scale'],
-                'symbol': format(values['symbol'] || initial),
-                'code': format(initial)
+                'symbol': format(values['symbol'] || initial)
             }
             if (initial !== name) {
                 aliases[initial] = format(name)
