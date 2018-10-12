@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+* {
+	font-family: "Open Sans";
+}
+input {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 16px;
+    transition: 0.2s;
+    width: 100%;
+}
+input:focus {
+    outline: none;
+}
+::placeholder {
+    color: #fff;
+    opacity: 0.5;
+}

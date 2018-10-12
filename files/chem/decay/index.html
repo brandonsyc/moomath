@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Decay Those Isotopes</title>
+        
+		<link rel="stylesheet" type="text/css" href="decay.css">
+    </head>
+
+    <body>
+        <svg>
+            <rect x="0" y="0" width="100" height="100" fill="#09c"></rect>
+            <foreignObject x="0" y="0" width="100" height="100">
+                <div style="display: flex; align-items: center; height: 100px; width: 100px">
+                    <div style="flex-basis: 40px;">
+                        <input style="text-align: right;" placeholder="100"></input>
+                        <input style="text-align: right;" placeholder="60" oninput="zchange(this)"></input>
+                    </div>
+                    <input style="font-size: 32px; flex-basis: 60px;" placeholder="Ce" oninput="echange(this)"></input>
+                </div>
+            </foreignObject>
+        </svg>
+        
+        <script src="decay.js"></script>
+    </body>
+</html>
