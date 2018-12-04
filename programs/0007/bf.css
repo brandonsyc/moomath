@@ -1,3 +1,6 @@
+canvas {
+    transform: scale(0.5);
+}
 code,
 pre {
 	margin: 10px;

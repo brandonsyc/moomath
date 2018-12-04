@@ -8,15 +8,26 @@
     </head>
 
     <body>
-        <svg>
+        <svg style="width: 100%;">
             <rect x="0" y="0" width="100" height="100" fill="#09c"></rect>
             <foreignObject x="0" y="0" width="100" height="100">
                 <div style="display: flex; align-items: center; height: 100px; width: 100px">
                     <div style="flex-basis: 40px;">
-                        <input style="text-align: right;" placeholder="100"></input>
-                        <input style="text-align: right;" placeholder="60" oninput="zchange(this)"></input>
+                        <input style="text-align: right;" placeholder="1" value="1" oninput="achange(this)"></input>
+                        <input style="text-align: right;" placeholder="1" value="1" oninput="zchange(this)"></input>
                     </div>
-                    <input style="font-size: 32px; flex-basis: 60px;" placeholder="Ce" oninput="echange(this)"></input>
+                    <input style="font-size: 32px; flex-basis: 60px;" placeholder="H" value="H" oninput="echange(this)"></input>
+                </div>
+            </foreignObject>
+
+            <rect x="300" y="0" width="100" height="100" fill="#0c9"></rect>
+            <foreignObject x="300" y="0" width="100" height="100">
+                <div style="display: flex; align-items: center; height: 100px; width: 100px">
+                    <div style="flex-basis: 40px;">
+                        <input style="text-align: right;" placeholder="1" value="1" oninput="achange(this)"></input>
+                        <input style="text-align: right;" placeholder="1" value="1" oninput="zchange(this)"></input>
+                    </div>
+                    <input style="font-size: 32px; flex-basis: 60px;" placeholder="H" value="H" oninput="echange(this)"></input>
                 </div>
             </foreignObject>
         </svg>

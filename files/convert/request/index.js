@@ -52,7 +52,7 @@ request('https://en.wikipedia.org/wiki/Module:Convert/data', function(error, res
         if (values['utype']) {
             if (!duplicates[values['utype']]) {
                 duplicates[values['utype']] = {
-                    values['scale'] = format(name)
+                    (String)(values['scale']): format(name)
                 }
             } else if (duplicates[values['scale']]) {
 

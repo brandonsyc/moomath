@@ -29,30 +29,66 @@ class Isotope {
     }
 }
 
-let svg = document.createElement('svg');
-document.body.appendChild(svg);
+/*let svg = document.createElement('svg');
+document.body.appendChild(svg);*/
+
+let base = new Isotope(1, 1);
 
 function echange(x) {
     let index = atoms.indexOf(x.value);
+    let zment = x.parentElement.children[0].children[1];
     if (index === -1) {
-        x.style.color = x.value === '' ? '#fff' : "#fc0";
-        x.parentElement.children[0].children[1].value = '';
+        x.style.color = x.value === '' ? '#fff' : "#ccc";
+        zment.value = '';
+        x.parentElement.children[0].children[0].style.color = "#fff";
         return;
     }
     x.style.color = "#fff";
     console.log(atoms.indexOf(x.value));
-    x.parentElement.children[0].children[1].value = atoms.indexOf(x.value) + 1;
-    x.parentElement.children[0].children[1].style.color = "#fff";
+    zment.value = atoms.indexOf(x.value) + 1;
+    zment.style.color = "#fff";
+    
+    update(-1, index, x.parentElement);
 }
 
 function zchange(x) {
-    if (x.value > 118 || x.value < 1) {
-        x.style.color = x.value === '' ? '#fff' : "#fc0";
-        x.parentElement.parentElement.children[1].value = '';
+    let ement = x.parentElement.parentElement.children[1];
+    if (x.value > 118 || x.value < 1 || isNaN(x.value)) {
+        x.style.color = x.value === '' ? '#fff' : "#ccc";
+        ement.value = '';
+        x.parentElement.children[0].style.color = "#fff";
         return;
     }
     x.style.color = "#fff";
     let atom = atoms[parseInt(x.value) - 1];
-    x.parentElement.parentElement.children[1].value = atom;
-    x.parentElement.parentElement.children[1].style.color = "#fff";
+    ement.value = atom;
+    ement.style.color = "#fff";
+    
+    update(-1, parseInt(x.value), x.parentElement.parentElement);
+}
+
+function acheck(x) {
+    console.log(x.children[1].value);
+    if (parseInt(base.az[0]) < parseInt(base.az[1]) || isNaN(base.az[0])) {
+        x.children[0].children[0].style.color = "#ccc";
+        return;
+    }
+    x.children[0].children[0].style.color = "#fff";
+}
+
+function achange(x) {
+    let zment = x.parentElement.children[1];
+    if (parseInt(x.value) < parseInt(zment.value) || isNaN(x.value)) {
+        x.style.color = x.value === '' ? '#fff' : "#ccc";
+        return;
+    }
+    x.style.color = "#fff";
+    
+    update(parseInt(x.value), -1, x.parentElement.parentElement);
+}
+
+function update(x, y, p) {
+    base = new Isotope(x === -1 ? base.az[0] : x, y === -1 ? base.az[1] : y);
+    console.log(base);
+    acheck(p);
 }

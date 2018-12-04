@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Untitled Document</title>
+        <style>
+            div {
+                width: 50px;
+                height: 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <input oninput="red(this)">
+        <input oninput="green(this)">
+        <input oninput="blue(this)">
+        <div id="color"></div>
+        <div id="gray"></div>
+        
+        <script>
+            let r = 0;
+            let g = 0;
+            let b = 0;
+            
+            let k = 0;
+            
+            function red(x) {
+                r = x.value;
+                update();
+            }
+            
+            function green(x) {
+                g = x.value;
+                update();
+            }
+            
+            function blue(x) {
+                b = x.value;
+                update();
+            }
+            
+            function update() {
+                k = 0.299 * r + 0.587 * g + 0.114 * b;
+                document.getElementById('color').style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ')';
+                document.getElementById('gray').style.backgroundColor = 'rgba(' + k + ',' + k + ',' + k + ')';
+            }
+        </script>
+    </body>
+</html>
