@@ -12,89 +12,88 @@
 	</head>
 
 	<body>
+        
+        <div id="data">
+            Ever since the term was introduced by <a href="https://en.wikipedia.org/wiki/Benoit_Mandelbrot" target="_blank">Benoit B. Mandelbrot</a>, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a>, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.
 
+            Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a href="http://dictionary.com" target="_blank">Dictionary.com</a> defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or physical properties of the structure, as the perimeter of a curve or the flow rate in a porous medium, behave as if the dimensions of the structure (fractal dimensions) are greater than the spatial dimensions.</em>" This is quite wordy, sure, but to get a better idea of what a fractal is, let's look at some examples.
 
-<div id="data">Ever since the term was introduced by <a href="https://en.wikipedia.org/wiki/Benoit_Mandelbrot" target="_blank">Benoit B. Mandelbrot</a>, "fractals" have awed so many people with their odd combination of simplicity and complexity. In this article I specifically talk about fractals in the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a>, but fractal geometry and its derivatives are a fascinating part of math going much beyond what I detail here, so definitely get yourself interested in that.
+            Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
 
-Before we begin, let's figure out exactly what a <strong>fractal</strong> is. <a href="http://dictionary.com" target="_blank">Dictionary.com</a> defines the word fractal to mean "<em>a geometrical or physical structure having an irregular or fragmented shape at all scales of measurement between a greatest and smallest scale such that certain mathematical or physical properties of the structure, as the perimeter of a curve or the flow rate in a porous medium, behave as if the dimensions of the structure (fractal dimensions) are greater than the spatial dimensions.</em>" This is quite wordy, sure, but to get a better idea of what a fractal is, let's look at some examples.
+            ::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
 
-Below is the Mandelbrot set - arguably one of the most famous fractals in existence - named after our old friend Benoit B. Mandelbrot, the father of fractal geometry.
+            Sure, this fractal is quite pleasing to look at. But as with any object, without some deeper meaning, a lot of beauty is lost. Let's delve into how the Mandelbrot set is generated.
 
-::fig::images/mandelbrot.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 1: The Mandelbrot set.::
+            First, let's consider the name. The Mandelbrot set is really just that: a <strong>set</strong>. That means it's effectively a list of points. When we color these points black and the rest of the points white, we get the figure from above. But how is this set determined?
 
-Sure, this fractal is quite pleasing to look at. But as with any object, without some deeper meaning, a lot of beauty is lost. Let's delve into how the Mandelbrot set is generated.
+            To understand the construction of the Mandelbrot set, we need to know about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a>. Complex numbers, of course, are an incredibly rich subject, and they have applications in physics, statistics, and much more. In essence, complex numbers are based off an "imaginary number" called <em>i</em>, defined so that \(i^2=-1\).
 
-First, let's consider the name. The Mandelbrot set is really just that: a <strong>set</strong>. That means it's effectively a list of points. When we color these points black and the rest of the points white, we get the figure from above. But how is this set determined?
+            Like any other number, the conventional rules for arithmetic addition and subtraction work with <em>i</em>. For example, \(2i+2i=4i\) and \(5i-2i=3i\).
 
-To understand the construction of the Mandelbrot set, we need to know about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a>. Complex numbers, of course, are an incredibly rich subject, and they have applications in physics, statistics, and much more. In essence, complex numbers are based off an "imaginary number" called <em>i</em>, defined so that \(i^2=-1\).
+            By the definition of <em>i</em>, we know that \(i^2=-1\). But what's the value of, say, \((3i)^2\)? Well, we can treat this expression as \((3 \cdot i)^2 = 3^2 \cdot i^2\). Using our definition of <em>i</em>, we thus know that \((3i)^2=9\cdot-1=-9\).
 
-Like any other number, the conventional rules for arithmetic addition and subtraction work with <em>i</em>. For example, \(2i+2i=4i\) and \(5i-2i=3i\).
+            How about complex numbers? Well, when we add them, we just add their real components and their imaginary components in turn. For example, \((2+3i)+(4+9i)=(2+4)+(3+9)i=6+12i\)  and  \((2+3i)-(4+9i)=(2-4)+(3-9)i=-2-6i\). Multiplication of complex numbers is a tad tricker, but we just use the distributive property. For example, \((2+3i)\cdot(4+9i)=8+18i+12i-27=-19+30i\).
 
-By the definition of <em>i</em>, we know that \(i^2=-1\). But what's the value of, say, \((3i)^2\)? Well, we can treat this expression as \((3 \cdot i)^2 = 3^2 \cdot i^2\). Using our definition of <em>i</em>, we thus know that \((3i)^2=9\cdot-1=-9\).
+            We have these lovely complex numbers now. But is there a way to visualize them?
 
-How about complex numbers? Well, when we add them, we just add their real components and their imaginary components in turn. For example, \((2+3i)+(4+9i)=(2+4)+(3+9)i=6+12i\)  and  \((2+3i)-(4+9i)=(2-4)+(3-9)i=-2-6i\). Multiplication of complex numbers is a tad tricker, but we just use the distributive property. For example, \((2+3i)\cdot(4+9i)=8+18i+12i-27=-19+30i\).
+            Sure thing! We can think of these complex numbers as <em>points</em> on a plane, sort of like a Cartesian coordinate system. The <em>number</em> \(a+bi\) corresponds to the <em>point</em> \((a,b)\) on the coordinate plane.
 
-We have these lovely complex numbers now. But is there a way to visualize them?
+            Of course, this is just a very basic introduction to complex numbers and the idea of the complex plane, so if you haven't learned about them yet and really want to understand what will be going on in the rest of this article, reading about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a> and the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a> may be helpful.
 
-Sure thing! We can think of these complex numbers as <em>points</em> on a plane, sort of like a Cartesian coordinate system. The <em>number</em> \(a+bi\) corresponds to the <em>point</em> \((a,b)\) on the coordinate plane.
+            With that out of the way, let's figure out what the Mandelbrot set is about!
 
-Of course, this is just a very basic introduction to complex numbers and the idea of the complex plane, so if you haven't learned about them yet and really want to understand what will be going on in the rest of this article, reading about <a href="https://en.wikipedia.org/wiki/Complex_number" target="_blank">complex numbers</a> and the <a href="https://en.wikipedia.org/wiki/Complex_plane" target="_blank">complex plane</a> may be helpful.
+            Define a function \(f_c(z)=z^2+c\) over the complex numbers. Then the Mandelbrot set is the set of all numbers \(c\) for which the function \(f_c(z)\) does not diverge when iterated from \(z=0\). In other words, \(f_c(f_c(f_c\cdots (z)))\) stays bounded.
 
-With that out of the way, let's figure out what the Mandelbrot set is about!
+            Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown
 
-Define a function \(f_c(z)=z^2+c\) over the complex numbers. Then the Mandelbrot set is the set of all numbers \(c\) for which the function \(f_c(z)\) does not diverge when iterated from \(z=0\). In other words, \(f_c(f_c(f_c\cdots (z)))\) stays bounded.
+            ::fig::images/complextable1.png::Iterations after c=(0.2+0.5i)::Figure 2: The numbers produced by iteration of \(f_c\).::
 
-Let's test if the number \(0.2+0.5i\) is in the Mandelbrot set. We start with \(f_c(0)\), where \(c=0.2+0.5i\). In the next iteration, we do \(f_c(0.2+0.5i)=-0.01 + 0.7i\), then in the next we do \(f_c(-0.01 + 0.7 i)\), etc. The results of these iterations are shown
+            It seems \(c=0.2+0.5\) does not diverge to infinity; it stays bounded. Thus, it is in the Mandelbrot set. Overlaying a point \(c=0.2+0.5i\) on the original image, we can see that, indeed, the point lies in a black region. (The x and y axes are also indicated.)
 
-::fig::images/complextable1.png::Iterations after c=(0.2+0.5i)::Figure 2: The numbers produced by iteration of \(f_c\).::
+            ::fig::images/mandelbrot2.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).::
 
-It seems \(c=0.2+0.5\) does not diverge to infinity; it stays bounded. Thus, it is in the Mandelbrot set. Overlaying a point \(c=0.2+0.5i\) on the original image, we can see that, indeed, the point lies in a black region. (The x and y axes are also indicated.)
+            This repeated calculation is done for every point - or, at least, every pixel in the image - and if the calculation stays bounded to a reasonable number of iterations, we can assume that it probably will stay bounded forever. All the images up to this point have been done with 500 iterations.
 
-::fig::images/mandelbrot2.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 3: The Mandelbrot set, overlayed with point \(c=0.2+0.5i\).::
+            But what's so interesting about the Mandelbrot set? The answer lies in its intrinsically fractal nature. For example, suppose we zoom in on the Mandelbrot set, say, on the gray rectangle highlighted here
 
-This repeated calculation is done for every point - or, at least, every pixel in the image - and if the calculation stays bounded to a reasonable number of iterations, we can assume that it probably will stay bounded forever. All the images up to this point have been done with 500 iterations.
+            :::fig::images/mandelbrot3.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 4: The Mandelbrot set, box around mini-Brot.::
 
-But what's so interesting about the Mandelbrot set? The answer lies in its intrinsically fractal nature. For example, suppose we zoom in on the Mandelbrot set, say, on the gray rectangle highlighted here
+            When we zoom in on that box, we get this image
 
-:::fig::images/mandelbrot3.png::Mandelbrot Set  (Real axis: [-2.5,1.5], Imaginary axis: [-2,2], 500 iterations.)::Figure 4: The Mandelbrot set, box around mini-Brot.::
+            :::fig::images/mandelbrot4.png::Mandelbrot Set::Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).::
 
-When we zoom in on that box, we get this image
+            Wait... what? It's the Mandelbrot Set again! It's just rotated and scaled down. There must be some end to this... let's zoom in on the same spot, but now in this "mini-Brot".
 
-:::fig::images/mandelbrot4.png::Mandelbrot Set::Figure 5: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\).::
+            ::fig::images/mandelbrot5.png::Mandelbrot Set::Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.::
 
-Wait... what? It's the Mandelbrot Set again! It's just rotated and scaled down. There must be some end to this... let's zoom in on the same spot, but now in this "mini-Brot".
+            ::fig::images/mandelbrot6.png::Mandelbrot Set::Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.::
 
-::fig::images/mandelbrot5.png::Mandelbrot Set::Figure 6: The Mandelbrot set, zoomed on mini-Brot at approximately \((-0.145,1.025)\), box around next mini-Brot.::
+            As we can see, inside of every Mandelbrot set, there's smaller Mandelbrot sets within. (If you're wondering why some parts of the image are gray, gray pixels denote points that go to infinity, but the darker the shade, the slower it diverges.) Cool!
 
-::fig::images/mandelbrot6.png::Mandelbrot Set::Figure 7: The Mandelbrot set, zoomed on another mini-Brot at approximately \((-0.152942,1.039712)\). Iteration count increased to 4000 for better detail.::
+            The Mandelbrot set, of course is very popular and famous fractal, but many of its properties are still unknown, including its area. If you'd like to read more about the Mandelbrot set, you can read the Wikipedia article <a href="https://en.wikipedia.org/wiki/Mandelbrot_set" target="_blank">here</a>, or play around with zooming into the set <a href="http://www.atopon.org/mandel/" target="_blank">here</a>.
 
-As we can see, inside of every Mandelbrot set, there's smaller Mandelbrot sets within. (If you're wondering why some parts of the image are gray, gray pixels denote points that go to infinity, but the darker the shade, the slower it diverges.) Cool!
+            Remember the numbers produced by the function \(f_c\)? Well, they're complex numbers, and that means they can be graphed! Let's draw lines between them on a coordinate grid to see their movements.
 
-The Mandelbrot set, of course is very popular and famous fractal, but many of its properties are still unknown, including its area. If you'd like to read more about the Mandelbrot set, you can read the Wikipedia article <a href="https://en.wikipedia.org/wiki/Mandelbrot_set" target="_blank">here</a>, or play around with zooming into the set <a href="http://www.atopon.org/mandel/" target="_blank">here</a>.
+            ::fig::images/mandelbrot7.png::Mandelbrot Set"::Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).::
 
-Remember the numbers produced by the function \(f_c\)? Well, they're complex numbers, and that means they can be graphed! Let's draw lines between them on a coordinate grid to see their movements.
+            We can see that the lines converge towards a certain point, slowly circling around it. This is true for any other point in the main <strong>cardioid</strong>, which is the sideways, heart-shaped object comprising most of the Mandelbrot set's area. Let's try a point outside of the main cardioid, say, \(c=-1.311687+0.062514i\)! (The point \(c\) is indicated with the arrow.)
 
-::fig::images/mandelbrot7.png::Mandelbrot Set"::Figure 8: The Mandelbrot set, path of iteration for \(c=0.2+0.5i\).::
+            ::fig::images/mandelbrot8.png::Mandelbrot Set::Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).::
 
-We can see that the lines converge towards a certain point, slowly circling around it. This is true for any other point in the main <strong>cardioid</strong>, which is the sideways, heart-shaped object comprising most of the Mandelbrot set's area. Let's try a point outside of the main cardioid, say, \(c=-1.311687+0.062514i\)! (The point \(c\) is indicated with the arrow.)
+            This point is situated in a much stranger part of the Mandelbrot set, and as you can see, no pattern is clear in its iteration. It is these kinds of points that give the Mandelbrot set, and related fractals, their complexity.
 
-::fig::images/mandelbrot8.png::Mandelbrot Set::Figure 9: The Mandelbrot set, path of iteration for \(c=-1.311686879823594+0.06251378169790517i\).::
+            Of course, a natural question is: what happens when you change the function \(f_c(z)\)? Well, let's try it!
 
-This point is situated in a much stranger part of the Mandelbrot set, and as you can see, no pattern is clear in its iteration. It is these kinds of points that give the Mandelbrot set, and related fractals, their complexity.
+            ::fig::images/fractal1.png::Fractal::Figure 10: Fractal for \(f_c(z)=z^3+c\).::
 
-Of course, a natural question is: what happens when you change the function \(f_c(z)\)? Well, let's try it!
+            ::fig::images/fractal2.png::Fractal::Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).::
 
-::fig::images/fractal1.png::Fractal::Figure 10: Fractal for \(f_c(z)=z^3+c\).::
+            ::fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
 
-::fig::images/fractal2.png::Fractal::Figure 11: Fractal for \(f_c(z)=z^3-z^2+c\).::
+            Beautiful. They share certain characteristics... but they're all different.
+        </div>
 
-::fig::images/fractal3.png::Fractal::Figure 12: Fractal for \(f_c(z)=z^2+\sqrt{z}+0.8c\).::
-
-Beautiful. They share certain characteristics... but they're all different.
-</div>
-
-
-		<script>path = "0001";</script>
+		<script>let path = "0001";</script>
 		<script src="../build.js"></script>
 		<script src="../../sticky.js"></script>
 	</body>

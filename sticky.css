@@ -36,7 +36,6 @@ body {
 	margin: 0;
 }
 .first {
-	border-bottom: 5px solid #096;
 	text-align: center;
 }
 .first h1 {
@@ -61,7 +60,7 @@ body {
 }
 .navigate,
 .sticky {
-	border-bottom: 5px solid #096;
+    background-color: #eee;
 	margin: auto;
 	padding: 25px;
 	width: calc(100% - 50px);
@@ -75,7 +74,6 @@ body {
 	text-align: center;
 }
 .sticky {
-	background-color: #fff;
 	position: fixed;
 	left: 50%;
 	opacity: 0;
@@ -84,10 +82,13 @@ body {
 	z-index: 1;
 }
 .last {
-	border-top: 5px solid #999;
+    background-color: #eee;
 	text-align: center;
-	letter-spacing: 1px;
 	margin: auto;
 	padding: 10px 25px;
 	width: calc(100% - 50px);
+}
+.last p {
+    font-size: 12px;
+    line-height: 24px;
 }

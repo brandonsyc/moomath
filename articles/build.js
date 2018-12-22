@@ -1,73 +1,69 @@
-var path;
-var array = document.getElementById("data").innerHTML.split("\n");
+let array = document.getElementById('data').innerHTML.split('\n');
 
-var rf2 = new XMLHttpRequest();
-rf2.open("GET", "https://moomath.com/articles/list.txt", false);
-rf2.onreadystatechange = function () {
-	"use strict";
-	if (rf2.readyState === 4) {
-		if (rf2.status === 200 || rf2.status === 0) {
-			var sub = rf2.responseText.split("\n")[path - 1].split(" - ");
+let req = new XMLHttpRequest();
+let self = this;
+req.onload = function() {
+    var sub = this.responseText.split('\n')[path - 1].split(' - ');
 
-			var header = document.createElement("header");
-			header.classList.add("header");
-			document.body.appendChild(header);
+    let header = document.createElement('div');
+    header.classList.add('header');
+    document.body.insertBefore(header, article);
 
-			var h1 = document.createElement("h1");
-			h1.innerHTML = sub[0];
-			header.appendChild(h1);
+    let h1 = document.createElement('h1');
+    h1.innerHTML = sub[0];
+    header.appendChild(h1);
 
-			var thing = document.createElement("title");
-			thing.innerHTML = sub[0];
-			document.head.appendChild(thing);
+    let thing = document.createElement('title');
+    thing.innerHTML = sub[0];
+    document.head.appendChild(thing);
 
-			var p = document.createElement("p");
-			p.innerHTML = "by <a href=\"https://github.com/" + sub[2] + "\" target=\"_blank\">" + sub[2] + "</a> &ndash; " + sub[1];
-			header.appendChild(p);
-		}
-	}
+    let p = document.createElement('p');
+    p.innerHTML = 'by <a href="https://github.com/' + sub[2] + '" target="_blank">' + sub[2] + '</a> &ndash; ' + sub[1];
+    header.appendChild(p);
 };
-rf2.send(null);
+req.open('get', 'https://moomath.com/articles/list.txt');
+req.send();
 
-var article = document.createElement("div");
-article.classList.add("article");
+let article = document.createElement('div');
+article.classList.add('article');
 document.body.appendChild(article);
 
-var out = "<p>";
-var setting = "";
+let out = '<p>';
+let setting = '';
 
-for (var i = 0; i < array.length; i++) {
-	var pars;
-	if (array[i].includes("::fig::")) {
-		pars = array[i].split("::");
-		out += "<figure><img src=\"" + pars[2] + "\" alt=\"" + pars[3];
-		if (pars[5] === "no") {
-			out += "\" class=\"no";
+for (let i = 0; i < array.length; i++) {
+    let line = array[i].trim();
+	let pars;
+	if (line.includes('::fig::')) {
+		pars = line.split('::');
+		out += '<figure><img src="' + pars[2] + '" alt="' + pars[3];
+		if (pars[5] === 'no') {
+			out += '" class="no';
 		}
-		out += "\"><figcaption>" + pars[4] + "</figcaption></figure>";
-	} else if (array[i].includes("::code::")) {
-		setting = "code";
-		out += "<pre class=\"prettyprint\">";
-	} else if (array[i].includes("::vid::")) {
-		pars = array[i].split("::");
-		out += "<div class=\"video\"><iframe src=\"" + pars[2] + "\" allowfullscreen></iframe></div>";
-	} else if (array[i] === "::") {
-		if (setting === "code") {
-			out += "</pre>";
+		out += '"><figcaption>' + pars[4] + '</figcaption></figure>';
+	} else if (line.includes('::code::')) {
+		setting = 'code';
+		out += '<pre class="prettyprint">';
+	} else if (line.includes('::vid::')) {
+		pars = line.split('::');
+		out += '<div class="video"><iframe src="' + pars[2] + '" allowfullscreen></iframe></div>';
+	} else if (line === '::') {
+		if (setting === 'code') {
+			out += '</pre>';
 		}
-		setting = "";
-	} else if (array[i] === "" && setting === "") {
-		if (!array[i - 1].includes("::")) {
-			out += "</p>";
+		setting = '';
+	} else if (line === '' && setting === '') {
+		if (i > 0 && !array[i - 1].includes('::')) {
+			out += '</p>';
 		}
-		if (!array[i + 1].includes("::")) {
-			out += "<p>";
+		if (i < array.length - 1 && !array[i + 1].includes('::')) {
+			out += '<p>';
 		}
 	} else {
-		out += array[i]+ "\n";
+		out += line+ '\n';
 	}
 }
 
-out += "</p>";
+out += '</p>';
 article.innerHTML = out;
-document.body.removeChild(document.getElementById("data"));
+document.body.removeChild(document.getElementById('data'));
