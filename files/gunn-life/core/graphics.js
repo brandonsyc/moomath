@@ -59,11 +59,11 @@ try {
                 ctx.globalAlpha = opacity;
             }
 
-            ctx.drawImage(image,
+            /*ctx.drawImage(image,
                 0, 0,
                 image.width, image.height,
                 offset_x, offset_y,
-                scale_x * image.width, scale_y * image.height);
+                scale_x * image.width, scale_y * image.height);*/
 
             if (opacity !== 1) {
                 ctx.restore(); // restore previous state, now that image is drawn
