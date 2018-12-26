@@ -87,9 +87,43 @@ var base;
 var key = "c";
 var mode = 0;
 var audio = [];
-for (var i = 36; i < 61; i++) {
-	audio.push(new Audio("sounds/" + i + ".wav"));
+var audio_count = 0;
+var loaded = {};
+var enabled = false;
+
+function enableEggs() {
+	if (enabled)
+		return;
+	enabled = true;
+	audio.forEach(audio_elem => audio_elem.oncanplaythrough = undefined);
+
+	let loading_monitor = document.getElementById("loading-monitor-div");
+
+	loading_monitor.parentElement.removeChild(loading_monitor);
+	document.getElementsByClassName("box")[0].classList.remove("loading-container");
 }
+
+function updateLoad(percent) {
+	document.getElementById("loading-monitor").innerText = "Loading " + parseInt(percent) + "%";
+
+	if (percent === 100) {
+		// done loading
+		setTimeout(enableEggs, 500);
+	}
+}
+
+for (var i = 36; i < 61; i++) {
+	var audio_elem = new Audio("sounds/" + i + ".wav");
+	audio.push(audio_elem);
+
+	audio_elem.oncanplaythrough = (evt) => {
+		loaded[evt.target.src] = 0;
+
+		updateLoad(Object.keys(loaded).length / audio_count * 100);
+    };
+	audio_count += 1;
+}
+
 var code = {};
 code.cf = [0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 2];
 code.gf = [0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1, 9];

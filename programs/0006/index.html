@@ -32,7 +32,7 @@
 		</script>
 	</head>
 
-	<body>
+	<body class="loading-container">
 		<div class="columns">
 			<div class="controls">
 				<a href="info" target="_blank" class="button">Info</a>
@@ -125,11 +125,20 @@
 				}
 			}
 		</script>
+
+
+		<div class="loading" id="loading-monitor-div">
+			<p id="loading-monitor">Loading</p>
+		</div>
+
 		<audio loop id="music">
 		<source src="sounds/mus.mp3" type="audio/mpeg">
 		Your browser does not support the audio element.
 		</audio>
+
 	</body>
+
+
 
 	<script src="three.js"></script>
 	<script src="planetOrbitData.js"></script>
