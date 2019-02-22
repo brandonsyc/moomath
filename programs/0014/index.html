@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Solubility Practice</title>
+
+    <style>
+        .center {
+
+        }
+    </style>
+
+    <script>
+        let subscriptify = (mtch, subscr) => "<sub>" + subscr + "</sub>";
+
+        function formatFormula(f) {
+            return f.replace(/([0-9]+)/g, subscriptify);
+        }
+
+        class Ion {
+            constructor(params = {}) {
+                this.name = params.name || "nitrate";
+                this.formula = params.formula || "NO3";
+                this.charge = params.charge !== undefined ? params.charge : -2;
+                this.ipa = params.ipa !== undefined ? params.ipa : false;
+
+                if (this.charge === 0 || this.charge % 1 !== 0)
+                    throw new Error("Invalid ion charge");
+            }
+
+            isPositive() {
+                return this.charge >= 1;
+            }
+
+            isNegative() {
+                return !this.isPositive();
+            }
+
+            formattedFormula(count = 1) {
+                if (count === 1) {
+                    return formatFormula(this.formula);
+                } else if (this.ipa) {
+                    return `(${formatFormula(this.formula)})` + subscriptify('', count);
+                } else {
+                    return formatFormula(this.formula) + subscriptify('', count);
+                }
+            }
+        }
+
+        const POSITIVE_IONS = [
+            new Ion({name: "ammonium", formula: "NH4", charge: 1, ipa: true}),
+            new Ion({name: "lithium", formula: "Li", charge: 1, ipa: false}),
+            new Ion({name: "sodium", formula: "Na", charge: 1, ipa: false}),
+            new Ion({name: "potassium", formula: "K", charge: 1, ipa: false}),
+            new Ion({name: "rubidium", formula: "Rb", charge: 1, ipa: false}),
+            new Ion({name: "caesium", formula: "Cs", charge: 1, ipa: false}),
+            new Ion({name: "beryllium", formula: "Be", charge: 2, ipa: false}),
+            new Ion({name: "magnesium", formula: "Be", charge: 2, ipa: false}),
+            new Ion({name: "calcium", formula: "Ca", charge: 2, ipa: false}),
+            new Ion({name: "strontium", formula: "Sr", charge: 2, ipa: false}),
+            new Ion({name: "barium", formula: "Ba", charge: 2, ipa: false}),
+            // new Ion({name: "radium", formula: "Ra", charge: 2, ipa: false}),
+            new Ion({name: "silver", formula: "Ag", charge: 1, ipa: false}),
+            new Ion({name: "zinc", formula: "Zn", charge: 2, ipa: false}),
+            new Ion({name: "mercury(I)", formula: "Hg2", charge: 2, ipa: false}),
+            new Ion({name: "mercury(II)", formula: "Hg", charge: 2, ipa: true}),
+            new Ion({name: "lead(II)", formula: "Pb", charge: 2, ipa: false}),
+            new Ion({name: "lead(IV)", formula: "Pb", charge: 4, ipa: false}),
+            new Ion({name: "cobalt(II)", formula: "Co", charge: 2, ipa: false}),
+            new Ion({name: "cobalt(III)", formula: "Co", charge: 3, ipa: false}),
+            new Ion({name: "nickel(II)", formula: "Ni", charge: 2, ipa: false}),
+            new Ion({name: "nickel(IV)", formula: "Ni", charge: 4, ipa: false}),
+            new Ion({name: "gold(I)", formula: "Au", charge: 1, ipa: false}),
+            new Ion({name: "gold(III)", formula: "Au", charge: 3, ipa: false}),
+            new Ion({name: "copper(I)", formula: "Cu", charge: 1, ipa: false}),
+            new Ion({name: "copper(II)", formula: "Cu", charge: 2, ipa: false}),
+            new Ion({name: "iron(II)", formula: "Fe", charge: 2, ipa: false}),
+            new Ion({name: "iron(III)", formula: "Fe", charge: 3, ipa: false}),
+            new Ion({name: "tin(II)", formula: "Sn", charge: 2, ipa: false}),
+            new Ion({name: "tin(IV)", formula: "Sn", charge: 4, ipa: false}),
+            new Ion({name: "chromium(II)", formula: "Cr", charge: 2, ipa: false}),
+            new Ion({name: "chromium(III)", formula: "Cr", charge: 3, ipa: false}),
+            new Ion({name: "manganese(II)", formula: "Mn", charge: 2, ipa: false}),
+            new Ion({name: "manganese(III)", formula: "Mn", charge: 3, ipa: false}),
+            new Ion({name: "aluminum", formula: "Al", charge: 3, ipa: false})
+        ];
+
+        const NEGATIVE_IONS = [
+            new Ion({name: "hydride", formula: "H", charge: -1, ipa: false}),
+            new Ion({name: "fluoride", formula: "F", charge: -1, ipa: false}),
+            new Ion({name: "chloride", formula: "Cl", charge: -1, ipa: false}),
+            new Ion({name: "bromide", formula: "Br", charge: -1, ipa: false}),
+            new Ion({name: "iodide", formula: "I", charge: -1, ipa: false}),
+            new Ion({name: "oxide", formula: "O", charge: -2, ipa: false}),
+            new Ion({name: "sulfide", formula: "S", charge: -2, ipa: false}),
+            new Ion({name: "selenide", formula: "Se", charge: -2, ipa: false}),
+            new Ion({name: "telluride", formula: "Te", charge: -2, ipa: false}),
+            new Ion({name: "nitride", formula: "N", charge: -3, ipa: false}),
+            new Ion({name: "phosphide", formula: "P", charge: -3, ipa: false}),
+            new Ion({name: "arsenide", formula: "As", charge: -3, ipa: false}),
+            new Ion({name: "nitrate", formula: "NO3", charge: -1, ipa: true}),
+            new Ion({name: "nitrite", formula: "NO2", charge: -1, ipa: true}),
+            new Ion({name: "chromate", formula: "CrO4", charge: -2, ipa: true}),
+            new Ion({name: "dichromate", formula: "Cr2O7", charge: -2, ipa: true}),
+            new Ion({name: "cyanide", formula: "CN", charge: -1, ipa: true}),
+            new Ion({name: "permanganate", formula: "MnO4", charge: -1, ipa: true}),
+            new Ion({name: "hydroxide", formula: "OH", charge: -1, ipa: true}),
+            new Ion({name: "peroxide", formula: "O2", charge: -2, ipa: true}),
+            new Ion({name: "carbonate", formula: "CO3", charge: -2, ipa: true}),
+            new Ion({name: "sulfate", formula: "SO4", charge: -2, ipa: true}),
+            new Ion({name: "sulfite", formula: "SO3", charge: -2, ipa: true}),
+            new Ion({name: "oxalate", formula: "C2O4", charge: -2, ipa: true}),
+            new Ion({name: "phosphate", formula: "PO4", charge: -3, ipa: true}),
+            new Ion({name: "phosphite", formula: "PO3", charge: -3, ipa: true}),
+            new Ion({name: "thiosulfate", formula: "S2O3", charge: -2, ipa: true}),
+            new Ion({name: "arsenate", formula: "AsO4", charge: -3, ipa: true}),
+            new Ion({name: "selenate", formula: "SeO4", charge: -2, ipa: true}),
+            new Ion({name: "silicate", formula: "SiO3", charge: -2, ipa: true}),
+            new Ion({name: "tartrate", formula: "C4H4O6", charge: -2, ipa: true}),
+            new Ion({name: "acetate", formula: "C2H3O2", charge: -1, ipa: true}),
+            new Ion({name: "perchlorate", formula: "ClO4", charge: -1, ipa: true}),
+            new Ion({name: "chlorate", formula: "ClO3", charge: -1, ipa: true}),
+            new Ion({name: "chlorite", formula: "ClO2", charge: -1, ipa: true}),
+            new Ion({name: "hypochlorite", formula: "ClO", charge: -1, ipa: true}),
+            new Ion({name: "periodate", formula: "IO4", charge: -1, ipa: true}),
+            new Ion({name: "iodate", formula: "IO3", charge: -1, ipa: true}),
+            new Ion({name: "hypoiodite", formula: "IO", charge: -1, ipa: true}),
+            new Ion({name: "bromate", formula: "BrO3", charge: -1, ipa: true}),
+            new Ion({name: "hypobromite", formula: "BrO", charge: -1, ipa: true}),
+            new Ion({name: "bicarbonate", formula: "HCO3", charge: -1, ipa: true}),
+            new Ion({name: "bisulfate", formula: "HSO4", charge: -1, ipa: true}),
+            new Ion({name: "bisulfite", formula: "HSO3", charge: -1, ipa: true}),
+            new Ion({name: "binoxalate", formula: "HC2O4", charge: -1, ipa: true}),
+            new Ion({name: "borate", formula: "BO3", charge: -3, ipa: true}),
+            new Ion({name: "tetraborate", formula: "B4O7", charge: -2, ipa: true}),
+            new Ion({name: "hexafluorosilicate", formula: "SiF6", charge: -2, ipa: true})
+        ];
+
+        Array.prototype.randomElement = function () {
+            return this[Math.floor(Math.random() * this.length)]
+        };
+
+        const RULE_1_CATIONS = "NH4 Li Na K Rb Cs".split(' ');
+        const RULE_2_ANIONS = "NO3 C2H3O2 ClO4".split(' ');
+        const RULE_3_CATIONS = "Ag Pb Hg Hg2".split(' ');
+        const RULE_4_ANIONS = "Cl Br I".split(' ');
+        const RULE_5_ANIONS = "CO3 CrO4 PO4 S O OH".split(' ');
+        const RULE_5_EXCEPTION_1 = "Mg Ca Sr".split(' ');
+        const RULE_5_EXCEPTION_2 = "Ca Sr Ba".split(' ');
+        const RULE_6_EXCEPTIONS = "Ba Ca Sr".split(' ');
+
+        function attemptDissolve(positive, negative) { // returns an object {soluble: true/false, rule: [1-6]} if it knows, otherwise returns null
+            if (!(positive instanceof Ion) || !(negative instanceof Ion)) // what
+                return null;
+
+            let cation = positive.formula;
+            let anion = negative.formula;
+
+            // Rule 1
+            if (RULE_1_CATIONS.includes(cation)) // well that was easy
+                return {soluble: true, rule: 1};
+
+            // Rule 2
+            if (RULE_2_ANIONS.includes(anion)) // ditto
+                return {soluble: true, rule: 2};
+
+            // Rule 3
+            if (RULE_3_CATIONS.includes(cation))
+                return {soluble: false, rule: 3};
+
+            // Rule 4
+            if (RULE_4_ANIONS.includes(anion))
+                return {soluble: true, rule: 4};
+
+            // Rule 5
+            if (RULE_5_ANIONS.includes(anion)) {
+                let is_soluble;
+
+                if (anion === "CrO4") {
+                    // exception 1
+                    is_soluble = RULE_5_EXCEPTION_1.includes(cation);
+                } else if (anion === "OH") {
+                    // exception 2
+                    is_soluble = RULE_5_EXCEPTION_2.includes(cation);
+                } else {
+                    is_soluble = false;
+                }
+
+                return {soluble: is_soluble, rule: 5};
+            }
+
+            // Rule 6
+            if (anion === "SO4") {
+                return {soluble: !RULE_6_EXCEPTIONS.includes(cation), rule: 6}
+            }
+            return null;
+        }
+
+        function generateSalt() {
+            while (true) {
+                let positive = POSITIVE_IONS.randomElement();
+                let negative = NEGATIVE_IONS.randomElement();
+
+                if (attemptDissolve(positive, negative)) {
+                    return [positive, negative];
+                }
+            }
+        }
+
+        var gcd = function(a, b) {
+            if ( ! b) {
+                return a;
+            }
+
+            return gcd(b, a % b);
+        };
+
+        function getSolubilityProblem(allowedRules = [1,2,3,4,5,6]) { // returns name, formula (formatted), whether it's soluble, and rule
+            let cation, anion, solubilityRules;
+
+            let n = 0;
+
+            while (++n < 500) { // lol
+                [cation, anion] = generateSalt();
+                solubilityRules = attemptDissolve(cation, anion);
+
+                if (allowedRules.includes(solubilityRules.rule))
+                    break;
+            }
+
+            let name = cation.name + ' ' + anion.name;
+
+            let cationM = anion.charge * -1;
+            let anionM = cation.charge;
+            let mgcd = gcd(cationM, anionM);
+
+            cationM /= mgcd;
+            anionM /= mgcd;
+
+            let formula = cation.formattedFormula(cationM) + anion.formattedFormula(anionM);
+
+            let soluble = solubilityRules.soluble;
+            let rule = solubilityRules.rule;
+
+            return {name, formula, soluble, rule};
+        }
+    </script>
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Open+Sans:300');
+        /* go to google fonts to choose your own font */
+        html, body {
+            height: 100%;
+        }
+        * {
+            font-family: "Open Sans";
+            margin: 0;
+            padding: 0;
+        }
+
+        #main {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #checkboxes {
+            display: flex;
+            margin: auto;
+            flex-direction: column;
+            width: 240px;
+        }
+        #checkboxes div {
+            margin: 5px;
+        }
+
+        #buttons {
+            margin: auto;
+            display: flex;
+            width: 480px;
+        }
+        #buttons button {
+            flex-grow: 1;
+
+            font-size: 24px;
+            margin: 0 25px;
+            padding: 25px;
+        }
+
+        button {
+            background-color: #eee;
+            border: none;
+
+            transition: 0.1s;
+        }
+        button:hover {
+            background-color: #ddd;
+        }
+        button:focus {
+            outline: none;
+        }
+        button:active {
+            background-color: #ccc;
+        }
+
+        #text {
+            margin: 50px auto;
+
+            width: 240px;
+        }
+        #text p {
+            border: 1px solid #ccc;
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+        input[type=checkbox] {
+            display: none;
+            /* it's easier to customize with the label element, so just hide the real ones */
+        }
+        input:checked + label::before {
+            background-color: #ccc;
+        }
+        label::before {
+            content: '';
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            width: 20px;
+            height: 20px;
+            border: 1px solid #ccc;
+
+            transition: 0.1s;
+            /* before psuedo element */
+        }
+        label:hover::before {
+            background-color: #eee;
+            /* placeholder animations */
+        }
+
+        sup, sub {
+            vertical-align: baseline;
+            position: relative;
+            top: -0.4em;
+        }
+        sub {
+            top: 0.4em;
+        }
+    </style>
+</head>
+
+<body>
+<div id="main">
+    <div id="checkboxes">
+        <div class="checkbox">
+            <p>Active Rules (to be tested on): </p>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb1" checked>
+            <label for="cb1">Rule 1 (Ammonium, alkalis)</label>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb2" checked>
+            <label for="cb2">Rule 2 (Certain anions)</label>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb3" checked>
+            <label for="cb3">Rule 3 (Certain metals)</label>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb4" checked>
+            <label for="cb4">Rule 4 (Certain halogens)</label>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb5">
+            <label for="cb5">Rule 5 (Various anions)</label>
+        </div>
+        <div class="checkbox">
+            <input type="checkbox" id="cb6">
+            <label for="cb6">Rule 6 (Sulfates)</label>
+        </div>
+    </div>
+    <div id="text">
+        <p id="formula"></p>
+        <p id="name"></p>
+    </div>
+    <div id="buttons">
+        <button id="soluble">Soluble</button>
+        <button id="insoluble">Insoluble</button>
+    </div>
+    <br>
+    <img width="100%" src="periodictable.svg" alt="Periodic Table">
+</div>
+
+
+<script>
+    let formulaElem = document.getElementById("formula");
+    let nameElem = document.getElementById("name");
+    let solubleButton = document.getElementById('soluble');
+    let insolubleButton = document.getElementById('insoluble');
+
+    let answer, ruleapplied;
+
+    let lastProblem;
+
+    function fillTheProblem() {
+        getAllowedRules();
+        let n = 0;
+        let problem;
+
+        do {
+            problem = getSolubilityProblem(allowedRules);
+        } while (problem !== lastProblem && ++n < 10);
+
+        solubleButton.style.backgroundColor = insolubleButton.style.backgroundColor = "";
+
+        formulaElem.innerHTML = problem.formula;
+        nameElem.innerHTML = problem.name;
+
+        answer = problem.soluble;
+        ruleapplied = problem.rule;
+    }
+
+    const CORRECT = "#88ee88";
+    const INCORRECT = "#ee8888";
+
+    function onSoluble() {
+        if (!newPR)
+            solubleButton.style.backgroundColor = answer ? CORRECT : INCORRECT;
+        newPR = frameDelay;
+    }
+
+    function onInsoluble() {
+        if (!newPR)
+            insolubleButton.style.backgroundColor = answer ? INCORRECT : CORRECT;
+        newPR = frameDelay;
+    }
+
+    let frameDelay = 60;
+    let ruleChangeFD = 10;
+    let newPR = 0;
+
+    let allowedRules = [];
+
+    let CB_KEY = "SOLUBILITY_CHECKBOXES_STATE";
+
+    function updateCBStuff() {
+        newPR = ruleChangeFD;
+    }
+
+    for (let i = 1; i < 7; i++) {
+        let cb = document.getElementById("cb" + i);
+        cb.addEventListener('click', updateCBStuff);
+    }
+
+    let cb_state = JSON.parse(localStorage.getItem(CB_KEY));
+
+    if (cb_state) {
+        for (let i = 1; i < 7; i++) {
+            let cb = document.getElementById("cb" + i);
+            cb.checked = cb_state.includes(i);
+        }
+    }
+
+    function getAllowedRules() {
+        allowedRules = [];
+
+        for (let i = 1; i < 7; i++) {
+            let cb = document.getElementById("cb" + i);
+            if (cb.checked)
+                allowedRules.push(i);
+        }
+
+        localStorage.setItem(CB_KEY, JSON.stringify(allowedRules));
+    }
+
+    function renderLoop() {
+        if (newPR) {
+            newPR--;
+            if (!newPR)
+                fillTheProblem();
+        }
+
+        requestAnimationFrame(renderLoop);
+    }
+
+    solubleButton.addEventListener('click', onSoluble);
+    insolubleButton.addEventListener('click', onInsoluble);
+
+    requestAnimationFrame(renderLoop);
+    fillTheProblem();
+</script>
+</body>
+</html>
