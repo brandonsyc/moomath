@@ -3,13 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Solubility Practice</title>
-
-    <style>
-        .center {
-
-        }
-    </style>
-
+    
     <script>
         let subscriptify = (mtch, subscr) => "<sub>" + subscr + "</sub>";
 
@@ -260,9 +254,8 @@
         }
 
         #main {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         #checkboxes {
@@ -351,6 +344,7 @@
 </head>
 
 <body>
+<br>
 <div id="main">
     <div id="checkboxes">
         <div class="checkbox">
@@ -392,8 +386,8 @@
     <br>
     <img width="100%" src="periodictable.svg" alt="Periodic Table">
 </div>
-
-
+<br>
+    
 <script>
     let formulaElem = document.getElementById("formula");
     let nameElem = document.getElementById("name");
