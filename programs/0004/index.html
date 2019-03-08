@@ -17,7 +17,7 @@
 			
 			<script src="chord.js"></script>
 
-			<div class="box">
+			<div class="box loading-container">
 				<p>Click the keyboard to toggle notes. Recognizes type of chord and base note.</p><hr>
 				<div class="piano" id="piano">
 					<div class="key" onClick="toggle(0)">
@@ -147,7 +147,14 @@
 				<label for="toggle">Mute</label>
 				<button onClick="together(true)">Play Chord</button>
 			</div>
+
+
+			<div class="loading" id="loading-monitor-div">
+				<p id="loading-monitor">Loading 0%</p>
+			</div>
 		</div>
+
+
 
 		<script src="chord.js"></script>
 		<script src="../../sticky.js"></script>

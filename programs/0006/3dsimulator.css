@@ -225,7 +225,7 @@ a {
 	top: 0px;
 	pointer-events: none;
 }
-.loading {
+/*.loading {
 	position: absolute;
 	top: 50px;
 	width: 100%;
@@ -233,4 +233,5 @@ a {
 }
 .loading p {
 	color: rgba(255, 255, 255, 0.5);
-}
+}*/
+

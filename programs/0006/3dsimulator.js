@@ -556,6 +556,8 @@ function update() {
     // Checkpoint for first frame above 30 fps
     finished = true;
     console.log("Finished setup #2");
+
+    enableEggs();
   }
 
   // Update positions of objs
@@ -814,7 +816,6 @@ window.onload = function() {
   days = unixToCalendar(new Date().getTime());
   enableLockBody();
   setTimeWarp("1%");
-  startMusic();
 
   setMusicVolume(0.5);
   setBeepVolume(0.5);
@@ -825,7 +826,14 @@ window.onload = function() {
 
   elems.controls.addEventListener('click',function(e) {e.stopPropagation();});
   elems.secondaryBar.addEventListener('click',function(e) {e.stopPropagation();});
+};
+
+function I_HATE_GOOGLE() {
+  document.removeEventListener("click", I_HATE_GOOGLE);
+  startMusic();
 }
+
+document.body.addEventListener("click", I_HATE_GOOGLE);
 
 function constructBody(name = null,
   radius = null,
@@ -2259,4 +2267,10 @@ function updateLoadingOffset() {
 function updateLoadingProgress() {
   return;
   loadingBar.innerHTML = "<p>Loading...</p>\n<p>" + parseInt(loadingProgress * 1000) / 10 + "% done</p>";
+}
+
+function enableEggs() {
+  let monitor = document.getElementById("loading-monitor-div");
+  monitor.parentElement.removeChild(monitor);
+  document.body.classList.remove("loading-container");
 }

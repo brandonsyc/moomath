@@ -169,3 +169,23 @@ canvas {
 canvas:not(#text-canvas) {
 	background-color: #000;
 }
+
+.loading-container {
+	filter: blur(10px);
+	pointer-events: none;
+	user-select: none;
+}
+
+.loading {
+	z-index: 2000;
+	position: fixed;
+	top: 500px;
+	left: 50%;
+	background: none;
+	transform: translate(-50%, -50%);
+}
+
+.loading p {
+	font-size: 100px;
+	text-align: center;
+}
