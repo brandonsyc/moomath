@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Untitled Document</title>
+    </head>
+
+    <body>
+        <input id="input" placeholder="Equation" oninput="calc(this)" value="H2O=Ca(Ca3(HOH)10Ca(C2O9)2)2+CO">
+        
+        <script>
+            //Ca3P2+H2O=Ca(OH)2+PH3
+            function molToElems(x) {
+                let out = [];
+                let current = '';
+                for (let i = 0; i < x.length; i++) {
+                    if (isNaN(x[i]) && x[i] === x[i].toUpperCase() && current !== '') {
+                        out.push(current);
+                        current = '';
+                    }
+                    current += x[i];
+                }
+                out.push(current);
+                return out;
+            }
+
+            function multElem(x, y) {
+                return x.match(/[a-zA-Z)]+/g)[0] + (x.match(/\d+/g) ? +x.match(/\d+/g)[0] * y : y);
+            }
+
+            function distributeParen(x) {
+                let mult = -1;
+                let level = 1;
+                for (let i = x.length - 1; i > -1; i--) {
+                    if (mult !== -1) {
+                        if (x[i] === '(') {
+                            level--;
+                            if (level === 0) {
+                                mult = -1;
+                                x[i] = '';
+                                break;
+                            }
+                        } else if (level === 1) {
+                            x[i] = multElem(x[i], mult);
+                        }
+                        level += x[i][0] === ')' ? 1 : 0;
+                    } else if (x[i][0] === ')') {
+                        mult = x[i].substr(1);
+                        x[i] = '';
+                    }
+                }
+                return x.filter(Boolean);
+            }
+
+            function elemToArr(x) {
+                return x.match(/[a-zA-Z]+/g).concat(+(x.match(/\d+/g) || 1));
+            }
+
+            function addElems(x) {
+                let out =  [];
+                let keys = [];
+                for (let i = 0; i < x.length; i++) {
+                    let datum = elemToArr(x[i]);
+                    if (keys.includes(datum[0])) {
+                        out[keys.indexOf(datum[0])][1] += datum[1];
+                    } else {
+                        keys.push(datum[0]);
+                        out.push(datum);
+                    }
+                }
+                return out;
+            }
+            
+            function sumSides(x) {
+                for (let i = 0; i < 2; i++) {
+                    for (let j = 0; j < x[i].length; j++) {
+                        
+                    }
+                }
+            }
+            
+            function calc(x) {
+                let parts = x.value.split('=');
+                parts[0] = parts[0].split('+');
+                if (parts.length === 1) {
+                    return;
+                }
+                parts[1] = parts[1].split('+');
+                console.log(parts);
+                
+                let parsed = [];
+                
+                for (let i = 0; i < 2; i++) {
+                    parsed.push([]);
+                    for (let j = 0; j < parts[i].length; j++) {
+                        let out = molToElems(parts[i][j]);
+                        let check = 0;
+                        while (out.includes('(')) {
+                            out = distributeParen(out);
+                            check++;
+                            if (check === 1000) {
+                                console.log('oops');
+                                break;
+                            }
+                        }
+                        parsed[i].push(addElems(out));
+                    }
+                }
+                
+                console.log(parsed);
+                console.log(sumSide(parsed));
+            }
+            
+            calc(document.getElementById("input"))
+        </script>
+    </body>
+</html>
