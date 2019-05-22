@@ -27,9 +27,12 @@
                 height: 100%;
             }
             .image {
+                background-size: cover;
+            }
+            #fig {
+                background-position: center;
                 background-repeat: no-repeat;
                 background-size: contain;
-                background-position: center;
                 height: 100%;
                 left: 100%;
                 position: absolute;
@@ -72,8 +75,21 @@
                 width: 25px;
             }
             .contain {
-                margin: auto;
+                display: flex;
+                margin: 50px auto;
+                padding: 0 50px;
                 width: 768px;
+            }
+            .contain .image {
+                border: 1px solid #999;
+                flex-shrink: 0;
+                transition: 0.125s;
+            }
+            .contain .image:hover {
+                border: 1px solid #000;
+            }
+            .left {
+                padding: 50px 50px 50px 0;
             }
         </style>
     </head>
@@ -86,12 +102,16 @@
                 <h1>A Geometric Approach to Matrices</h1>
                 <p>Web copy & additional resources</p>
             </div>
-            <div class="image" style="background-image: url('images/cover.png')"></div>
+            <div id="fig" style="background-image: url('images/cover.png')"></div>
         </div>
         <div class="panel">
             <div class="contain">
-                <h1>A Geometric Approach to Matrices (Online)</h1>
-                <p>This is the full textbook in color as a PDF. Links are also clickable here.</p>
+                <div class="left">
+                    <h1>A Geometric Approach to Matrices (Online)</h1>
+                    <p>This is the full textbook in color as a PDF. Links are also clickable here.</p>
+                    <p>Updated 5-22-19</p>
+                </div>
+                <div class="image" style="background-image: url('images/cover-page.png'); width: 360px; height: calc(360px*11/8.5)"></div>
             </div>
         </div>
     </body>
