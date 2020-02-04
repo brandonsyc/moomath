@@ -4,14 +4,41 @@
         <meta charset="utf-8">
         <title>A Geometric Approach to Matrices</title>
         <style>
-            @import url('https://fonts.googleapis.com/css?family=Raleway:200');
+            @import url('https://fonts.googleapis.com/css?family=Muli:300');
+            @import url('https://fonts.googleapis.com/css?family=DM+Sans:500');
             * {
-                font-family: Raleway;
+                font-family: Muli;
                 font-weight: 200;
             }
-            p {
+            *::-webkit-scrollbar {
+                width: 10px;
+            }
+            *::-webkit-scrollbar-thumb {
+                background-color: #999;
+                border-radius: 5px;
+            }
+            *::-webkit-scrollbar-track {
+                background-color: #eee;
+            }
+            h1,
+            h2 {
+                font-family: 'DM Sans';
+            }
+            p,
+            li {
+                font-size: 16px;
+                line-height: 30px;
+            }
+            a {
+                color: #36c;
+                text-decoration: none;
+            }
+            h1 {
+                font-size: 36px;
+            }
+            h2 {
+                margin: 25px 0 -10px 0;
                 font-size: 18px;
-                line-height: 32px;
             }
             html,
             body {
@@ -23,97 +50,127 @@
                 overflow-y: scroll;
             }
             .full {
-                background-color: #333;
+                align-items: center;
+                display: flex;
                 height: 100%;
+                justify-content: center;
+                text-align: center;
             }
-            .image {
-                background-size: cover;
+            #cover {
+                background-color: #f7f7f7;
+                position: absolute;
+                top: 0; bottom: 0; left: 0; right: 0;
+                z-index: -2;
             }
-            #fig {
+            #backer {
                 background-position: center;
-                background-repeat: no-repeat;
-                background-size: contain;
-                height: 100%;
-                left: 100%;
+                background-size: cover;
+                opacity: 0.1;
                 position: absolute;
-                transform: translate(-52.5%, 0);
-                width: 100%;
-            }
-            #header {
-                bottom: 0;
-                color: #fff;
-                margin: 50px;
-                position: absolute;
-                width: 50%;
+                top: 0; bottom: 0; left: 0; right: 0;
+                z-index: -1;
             }
             #header h1 {
-                font-size: 56px;
+                background-color: #c03;
+                box-shadow: 10px 10px 0 #900;
+                color: #fff;
+                font-size: 60px;
+                margin: 0 50px;
+                padding: 10px 25px;
             }
             #header p {
-                font-size: 24px;
-            }
-            #fbrack {
-                border-bottom: 2px solid #fff;
-                border-left: 2px solid #fff;
-                border-radius: 2px;
-                border-top: 2px solid #fff;
-                height: 40%;
-                left: 50px;
-                position: absolute;
-                top: 100px;
-                width: 25px;
-            }
-            #lbrack {
-                border-bottom: 2px solid #fff;
-                border-radius: 2px;
-                border-right: 2px solid #fff;
-                border-top: 2px solid #fff;
-                height: 40%;
-                right: calc(50% + 50px);
-                position: absolute;
-                top: 100px;
-                width: 25px;
+                font-size: 30px;
             }
             .contain {
+                border-bottom: 2px solid #eee;
                 display: flex;
                 margin: 50px auto;
                 padding: 0 50px;
-                width: 768px;
+                width: 896px;
             }
             .contain .image {
-                border: 1px solid #999;
+                background-size: contain;
+                border: 1px solid #eee;
+                box-shadow: 5px 5px 0 #f7f7f7;
                 flex-shrink: 0;
                 transition: 0.125s;
             }
-            .contain .image:hover {
-                border: 1px solid #000;
-            }
             .left {
-                padding: 50px 50px 50px 0;
+                padding: 50px 0 50px 50px;
             }
         </style>
     </head>
 
     <body>
         <div class="full">
-            <!--<div id="fbrack"></div>
-            <div id="lbrack"></div>-->
+            <div id="cover"></div>
             <div id="header">
+                <h1>A Geometric Approach<br>to Matrices</h1>
+                <p>Online resources</p>
+            </div>
+            <div id="backer" style="background-image: url('images/cover.png')"></div>
+        </div>
+        <div class="contain">
+            <div class="image" style="background-image: url('images/cover-page.png'); width: 240px; height: calc(240px*3507/2480)"></div>
+            <div class="left">
                 <h1>A Geometric Approach to Matrices</h1>
-                <p>Web copy & additional resources</p>
+                <p>
+                    This is the full text of the main textbook. Clickable links and color version availibe soon(ish). The top link will update over time as it is edited, while the older versions will not change.
+                    <br><br>
+                    Chapters are provided for convenience and will load faster than all of them together.
+                    <br><br>
+                    <a href="https://github.com/anematode/gatm/blob/master/build/gatm.pdf" target="_blank">Most recent version</a>
+                </p>
+                <h2>Older versions:</h2>
+                <p>
+                    2020-02-02: <a href="https://github.com/anematode/gatm/blob/db55056f5ac5b405d351e6257c8653f1119f9a95/build/gatm.pdf" target="_blank">Version in print for 2019&ndash;2020</a>
+                </p>
+                <h2>Chapters:</h2>
+                <ol>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/trig_review.pdf" target="_blank">Trigonometry Review</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/itsasnap.pdf" target="_blank">It's a Snap</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/snap_flip.pdf" target="_blank">From Snaps to Flips</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/rrg.pdf" target="_blank">Rotation and Reflection Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/inf.pdf" target="_blank">Infinite Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/cmplx_geo.pdf" target="_blank">Geometry of Complex Numbers</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/vitamin_i.pdf" target="_blank">Vitamin <em>i</em></a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mtrx_mult.pdf" target="_blank">Matrix Multiplication</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mat_plane.pdf" target="_blank">Mapping the plane with Matrices</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/plane_rot.pdf" target="_blank">Rotations of the Plane</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mat_gen.pdf" target="_blank">Matrices Generate Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/comp_map.pdf" target="_blank">Composite Mappings of the Plane</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/inverses.pdf" target="_blank">Inverses</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mod_m.pdf" target="_blank">Multiplication Modulo <em>m</em> Meets Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/eigen.pdf" target="_blank">Eigenvectors and Eigenvalues</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/comp_func.pdf" target="_blank">Composition of Functions</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/glossary.pdf" target="_blank">Glossary</a></li>
+                </ol>
             </div>
-            <div id="fig" style="background-image: url('images/cover.png')"></div>
         </div>
-        <div class="panel">
-            <div class="contain">
-                <div class="left">
-                    <h1>A Geometric Approach to Matrices (Online)</h1>
-                    <p>This is the full textbook in color as a PDF. Links are also clickable here.</p>
-                    <p>Updated 5-22-19</p>
-                </div>
-                <div class="image" style="background-image: url('images/cover-page.png'); width: 360px; height: calc(360px*11/8.5)"></div>
-                <a href="https://github.com/anematode/gatm/blob/master/build/gatm.pdf">Link to Rough Draft</a>
+        <div class="contain">
+            <div class="image" style="background-image: url('images/cover-page.png'); width: 240px; height: calc(240px*3507/2480)"></div>
+            <div class="left">
+                <h1>A Geometric Approach to Matrices (Answer Key)</h1>
+                <p>
+                    This contains answers to all of the problems in the textbook. Due to the immense size, this will not be printed in physical form, although I will try to provide links for every printed version of the main text. NOTE: This is extrememly unfinished as of February 2020.
+                    <br><br>
+                    <a href="https://github.com/anematode/gatm/blob/master/build/gatm_answers.pdf" target="_blank">Most recent version</a>
+                </p>
+                <h2>Older versions:</h2>
+                <p>
+                    2020-02-02: <a href="https://github.com/anematode/gatm/blob/db55056f5ac5b405d351e6257c8653f1119f9a95/build/gatm_answers.pdf" target="_blank">Version in print for 2019&ndash;2020</a>
+                </p>
+                <h2>Chapters:</h2>
+                <p>
+                    Coming soon!
+                </p>
             </div>
         </div>
+
+        <script>
+            document.onscroll = function() {
+                document.getElementById('backer').style.marginTop = (document.documentElement.scrollTop / 2) + "px";
+            }
+        </script>
     </body>
 </html>
