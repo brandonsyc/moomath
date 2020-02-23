@@ -1,0 +1,195 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>A Geometric Approach to Matrices</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css?family=Muli:300');
+            @import url('https://fonts.googleapis.com/css?family=DM+Sans:500');
+            * {
+                font-family: Muli;
+                font-weight: 200;
+            }
+            *::-webkit-scrollbar {
+                width: 10px;
+            }
+            *::-webkit-scrollbar-thumb {
+                background-color: #999;
+                border-radius: 5px;
+            }
+            *::-webkit-scrollbar-track {
+                background-color: #eee;
+            }
+            h1,
+            h2 {
+                font-family: 'DM Sans';
+            }
+            p,
+            li {
+                font-size: 16px;
+                line-height: 30px;
+            }
+            a {
+                color: #36c;
+                text-decoration: none;
+            }
+            abbr {
+                font-family: 'DM Sans';
+                text-decoration: none;
+            }
+            h1 {
+                font-size: 36px;
+            }
+            h2 {
+                margin: 25px 0 -10px 0;
+                font-size: 18px;
+            }
+            html,
+            body {
+                height: 100%;
+                margin: 0;
+            }
+            body {
+                overflow-x: hidden;
+                overflow-y: scroll;
+            }
+            .full {
+                align-items: center;
+                display: flex;
+                height: 100%;
+                justify-content: center;
+                text-align: center;
+            }
+            #cover {
+                background-color: #f7f7f7;
+                position: absolute;
+                top: 0; bottom: 0; left: 0; right: 0;
+                z-index: -2;
+            }
+            #backer {
+                background-position: center;
+                background-size: cover;
+                opacity: 0.1;
+                position: absolute;
+                top: 0; bottom: 0; left: 0; right: 0;
+                z-index: -1;
+            }
+            #header h1 {
+                background-color: #fc3;
+                box-shadow: 10px 10px 0 #c90;
+                color: #fff;
+                font-size: 60px;
+                margin: 0 50px;
+                padding: 10px 25px;
+            }
+            #header p {
+                font-size: 30px;
+            }
+            .contain {
+                border-bottom: 2px solid #eee;
+                display: flex;
+                margin: 50px auto;
+                padding: 0 50px;
+                width: 896px;
+            }
+            .contain .image {
+                background-size: contain;
+                border: 1px solid #eee;
+                box-shadow: 5px 5px 0 #f7f7f7;
+                flex-shrink: 0;
+                transition: 0.125s;
+            }
+            .left {
+                padding: 50px 0 50px 50px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="full">
+            <div id="cover"></div>
+            <div id="header">
+                <h1>A Geometric Approach<br>to Matrices</h1>
+                <p>Online resources</p>
+            </div>
+            <div id="backer" style="background-image: url('images/cover.png')"></div>
+        </div>
+        
+        <div class="contain">
+            <div class="left" style="padding-left: 0; padding-top: 0; margin: auto; max-width: 768px">
+                <h2><abbr title="oh no ive gone too far into the latex">Abstract</abbr></h2>
+                <p>
+                    This is a website where all resources pertaining to GAtM will be made availible. This includes the PDF versions of the textbook and answer key, individual chapters, and also eventually programs and apps for students and some CADs for visuals.
+                    <br><br>
+                    GAtM is now open-source and can be found <a href="https://github.com/anematode/gatm/" target="_blank">here</a>. You are welcome to make an issue or a fork if you see any issue with the text; if you do want to clone it and run it on your computer, make sure to read the README to get the full instructions on how to build it. GAtM is written with LaTeX, Asymptote, and Ti<em>k</em>z.
+                </p>
+            </div>
+        </div>
+        <div class="contain">
+            <div class="image" style="background-image: url('images/cover-page.png'); width: 240px; height: calc(240px*3507/2480)"></div>
+            <div class="left">
+                <h1>A Geometric Approach to Matrices</h1>
+                <p>
+                    This is the full text of the main textbook. Clickable links, color, and other improvements availible soon(ish). The top link will update over time as it is edited, while the older versions will not change.
+                    <br><br>
+                    Chapters are provided for convenience and will load much faster than the main PDF.
+                    <br><br>
+                    <a href="https://github.com/anematode/gatm/blob/master/build/gatm.pdf" target="_blank">Most recent version</a>
+                </p>
+                <h2>Older versions:</h2>
+                <p>
+                    2020-02-02: <a href="https://github.com/anematode/gatm/blob/db55056f5ac5b405d351e6257c8653f1119f9a95/build/gatm.pdf" target="_blank">Version in print for 2019&ndash;2020</a>
+                </p>
+                <h2>Chapters:</h2>
+                <ol>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/trig_review.pdf" target="_blank">Trigonometry Review</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/itsasnap.pdf" target="_blank">It's a Snap</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/snap_flip.pdf" target="_blank">From Snaps to Flips</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/rrg.pdf" target="_blank">Rotation and Reflection Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/inf.pdf" target="_blank">Infinite Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/cmplx_geo.pdf" target="_blank">Geometry of Complex Numbers</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/vitamin_i.pdf" target="_blank">Vitamin <em>i</em></a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mtrx_mult.pdf" target="_blank">Matrix Multiplication</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mat_plane.pdf" target="_blank">Mapping the plane with Matrices</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/plane_rot.pdf" target="_blank">Rotations of the Plane</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mat_gen.pdf" target="_blank">Matrices Generate Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/comp_map.pdf" target="_blank">Composite Mappings of the Plane</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/inverses.pdf" target="_blank">Inverses</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/mod_m.pdf" target="_blank">Multiplication Modulo <em>m</em> Meets Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/eigen.pdf" target="_blank">Eigenvectors and Eigenvalues</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/comp_func.pdf" target="_blank">Composition of Functions</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters/glossary.pdf" target="_blank">Glossary</a></li>
+                </ol>
+            </div>
+        </div>
+        <div class="contain">
+            <div class="image" style="background-image: url('images/cover-page-answers.png'); width: 240px; height: calc(240px*3507/2480)"></div>
+            <div class="left">
+                <h1>A Geometric Approach to Matrices (Answer Key)</h1>
+                <p>
+                    This contains answers to all of the problems in the textbook. Due to the immense size, this will not be printed in physical form, although I will try to provide files corresponding to every printed version of the main text. NOTE: This is extrememly unfinished as of February 2020.
+                    <br><br>
+                    <a href="https://github.com/anematode/gatm/blob/master/build/gatm_answers.pdf" target="_blank">Most recent version</a> (all chapters outdated, see updated chapters below)
+                </p>
+                <h2>Older versions:</h2>
+                <p>
+                    2020-01-06: <a href="https://github.com/anematode/gatm/blob/db55056f5ac5b405d351e6257c8653f1119f9a95/build/gatm_answers.pdf" target="_blank">Draft for 2019&ndash;2020 text</a>
+                </p>
+                <h2>Chapters:</h2>
+                <ol>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters_answers/trig_review.pdf" target="_blank">Trigonometry Review</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters_answers/itsasnap.pdf" target="_blank">It's a Snap</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters_answers/snap_flip.pdf" target="_blank">From Snaps to Flips</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters_answers/rrg.pdf" target="_blank">Rotation and Reflection Groups</a></li>
+                    <li><a href="https://github.com/anematode/gatm/blob/master/build/chapters_answers/inf.pdf" target="_blank">Infinite Groups</a></li>
+                </ol>
+            </div>
+        </div>
+
+        <script>
+            document.onscroll = function() {
+                document.getElementById('backer').style.marginTop = (document.documentElement.scrollTop / 2) + "px";
+            }
+        </script>
+    </body>
+</html>

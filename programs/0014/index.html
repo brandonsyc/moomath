@@ -3,13 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Solubility Practice</title>
-
-    <style>
-        .center {
-
-        }
-    </style>
-
+    
     <script>
         let subscriptify = (mtch, subscr) => "<sub>" + subscr + "</sub>";
 
@@ -62,8 +56,8 @@
             // new Ion({name: "radium", formula: "Ra", charge: 2, ipa: false}),
             new Ion({name: "silver", formula: "Ag", charge: 1, ipa: false}),
             new Ion({name: "zinc", formula: "Zn", charge: 2, ipa: false}),
-            new Ion({name: "mercury(I)", formula: "Hg2", charge: 2, ipa: false}),
-            new Ion({name: "mercury(II)", formula: "Hg", charge: 2, ipa: true}),
+            new Ion({name: "mercury(I)", formula: "Hg2", charge: 2, ipa: true}),
+            new Ion({name: "mercury(II)", formula: "Hg", charge: 2, ipa: false}),
             new Ion({name: "lead(II)", formula: "Pb", charge: 2, ipa: false}),
             new Ion({name: "lead(IV)", formula: "Pb", charge: 4, ipa: false}),
             new Ion({name: "cobalt(II)", formula: "Co", charge: 2, ipa: false}),
@@ -260,9 +254,8 @@
         }
 
         #main {
-            position: fixed;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         #checkboxes {
@@ -351,6 +344,7 @@
 </head>
 
 <body>
+<br>
 <div id="main">
     <div id="checkboxes">
         <div class="checkbox">
@@ -392,8 +386,8 @@
     <br>
     <img width="100%" src="periodictable.svg" alt="Periodic Table">
 </div>
-
-
+<br>
+    
 <script>
     let formulaElem = document.getElementById("formula");
     let nameElem = document.getElementById("name");
@@ -484,9 +478,16 @@
 
         requestAnimationFrame(renderLoop);
     }
-
+    
     solubleButton.addEventListener('click', onSoluble);
     insolubleButton.addEventListener('click', onInsoluble);
+    window.addEventListener('keypress', event => {
+        if (event.key == 's' || event.key == 'S') {
+            onSoluble();
+        } else if (event.key == 'i' || event.key == 'I') {
+            onInsoluble();
+        }
+    });
 
     requestAnimationFrame(renderLoop);
     fillTheProblem();

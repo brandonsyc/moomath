@@ -1,0 +1,180 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Untitled Document</title>
+    <style>
+        * {
+            margin: 0;
+            overflow: hidden;
+        }
+        body, html {
+            height: 100%;
+        }
+        canvas {
+            position: fixed;
+        }
+        #controls {
+            position: fixed;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+    <body>
+        <div id="controls">
+            <!--<input type="range" oninput="cZoom(this.value)">-->
+            <input type="number" oninput="setit()" id="iX">
+            <input type="number" oninput="setit()" id="iY">
+        </div>
+        <script>
+            function setit() {
+                let ix = document.getElementById("iX").value;
+                let iy = document.getElementById("iY").value;
+                didit(ix * ZOOM + over.width / 2 / dpr, -iy * ZOOM + over.height / 2 / dpr);
+            }
+            
+            function cZoom(x) {
+                let nZoom = ZOOM + (+x - 50) * 10;
+                ctx.restore();
+                ctx.save();
+                ctx.scale(nZoom / ZOOM, nZoom / ZOOM);
+                draw(canvas.width*(1-nZoom/ZOOM)/2,canvas.height*(1-nZoom/ZOOM)/2);
+            }
+            
+            function cM(x, y) {
+                return [x[0] * y[0] - x[1] * y[1], x[0] * y[1] + x[1] * y[0]];
+            }
+            
+            function cA(x, y) {
+                return [x[0] + y[0], x[1] + y[1]];
+            }
+            
+            function didit(x, y) {
+                overx.clearRect(0, 0, over.width, over.height);
+                
+                let g = [(x - over.width / 2 / dpr) / ZOOM, (-y + over.height / 2 / dpr) / ZOOM];
+                overx.lineWidth = 2;
+                
+                overx.strokeStyle = '#fff';
+                overx.beginPath();
+                overx.arc(x * dpr, y * dpr, 5, 0, 2 * Math.PI);
+                overx.stroke();
+                
+                //function z^2+c
+                let z = [0, 0];
+                console.log('begin')
+                for (let i = 0; i < ITERATIONS; i++) {
+                    overx.strokeStyle = 'rgba(255,255,255,' + Math.pow(1.03125, -i) + ')';
+                    overx.beginPath();
+                    overx.moveTo(z[0] * ZOOM * dpr + over.width / 2, over.height / 2 - z[1] * ZOOM * dpr);
+                    z = cA(cM(z,z), g);
+                    if (i < 50) {
+                        console.log(z);
+                    }
+                    //if (Math.sqrt(z[0] * z[0] + z[1] * z[1]) > THRESHOLD) {
+                    //}
+                    overx.lineTo(z[0] * ZOOM * dpr + over.width / 2, over.height / 2 - z[1] * ZOOM * dpr);
+                    overx.stroke();
+                }
+            }
+            
+            let dpr = window.devicePixelRatio || 1;            
+            
+            let canvas = document.createElement('canvas');
+            canvas.width = 1920;
+            canvas.height = 1080;
+            document.body.appendChild(canvas);
+            
+            canvas.style.transform = 'scale(' + (1 / dpr) + ')' +
+                'translate(' + (-canvas.width / dpr) + 'px, ' + (-canvas.height / dpr) + 'px)';
+            let ctx = canvas.getContext('2d');
+            var id = ctx.createImageData(canvas.width, canvas.height);
+            
+            let over = document.createElement('canvas');
+            over.style.pointerEvents = 'none';
+            over.width = 1920;
+            over.height = 1080;
+            document.body.appendChild(over);
+            
+            over.style.transform = 'scale(' + (1 / dpr) + ')' +
+                'translate(' + (-over.width / dpr) + 'px, ' + (-over.height / dpr) + 'px)';
+            let overx = over.getContext('2d');
+            
+            canvas.onclick = function(e) {
+                didit(e.clientX, e.clientY);
+            }
+            
+            
+            function color(x, y, c) {
+                let cX = x + canvas.width / 2;
+                let cY = y + canvas.height / 2;
+                
+                let start = (cY * canvas.width + cX) * 4;
+                if (c === 1) {
+                    id.data[start] = 255;
+                    id.data[start + 1] = 255;
+                    id.data[start + 2] = 255;
+                } else {
+                    for (let i = 0; i < colors.length; i++) {
+                        if (c < colors[i][0]) {
+                            let p = (c - colors[i - 1][0]) / (colors[i][0] - colors[i - 1][0]);
+                            id.data[start] = (1 - p) * colors[i - 1][1] + p * colors[i][1];
+                            id.data[start + 1] = (1 - p) * colors[i - 1][2] + p * colors[i][2];
+                            id.data[start + 2] = (1 - p) * colors[i - 1][3] + p * colors[i][3];
+                            break;
+                        }
+                    }
+                }
+                
+                id.data[start + 3] = 255;
+            }
+            
+            // if C is 0 --> 0 0 255
+            // if C is 0.1 --> 0 0 127
+            
+            let ITERATIONS = 256;
+            let FAST_ITER = 2;
+            let THRESHOLD = 2;
+            let ZOOM = 300;
+            
+            //let colors = [[0,0,0,63],[0.05,63,127,191],[0.1,255,255,255],[0.2,127,63,0],[1,0,0,0]];
+            let colors = [[0,255,255,255],[0.1,191,191,191],[1,0,0,0]];
+            
+            function test(c, it) {
+                //function z^2+c
+                let z = [0, 0];
+                for (let i = 0; i < it; i++) {
+                    z = cA(cM(z,z), c);
+                    if (Math.sqrt(z[0] * z[0] + z[1] * z[1]) > THRESHOLD) {
+                        return i / it;
+                    }
+                }
+                return 1;
+            }
+            
+            function render(it) {
+                for (let j = -canvas.height / 2; j < canvas.height / 2; j++) {
+                    for (let i = -canvas.width / 2; i < canvas.width / 2; i++) {
+                        let z = test([i / dpr / ZOOM, j / dpr / ZOOM], it);
+                        color(i, j, z);
+                    }
+                }
+                console.log('done');
+                draw();
+            }
+            
+            function draw(x, y) {
+                let dummy = document.createElement('canvas');
+                dummy.width = canvas.width;
+                dummy.height = canvas.height;
+                
+                dummy.getContext('2d').putImageData(id, 0, 0);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(dummy, 0, 0);
+            }
+            
+            render(ITERATIONS);
+        </script>
+    </body>
+</html>
