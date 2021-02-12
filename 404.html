@@ -6,8 +6,8 @@ permalink: 404.html
 	<head>
 		<meta charset="utf-8">
 		<title>Whups! &ndash; Moomath</title>
-		<link rel="stylesheet" type="text/css" href="https://moomath.com/error.css">
-		<link rel="icon" href="https://moomath.com/images/favicon.png" sizes="16x16" type="image/png">
+		<link rel="stylesheet" type="text/css" href="../error.css">
+		<link rel="icon" href="../images/favicon.png" sizes="16x16" type="image/png">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	</head>
 
@@ -23,8 +23,15 @@ permalink: 404.html
 			+###+ &nbsp;##&nbsp; &nbsp;<br>
 			&nbsp;+#+ &nbsp; &nbsp;+# &nbsp;<br>
 			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; #+<br>
-			<br><br>Something went wrong.<br><br><a href="https://moomath.com">Go Home</a>
+			<br><br>Something went wrong.<br><br><a href="..">Go Home</a>
 		</p>
-		<script src="https://moomath.com/images/moo.js"></script>
+		<script>
+			// Redirect to gunn-gatm.github.io/<path> if pathname matches "/gatm/<path>"
+			const pathname = window.location.pathname
+			if (pathname.startsWith("/gatm/")) {
+				window.location.href = "https://gunn-gatm.github.io/" + pathname.slice(6)
+			}
+		</script>
+		<script src="../images/moo.js"></script>
 	</body>
 </html>
