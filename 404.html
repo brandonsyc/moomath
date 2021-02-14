@@ -30,6 +30,8 @@ permalink: 404.html
 			const pathname = window.location.pathname
 			if (pathname.startsWith("/gatm/")) {
 				window.location.href = "https://gunn-gatm.github.io/" + pathname.slice(6)
+			} else if (pathname === "/gatm") {
+				window.location.href = "https://gunn-gatm.github.io"
 			}
 		</script>
 		<script src="../images/moo.js"></script>
